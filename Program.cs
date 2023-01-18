@@ -1,9 +1,14 @@
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Data.SqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<TodoDb>(opt => opt.UseInMemoryDatabase("TodoList"));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 var app = builder.Build();
+
+TestConnection test = new TestConnection();
+test.testConnection();
 
 app.MapGet("/todoitems", async (TodoDb db) =>
     await db.Todos.ToListAsync());
@@ -52,3 +57,32 @@ app.MapDelete("/todoitems/{id}", async (int id, TodoDb db) =>
 });
 
 app.Run();
+
+public class TestConnection
+{
+    public void testConnection()
+    {
+        // Replace with your actual connection string
+        string connectionString = "Server=tcp:stock-database-server.database.windows.net,1433;Initial Catalog=stock_app_db;Persist Security Info=False;User ID=bachelor;Password=Gustav.Frederik;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+            Console.WriteLine("Connection to the database is successful!");
+
+            // Test the SELECT statement
+            string queryString = "SELECT * FROM Account";
+            using (SqlCommand command = new SqlCommand(queryString, connection))
+            {
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    // Process the result set
+                    while (reader.Read())
+                    {
+                        Console.WriteLine("Account ID: " + reader[0] + ", Account Name: " + reader[1]);
+                    }
+                }
+            }
+        }
+    }
+}
