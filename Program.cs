@@ -6,3 +6,5 @@ Endpoints.setup();
 
 Application.app.Run();
 
+//await DataFetcher.stock("ibm","nyse");
+

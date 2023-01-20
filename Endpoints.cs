@@ -14,5 +14,10 @@ class Endpoints
         {
             return Results.Ok(SignIn.endpoint(body));
         });
+
+        Application.app.MapPost(API_ENDPOINTS.STOCK_INFO_ENDPOINT, async (StockInfoBody body) => 
+        {
+            return Results.Ok(await StockInfo.endpoint(body));
+        });
     }
 }
