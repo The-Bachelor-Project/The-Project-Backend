@@ -1,7 +1,7 @@
 using System.Data.SqlClient;
 class SignIn
 {
-    public SignInResponse endpoint(SignInBody body)
+    public static SignInResponse endpoint(SignInBody body)
     {
         SignInResponse signInResponse = new SignInResponse();
         using (SqlConnection connection = Database.createConnection())

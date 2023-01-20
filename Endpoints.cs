@@ -7,14 +7,12 @@ class Endpoints
     {
         Application.app.MapPost(API_ENDPOINTS.SIGN_UP_ENDPOINT, (SignUpBody body) => 
         {
-            SignUp signUp = new SignUp();
-            return Results.Ok(signUp.endpoint(body));
+            return Results.Ok(SignUp.endpoint(body));
         });
 
         Application.app.MapPost(API_ENDPOINTS.SIGN_IN_ENDPOINT, (SignInBody body) => 
         {
-            SignIn signIn = new SignIn();
-            return Results.Ok(signIn.endpoint(body));
+            return Results.Ok(SignIn.endpoint(body));
         });
     }
 }

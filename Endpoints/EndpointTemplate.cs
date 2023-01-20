@@ -1,7 +1,7 @@
 using System.Data.SqlClient;
 class EndpointTemplate
 {
-    public EndpointTemplateResponse endpoint(EndpointTemplateBody body)
+    public static EndpointTemplateResponse endpoint(EndpointTemplateBody body)
     {
         EndpointTemplateResponse endpointTemplateResponse = new EndpointTemplateResponse();
         using (SqlConnection connection = Database.createConnection())
