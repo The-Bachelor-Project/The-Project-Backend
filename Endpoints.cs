@@ -10,5 +10,11 @@ class Endpoints
             SignUp signUp = new SignUp();
             return Results.Ok(signUp.endpoint(body));
         });
+
+        Application.app.MapPost(API_ENDPOINTS.SIGN_IN_ENDPOINT, (SignInBody body) => 
+        {
+            SignIn signIn = new SignIn();
+            return Results.Ok(signIn.endpoint(body));
+        });
     }
 }
