@@ -12,10 +12,10 @@ class SignUp
             command.Parameters.AddWithValue("@password", body.password);
             try{
                 command.ExecuteNonQuery();
-                signUpResponse.response = "👍";
+                signUpResponse.response = "success";
             } catch(Exception e){
                 //TODO: do a check if email already exist and return specific error in response
-                signUpResponse.response = "👎";
+                signUpResponse.response = "error";
             }
         }
         

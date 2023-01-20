@@ -12,9 +12,9 @@ class EndpointTemplate
             command.Parameters.AddWithValue("@val2", body.str2);
             try{
                 command.ExecuteNonQuery();
-                endpointTemplateResponse.response = "👍";
+                endpointTemplateResponse.response = "success";
             } catch(Exception e){
-                endpointTemplateResponse.response = "👎";
+                endpointTemplateResponse.response = "error";
             }
         }
         

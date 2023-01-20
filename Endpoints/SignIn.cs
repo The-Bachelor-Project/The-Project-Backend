@@ -12,12 +12,12 @@ class SignIn
             SqlDataReader reader = command.ExecuteReader();
             if(reader.Read()){
                 String dbPassword = reader["password"].ToString();
-                signInResponse.response = "👍";
+                signInResponse.response = "success";
                 signInResponse.token = body.email;
             }
             else{
 
-                signInResponse.response = "👎";
+                signInResponse.response = "error";
             }
 
         }
