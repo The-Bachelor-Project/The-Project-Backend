@@ -3,7 +3,9 @@ class YfTranslator{
 		{"FRA","FRA"},
 		{"CPH","CPH"},
 		{"NYQ","NYSE"},
-		{"NAS","NASDAQ"}
+		{"NAS","NASDAQ"},
+		{"NMS","NASDAQ"},
+		{"NCM","NASDAQ"}
 	};
 	public static Dictionary<String, String> stockSymbolExtension = new Dictionary<string, string>(){
 		{"FRA",".F"},

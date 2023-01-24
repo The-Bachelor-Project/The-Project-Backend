@@ -1,3 +1,4 @@
+using System.Data.SqlClient;
 using Newtonsoft.Json.Linq;
 
 class YfSearch
@@ -17,6 +18,17 @@ class YfSearch
 				if(YfTranslator.stockAutocomplete.TryGetValue(""+res.exch, out exchange)){
 					String ticker = (""+res.symbol).Split(".")[0];
 					await StockInfo.getStock(ticker,exchange);
+				}
+				else{
+					using (SqlConnection connection = Database.createConnection()) //TODO: This is just for development. Remove before production.
+					{
+						String query = "INSERT INTO MissingExchanges (exchange, disp, stock) VALUES (@exchange, @disp, @stock)";
+						SqlCommand command = new SqlCommand(query, connection);
+						command.Parameters.AddWithValue("@exchange", ""+res.exch);
+						command.Parameters.AddWithValue("@disp", ""+res.exchDisp);
+						command.Parameters.AddWithValue("@stock", ""+res.symbol);
+						command.ExecuteNonQuery();
+					}
 				}
 			}
 		}
