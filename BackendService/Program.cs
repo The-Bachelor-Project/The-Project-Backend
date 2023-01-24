@@ -4,7 +4,8 @@ using System.Data.SqlClient;
 
 namespace BackendService;
 
-class Program{
+class Program
+{
 	public static void Main()
 	{
 		Endpoints.setup();

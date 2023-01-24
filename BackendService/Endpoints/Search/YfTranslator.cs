@@ -1,5 +1,6 @@
 namespace BackendService;
-public class YfTranslator{
+public class YfTranslator
+{
 	public static Dictionary<String, String> stockAutocomplete = new Dictionary<string, string>(){
 		{"FRA","FRA"},
 		{"CPH","CPH"},

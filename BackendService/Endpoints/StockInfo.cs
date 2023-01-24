@@ -3,11 +3,12 @@ using System.Data.SqlClient;
 namespace BackendService;
 
 
-class StockInfo{
+class StockInfo
+{
 	public String ticker { get; set; }
 	public String exchange { get; set; }
 	public String name { get; set; }
-	public String industry  { get; set; }
+	public String industry { get; set; }
 	public String sector { get; set; }
 	public String website { get; set; }
 	public String country { get; set; }
@@ -15,77 +16,84 @@ class StockInfo{
 
 
 	public static async Task<StockInfoResponse> endpoint(StockInfoBody body)
-    {
-        StockInfoResponse stockResponse = new StockInfoResponse();
-        stockResponse.stock = await getStock(body.ticker, body.exchange);
-            stockResponse.response = "success";
-        try{
-            stockResponse.stock = await getStock(body.ticker, body.exchange);
-            stockResponse.response = "success";
-        } catch(Exception e){
-            stockResponse.response = "error";
-        }
-        return stockResponse;
-    }
+	{
+		StockInfoResponse stockResponse = new StockInfoResponse();
+		stockResponse.stock = await getStock(body.ticker, body.exchange);
+		stockResponse.response = "success";
+		try
+		{
+			stockResponse.stock = await getStock(body.ticker, body.exchange);
+			stockResponse.response = "success";
+		}
+		catch (Exception e)
+		{
+			stockResponse.response = "error";
+		}
+		return stockResponse;
+	}
 
-	public static async Task<StockInfo> getStock(String ticker, String exchange){
+	public static async Task<StockInfo> getStock(String ticker, String exchange)
+	{
 		StockInfo result = new StockInfo();
 		result.ticker = ticker;
 		result.exchange = exchange;
 
-        using (SqlConnection connection = Database.createConnection())
-        {
-            String query = "SELECT * FROM Stocks WHERE ticker = @ticker AND exchange = @exchange";
-            SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@ticker", ticker);
-            command.Parameters.AddWithValue("@exchange", exchange);
-            SqlDataReader reader = command.ExecuteReader();
-            if(reader.Read()){
-                result.name = reader["company_name"].ToString();
-                result.industry = reader["industry"].ToString();
-                result.sector = reader["sector"].ToString();
-                result.website = reader["website"].ToString();
-                result.country = reader["country"].ToString();
-            }
-            else{
-                result = await DataFetcher.stock(ticker, exchange);
-                saveStock(result);
-            }
-        }
+		using (SqlConnection connection = Database.createConnection())
+		{
+			String query = "SELECT * FROM Stocks WHERE ticker = @ticker AND exchange = @exchange";
+			SqlCommand command = new SqlCommand(query, connection);
+			command.Parameters.AddWithValue("@ticker", ticker);
+			command.Parameters.AddWithValue("@exchange", exchange);
+			SqlDataReader reader = command.ExecuteReader();
+			if (reader.Read())
+			{
+				result.name = reader["company_name"].ToString();
+				result.industry = reader["industry"].ToString();
+				result.sector = reader["sector"].ToString();
+				result.website = reader["website"].ToString();
+				result.country = reader["country"].ToString();
+			}
+			else
+			{
+				result = await DataFetcher.stock(ticker, exchange);
+				saveStock(result);
+			}
+		}
 
 		return result;
 	}
 
-	public static void saveStock(StockInfo newStock){
+	public static void saveStock(StockInfo newStock)
+	{
 		//TODO: save stock to database
-        SignUpResponse signUpResponse = new SignUpResponse();
-        using (SqlConnection connection = Database.createConnection())
-        {
-            String query = "INSERT INTO Stocks (ticker, exchange, company_name, industry, sector, website, country) VALUES (@ticker, @exchange, @name, @industry, @sector, @website, @country)";
-            SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@ticker", newStock.ticker);
-            command.Parameters.AddWithValue("@exchange", newStock.exchange);
-            command.Parameters.AddWithValue("@name", newStock.name);
-            command.Parameters.AddWithValue("@industry", newStock.industry);
-            command.Parameters.AddWithValue("@sector", newStock.sector);
-            command.Parameters.AddWithValue("@website", newStock.website);
-            command.Parameters.AddWithValue("@country", newStock.country);
-            command.ExecuteNonQuery();
-        
-        }
+		SignUpResponse signUpResponse = new SignUpResponse();
+		using (SqlConnection connection = Database.createConnection())
+		{
+			String query = "INSERT INTO Stocks (ticker, exchange, company_name, industry, sector, website, country) VALUES (@ticker, @exchange, @name, @industry, @sector, @website, @country)";
+			SqlCommand command = new SqlCommand(query, connection);
+			command.Parameters.AddWithValue("@ticker", newStock.ticker);
+			command.Parameters.AddWithValue("@exchange", newStock.exchange);
+			command.Parameters.AddWithValue("@name", newStock.name);
+			command.Parameters.AddWithValue("@industry", newStock.industry);
+			command.Parameters.AddWithValue("@sector", newStock.sector);
+			command.Parameters.AddWithValue("@website", newStock.website);
+			command.Parameters.AddWithValue("@country", newStock.country);
+			command.ExecuteNonQuery();
+
+		}
 	}
 }
 
 
 class StockInfoResponse
 {
-    public String response { get; set; }
+	public String response { get; set; }
 	public StockInfo stock { get; set; }
 }
 
 class StockInfoBody
 {
 	public String token { get; set; }
-    public String ticker { get; set; }
-    public String exchange { get; set; }
+	public String ticker { get; set; }
+	public String exchange { get; set; }
 }
