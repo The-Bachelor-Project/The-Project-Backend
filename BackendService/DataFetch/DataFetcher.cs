@@ -1,6 +1,8 @@
 
 using Newtonsoft.Json.Linq;
 
+namespace BackendService;
+
 class DataFetcher{
 	public static async Task<StockInfo> stock(String ticker, String exchange){
 		String stockExtension;

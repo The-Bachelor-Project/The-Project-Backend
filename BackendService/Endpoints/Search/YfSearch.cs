@@ -1,6 +1,7 @@
 using System.Data.SqlClient;
 using Newtonsoft.Json.Linq;
 
+namespace BackendService;
 class YfSearch
 {
 	public static async Task searchStocksAsync(String term){

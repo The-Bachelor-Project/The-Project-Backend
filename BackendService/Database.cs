@@ -1,4 +1,7 @@
 using System.Data.SqlClient;
+
+namespace BackendService;
+
 class Database
 {
     private static SqlConnectionStringBuilder builder = buildConnectionString();

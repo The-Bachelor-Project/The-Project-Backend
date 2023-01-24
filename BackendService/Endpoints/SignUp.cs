@@ -1,4 +1,7 @@
 using System.Data.SqlClient;
+
+namespace BackendService;
+
 class SignUp
 {
     public static SignUpResponse endpoint(SignUpBody body)

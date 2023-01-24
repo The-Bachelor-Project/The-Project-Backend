@@ -1,3 +1,4 @@
+namespace BackendService;
 class Search
 {
     public static async Task<SearchResponse> endpoint(SearchBody body)

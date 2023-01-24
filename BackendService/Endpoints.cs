@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Data.SqlClient;
+
+namespace BackendService;
+
 class Endpoints
 {
     public static void setup() 

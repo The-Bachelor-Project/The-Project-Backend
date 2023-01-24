@@ -1,3 +1,5 @@
+namespace BackendService;
+
 class Application
 {
     static WebApplicationBuilder builder = WebApplication.CreateBuilder();

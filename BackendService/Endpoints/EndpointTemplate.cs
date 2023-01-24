@@ -1,4 +1,7 @@
 using System.Data.SqlClient;
+
+namespace BackendService;
+
 class EndpointTemplate
 {
     public static EndpointTemplateResponse endpoint(EndpointTemplateBody body)

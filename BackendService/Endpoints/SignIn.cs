@@ -1,4 +1,7 @@
 using System.Data.SqlClient;
+
+namespace BackendService;
+
 class SignIn
 {
     public static SignInResponse endpoint(SignInBody body)

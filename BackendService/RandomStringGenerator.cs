@@ -1,3 +1,5 @@
+namespace BackendService;
+
 public static class RandomStringGenerator
 {
     private static readonly Random _random = new Random();

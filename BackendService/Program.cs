@@ -2,9 +2,18 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Data.SqlClient;
 
-Endpoints.setup();
+namespace BackendService;
 
-Application.app.Run();
+class Program{
+	public static void Main()
+	{
+		Endpoints.setup();
+
+		Application.app.Run();
+	}
+}
+
+
 
 //await DataFetcher.stock("ibm","nyse");
 

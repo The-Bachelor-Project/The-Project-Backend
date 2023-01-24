@@ -1,5 +1,7 @@
 using System.Data.SqlClient;
 
+namespace BackendService;
+
 
 class StockInfo{
 	public String ticker { get; set; }

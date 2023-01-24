@@ -1,3 +1,5 @@
+namespace BackendService;
+
 class API_ENDPOINTS
 {
     // Our API
