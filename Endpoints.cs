@@ -19,5 +19,10 @@ class Endpoints
         {
             return Results.Ok(await StockInfo.endpoint(body));
         });
+
+        Application.app.MapPost(API_ENDPOINTS.SEARCH_ENDPOINT, async (SearchBody body) => 
+        {
+            return Results.Ok(await Search.endpoint(body));
+        });
     }
 }

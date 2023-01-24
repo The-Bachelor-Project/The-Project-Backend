@@ -5,4 +5,5 @@ class API_ENDPOINTS
     public const String SIGN_UP_ENDPOINT = "/signup";
     public const String SIGN_IN_ENDPOINT = "/signin";
     public const String STOCK_INFO_ENDPOINT = "/stock_info";
+    public const String SEARCH_ENDPOINT = "/search";
 }

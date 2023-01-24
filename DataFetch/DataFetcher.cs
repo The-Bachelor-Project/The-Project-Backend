@@ -3,6 +3,10 @@ using Newtonsoft.Json.Linq;
 
 class DataFetcher{
 	public static async Task<StockInfo> stock(String ticker, String exchange){
+		String stockExtension;
+		YfTranslator.stockSymbolExtension.TryGetValue(exchange, out stockExtension);
+		ticker+=stockExtension;
+
 		StockInfo result = new StockInfo();
 		HttpClient client = new HttpClient();
 
@@ -15,20 +19,10 @@ class DataFetcher{
 		String quoteJson = await quoteRes.Content.ReadAsStringAsync();
 		dynamic quote = JObject.Parse(quoteJson);
 
-		String exchangeTranslated = quote.quoteResponse.result[0].exchange;
-
-		System.Console.WriteLine(quote.quoteResponse.result[0].exchange);
-		System.Console.WriteLine("test22");
-
-		String yfExchange = quote.quoteResponse.result[0].exchange;
-
-		switch(""+quote.quoteResponse.result[0].exchange){
-			case "NMS": exchangeTranslated = "NASDAQ"; break;
-			case "NYQ": exchangeTranslated = "NYSE"; break;
-		}
+		System.Console.WriteLine("Tocker:" + ticker);
 
 		result.ticker = ticker;
-		result.exchange = exchangeTranslated;
+		result.exchange = exchange;
 		result.name = quote.quoteResponse.result[0].shortName;
         result.industry = quoteSummary.quoteSummary.result[0].assetProfile.industry;
         result.sector = quoteSummary.quoteSummary.result[0].assetProfile.sector;
