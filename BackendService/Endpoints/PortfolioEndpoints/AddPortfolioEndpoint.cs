@@ -7,11 +7,10 @@ class AddPortfolio
     public static AddPortfolioResponse endpoint(AddPortfolioBody body)
     {
         AddPortfolioResponse addPortfolioResponse = new AddPortfolioResponse();
-        if (ValidateUserToken.authenticate(body.owner, body.device))
+        if (ValidateUserToken.authenticate(body.token, body.device))
         {
             using (SqlConnection connection = Database.createConnection())
             {
-
                 String uid = RandomStringGenerator.Generate(32);
                 String query = "INSERT INTO Portfolios (uid, name, owner, currency, balance) VALUES (@uid, @name, @owner, @currency, @balance)";
                 SqlCommand command = new SqlCommand(query, connection);
@@ -54,4 +53,5 @@ class AddPortfolioBody
     public String currency { get; set; }
     public Double balance { get; set; }
     public String device { get; set; }
+    public String token { get; set; }
 }

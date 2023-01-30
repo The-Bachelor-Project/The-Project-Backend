@@ -17,9 +17,11 @@ class SignIn
             {
                 String dbPassword = reader["password"].ToString();
                 reader.Close();
-                if (handleTokenGeneration(connection, body))
+                String token = handleTokenGeneration(connection, body);
+                if (token != "")
                 {
                     signInResponse.response = "success";
+                    signInResponse.token = token;
                 }
                 else
                 {
@@ -37,7 +39,7 @@ class SignIn
         return signInResponse;
     }
 
-    private static bool handleTokenGeneration(SqlConnection connection, SignInBody body)
+    private static String handleTokenGeneration(SqlConnection connection, SignInBody body)
     {
         String checkIfDeviceExists = "SELECT device FROM Tokens WHERE user_id = (SELECT user_id FROM Accounts WHERE email = @email) AND device = @device";
         SqlCommand command = new SqlCommand(checkIfDeviceExists, connection);
@@ -56,12 +58,12 @@ class SignIn
             try
             {
                 command.ExecuteNonQuery();
-                return true;
+                return uid;
             }
             catch (Exception e)
             {
                 System.Console.WriteLine(e);
-                return false;
+                return "";
             }
         }
         else
@@ -75,12 +77,12 @@ class SignIn
             try
             {
                 command.ExecuteNonQuery();
-                return true;
+                return uid;
             }
             catch (Exception e)
             {
                 System.Console.WriteLine(e);
-                return false;
+                return "";
             }
         }
     }

@@ -4,13 +4,14 @@ namespace BackendService;
 
 class ValidateUserToken
 {
-    public static bool authenticate(String user_id, String device)
+    public static bool authenticate(String token, String device)
     {
-        String getToken = "SELECT token FROM Tokens WHERE user_id = @user_id AND device = @device";
+        // ? How do we handle device??
+        String getToken = "SELECT token FROM Tokens WHERE token = @token AND device = @device";
         using (SqlConnection connection = Database.createConnection())
         {
             SqlCommand command = new SqlCommand(getToken, connection);
-            command.Parameters.AddWithValue("@user_id", user_id);
+            command.Parameters.AddWithValue("@token", token);
             command.Parameters.AddWithValue("@device", device);
             SqlDataReader reader = command.ExecuteReader();
             if (reader.Read())

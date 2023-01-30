@@ -32,5 +32,10 @@ class Endpoints
         {
             return Results.Ok(AddPortfolio.endpoint(body));
         });
+
+        Application.app.MapPost(API_ENDPOINTS.ADD_STOCK_TRANSACTION_ENDPOINT, (AddStockTransactionBody body) =>
+        {
+            return Results.Ok(AddStockTransaction.endpoint(body));
+        });
     }
 }
