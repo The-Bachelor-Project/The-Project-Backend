@@ -7,28 +7,36 @@ class AddPortfolio
     public static AddPortfolioResponse endpoint(AddPortfolioBody body)
     {
         AddPortfolioResponse addPortfolioResponse = new AddPortfolioResponse();
-
-        using (SqlConnection connection = Database.createConnection())
+        if (ValidateUserToken.authenticate(body.owner, body.device))
         {
-            String uid = RandomStringGenerator.Generate(32);
-            String query = "INSERT INTO Portfolios (uid, name, owner, currency, balance) VALUES (@uid, @name, @owner, @currency, @balance)";
-            SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@uid", uid);
-            command.Parameters.AddWithValue("@name", body.name);
-            command.Parameters.AddWithValue("@owner", body.owner);
-            command.Parameters.AddWithValue("@currency", body.currency);
-            command.Parameters.AddWithValue("@balance", body.balance);
-            try
+            using (SqlConnection connection = Database.createConnection())
             {
-                command.ExecuteNonQuery();
-                addPortfolioResponse.response = "success";
-            }
-            catch (System.Exception e)
-            {
-                System.Console.WriteLine(e);
-                addPortfolioResponse.response = "error";
+
+                String uid = RandomStringGenerator.Generate(32);
+                String query = "INSERT INTO Portfolios (uid, name, owner, currency, balance) VALUES (@uid, @name, @owner, @currency, @balance)";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@uid", uid);
+                command.Parameters.AddWithValue("@name", body.name);
+                command.Parameters.AddWithValue("@owner", body.owner);
+                command.Parameters.AddWithValue("@currency", body.currency);
+                command.Parameters.AddWithValue("@balance", body.balance);
+                try
+                {
+                    command.ExecuteNonQuery();
+                    addPortfolioResponse.response = "success";
+                }
+                catch (System.Exception e)
+                {
+                    System.Console.WriteLine(e);
+                    addPortfolioResponse.response = "error";
+                }
             }
         }
+        else
+        {
+            addPortfolioResponse.response = "User not logged in";
+        }
+
 
         return addPortfolioResponse;
     }
@@ -45,4 +53,5 @@ class AddPortfolioBody
     public String owner { get; set; }
     public String currency { get; set; }
     public Double balance { get; set; }
+    public String device { get; set; }
 }
