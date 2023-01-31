@@ -40,9 +40,3 @@ class YfSearch
 		}
 	}
 }
-
-class YfSearchStockResult
-{
-	StockInfo stockInfo;
-}
-

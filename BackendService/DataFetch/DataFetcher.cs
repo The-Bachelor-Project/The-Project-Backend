@@ -7,7 +7,7 @@ class DataFetcher
 {
 	public static async Task<StockInfo> stock(String ticker, String exchange)
 	{
-		String stockExtension;
+		String? stockExtension;
 		YfTranslator.stockSymbolExtension.TryGetValue(exchange, out stockExtension);
 		String tickerExt = ticker + stockExtension;
 
