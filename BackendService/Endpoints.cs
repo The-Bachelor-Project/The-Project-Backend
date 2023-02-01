@@ -37,5 +37,10 @@ class Endpoints
         {
             return Results.Ok(AddStockTransaction.endpoint(body));
         });
+
+        Application.app.MapPost(API_ENDPOINTS.STOCK_TAG_GENERATION, () =>
+        {
+            StockTagGenerator.updateAllStocks();
+        });
     }
 }
