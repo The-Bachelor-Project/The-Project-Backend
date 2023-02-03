@@ -17,4 +17,11 @@ public class YfTranslator
 		{"NASDAQ",""},
 		{"STO",".ST"}
 	};
+
+	public static String getYfSymbol(String ticker, String exchange)
+	{
+		String? stockExtension;
+		stockSymbolExtension.TryGetValue(exchange, out stockExtension);
+		return ticker + stockExtension;
+	}
 }

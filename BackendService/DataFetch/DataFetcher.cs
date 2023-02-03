@@ -7,9 +7,7 @@ class DataFetcher
 {
 	public static async Task<StockInfo> stock(String ticker, String exchange)
 	{
-		String? stockExtension;
-		YfTranslator.stockSymbolExtension.TryGetValue(exchange, out stockExtension);
-		String tickerExt = ticker + stockExtension;
+		String tickerExt = YfTranslator.getYfSymbol(ticker, exchange);
 
 		StockInfo result = new StockInfo();
 		HttpClient client = new HttpClient();
@@ -32,5 +30,17 @@ class DataFetcher
 		result.country = quoteSummary.quoteSummary.result[0].assetProfile.country;
 
 		return result;
+	}
+
+	public static async void StockHistory(String ticker, String exchange, int start_time, int end_time) //TODO: this is not done at all
+	{
+		String tickerExt = YfTranslator.getYfSymbol(ticker, exchange);
+
+		StockInfo result = new StockInfo();
+		HttpClient client = new HttpClient();
+
+		HttpResponseMessage stockHistoryRes = await client.GetAsync("https://query1.finance.yahoo.com/v7/finance/download/" + tickerExt + "?interval=1d&period1=" + start_time + "&period2=" + end_time);
+		String stockHistoryJson = await stockHistoryRes.Content.ReadAsStringAsync();
+		dynamic stockHistory = JObject.Parse(stockHistoryJson);
 	}
 }
