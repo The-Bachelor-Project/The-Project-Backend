@@ -9,24 +9,29 @@ class StockHistory  //TODO: this is not done at all
 		StockHistoryResponse stockHistoryResponse = new StockHistoryResponse("error");
 		using (SqlConnection connection = Database.createConnection())
 		{
+			System.Console.WriteLine("History");
 			String getTrackingDateQuery = "SELECT tracking_date FROM Stocks WHERE ticker = @ticker AND exchange = @exchange";
 			SqlCommand command = new SqlCommand(getTrackingDateQuery, connection);
 			command.Parameters.AddWithValue("@ticker", body.ticker);
 			command.Parameters.AddWithValue("@exchange", body.exchange);
 			SqlDataReader reader = command.ExecuteReader();
-			if (!reader.Read())
+			if (reader.Read())
 			{
-				int trackingDate = Int32.Parse(reader["tracking_date"].ToString());
-			}
-			try
-			{
-				command.ExecuteNonQuery();
-				stockHistoryResponse.response = "success";
-			}
-			catch (Exception e)
-			{
-				System.Console.WriteLine(e);
-				stockHistoryResponse.response = "error";
+				DateOnly trackingDate;
+				try
+				{
+					trackingDate = DateOnly.Parse("" + reader["tracking_date"].ToString());
+				}
+				catch (Exception e)
+				{
+					trackingDate = DateOnly.FromDateTime(DateTime.Now).AddDays(1);
+				}
+
+				DateOnly startDate = DateOnly.Parse(body.start_date);
+				if (startDate < trackingDate)
+				{
+					DataFetcher.StockHistory(body.ticker, body.exchange, startDate, trackingDate.AddDays(-1));
+				}
 			}
 		}
 
@@ -46,14 +51,14 @@ class StockHistoryResponse
 
 class StockHistoryBody
 {
-	public StockHistoryBody(string ticker, string exchange, int start_time)
+	public StockHistoryBody(string ticker, string exchange, String start_date)
 	{
 		this.ticker = ticker;
 		this.exchange = exchange;
-		this.start_time = start_time;
+		this.start_date = start_date;
 	}
 
 	public String ticker { get; set; }
 	public String exchange { get; set; }
-	public int start_time { get; set; }
+	public String start_date { get; set; }
 }
