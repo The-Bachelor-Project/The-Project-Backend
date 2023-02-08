@@ -1,5 +1,7 @@
 {
 	"cSpell.words": ["signin"],
 	"editor.formatOnSave": true,
-	"editor.defaultFormatter": "ms-dotnettools.csharp"
+	"editor.defaultFormatter": "ms-dotnettools.csharp",
+	"editor.formatOnPaste": true,
+	"editor.insertSpaces": false
 }

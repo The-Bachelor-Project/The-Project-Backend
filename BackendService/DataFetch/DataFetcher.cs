@@ -34,7 +34,9 @@ class DataFetcher
 		return result;
 	}
 
-	public static async void StockHistory(String ticker, String exchange, DateOnly startDate, DateOnly endDate) //TODO: this is not done at all
+
+	public static async Task stockHistory(String ticker, String exchange, DateOnly startDate, DateOnly endDate)
+	//TODO this is not done at all
 	{
 		int startTime = TimeConverter.dateOnlyToUnix(startDate);
 		int endTime = TimeConverter.dateOnlyToUnix(endDate);
@@ -61,6 +63,7 @@ class DataFetcher
 			using (SqlConnection connection = Database.createConnection())
 			{
 				String query = "INSERT INTO StockPrices VALUES (@ticker, @exchange, @date, @open_price, @high_price, @low_price, @close_price, @volume)";
+				//TODO: Look into using a BULK INSERT query
 				SqlCommand command = new SqlCommand(query, connection);
 				command.Parameters.AddWithValue("@ticker", ticker);
 				command.Parameters.AddWithValue("@exchange", exchange);
