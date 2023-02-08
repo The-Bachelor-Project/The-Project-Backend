@@ -6,7 +6,7 @@ class Search
 {
 	public static async Task<SearchResponse> endpoint(SearchBody body) //TODO: not done at all
 	{
-		Regex regex = new Regex("[A-Za-z0-9]+[A-Za-z0-9]+", RegexOptions.IgnoreCase);
+		Regex regex = new Regex("[A-Za-z0-9]*[A-Za-z0-9]", RegexOptions.IgnoreCase);
 		MatchCollection matchedAuthors = regex.Matches(body.term);
 		String termTrimmed = matchedAuthors[0].Value.ToLower();
 		for (int i = 1; i < matchedAuthors.Count; i++)
