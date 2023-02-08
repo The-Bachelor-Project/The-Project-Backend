@@ -22,6 +22,7 @@ class DataFetcher
 		HttpResponseMessage quoteRes = await client.GetAsync("https://query1.finance.yahoo.com/v6/finance/quote?symbols=" + tickerExt);
 		String quoteJson = await quoteRes.Content.ReadAsStringAsync();
 		dynamic quote = JObject.Parse(quoteJson);
+		System.Console.WriteLine(quoteJson);
 
 		result.ticker = ticker;
 		result.exchange = exchange;
@@ -30,6 +31,15 @@ class DataFetcher
 		result.sector = quoteSummary.quoteSummary.result[0].assetProfile.sector;
 		result.website = quoteSummary.quoteSummary.result[0].assetProfile.website;
 		result.country = quoteSummary.quoteSummary.result[0].assetProfile.country;
+
+		if (result.name == null) //FIXME this is a botch solution
+		{
+			result.name = quote.quoteResponse.result[0].longName;
+		}
+		if (result.website == null) //FIXME this is a botch solution
+		{
+			result.website = "";
+		}
 
 		return result;
 	}

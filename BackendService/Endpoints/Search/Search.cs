@@ -13,7 +13,7 @@ class Search
 		{
 			termTrimmed += " " + matchedAuthors[i].Value.ToLower();
 		}
-		String response = "";
+		SearchResponse searchResponse = new SearchResponse("error");
 		if (body.stocks)
 		{
 			await YfSearch.searchStocksAsync(body.term);
@@ -25,13 +25,12 @@ class Search
 				SqlDataReader reader = command.ExecuteReader();
 				while (reader.Read())
 				{
-					response += reader["exchange"].ToString() + ":" + reader["ticker"].ToString() + ", ";
+					searchResponse.stocks = searchResponse.stocks.Append(new StockSearchResult((String)reader["company_name"], (String)reader["ticker"], (String)reader["exchange"])).ToArray();
 				}
+				searchResponse.response = "success";
 				reader.Close();
 			}
 		}
-
-		SearchResponse searchResponse = new SearchResponse(response);
 		return searchResponse;
 	}
 }
@@ -41,9 +40,11 @@ class SearchResponse
 	public SearchResponse(string response)
 	{
 		this.response = response;
+		this.stocks = new StockSearchResult[] { };
 	}
 
 	public String response { get; set; }
+	public StockSearchResult[] stocks { get; set; }
 }
 
 class SearchBody
@@ -56,4 +57,18 @@ class SearchBody
 
 	public String term { get; set; }
 	public bool stocks { get; set; }
+}
+
+class StockSearchResult
+{
+	public StockSearchResult(string name, string ticker, string exchange)
+	{
+		this.name = name;
+		this.ticker = ticker;
+		this.exchange = exchange;
+	}
+
+	public String name { get; set; }
+	public String ticker { get; set; }
+	public String exchange { get; set; }
 }
