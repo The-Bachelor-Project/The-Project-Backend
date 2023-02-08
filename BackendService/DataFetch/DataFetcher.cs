@@ -47,13 +47,10 @@ class DataFetcher
 		HttpClient client = new HttpClient();
 
 		String url = "https://query1.finance.yahoo.com/v7/finance/download/" + tickerExt + "?interval=1d&period1=" + startTime + "&period2=" + endTime;
-		System.Console.WriteLine("URL: " + url);
-		System.Console.WriteLine("URL: " + url);
 
 		HttpResponseMessage stockHistoryRes = await client.GetAsync(url);
 		String stockHistoryCsv = await stockHistoryRes.Content.ReadAsStringAsync();
 
-		System.Console.WriteLine(stockHistoryCsv);
 		String[] dataLines = stockHistoryCsv.Replace("\r", "").Split("\n");
 
 		return dataLines;

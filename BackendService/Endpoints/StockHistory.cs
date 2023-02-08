@@ -9,7 +9,6 @@ class StockHistory
 		StockHistoryResponse stockHistoryResponse = new StockHistoryResponse("error");
 		using (SqlConnection connection = Database.createConnection())
 		{
-			System.Console.WriteLine("History");
 			String getTrackingDateQuery = "SELECT start_tracking_date FROM Stocks WHERE ticker = @ticker AND exchange = @exchange";
 			SqlCommand command = new SqlCommand(getTrackingDateQuery, connection);
 			command.Parameters.AddWithValue("@ticker", body.ticker);
@@ -32,8 +31,6 @@ class StockHistory
 				DateOnly startDate = DateOnly.Parse(body.start_date); //TODO check if date format is correct
 				if (startDate < trackingDate)
 				{
-					System.Console.WriteLine("time1: " + TimeConverter.dateOnlyToString(startDate));
-					System.Console.WriteLine("time1: " + TimeConverter.dateOnlyToString(trackingDate.AddDays(-1)));
 					await StockPricesUpdater.update(body.ticker, body.exchange, startDate);
 				}
 

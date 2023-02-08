@@ -62,7 +62,6 @@ class SignIn
 			}
 			catch (Exception e)
 			{
-				System.Console.WriteLine(e);
 				return "";
 			}
 		}
@@ -79,9 +78,8 @@ class SignIn
 				command.ExecuteNonQuery();
 				return uid;
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
-				System.Console.WriteLine(e);
 				return "";
 			}
 		}

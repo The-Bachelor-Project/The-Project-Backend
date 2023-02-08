@@ -28,9 +28,8 @@ class SignUp
 					signUpResponse.response = "success";
 					signUpResponse.uid = UID;
 				}
-				catch (Exception e)
+				catch (Exception)
 				{
-					System.Console.WriteLine(e);
 					signUpResponse.response = "error";
 				}
 			}

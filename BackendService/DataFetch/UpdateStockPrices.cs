@@ -98,7 +98,6 @@ class StockPricesUpdater
 	private static async Task<DateOnly> _update(String ticker, String exchange, DateOnly startDate, DateOnly endDate)
 	{
 		int startTime = TimeConverter.dateOnlyToUnix(startDate);
-		System.Console.WriteLine("this is the problem: " + endDate.ToString());
 		int endTime = TimeConverter.dateOnlyToUnix(endDate);
 
 		String[] dataLines = await DataFetcher.stockHistory(ticker, exchange, startDate, endDate);
@@ -125,9 +124,8 @@ class StockPricesUpdater
 				{
 					command.ExecuteNonQuery();
 				}
-				catch (Exception e)
+				catch (Exception)
 				{
-					System.Console.WriteLine(e);
 				}
 			}
 		}

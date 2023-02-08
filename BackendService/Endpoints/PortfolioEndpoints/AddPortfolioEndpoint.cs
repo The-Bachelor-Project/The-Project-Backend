@@ -24,9 +24,8 @@ class AddPortfolio
 					command.ExecuteNonQuery();
 					addPortfolioResponse.response = "success";
 				}
-				catch (System.Exception e)
+				catch (Exception)
 				{
-					System.Console.WriteLine(e);
 					addPortfolioResponse.response = "error";
 				}
 			}

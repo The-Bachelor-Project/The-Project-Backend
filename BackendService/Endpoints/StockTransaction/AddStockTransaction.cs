@@ -32,13 +32,12 @@ class AddStockTransaction
 						command.ExecuteNonQuery();
 						addStockTransactionResponse.response = "success";
 					}
-					catch (System.Exception e)
+					catch (System.Exception)
 					{
-						System.Console.WriteLine(e);
 						addStockTransactionResponse.response = "error";
 					}
 				}
-				catch (Exception e) { System.Console.WriteLine(e); }
+				catch (Exception) { }
 
 			}
 			return addStockTransactionResponse;

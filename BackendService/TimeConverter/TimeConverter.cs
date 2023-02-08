@@ -4,7 +4,6 @@ class TimeConverter
 	{
 		DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 		TimeSpan diff = dateOnly.ToDateTime(new TimeOnly(12, 0)).ToUniversalTime() - origin;
-		System.Console.WriteLine("diff = " + diff.ToString());
 		return int.Parse(Math.Floor(diff.TotalSeconds).ToString());
 	}
 	public static String dateOnlyToString(DateOnly dateOnly)

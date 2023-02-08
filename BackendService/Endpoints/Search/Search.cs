@@ -19,7 +19,6 @@ class Search
 			await YfSearch.searchStocksAsync(body.term);
 			using (SqlConnection connection = Database.createConnection())
 			{
-				System.Console.WriteLine(body.term);
 				String query = "SELECT TOP 100 * FROM Stocks WHERE tags LIKE @tags";
 				SqlCommand command = new SqlCommand(query, connection);
 				command.Parameters.AddWithValue("@tags", "%" + body.term + "%");

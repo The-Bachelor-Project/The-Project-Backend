@@ -20,7 +20,6 @@ class EndpointTemplate
 			}
 			catch (Exception e)
 			{
-				System.Console.WriteLine(e);
 				endpointTemplateResponse.response = "error";
 			}
 		}
