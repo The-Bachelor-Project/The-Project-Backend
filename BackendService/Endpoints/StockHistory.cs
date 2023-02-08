@@ -36,16 +36,18 @@ class StockHistory
 
 
 				DateOnly endDate = body.end_date == "" ? DateOnly.FromDateTime(DateTime.Now) : DateOnly.Parse(body.end_date);
-
-				String getStockHistoryQuery = "SELECT * FROM StockPrices WHERE ticker = @ticker AND exchange = @exchange AND date >= @start_date";
+				System.Console.WriteLine(endDate);
+				String getStockHistoryQuery = "SELECT * FROM GetStockPrices(@ticker, @exchange, @interval, @start_date, @end_date)";
 				command = new SqlCommand(getStockHistoryQuery, connection);
 				command.Parameters.AddWithValue("@ticker", body.ticker);
 				command.Parameters.AddWithValue("@exchange", body.exchange);
+				command.Parameters.AddWithValue("@interval", body.interval);
 				command.Parameters.AddWithValue("@start_date", body.start_date);
+				command.Parameters.AddWithValue("@end_date", TimeConverter.dateOnlyToString(endDate));
 				reader = command.ExecuteReader();
 				while (reader.Read())
 				{
-					stockHistoryResponse.history = stockHistoryResponse.history.Append(new StockHistoryInfo(TimeConverter.dateOnlyToString(DateOnly.FromDateTime((DateTime)reader["date"])), Decimal.Parse("" + reader["open_price"].ToString()), Decimal.Parse("" + reader["high_price"].ToString()), Decimal.Parse("" + reader["low_price"].ToString()), Decimal.Parse("" + reader["close_price"].ToString()), int.Parse("" + reader["volume"].ToString()))).ToArray();
+					stockHistoryResponse.history = stockHistoryResponse.history.Append(new StockHistoryInfo(TimeConverter.dateOnlyToString(DateOnly.FromDateTime((DateTime)reader["date"])), Decimal.Parse("" + reader["open_price"].ToString()), Decimal.Parse("" + reader["high_price"].ToString()), Decimal.Parse("" + reader["low_price"].ToString()), Decimal.Parse("" + reader["close_price"].ToString()))).ToArray();
 				}
 				stockHistoryResponse.response = "success";
 			}
@@ -91,14 +93,13 @@ class StockHistoryBody
 
 class StockHistoryInfo
 {
-	public StockHistoryInfo(string date, decimal open_price, decimal high_price, decimal low_price, decimal close_price, int volume)
+	public StockHistoryInfo(string date, decimal open_price, decimal high_price, decimal low_price, decimal close_price)
 	{
 		this.date = date;
 		this.open_price = open_price;
 		this.high_price = high_price;
 		this.low_price = low_price;
 		this.close_price = close_price;
-		this.volume = volume;
 	}
 
 	public String date { get; set; }
@@ -106,5 +107,4 @@ class StockHistoryInfo
 	public Decimal high_price { get; set; }
 	public Decimal low_price { get; set; }
 	public Decimal close_price { get; set; }
-	public int volume { get; set; }
 }
