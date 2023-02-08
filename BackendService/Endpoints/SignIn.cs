@@ -60,7 +60,7 @@ class SignIn
 				command.ExecuteNonQuery();
 				return uid;
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				return "";
 			}

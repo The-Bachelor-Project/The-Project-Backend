@@ -18,7 +18,7 @@ class EndpointTemplate
 				command.ExecuteNonQuery();
 				endpointTemplateResponse.response = "success";
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				endpointTemplateResponse.response = "error";
 			}

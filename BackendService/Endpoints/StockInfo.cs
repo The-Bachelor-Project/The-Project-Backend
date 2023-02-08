@@ -23,7 +23,7 @@ class StockInfo
 			stockResponse.stock = await getStock(body.ticker, body.exchange);
 			stockResponse.response = "success";
 		}
-		catch (Exception e)
+		catch (Exception)
 		{
 			stockResponse.response = "error";
 		}

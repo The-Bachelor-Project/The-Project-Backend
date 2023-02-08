@@ -24,6 +24,6 @@ public class YfTranslator
 	{
 		String? stockExtension;
 		stockSymbolExtension.TryGetValue(exchange.ToUpper(), out stockExtension);
-		return ticker + stockExtension.ToLower();
+		return ticker + stockExtension!.ToLower();
 	}
 }
