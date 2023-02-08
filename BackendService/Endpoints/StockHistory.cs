@@ -73,18 +73,20 @@ class StockHistoryResponse
 
 class StockHistoryBody
 {
-	public StockHistoryBody(string ticker, string exchange, String start_date, String end_date)
+	public StockHistoryBody(string ticker, string exchange, String start_date, String end_date, String interval)
 	{
 		this.ticker = ticker;
 		this.exchange = exchange;
 		this.start_date = start_date;
 		this.end_date = end_date;
+		this.interval = interval;
 	}
 
 	public String ticker { get; set; }
 	public String exchange { get; set; }
 	public String start_date { get; set; }
 	public String end_date { get; set; }
+	public String interval { get; set; }
 }
 
 class StockHistoryInfo
