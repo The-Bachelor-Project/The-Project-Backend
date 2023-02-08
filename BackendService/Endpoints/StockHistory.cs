@@ -28,11 +28,14 @@ class StockHistory
 
 				reader.Close();
 
-				DateOnly startDate = DateOnly.Parse(body.start_date); //TODO check if date format is correct
+				DateOnly startDate = DateOnly.Parse(body.start_date);
 				if (startDate < trackingDate)
 				{
 					await StockPricesUpdater.update(body.ticker, body.exchange, startDate);
 				}
+
+
+				DateOnly endDate = body.end_date == "" ? DateOnly.FromDateTime(DateTime.Now) : DateOnly.Parse(body.end_date);
 
 				String getStockHistoryQuery = "SELECT * FROM StockPrices WHERE ticker = @ticker AND exchange = @exchange AND date >= @start_date";
 				command = new SqlCommand(getStockHistoryQuery, connection);
@@ -70,16 +73,18 @@ class StockHistoryResponse
 
 class StockHistoryBody
 {
-	public StockHistoryBody(string ticker, string exchange, String start_date)
+	public StockHistoryBody(string ticker, string exchange, String start_date, String end_date)
 	{
 		this.ticker = ticker;
 		this.exchange = exchange;
 		this.start_date = start_date;
+		this.end_date = end_date;
 	}
 
 	public String ticker { get; set; }
 	public String exchange { get; set; }
 	public String start_date { get; set; }
+	public String end_date { get; set; }
 }
 
 class StockHistoryInfo
