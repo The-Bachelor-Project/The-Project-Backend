@@ -35,7 +35,7 @@ class DataFetcher
 	}
 
 
-	public static async Task stockHistory(String ticker, String exchange, DateOnly startDate, DateOnly endDate)
+	public static async Task<String[]> stockHistory(String ticker, String exchange, DateOnly startDate, DateOnly endDate)
 	//TODO this is not done at all
 	{
 		int startTime = TimeConverter.dateOnlyToUnix(startDate);
@@ -47,7 +47,7 @@ class DataFetcher
 		HttpClient client = new HttpClient();
 
 		String url = "https://query1.finance.yahoo.com/v7/finance/download/" + tickerExt + "?interval=1d&period1=" + startTime + "&period2=" + endTime;
-
+		System.Console.WriteLine("URL: " + url);
 		System.Console.WriteLine("URL: " + url);
 
 		HttpResponseMessage stockHistoryRes = await client.GetAsync(url);
@@ -55,33 +55,7 @@ class DataFetcher
 
 		System.Console.WriteLine(stockHistoryCsv);
 		String[] dataLines = stockHistoryCsv.Replace("\r", "").Split("\n");
-		System.Console.WriteLine(dataLines.Length);
 
-		for (int i = 1; i < dataLines.Length; i++)
-		{
-			String[] data = dataLines[i].Split(",");
-			using (SqlConnection connection = Database.createConnection())
-			{
-				String query = "INSERT INTO StockPrices VALUES (@ticker, @exchange, @date, @open_price, @high_price, @low_price, @close_price, @volume)";
-				//TODO: Look into using a BULK INSERT query
-				SqlCommand command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@ticker", ticker);
-				command.Parameters.AddWithValue("@exchange", exchange);
-				command.Parameters.AddWithValue("@date", data[0]);
-				command.Parameters.AddWithValue("@open_price", Decimal.Parse(data[1]));
-				command.Parameters.AddWithValue("@high_price", Decimal.Parse(data[2]));
-				command.Parameters.AddWithValue("@low_price", Decimal.Parse(data[3]));
-				command.Parameters.AddWithValue("@close_price", Decimal.Parse(data[4]));
-				command.Parameters.AddWithValue("@volume", int.Parse(data[6]));
-				try
-				{
-					command.ExecuteNonQuery();
-				}
-				catch (Exception e)
-				{
-					System.Console.WriteLine(e);
-				}
-			}
-		}
+		return dataLines;
 	}
 }

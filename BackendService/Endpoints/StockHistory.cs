@@ -2,7 +2,7 @@ using System.Data.SqlClient;
 
 namespace BackendService;
 
-class StockHistory  //TODO: this is not done at all
+class StockHistory
 {
 	public static async Task<StockHistoryResponse> endpoint(StockHistoryBody body)
 	{
@@ -20,7 +20,7 @@ class StockHistory  //TODO: this is not done at all
 				DateOnly trackingDate;
 				try
 				{
-					trackingDate = DateOnly.Parse("" + reader["start_tracking_date"].ToString());
+					trackingDate = DateOnly.FromDateTime((DateTime)reader["start_tracking_date"]);
 				}
 				catch (Exception)
 				{
@@ -29,21 +29,29 @@ class StockHistory  //TODO: this is not done at all
 
 				reader.Close();
 
-				DateOnly startDate = DateOnly.Parse(body.start_date);
+				DateOnly startDate = DateOnly.Parse(body.start_date); //TODO check if date format is correct
 				if (startDate < trackingDate)
 				{
 					System.Console.WriteLine("time1: " + TimeConverter.dateOnlyToString(startDate));
 					System.Console.WriteLine("time1: " + TimeConverter.dateOnlyToString(trackingDate.AddDays(-1)));
-					await DataFetcher.stockHistory(body.ticker, body.exchange, startDate, trackingDate.AddDays(-1));
-
-					String updateStockTrackingDatesQuery = "UPDATE Stocks SET start_tracking_date = @start_tracking_date, end_tracking_date = @end_tracking_date WHERE ticker = @ticker AND exchange = @exchange";
-					command = new SqlCommand(updateStockTrackingDatesQuery, connection);
-					command.Parameters.AddWithValue("@start_tracking_date", TimeConverter.dateOnlyToString(startDate));
-					command.Parameters.AddWithValue("@end_tracking_date", TimeConverter.dateOnlyToString(trackingDate.AddDays(-1)));
-					command.Parameters.AddWithValue("@ticker", body.ticker);
-					command.Parameters.AddWithValue("@exchange", body.exchange);
-					command.ExecuteNonQuery();
+					await StockPricesUpdater.update(body.ticker, body.exchange, startDate);
 				}
+
+				String getStockHistoryQuery = "SELECT * FROM StockPrices WHERE ticker = @ticker AND exchange = @exchange AND date >= @start_date";
+				command = new SqlCommand(getStockHistoryQuery, connection);
+				command.Parameters.AddWithValue("@ticker", body.ticker);
+				command.Parameters.AddWithValue("@exchange", body.exchange);
+				command.Parameters.AddWithValue("@start_date", body.start_date);
+				reader = command.ExecuteReader();
+				while (reader.Read())
+				{
+					stockHistoryResponse.history = stockHistoryResponse.history.Append(new StockHistoryInfo(TimeConverter.dateOnlyToString(DateOnly.FromDateTime((DateTime)reader["date"])), Decimal.Parse("" + reader["open_price"].ToString()), Decimal.Parse("" + reader["high_price"].ToString()), Decimal.Parse("" + reader["low_price"].ToString()), Decimal.Parse("" + reader["close_price"].ToString()), int.Parse("" + reader["volume"].ToString()))).ToArray();
+				}
+				stockHistoryResponse.response = "success";
+			}
+			else
+			{
+				throw new Exception();
 			}
 		}
 
@@ -56,9 +64,11 @@ class StockHistoryResponse
 	public StockHistoryResponse(string response)
 	{
 		this.response = response;
+		history = new StockHistoryInfo[] { };
 	}
 
 	public String response { get; set; }
+	public StockHistoryInfo[] history { get; set; }
 }
 
 class StockHistoryBody
@@ -73,4 +83,24 @@ class StockHistoryBody
 	public String ticker { get; set; }
 	public String exchange { get; set; }
 	public String start_date { get; set; }
+}
+
+class StockHistoryInfo
+{
+	public StockHistoryInfo(string date, decimal open_price, decimal high_price, decimal low_price, decimal close_price, int volume)
+	{
+		this.date = date;
+		this.open_price = open_price;
+		this.high_price = high_price;
+		this.low_price = low_price;
+		this.close_price = close_price;
+		this.volume = volume;
+	}
+
+	public String date { get; set; }
+	public Decimal open_price { get; set; }
+	public Decimal high_price { get; set; }
+	public Decimal low_price { get; set; }
+	public Decimal close_price { get; set; }
+	public int volume { get; set; }
 }

@@ -8,20 +8,22 @@ public class YfTranslator
 		{"NAS","NASDAQ"},
 		{"NMS","NASDAQ"},
 		{"NCM","NASDAQ"},
-		{"IOB","STO"}
+		{"IOB","STO"},
+		{"TOR","TSE"}
 	};
 	public static Dictionary<String, String> stockSymbolExtension = new Dictionary<string, string>(){
 		{"FRA",".F"},
 		{"CPH",".CO"},
 		{"NYSE",""},
 		{"NASDAQ",""},
-		{"STO",".ST"}
+		{"STO",".ST"},
+		{"TSE",".TO"}
 	};
 
 	public static String getYfSymbol(String ticker, String exchange)
 	{
 		String? stockExtension;
-		stockSymbolExtension.TryGetValue(exchange, out stockExtension);
-		return ticker + stockExtension;
+		stockSymbolExtension.TryGetValue(exchange.ToUpper(), out stockExtension);
+		return ticker + stockExtension.ToLower();
 	}
 }
