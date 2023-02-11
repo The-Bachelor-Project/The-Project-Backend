@@ -27,10 +27,21 @@ class DataFetcher
 		result.ticker = ticker;
 		result.exchange = exchange;
 		result.name = quote.quoteResponse.result[0].shortName;
-		result.industry = quoteSummary.quoteSummary.result[0].assetProfile.industry;
-		result.sector = quoteSummary.quoteSummary.result[0].assetProfile.sector;
-		result.website = quoteSummary.quoteSummary.result[0].assetProfile.website;
-		result.country = quoteSummary.quoteSummary.result[0].assetProfile.country;
+		try
+		{
+			result.industry = quoteSummary.quoteSummary.result[0].assetProfile.industry;
+			result.sector = quoteSummary.quoteSummary.result[0].assetProfile.sector;
+			result.website = quoteSummary.quoteSummary.result[0].assetProfile.website;
+			result.country = quoteSummary.quoteSummary.result[0].assetProfile.country;
+		}
+		catch (Exception)
+		{
+			result.industry = "";
+			result.sector = "";
+			result.website = "";
+			result.country = "";
+		}
+
 
 		if (result.name == null) //FIXME this is a botch solution
 		{
