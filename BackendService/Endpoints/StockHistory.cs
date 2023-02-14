@@ -47,7 +47,7 @@ class StockHistory
 				reader = command.ExecuteReader();
 				while (reader.Read())
 				{
-					stockHistoryResponse.history = stockHistoryResponse.history.Append(new StockHistoryInfo(TimeConverter.dateOnlyToString(DateOnly.FromDateTime((DateTime)reader["date"])), Decimal.Parse("" + reader["open_price"].ToString()), Decimal.Parse("" + reader["high_price"].ToString()), Decimal.Parse("" + reader["low_price"].ToString()), Decimal.Parse("" + reader["close_price"].ToString()))).ToArray();
+					stockHistoryResponse.history = stockHistoryResponse.history.Append(new StockHistoryInfo(TimeConverter.dateOnlyToString(DateOnly.FromDateTime((DateTime)reader["end_date"])), Decimal.Parse("" + reader["open_price"].ToString()), Decimal.Parse("" + reader["high_price"].ToString()), Decimal.Parse("" + reader["low_price"].ToString()), Decimal.Parse("" + reader["close_price"].ToString()))).ToArray();
 				}
 				stockHistoryResponse.response = "success";
 			}
