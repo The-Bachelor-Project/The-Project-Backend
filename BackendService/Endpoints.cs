@@ -18,9 +18,9 @@ class Endpoints
 			return Results.Ok(SignIn.endpoint(body));
 		});
 
-		Application.app.MapPost(API_ENDPOINTS.STOCK_INFO_ENDPOINT, async (StockInfoBody body) =>
+		Application.app.MapPost(API_ENDPOINTS.STOCK_INFO_ENDPOINT, async (StockProfileBody body) =>
 		{
-			return Results.Ok(await StockInfo.endpoint(body));
+			return Results.Ok(await StockProfile.endpoint(body));
 		});
 
 		Application.app.MapPost(API_ENDPOINTS.STOCK_HISTORY_ENDPOINT, async (StockHistoryBody body) =>
@@ -45,7 +45,7 @@ class Endpoints
 
 		Application.app.MapPost(API_ENDPOINTS.STOCK_TAG_GENERATION, () =>
 		{
-			StockTagGenerator.updateAllStocks();
+			DatabaseService.StockTagGenerator.updateAllStocks();
 		});
 	}
 }

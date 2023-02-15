@@ -7,39 +7,20 @@ class SignUp
 	public static SignUpResponse endpoint(SignUpBody body)
 	{
 		SignUpResponse signUpResponse = new SignUpResponse("error", "i dunno");
-		using (SqlConnection connection = Database.createConnection())
+
+		try
 		{
-			String getEmailQuery = "SELECT email FROM Accounts WHERE email = @email";
-			SqlCommand command = new SqlCommand(getEmailQuery, connection);
-			command.Parameters.AddWithValue("@email", body.email);
-			SqlDataReader reader = command.ExecuteReader();
-			if (!reader.Read())
-			{
-				reader.Close();
-				String UID = RandomStringGenerator.Generate(32);
-				String query = "INSERT INTO Accounts (user_id, email, password) VALUES (@user_id, @email, @password)";
-				command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@user_id", UID);
-				command.Parameters.AddWithValue("@email", body.email);
-				command.Parameters.AddWithValue("@password", body.password);
-				try
-				{
-					command.ExecuteNonQuery();
-					signUpResponse.response = "success";
-					signUpResponse.uid = UID;
-				}
-				catch (Exception)
-				{
-					signUpResponse.response = "error";
-				}
-			}
-			else
-			{
-				signUpResponse.response = "Email already in use";
-			}
+			signUpResponse.uid = DatabaseService.User.SignUp(body.email, body.password);
 
-
+			signUpResponse.response = "success";
 		}
+		catch (Exception e)
+		{
+			signUpResponse.response = "Email already in use";
+			System.Console.WriteLine(e);
+		}
+
+
 
 		return signUpResponse;
 	}

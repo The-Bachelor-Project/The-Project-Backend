@@ -6,7 +6,7 @@ class StockPricesUpdater
 	public static async Task update(String ticker, String exchange, DateOnly startDate)
 	{
 
-		using (SqlConnection connection = Database.createConnection())
+		using (SqlConnection connection = DatabaseService.Database.createConnection())
 		{
 			DateOnly endDate = new DateOnly();
 			String getEndDateQuery = "SELECT start_tracking_date FROM Stocks WHERE ticker = @ticker AND exchange = @exchange";
@@ -55,7 +55,7 @@ class StockPricesUpdater
 
 	public static async Task update(String ticker, String exchange)
 	{
-		using (SqlConnection connection = Database.createConnection())
+		using (SqlConnection connection = DatabaseService.Database.createConnection())
 		{
 			DateOnly endDate = DateOnly.FromDateTime(DateTime.Now);
 			DateOnly startDate = new DateOnly();
@@ -108,7 +108,7 @@ class StockPricesUpdater
 		{
 			String[] data = dataLines[i].Split(",");
 			lastDate = data[0];
-			using (SqlConnection connection = Database.createConnection())
+			using (SqlConnection connection = DatabaseService.Database.createConnection())
 			{
 				//TODO Look into using a BULK INSERT query
 				SqlCommand command = new SqlCommand(insertIntoStockPricesQuery, connection);
