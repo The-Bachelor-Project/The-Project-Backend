@@ -1,6 +1,6 @@
 using System.Data.SqlClient;
 
-namespace BackendService;
+namespace DatabaseService;
 
 class Database
 {

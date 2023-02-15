@@ -16,7 +16,7 @@ class SignUp
 			if (!reader.Read())
 			{
 				reader.Close();
-				String UID = RandomStringGenerator.Generate(32);
+				String UID = RandomString.Generate(32);
 				String query = "INSERT INTO Accounts (user_id, email, password) VALUES (@user_id, @email, @password)";
 				command = new SqlCommand(query, connection);
 				command.Parameters.AddWithValue("@user_id", UID);
@@ -40,6 +40,15 @@ class SignUp
 
 
 		}
+
+		try
+		{
+			DatabaseService.SignUp.Execute(body.email, body.password);
+
+			signUpResponse.response = "success";
+		}
+
+
 
 		return signUpResponse;
 	}

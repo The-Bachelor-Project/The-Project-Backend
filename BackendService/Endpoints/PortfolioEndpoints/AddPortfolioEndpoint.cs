@@ -11,7 +11,7 @@ class AddPortfolio
 		{
 			using (SqlConnection connection = Database.createConnection())
 			{
-				String uid = RandomStringGenerator.Generate(32);
+				String uid = RandomString.Generate(32);
 				String query = "INSERT INTO Portfolios (uid, name, owner, currency, balance) VALUES (@uid, @name, @owner, @currency, @balance)";
 				SqlCommand command = new SqlCommand(query, connection);
 				command.Parameters.AddWithValue("@uid", uid);
