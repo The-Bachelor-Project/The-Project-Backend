@@ -10,7 +10,7 @@ class Token
 		command.Parameters.AddWithValue("@email", body.email);
 		command.Parameters.AddWithValue("@device", body.device);
 		SqlDataReader reader = command.ExecuteReader();
-		String uid = RandomString.Generate(32);
+		String uid = DatabaseService.RandomString.Generate(32);
 		if (reader.Read())
 		{
 			reader.Close();

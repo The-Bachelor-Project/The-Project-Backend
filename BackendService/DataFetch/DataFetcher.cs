@@ -7,11 +7,11 @@ namespace BackendService;
 
 class DataFetcher
 {
-	public static async Task<StockInfo> stock(String ticker, String exchange)
+	public static async Task<Data.StockProfile> stock(String ticker, String exchange)
 	{
 		String tickerExt = YfTranslator.getYfSymbol(ticker, exchange);
 
-		StockInfo result = new StockInfo();
+		Data.StockProfile result = new Data.StockProfile();
 		HttpClient client = new HttpClient();
 
 		HttpResponseMessage quoteSummaryRes = await client.GetAsync("https://query1.finance.yahoo.com/v11/finance/quoteSummary/" + tickerExt + "?modules=assetProfile");
@@ -24,32 +24,32 @@ class DataFetcher
 		dynamic quote = JObject.Parse(quoteJson);
 		System.Console.WriteLine(quoteJson);
 
-		result.ticker = ticker;
-		result.exchange = exchange;
-		result.name = quote.quoteResponse.result[0].shortName;
+		result.Ticker = ticker;
+		result.Exchange = exchange;
+		result.Name = quote.quoteResponse.result[0].shortName;
 		try
 		{
-			result.industry = quoteSummary.quoteSummary.result[0].assetProfile.industry;
-			result.sector = quoteSummary.quoteSummary.result[0].assetProfile.sector;
-			result.website = quoteSummary.quoteSummary.result[0].assetProfile.website;
-			result.country = quoteSummary.quoteSummary.result[0].assetProfile.country;
+			result.Industry = quoteSummary.quoteSummary.result[0].assetProfile.industry;
+			result.Sector = quoteSummary.quoteSummary.result[0].assetProfile.sector;
+			result.Website = quoteSummary.quoteSummary.result[0].assetProfile.website;
+			result.Country = quoteSummary.quoteSummary.result[0].assetProfile.country;
 		}
 		catch (Exception)
 		{
-			result.industry = "";
-			result.sector = "";
-			result.website = "";
-			result.country = "";
+			result.Industry = "";
+			result.Sector = "";
+			result.Website = "";
+			result.Country = "";
 		}
 
 
-		if (result.name == null) //FIXME this is a botch solution
+		if (result.Name == null) //FIXME this is a botch solution
 		{
-			result.name = quote.quoteResponse.result[0].longName;
+			result.Name = quote.quoteResponse.result[0].longName;
 		}
-		if (result.website == null) //FIXME this is a botch solution
+		if (result.Website == null) //FIXME this is a botch solution
 		{
-			result.website = "";
+			result.Website = "";
 		}
 
 		return result;
@@ -64,7 +64,7 @@ class DataFetcher
 
 		String tickerExt = YfTranslator.getYfSymbol(ticker, exchange);
 
-		StockInfo result = new StockInfo();
+		StockProfile result = new StockProfile();
 		HttpClient client = new HttpClient();
 
 		String url = "https://query1.finance.yahoo.com/v7/finance/download/" + tickerExt + "?interval=1d&period1=" + startTime + "&period2=" + endTime;

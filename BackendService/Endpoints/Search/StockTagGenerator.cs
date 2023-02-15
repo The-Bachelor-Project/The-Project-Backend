@@ -1,15 +1,17 @@
 using System.Data.SqlClient;
 using BackendService;
 
+namespace DatabaseService;
+
 class StockTagGenerator
 {
-	public static String generate(StockInfo stockInfo)
+	public static String generate(Data.StockProfile stockProfile)
 	{
 		//TODO: Make variants for NOVO-B, NOVO B, AT&T, ATT, AT T, so fourth
 		String tags = "";
-		tags += stockInfo.exchange + " " + stockInfo.ticker + ",";
-		tags += stockInfo.ticker + " " + stockInfo.exchange + ",";
-		tags += stockInfo.name + ",";
+		tags += stockProfile.Exchange + " " + stockProfile.Ticker + ",";
+		tags += stockProfile.Ticker + " " + stockProfile.Exchange + ",";
+		tags += stockProfile.Name + ",";
 		return tags.ToLower();
 	}
 
@@ -22,27 +24,27 @@ class StockTagGenerator
 			SqlDataReader reader = command.ExecuteReader();
 
 			String updateQuery = "UPDATE Stocks SET tags = @tags WHERE ticker = @ticker AND exchange = @exchange";
-			List<StockInfo> stockInfoList = new List<StockInfo>();
+			List<Data.StockProfile> stockProfileList = new List<Data.StockProfile>();
 			while (reader.Read())
 			{
-				StockInfo stockInfo = new StockInfo();
-				stockInfo.country = reader["country"].ToString();
-				stockInfo.exchange = reader["exchange"].ToString();
-				stockInfo.industry = reader["industry"].ToString();
-				stockInfo.name = reader["company_name"].ToString();
-				stockInfo.sector = reader["sector"].ToString();
-				stockInfo.ticker = reader["ticker"].ToString();
-				stockInfo.exchange = reader["exchange"].ToString();
-				stockInfo.website = reader["website"].ToString();
-				stockInfoList.Add(stockInfo);
+				Data.StockProfile stockProfile = new Data.StockProfile();
+				stockProfile.Country = reader["country"].ToString();
+				stockProfile.Exchange = reader["exchange"].ToString();
+				stockProfile.Industry = reader["industry"].ToString();
+				stockProfile.Name = reader["company_name"].ToString();
+				stockProfile.Sector = reader["sector"].ToString();
+				stockProfile.Ticker = reader["ticker"].ToString();
+				stockProfile.Exchange = reader["exchange"].ToString();
+				stockProfile.Website = reader["website"].ToString();
+				stockProfileList.Add(stockProfile);
 			}
 			reader.Close();
-			foreach (StockInfo stockInfo in stockInfoList)
+			foreach (Data.StockProfile stockProfile in stockProfileList)
 			{
 				SqlCommand updateCommand = new SqlCommand(updateQuery, connection);
-				updateCommand.Parameters.AddWithValue("@tags", generate(stockInfo));
-				updateCommand.Parameters.AddWithValue("@ticker", stockInfo.ticker);
-				updateCommand.Parameters.AddWithValue("@exchange", stockInfo.exchange);
+				updateCommand.Parameters.AddWithValue("@tags", generate(stockProfile));
+				updateCommand.Parameters.AddWithValue("@ticker", stockProfile.Ticker);
+				updateCommand.Parameters.AddWithValue("@exchange", stockProfile.Exchange);
 				updateCommand.ExecuteNonQuery();
 			}
 		}

@@ -1,4 +1,5 @@
 using System.Data.SqlClient;
+using Data;
 
 namespace BackendService;
 
@@ -7,33 +8,7 @@ class AddPortfolio
 	public static AddPortfolioResponse endpoint(AddPortfolioBody body)
 	{
 		AddPortfolioResponse addPortfolioResponse = new AddPortfolioResponse("error");
-		if (ValidateUserToken.authenticate(body.token))
-		{
-			using (SqlConnection connection = Database.createConnection())
-			{
-				String uid = RandomString.Generate(32);
-				String query = "INSERT INTO Portfolios (uid, name, owner, currency, balance) VALUES (@uid, @name, @owner, @currency, @balance)";
-				SqlCommand command = new SqlCommand(query, connection);
-				command.Parameters.AddWithValue("@uid", uid);
-				command.Parameters.AddWithValue("@name", body.name);
-				command.Parameters.AddWithValue("@owner", body.owner);
-				command.Parameters.AddWithValue("@currency", body.currency);
-				command.Parameters.AddWithValue("@balance", body.balance);
-				try
-				{
-					command.ExecuteNonQuery();
-					addPortfolioResponse.response = "success";
-				}
-				catch (Exception)
-				{
-					addPortfolioResponse.response = "error";
-				}
-			}
-		}
-		else
-		{
-			addPortfolioResponse.response = "User not logged in";
-		}
+		DatabaseService.Portfolio.Add(body.portfolio);
 
 
 		return addPortfolioResponse;
@@ -52,20 +27,12 @@ class AddPortfolioResponse
 
 class AddPortfolioBody
 {
-	public AddPortfolioBody(string name, string owner, string currency, decimal balance, bool trackBalance, string token)
+	public AddPortfolioBody(Portfolio portfolio, string token)
 	{
-		this.name = name;
-		this.owner = owner;
-		this.currency = currency;
-		this.balance = balance;
-		this.trackBalance = trackBalance;
+		this.portfolio = portfolio;
 		this.token = token;
 	}
 
-	public String name { get; set; }
-	public String owner { get; set; }
-	public String currency { get; set; }
-	public Decimal balance { get; set; }
-	public Boolean trackBalance { get; set; }
+	public Data.Portfolio portfolio { get; set; }
 	public String token { get; set; }
 }

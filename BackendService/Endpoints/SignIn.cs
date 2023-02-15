@@ -10,7 +10,7 @@ class SignIn
 
 		try
 		{
-			signInResponse.token = DatabaseService.SignIn.Execute(body.email, body.password);
+			signInResponse.token = DatabaseService.User.SignIn(body.email, body.password);
 			signInResponse.response = "success";
 		}
 		catch (Exception e)
