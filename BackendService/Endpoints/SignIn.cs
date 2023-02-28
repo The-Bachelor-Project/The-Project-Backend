@@ -47,6 +47,6 @@ class SignInBody
 	}
 
 	public String email { get; set; }
-	public String device { get; set; }
+	public String? device { get; set; }
 	public String password { get; set; }
 }
