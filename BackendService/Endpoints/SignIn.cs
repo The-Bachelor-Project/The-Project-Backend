@@ -10,8 +10,18 @@ class SignIn
 
 		try
 		{
-			signInResponse.token = DatabaseService.User.SignIn(body.email, body.password);
-			signInResponse.response = "success";
+			String UserID = DatabaseService.User.SignIn(body.email, body.password);
+			Authentication.GrantTokenResponse GrantTokenResponse = Authentication.GetToken.GrantToken(UserID);
+			if (GrantTokenResponse.Success)
+			{
+				Authentication.TokenGeneration.RefreshToken(GrantTokenResponse.GrantToken);
+				signInResponse.response = "success";
+			}
+			else
+			{
+				signInResponse.response = "error getting grant token";
+			}
+
 		}
 		catch (Exception e)
 		{
