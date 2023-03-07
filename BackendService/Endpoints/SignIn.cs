@@ -11,10 +11,10 @@ class SignIn
 		try
 		{
 			String UserID = DatabaseService.User.SignIn(body.email, body.password);
-			Authentication.GrantTokenResponse GrantTokenResponse = Authentication.GetToken.GrantToken(UserID);
-			if (GrantTokenResponse.Success)
+			Authentication.GottenTokenResponse GottenGrantToken = Authentication.GetToken.GrantToken(UserID);
+			if (GottenGrantToken.Success)
 			{
-				Authentication.TokenGeneration.RefreshToken(GrantTokenResponse.GrantToken);
+				Authentication.TokenGeneration.RefreshToken(GottenGrantToken.Token);
 				signInResponse.response = "success";
 			}
 			else
