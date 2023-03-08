@@ -77,11 +77,11 @@ class DataFetcher
 		return dataLines;
 	}
 
-	public static async Task<String[]> CurrencyHistory(String currency, DateOnly StartDate, DateOnly EndDate)
+	public static async Task<String[]> CurrencyHistory(String currency, DateOnly startDate, DateOnly endDate)
 	{
 		String CorrectCurrency = currency + "USD=X";
-		int StartTime = TimeConverter.dateOnlyToUnix(StartDate);
-		int EndTime = TimeConverter.dateOnlyToUnix(EndDate);
+		int StartTime = TimeConverter.dateOnlyToUnix(startDate);
+		int EndTime = TimeConverter.dateOnlyToUnix(endDate);
 
 		HttpClient client = new HttpClient();
 

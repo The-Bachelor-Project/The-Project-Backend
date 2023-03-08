@@ -54,8 +54,8 @@ class CurrencyRatesUpdater
 	{
 		using (SqlConnection Connection = DatabaseService.Database.createConnection())
 		{
-			DateOnly EndDate = DateOnly.FromDateTime(DateTime.Now);
-			DateOnly StartDate = new DateOnly();
+			DateOnly endDate = DateOnly.FromDateTime(DateTime.Now);
+			DateOnly startDate = new DateOnly();
 			String GetStartDateQuery = "SELECT end_tracking_date FROM Currencies WHERE code = @currency";
 			SqlCommand Command = new SqlCommand(GetStartDateQuery, Connection);
 			Command.Parameters.AddWithValue("@currency", currency);
@@ -64,7 +64,7 @@ class CurrencyRatesUpdater
 			{
 				try
 				{
-					StartDate = DateOnly.Parse("" + Reader["end_tracking_date"].ToString()).AddDays(-1);
+					startDate = DateOnly.Parse("" + Reader["end_tracking_date"].ToString()).AddDays(-1);
 					Reader.Close();
 				}
 				catch (Exception)
@@ -79,12 +79,12 @@ class CurrencyRatesUpdater
 				//TODO make a better exception
 				throw new Exception();
 			}
-			EndDate = await _Update(currency, StartDate, EndDate);
+			endDate = await _Update(currency, startDate, endDate);
 
 
 			String updateStartTrackingDateQuery = "UPDATE Currencies SET end_tracking_date = @end_tracking_date WHERE code = @currency";
 			Command = new SqlCommand(updateStartTrackingDateQuery, Connection);
-			Command.Parameters.AddWithValue("@end_tracking_date", EndDate);
+			Command.Parameters.AddWithValue("@end_tracking_date", endDate);
 			Command.Parameters.AddWithValue("@currency", currency);
 			Command.ExecuteNonQuery();
 		}

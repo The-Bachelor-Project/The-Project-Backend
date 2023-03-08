@@ -8,7 +8,7 @@ class CurrencyRatesHistory
 	{
 		try
 		{
-			Data.CurrencyHistory CurrencyHistory = new Data.CurrencyHistory(body.currency, body.start_date, body.end_date, body.interval);
+			Data.CurrencyHistory CurrencyHistory = new Data.CurrencyHistory(body.currency.ToUpper(), body.start_date, body.end_date, body.interval);
 			return new CurrencyRatesHistoryResponse("success", await DatabaseService.CurrencyRatesHistory.Get(CurrencyHistory));
 		}
 		catch (Exception e)
@@ -21,10 +21,10 @@ class CurrencyRatesHistory
 
 class CurrencyRatesHistoryResponse
 {
-	public CurrencyRatesHistoryResponse(string Response, Data.CurrencyHistory History)
+	public CurrencyRatesHistoryResponse(string response, Data.CurrencyHistory history)
 	{
-		this.Response = Response;
-		this.History = History;
+		this.Response = response;
+		this.History = history;
 	}
 
 	public String Response { get; set; }
