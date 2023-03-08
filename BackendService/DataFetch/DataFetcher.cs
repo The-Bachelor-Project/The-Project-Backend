@@ -76,4 +76,24 @@ class DataFetcher
 
 		return dataLines;
 	}
+
+	public static async Task<String[]> CurrencyHistory(String currency, DateOnly StartDate, DateOnly EndDate)
+	{
+		String CorrectCurrency = currency + "USD=X";
+		int StartTime = TimeConverter.dateOnlyToUnix(StartDate);
+		int EndTime = TimeConverter.dateOnlyToUnix(EndDate);
+
+		HttpClient client = new HttpClient();
+
+		String url = "https://query1.finance.yahoo.com/v7/finance/download/" + CorrectCurrency + "?interval=1d&period1=" + StartTime + "&period2=" + EndTime;
+
+		HttpResponseMessage stockHistoryRes = await client.GetAsync(url);
+		String stockHistoryCsv = await stockHistoryRes.Content.ReadAsStringAsync();
+
+		String[] dataLines = stockHistoryCsv.Replace("\r", "").Split("\n");
+
+		return dataLines;
+	}
+
+
 }

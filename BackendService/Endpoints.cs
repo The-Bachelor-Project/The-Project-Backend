@@ -47,5 +47,10 @@ class Endpoints
 		{
 			DatabaseService.StockTagGenerator.updateAllStocks();
 		});
+
+		Application.app.MapPost(API_ENDPOINTS.CURRENCY_HISTORY_ENDPOINT, async (CurrencyRatesHistoryBody body) =>
+		{
+			return Results.Ok(await CurrencyRatesHistory.endpoint(body));
+		});
 	}
 }
