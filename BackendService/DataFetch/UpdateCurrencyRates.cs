@@ -30,7 +30,7 @@ class CurrencyRatesUpdater
 					String UpdateEndTrackingDateQuery = "UPDATE Currencies SET end_tracking_date = @end_tracking_date WHERE code = @currency";
 					Command = new SqlCommand(UpdateEndTrackingDateQuery, Connection);
 					Command.Parameters.AddWithValue("@end_tracking_date", TimeConverter.dateOnlyToString(EndDate));
-					Command.Parameters.AddWithValue("@code", currency);
+					Command.Parameters.AddWithValue("@currency", currency);
 					Command.ExecuteNonQuery();
 				}
 			}

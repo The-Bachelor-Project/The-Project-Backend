@@ -13,6 +13,7 @@ class CurrencyRatesHistory
 		}
 		catch (Exception e)
 		{
+			System.Console.WriteLine(e.StackTrace);
 			throw e;
 		}
 	}
