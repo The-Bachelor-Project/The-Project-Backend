@@ -100,14 +100,17 @@ class StockPricesUpdater
 		int startTime = TimeConverter.dateOnlyToUnix(startDate);
 		int endTime = TimeConverter.dateOnlyToUnix(endDate);
 
+
 		String[] dataLines = await DataFetcher.stockHistory(ticker, exchange, startDate, endDate);
 
+		// await CurrencyConversion.GetMissingRatesAsync(ticker, exchange, startDate, endDate);
 		String insertIntoStockPricesQuery = "INSERT INTO StockPrices VALUES (@ticker, @exchange, @date, @open_price, @high_price, @low_price, @close_price, @volume)";
 		String lastDate = "";
 		for (int i = 1; i < dataLines.Length; i++)
 		{
 			String[] data = dataLines[i].Split(",");
 			lastDate = data[0];
+			//TODO: Add currency conversion
 			using (SqlConnection connection = DatabaseService.Database.createConnection())
 			{
 				//TODO Look into using a BULK INSERT query

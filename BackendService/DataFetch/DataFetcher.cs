@@ -59,6 +59,7 @@ class DataFetcher
 	public static async Task<String[]> stockHistory(String ticker, String exchange, DateOnly startDate, DateOnly endDate)
 	//TODO this is not done at all
 	{
+
 		int startTime = TimeConverter.dateOnlyToUnix(startDate);
 		int endTime = TimeConverter.dateOnlyToUnix(endDate);
 
