@@ -6,7 +6,7 @@ class SignIn
 {
 	public static SignInResponse endpoint(SignInBody body)
 	{
-		SignInResponse signInResponse = new SignInResponse("error", "nope");
+		SignInResponse signInResponse = new SignInResponse("error", "nope", "");
 
 		try
 		{
@@ -16,6 +16,8 @@ class SignIn
 			{
 				Authentication.TokenGeneration.RefreshToken(GottenGrantToken.Token);
 				signInResponse.response = "success";
+				signInResponse.token = GottenGrantToken.Token;
+				signInResponse.uid = UserID;
 			}
 			else
 			{
@@ -37,14 +39,16 @@ class SignIn
 
 class SignInResponse
 {
-	public SignInResponse(string response, string token)
+	public SignInResponse(string response, string token, string uid)
 	{
 		this.response = response;
 		this.token = token;
+		this.uid = uid;
 	}
 
 	public String response { get; set; }
 	public String token { get; set; }
+	public String uid { get; set; }
 }
 
 class SignInBody
