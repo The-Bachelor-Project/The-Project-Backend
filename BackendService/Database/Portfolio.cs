@@ -17,4 +17,27 @@ class Portfolio
 		Command.Parameters.AddWithValue("@balance", portfolio.Balance);
 		Command.ExecuteNonQuery();
 	}
+
+	public static Data.Portfolio[] GetAll(string owner)
+	{
+		SqlConnection Connection = Database.createConnection();
+		String Query = "SELECT * FROM Portfolios WHERE owner = @owner";
+		SqlCommand Command = new SqlCommand(Query, Connection);
+		Command.Parameters.AddWithValue("@owner", owner);
+		SqlDataReader Reader = Command.ExecuteReader();
+		List<Data.Portfolio> portfolios = new List<Data.Portfolio>();
+		while (Reader.Read())
+		{
+			Data.Portfolio portfolio = new Data.Portfolio(
+				Reader.GetString(1),
+				Reader.GetString(2),
+				Reader.GetString(3),
+				Reader.GetDecimal(4),
+				Reader.GetBoolean(5)
+			);
+			portfolio.UID = Reader.GetString(0);
+			portfolios.Add(portfolio);
+		}
+		return portfolios.ToArray();
+	}
 }
