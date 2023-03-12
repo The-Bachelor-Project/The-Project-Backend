@@ -33,6 +33,11 @@ class Endpoints
 			return Results.Ok(await Search.endpoint(body));
 		});
 
+		Application.app.MapPost(API_ENDPOINTS.GET_ALL_PORTFOLIOS, (GetAllPortfoliosBody body) =>
+		{
+			return Results.Ok(GetAllPortfolios.endpoint(body));
+		});
+
 		Application.app.MapPost(API_ENDPOINTS.ADD_PORTFOLIO, (AddPortfolioBody body) =>
 		{
 			return Results.Ok(AddPortfolio.endpoint(body));

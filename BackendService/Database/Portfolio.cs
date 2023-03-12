@@ -29,13 +29,14 @@ class Portfolio
 		while (Reader.Read())
 		{
 			Data.Portfolio portfolio = new Data.Portfolio(
-				Reader.GetString(1),
-				Reader.GetString(2),
-				Reader.GetString(3),
-				Reader.GetDecimal(4),
-				Reader.GetBoolean(5)
+				Reader["uid"].ToString(),
+				Reader["name"].ToString(),
+				Reader["owner"].ToString(),
+				Reader["currency"].ToString()!,
+				Convert.ToDecimal(Reader["balance"]),
+				false
+			//Convert.ToBoolean(Reader["track_balance"]) //TODO add to database to it can be used here
 			);
-			portfolio.UID = Reader.GetString(0);
 			portfolios.Add(portfolio);
 		}
 		return portfolios.ToArray();
