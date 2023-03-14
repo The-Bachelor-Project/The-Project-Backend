@@ -1,5 +1,6 @@
 using System.Data.SqlClient;
 using BackendService;
+using Data;
 
 class StockPricesUpdater
 {
@@ -103,7 +104,11 @@ class StockPricesUpdater
 
 		String[] dataLines = await DataFetcher.stockHistory(ticker, exchange, startDate, endDate);
 
-		// await CurrencyConversion.GetMissingRatesAsync(ticker, exchange, startDate, endDate);
+		String CurrencySymbol = DatabaseService.Exchange.GetCurrency(exchange);
+		await CurrencyRatesUpdater.Update(CurrencySymbol, startDate);
+		Dictionary<String, CurrencyHistoryData> Rates = await CurrencyConverter.GetRatesAsync(startDate, CurrencySymbol);
+
+
 		String insertIntoStockPricesQuery = "INSERT INTO StockPrices VALUES (@ticker, @exchange, @date, @open_price, @high_price, @low_price, @close_price, @volume)";
 		String lastDate = "";
 		for (int i = 1; i < dataLines.Length; i++)
@@ -115,13 +120,19 @@ class StockPricesUpdater
 			{
 				//TODO Look into using a BULK INSERT query
 				SqlCommand command = new SqlCommand(insertIntoStockPricesQuery, connection);
+
+				CurrencyHistoryData CurrencyRates = Rates[data[0]];
+				Decimal OpenPrice = Decimal.Parse(data[1]) * CurrencyRates.OpenPrice;
+				Decimal HighPrice = Decimal.Parse(data[2]) * CurrencyRates.HighPrice;
+				Decimal LowPrice = Decimal.Parse(data[3]) * CurrencyRates.LowPrice;
+				Decimal ClosePrice = Decimal.Parse(data[4]) * CurrencyRates.ClosePrice;
 				command.Parameters.AddWithValue("@ticker", ticker);
 				command.Parameters.AddWithValue("@exchange", exchange);
 				command.Parameters.AddWithValue("@date", data[0]);
-				command.Parameters.AddWithValue("@open_price", Decimal.Parse(data[1]));
-				command.Parameters.AddWithValue("@high_price", Decimal.Parse(data[2]));
-				command.Parameters.AddWithValue("@low_price", Decimal.Parse(data[3]));
-				command.Parameters.AddWithValue("@close_price", Decimal.Parse(data[4]));
+				command.Parameters.AddWithValue("@open_price", OpenPrice);
+				command.Parameters.AddWithValue("@high_price", HighPrice);
+				command.Parameters.AddWithValue("@low_price", LowPrice);
+				command.Parameters.AddWithValue("@close_price", ClosePrice);
 				command.Parameters.AddWithValue("@volume", int.Parse(data[6]));
 				try
 				{
