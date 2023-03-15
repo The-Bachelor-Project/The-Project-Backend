@@ -33,9 +33,14 @@ class Endpoints
 			return Results.Ok(await Search.endpoint(body));
 		});
 
-		Application.app.MapPost(API_ENDPOINTS.ADD_PORTFOLIO, (AddPortfolioBody body) =>
+		Application.app.MapPost(API_ENDPOINTS.GET_ALL_PORTFOLIOS, (GetAllPortfoliosBody body) =>
 		{
-			return Results.Ok(AddPortfolio.endpoint(body));
+			return Results.Ok(GetAllPortfolios.endpoint(body));
+		});
+
+		Application.app.MapPost(API_ENDPOINTS.CREATE_PORTFOLIO, (CreatePortfolioBody body) =>
+		{
+			return Results.Ok(CreatePortfolio.endpoint(body));
 		});
 
 		Application.app.MapPost(API_ENDPOINTS.ADD_STOCK_TRANSACTION_ENDPOINT, (AddStockTransactionBody body) =>
@@ -46,6 +51,11 @@ class Endpoints
 		Application.app.MapPost(API_ENDPOINTS.STOCK_TAG_GENERATION, () =>
 		{
 			DatabaseService.StockTagGenerator.updateAllStocks();
+		});
+
+		Application.app.MapPost(API_ENDPOINTS.CURRENCY_HISTORY_ENDPOINT, async (CurrencyRatesHistoryBody body) =>
+		{
+			return Results.Ok(await CurrencyRatesHistory.endpoint(body));
 		});
 	}
 }

@@ -24,7 +24,7 @@ class Search
 		SqlDataReader reader = command.ExecuteReader();
 		while (reader.Read())
 		{
-			results = results.Append(new Data.StockProfile((String)reader["company_name"], (String)reader["ticker"], (String)reader["exchange"])).ToArray();
+			results = results.Append(new Data.StockProfile((String)reader["ticker"], (String)reader["exchange"], (String)reader["company_name"])).ToArray();
 		}
 		reader.Close();
 		return results;

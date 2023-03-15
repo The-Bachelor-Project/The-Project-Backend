@@ -6,12 +6,24 @@ class SignIn
 {
 	public static SignInResponse endpoint(SignInBody body)
 	{
-		SignInResponse signInResponse = new SignInResponse("error", "nope");
+		SignInResponse signInResponse = new SignInResponse("error", "nope", "");
 
 		try
 		{
-			signInResponse.token = DatabaseService.User.SignIn(body.email, body.password);
-			signInResponse.response = "success";
+			String UserID = DatabaseService.User.SignIn(body.email, body.password);
+			Authentication.GottenTokenResponse GottenGrantToken = Authentication.GetToken.GrantToken(UserID);
+			if (GottenGrantToken.Success)
+			{
+				Authentication.TokenGeneration.RefreshToken(GottenGrantToken.Token);
+				signInResponse.response = "success";
+				signInResponse.token = GottenGrantToken.Token;
+				signInResponse.uid = UserID;
+			}
+			else
+			{
+				signInResponse.response = "error getting grant token";
+			}
+
 		}
 		catch (Exception e)
 		{
@@ -27,14 +39,16 @@ class SignIn
 
 class SignInResponse
 {
-	public SignInResponse(string response, string token)
+	public SignInResponse(string response, string token, string uid)
 	{
 		this.response = response;
 		this.token = token;
+		this.uid = uid;
 	}
 
 	public String response { get; set; }
 	public String token { get; set; }
+	public String uid { get; set; }
 }
 
 class SignInBody

@@ -4,7 +4,7 @@ namespace DatabaseService;
 
 class Portfolio
 {
-	public static void Add(Data.Portfolio portfolio)
+	public static void Create(Data.Portfolio portfolio)
 	{
 		SqlConnection Connection = Database.createConnection();
 		String UID = RandomString.Generate(32);
@@ -16,5 +16,29 @@ class Portfolio
 		Command.Parameters.AddWithValue("@currency", portfolio.Currency);
 		Command.Parameters.AddWithValue("@balance", portfolio.Balance);
 		Command.ExecuteNonQuery();
+	}
+
+	public static Data.Portfolio[] GetAll(string owner)
+	{
+		SqlConnection Connection = Database.createConnection();
+		String Query = "SELECT * FROM Portfolios WHERE owner = @owner";
+		SqlCommand Command = new SqlCommand(Query, Connection);
+		Command.Parameters.AddWithValue("@owner", owner);
+		SqlDataReader Reader = Command.ExecuteReader();
+		List<Data.Portfolio> portfolios = new List<Data.Portfolio>();
+		while (Reader.Read())
+		{
+			Data.Portfolio portfolio = new Data.Portfolio(
+				Reader["name"].ToString(),
+				Reader["owner"].ToString(),
+				Reader["currency"].ToString()!,
+				Convert.ToDecimal(Reader["balance"]),
+				true
+			//Convert.ToBoolean(Reader["track_balance"]) //TODO add to database to it can be used here
+			);
+			portfolio.UID = Reader["uid"].ToString();
+			portfolios.Add(portfolio);
+		}
+		return portfolios.ToArray();
 	}
 }

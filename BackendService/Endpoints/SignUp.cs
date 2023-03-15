@@ -10,17 +10,26 @@ class SignUp
 
 		try
 		{
-			signUpResponse.uid = DatabaseService.User.SignUp(body.email, body.password);
-
+			String UID = DatabaseService.User.SignUp(body.email, body.password);
+			String GrantToken = DatabaseService.RandomString.Generate(128);
+			Boolean SuccessfulGrantCreation = Authentication.TokenGeneration.GrantToken(UID, GrantToken);
+			Boolean SuccessfulRefreshCreation = Authentication.TokenGeneration.RefreshToken(GrantToken);
+			if (!SuccessfulGrantCreation && !SuccessfulRefreshCreation)
+			{
+				throw new IOException();
+			}
+			signUpResponse.uid = UID;
 			signUpResponse.response = "success";
+		}
+		catch (IOException)
+		{
+			signUpResponse.response = "Problem with creating grant and/or refresh token";
 		}
 		catch (Exception e)
 		{
 			signUpResponse.response = "Email already in use";
 			System.Console.WriteLine(e);
 		}
-
-
 
 		return signUpResponse;
 	}

@@ -14,10 +14,11 @@ class User
 		if (Reader.Read())
 		{
 			String? DbPassword = Reader["password"].ToString();
+			String UserID = Reader["user_id"].ToString()!;
 			Reader.Close();
 			//TODO Check password
-			String Token = RandomString.Generate(32);
-			return Token; //TODO do more with token
+
+			return UserID;
 		}
 		throw new UserDoesNotExistException("No user with the email \"" + email + "\" was found");
 	}
@@ -33,8 +34,8 @@ class User
 		{
 			Reader.Close();
 			String UID = RandomString.Generate(32);
-			String Query = "INSERT INTO Accounts (user_id, email, password) VALUES (@user_id, @email, @password)";
-			Command = new SqlCommand(Query, Connection);
+			String SignUpQuery = "INSERT INTO Accounts (user_id, email, password) VALUES (@user_id, @email, @password)";
+			Command = new SqlCommand(SignUpQuery, Connection);
 			Command.Parameters.AddWithValue("@user_id", UID);
 			Command.Parameters.AddWithValue("@email", email);
 			Command.Parameters.AddWithValue("@password", password);

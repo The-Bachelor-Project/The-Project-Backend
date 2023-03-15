@@ -59,6 +59,7 @@ class DataFetcher
 	public static async Task<String[]> stockHistory(String ticker, String exchange, DateOnly startDate, DateOnly endDate)
 	//TODO this is not done at all
 	{
+
 		int startTime = TimeConverter.dateOnlyToUnix(startDate);
 		int endTime = TimeConverter.dateOnlyToUnix(endDate);
 
@@ -76,4 +77,24 @@ class DataFetcher
 
 		return dataLines;
 	}
+
+	public static async Task<String[]> CurrencyHistory(String currency, DateOnly startDate, DateOnly endDate)
+	{
+		String CorrectCurrency = currency + "USD=X";
+		int StartTime = TimeConverter.dateOnlyToUnix(startDate);
+		int EndTime = TimeConverter.dateOnlyToUnix(endDate);
+
+		HttpClient client = new HttpClient();
+
+		String url = "https://query1.finance.yahoo.com/v7/finance/download/" + CorrectCurrency + "?interval=1d&period1=" + StartTime + "&period2=" + EndTime;
+
+		HttpResponseMessage stockHistoryRes = await client.GetAsync(url);
+		String stockHistoryCsv = await stockHistoryRes.Content.ReadAsStringAsync();
+
+		String[] dataLines = stockHistoryCsv.Replace("\r", "").Split("\n");
+
+		return dataLines;
+	}
+
+
 }
