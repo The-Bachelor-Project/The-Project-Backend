@@ -38,9 +38,9 @@ class Endpoints
 			return Results.Ok(GetAllPortfolios.endpoint(body));
 		});
 
-		Application.app.MapPost(API_ENDPOINTS.ADD_PORTFOLIO, (AddPortfolioBody body) =>
+		Application.app.MapPost(API_ENDPOINTS.CREATE_PORTFOLIO, (CreatePortfolioBody body) =>
 		{
-			return Results.Ok(AddPortfolio.endpoint(body));
+			return Results.Ok(CreatePortfolio.endpoint(body));
 		});
 
 		Application.app.MapPost(API_ENDPOINTS.ADD_STOCK_TRANSACTION_ENDPOINT, (AddStockTransactionBody body) =>

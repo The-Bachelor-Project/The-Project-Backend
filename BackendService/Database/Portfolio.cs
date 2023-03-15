@@ -4,7 +4,7 @@ namespace DatabaseService;
 
 class Portfolio
 {
-	public static void Add(Data.Portfolio portfolio)
+	public static void Create(Data.Portfolio portfolio)
 	{
 		SqlConnection Connection = Database.createConnection();
 		String UID = RandomString.Generate(32);
@@ -29,14 +29,14 @@ class Portfolio
 		while (Reader.Read())
 		{
 			Data.Portfolio portfolio = new Data.Portfolio(
-				Reader["uid"].ToString(),
 				Reader["name"].ToString(),
 				Reader["owner"].ToString(),
 				Reader["currency"].ToString()!,
 				Convert.ToDecimal(Reader["balance"]),
-				false
+				true
 			//Convert.ToBoolean(Reader["track_balance"]) //TODO add to database to it can be used here
 			);
+			portfolio.UID = Reader["uid"].ToString();
 			portfolios.Add(portfolio);
 		}
 		return portfolios.ToArray();

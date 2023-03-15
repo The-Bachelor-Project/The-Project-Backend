@@ -3,21 +3,24 @@ using Data;
 
 namespace BackendService;
 
-class AddPortfolio
+class CreatePortfolio
 {
-	public static AddPortfolioResponse endpoint(AddPortfolioBody body)
+	public static CreatePortfolioResponse endpoint(CreatePortfolioBody body)
 	{
-		AddPortfolioResponse addPortfolioResponse = new AddPortfolioResponse("error");
-		DatabaseService.Portfolio.Add(body.portfolio);
+		System.Console.WriteLine("AddPortfolio endpoint called");
+		CreatePortfolioResponse createPortfolioResponse = new CreatePortfolioResponse("error");
+		System.Console.WriteLine("AddPortfolio endpoint called");
+		DatabaseService.Portfolio.Create(body.portfolio);
+		System.Console.WriteLine("AddPortfolio endpoint called");
 
 
-		return addPortfolioResponse;
+		return createPortfolioResponse;
 	}
 }
 
-class AddPortfolioResponse
+class CreatePortfolioResponse
 {
-	public AddPortfolioResponse(string response)
+	public CreatePortfolioResponse(string response)
 	{
 		this.response = response;
 	}
@@ -25,9 +28,9 @@ class AddPortfolioResponse
 	public String response { get; set; }
 }
 
-class AddPortfolioBody
+class CreatePortfolioBody
 {
-	public AddPortfolioBody(Portfolio portfolio, string token)
+	public CreatePortfolioBody(Portfolio portfolio, string token)
 	{
 		this.portfolio = portfolio;
 		this.token = token;
