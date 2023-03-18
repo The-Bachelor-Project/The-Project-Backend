@@ -105,9 +105,18 @@ class StockPricesUpdater
 		String[] dataLines = await DataFetcher.stockHistory(ticker, exchange, startDate, endDate);
 
 		String CurrencySymbol = DatabaseService.Exchange.GetCurrency(exchange);
-		await CurrencyRatesUpdater.Update(CurrencySymbol, startDate);
-		Dictionary<String, CurrencyHistoryData> Rates = await CurrencyConverter.GetRatesAsync(startDate, CurrencySymbol);
+		Boolean DoCurrencyConvert = true;
+		if (CurrencySymbol == "USD" || CurrencySymbol == "usd")
+		{
+			DoCurrencyConvert = false;
+		}
 
+		Dictionary<String, CurrencyHistoryData> Rates = new Dictionary<string, CurrencyHistoryData>();
+		if (DoCurrencyConvert)
+		{
+			await CurrencyRatesUpdater.Update(CurrencySymbol, startDate);
+			await CurrencyConverter.GetRatesAsync(startDate, CurrencySymbol);
+		}
 
 		String insertIntoStockPricesQuery = "INSERT INTO StockPrices VALUES (@ticker, @exchange, @date, @open_price, @high_price, @low_price, @close_price, @volume)";
 		String lastDate = "";
@@ -115,17 +124,24 @@ class StockPricesUpdater
 		{
 			String[] data = dataLines[i].Split(",");
 			lastDate = data[0];
-			//TODO: Add currency conversion
 			using (SqlConnection connection = DatabaseService.Database.createConnection())
 			{
 				//TODO Look into using a BULK INSERT query
 				SqlCommand command = new SqlCommand(insertIntoStockPricesQuery, connection);
 
-				CurrencyHistoryData CurrencyRates = Rates[data[0]];
-				Decimal OpenPrice = Decimal.Parse(data[1]) * CurrencyRates.OpenPrice;
-				Decimal HighPrice = Decimal.Parse(data[2]) * CurrencyRates.HighPrice;
-				Decimal LowPrice = Decimal.Parse(data[3]) * CurrencyRates.LowPrice;
-				Decimal ClosePrice = Decimal.Parse(data[4]) * CurrencyRates.ClosePrice;
+				Decimal OpenPrice = Decimal.Parse(data[1]);
+				Decimal HighPrice = Decimal.Parse(data[2]);
+				Decimal LowPrice = Decimal.Parse(data[3]);
+				Decimal ClosePrice = Decimal.Parse(data[4]);
+				if (DoCurrencyConvert)
+				{
+					CurrencyHistoryData CurrencyRates = Rates[data[0]];
+					OpenPrice = OpenPrice * CurrencyRates.OpenPrice;
+					HighPrice = HighPrice * CurrencyRates.HighPrice;
+					LowPrice = LowPrice * CurrencyRates.LowPrice;
+					ClosePrice = ClosePrice * CurrencyRates.ClosePrice;
+				}
+
 				command.Parameters.AddWithValue("@ticker", ticker);
 				command.Parameters.AddWithValue("@exchange", exchange);
 				command.Parameters.AddWithValue("@date", data[0]);
