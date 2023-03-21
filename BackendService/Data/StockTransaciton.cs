@@ -2,7 +2,7 @@ namespace Data;
 
 class StockTransaction
 {
-	public StockTransaction(string portfolio, string ticker, string exchange, decimal amount, int timestamp, Data.Value price, string token)
+	public StockTransaction(string portfolio, string ticker, string exchange, decimal amount, int timestamp, Data.Value price)
 	{
 		this.portfolio = portfolio;
 		this.ticker = ticker;
