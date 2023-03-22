@@ -31,16 +31,16 @@ public class SignInTest
 		Assert.IsFalse(signIn.response == "success","SignIn failed");
 	}
 
-	//[TestMethod]
-    //public void FailOnPassword()
-    //{
-	//	SignInResponse signIn = SignIn.endpoint(new SignInBody
-	//	(
-	//		SignInHelper.getEmail(),
-	//		"Test",
-	//		SignInHelper.getPassword() + SignInHelper.getPassword()
-	//	));
-	//	Assert.IsTrue(signIn.response == "error","SignIn succeed");
-	//	Assert.IsFalse(signIn.response == "success","SignIn failed");
-	//}
+	[TestMethod]
+    public void FailOnPassword()
+    {
+		SignInResponse signIn = SignIn.endpoint(new SignInBody
+		(
+			SignInHelper.getEmail(),
+			"MSTest",
+			SignInHelper.getPassword() + SignInHelper.getPassword()
+		));
+		Assert.IsTrue(signIn.response == "error","SignIn succeed");
+		Assert.IsFalse(signIn.response == "success","SignIn failed");
+	}
 }
