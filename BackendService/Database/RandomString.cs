@@ -1,6 +1,6 @@
-namespace DatabaseService;
+namespace Tools;
 
-public static class RandomString
+public class RandomString
 {
 	private static readonly Random _Random = new Random();
 	private static String Characters = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890";

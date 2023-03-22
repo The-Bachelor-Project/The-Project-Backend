@@ -2,7 +2,7 @@ using System.Data.SqlClient;
 
 namespace BackendService;
 
-class SignUp
+public class SignUp
 {
 	public static SignUpResponse endpoint(SignUpBody body)
 	{
@@ -11,7 +11,7 @@ class SignUp
 		try
 		{
 			String UID = DatabaseService.User.SignUp(body.email, body.password);
-			String GrantToken = DatabaseService.RandomString.Generate(128);
+			String GrantToken = Tools.RandomString.Generate(128);
 			Boolean SuccessfulGrantCreation = Authentication.TokenGeneration.GrantToken(UID, GrantToken);
 			Boolean SuccessfulRefreshCreation = Authentication.TokenGeneration.RefreshToken(GrantToken);
 			if (!SuccessfulGrantCreation && !SuccessfulRefreshCreation)
@@ -35,7 +35,7 @@ class SignUp
 	}
 }
 
-class SignUpResponse
+public class SignUpResponse
 {
 	public SignUpResponse(string response, string uid)
 	{
@@ -47,7 +47,7 @@ class SignUpResponse
 	public String uid { get; set; }
 }
 
-class SignUpBody
+public class SignUpBody
 {
 	public SignUpBody(string email, string password)
 	{

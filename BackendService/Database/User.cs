@@ -33,7 +33,7 @@ class User
 		if (!Reader.Read())
 		{
 			Reader.Close();
-			String UID = RandomString.Generate(32);
+			String UID = Tools.RandomString.Generate(32);
 			String SignUpQuery = "INSERT INTO Accounts (user_id, email, password) VALUES (@user_id, @email, @password)";
 			Command = new SqlCommand(SignUpQuery, Connection);
 			Command.Parameters.AddWithValue("@user_id", UID);

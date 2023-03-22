@@ -2,7 +2,7 @@ using System.Data.SqlClient;
 
 namespace BackendService;
 
-class SignIn
+public class SignIn
 {
 	public static SignInResponse endpoint(SignInBody body)
 	{
@@ -37,7 +37,7 @@ class SignIn
 
 }
 
-class SignInResponse
+public class SignInResponse
 {
 	public SignInResponse(string response, string token, string uid)
 	{
@@ -51,7 +51,7 @@ class SignInResponse
 	public String uid { get; set; }
 }
 
-class SignInBody
+public class SignInBody
 {
 	public SignInBody(string email, string device, string password)
 	{

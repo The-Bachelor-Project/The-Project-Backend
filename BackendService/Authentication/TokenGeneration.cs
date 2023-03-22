@@ -25,7 +25,7 @@ class TokenGeneration
 
 	public static Boolean RefreshToken(String GrantToken)
 	{
-		String RefreshToken = DatabaseService.RandomString.Generate(128);
+		String RefreshToken = Tools.RandomString.Generate(128);
 		String UpdateRefreshToken = "UPDATE Tokens SET refresh_token = @refresh_token WHERE grant_token = @grant_token";
 		SqlConnection Connection = DatabaseService.Database.createConnection();
 		SqlCommand Command = new SqlCommand(UpdateRefreshToken, Connection);

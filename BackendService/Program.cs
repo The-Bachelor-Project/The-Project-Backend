@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace BackendService;
 
-class Program
+public class Program
 {
 	public static void Main()
 	{
