@@ -3,12 +3,12 @@ namespace Authentication;
 
 class AuthenticateToken
 {
-	public static Boolean RefreshToken(String RefreshToken)
+	public static Boolean AccessToken(String AccessToken)
 	{
-		String GetIsRefreshExpired = "SELECT dbo.CheckRefreshIsExpired(@refresh_token) AS IsExpired";
+		String GetIsAccessExpired = "SELECT dbo.CheckAccessIsExpired(@access_token) AS IsExpired";
 		SqlConnection Connection = DatabaseService.Database.createConnection();
-		SqlCommand Command = new SqlCommand(GetIsRefreshExpired, Connection);
-		Command.Parameters.AddWithValue("@refresh_token", RefreshToken);
+		SqlCommand Command = new SqlCommand(GetIsAccessExpired, Connection);
+		Command.Parameters.AddWithValue("@access_token", AccessToken);
 		try
 		{
 			SqlDataReader Reader = Command.ExecuteReader();

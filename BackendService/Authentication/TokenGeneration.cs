@@ -4,13 +4,13 @@ namespace Authentication;
 
 class TokenGeneration
 {
-	public static Boolean GrantToken(String UID, String GrantToken)
+	public static Boolean RefreshToken(String UID, String RefreshToken)
 	{
-		String CreateGrantTokenRecord = "INSERT INTO Tokens (user_id, grant_token) VALUES (@user_id, @grant_token)";
+		String CreateRefreshTokenRecord = "INSERT INTO Tokens (user_id, refresh_token) VALUES (@user_id, @refresh_token)";
 		SqlConnection Connection = DatabaseService.Database.createConnection();
-		SqlCommand Command = new SqlCommand(CreateGrantTokenRecord, Connection);
+		SqlCommand Command = new SqlCommand(CreateRefreshTokenRecord, Connection);
 		Command.Parameters.AddWithValue("@user_id", UID);
-		Command.Parameters.AddWithValue("@grant_token", GrantToken);
+		Command.Parameters.AddWithValue("@refresh_token", RefreshToken);
 		try
 		{
 			Command.ExecuteNonQuery();
@@ -23,14 +23,15 @@ class TokenGeneration
 		}
 	}
 
-	public static Boolean RefreshToken(String GrantToken)
+	public static Boolean AccessToken(String RefreshToken)
 	{
-		String RefreshToken = Tools.RandomString.Generate(128);
-		String UpdateRefreshToken = "UPDATE Tokens SET refresh_token = @refresh_token WHERE grant_token = @grant_token";
+
+		String AccessToken = DatabaseService.RandomString.Generate(128);
+		String UpdateAccessToken = "UPDATE Tokens SET access_token = @access_token WHERE refresh_token = @refresh_token";
 		SqlConnection Connection = DatabaseService.Database.createConnection();
-		SqlCommand Command = new SqlCommand(UpdateRefreshToken, Connection);
+		SqlCommand Command = new SqlCommand(UpdateAccessToken, Connection);
+		Command.Parameters.AddWithValue("@access_token", AccessToken);
 		Command.Parameters.AddWithValue("@refresh_token", RefreshToken);
-		Command.Parameters.AddWithValue("@grant_token", GrantToken);
 		try
 		{
 			Command.ExecuteNonQuery();

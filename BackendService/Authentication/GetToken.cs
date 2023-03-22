@@ -4,43 +4,12 @@ namespace Authentication;
 
 class GetToken
 {
-	public static GottenTokenResponse GrantToken(String UserID)
+	public static GottenTokenResponse RefreshToken(String UserID)
 	{
-		String GetGrantToken = "SELECT grant_token FROM Tokens WHERE user_id = @user_id";
+		String GetRefreshToken = "SELECT refresh_token FROM Tokens WHERE user_id = @user_id";
 		SqlConnection Connection = DatabaseService.Database.createConnection();
-		SqlCommand Command = new SqlCommand(GetGrantToken, Connection);
+		SqlCommand Command = new SqlCommand(GetRefreshToken, Connection);
 		Command.Parameters.AddWithValue("@user_id", UserID);
-		try
-		{
-			SqlDataReader Reader = Command.ExecuteReader();
-			GottenTokenResponse GrantTokenResponse = new GottenTokenResponse("", true);
-			if (Reader.Read())
-			{
-				String GrantToken = Reader["grant_token"].ToString()!;
-				GrantTokenResponse.Token = GrantToken;
-				Reader.Close();
-				return GrantTokenResponse;
-			}
-			else
-			{
-				GrantTokenResponse.Success = false;
-				return GrantTokenResponse;
-			}
-		}
-		catch (Exception e)
-		{
-			System.Console.WriteLine(e);
-			GottenTokenResponse GrantTokenResponse = new GottenTokenResponse("", false);
-			return GrantTokenResponse;
-		}
-	}
-
-	public static GottenTokenResponse RefreshToken(String GrantToken)
-	{
-		String GetGrantToken = "SELECT refresh_token FROM Tokens WHERE grant_token = @grant_token";
-		SqlConnection Connection = DatabaseService.Database.createConnection();
-		SqlCommand Command = new SqlCommand(GetGrantToken, Connection);
-		Command.Parameters.AddWithValue("@grant_token", GrantToken);
 		try
 		{
 			SqlDataReader Reader = Command.ExecuteReader();
@@ -61,8 +30,39 @@ class GetToken
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e);
-			GottenTokenResponse GrantTokenResponse = new GottenTokenResponse("", false);
-			return GrantTokenResponse;
+			GottenTokenResponse RefreshTokenResponse = new GottenTokenResponse("", false);
+			return RefreshTokenResponse;
+		}
+	}
+
+	public static GottenTokenResponse AccessToken(String RefreshToken)
+	{
+		String GetRefreshToken = "SELECT access_token FROM Tokens WHERE refresh_token = @refresh_token";
+		SqlConnection Connection = DatabaseService.Database.createConnection();
+		SqlCommand Command = new SqlCommand(GetRefreshToken, Connection);
+		Command.Parameters.AddWithValue("@refresh_token", RefreshToken);
+		try
+		{
+			SqlDataReader Reader = Command.ExecuteReader();
+			GottenTokenResponse AccessTokenResponse = new GottenTokenResponse("", true);
+			if (Reader.Read())
+			{
+				String AccessToken = Reader["access_token"].ToString()!;
+				AccessTokenResponse.Token = RefreshToken;
+				Reader.Close();
+				return AccessTokenResponse;
+			}
+			else
+			{
+				AccessTokenResponse.Success = false;
+				return AccessTokenResponse;
+			}
+		}
+		catch (Exception e)
+		{
+			System.Console.WriteLine(e);
+			GottenTokenResponse AccessTokenResponse = new GottenTokenResponse("", false);
+			return AccessTokenResponse;
 		}
 	}
 }
