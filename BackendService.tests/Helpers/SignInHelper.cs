@@ -11,7 +11,7 @@ class SignInHelper{
 
 		string random = RandomString.Generate(32);
 		email = random + "@test.mail";
-		password = RandomString.Generate(16);
+		password = "aB1!" + RandomString.Generate(8);
 
 		SignUpResponse signUp = SignUp.endpoint(new SignUpBody
 		(
