@@ -7,15 +7,16 @@ class AddStockTransaction
 {
 	public static async Task<AddStockTransactionResponse> endpoint(AddStockTransactionBody body)
 	{
-		AddStockTransactionResponse addStockTransactionResponse = new AddStockTransactionResponse("error");
+		AddStockTransactionResponse addStockTransactionResponse = new AddStockTransactionResponse("errorgf");
 		try
 		{
 			await DatabaseService.StockTransaction.Add(body.transaction);
 			addStockTransactionResponse.response = "success";
 		}
-		catch (System.Exception)
+		catch (System.Exception e)
 		{
-			addStockTransactionResponse.response = "error";
+			System.Console.WriteLine(e);
+			addStockTransactionResponse.response = "erroruu";
 		}
 		return addStockTransactionResponse;
 	}

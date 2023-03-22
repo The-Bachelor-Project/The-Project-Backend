@@ -29,7 +29,7 @@ class StockTransaction
 		Command.Parameters.AddWithValue("@amount_owned", transaction.amount); //TODO: Should be calculated in the future
 		Command.Parameters.AddWithValue("@timestamp", transaction.timestamp);
 		Command.Parameters.AddWithValue("@price_amount", transaction.price.Amount);
-		Command.Parameters.AddWithValue("@price_currency", transaction.price.Currency.ToString());
+		Command.Parameters.AddWithValue("@price_currency", transaction.price.Currency);
 		Command.ExecuteNonQuery();
 
 		return "";
