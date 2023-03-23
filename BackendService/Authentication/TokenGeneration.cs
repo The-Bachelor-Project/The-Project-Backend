@@ -26,7 +26,7 @@ class TokenGeneration
 	public static Boolean AccessToken(String RefreshToken)
 	{
 
-		String AccessToken = DatabaseService.RandomString.Generate(128);
+		String AccessToken = Tools.RandomString.Generate(128);
 		String UpdateAccessToken = "UPDATE Tokens SET access_token = @access_token WHERE refresh_token = @refresh_token";
 		SqlConnection Connection = DatabaseService.Database.createConnection();
 		SqlCommand Command = new SqlCommand(UpdateAccessToken, Connection);

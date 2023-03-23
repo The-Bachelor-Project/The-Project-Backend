@@ -11,7 +11,7 @@ public class SignUp
 		try
 		{
 			String UID = DatabaseService.User.SignUp(body.email, body.password);
-			String RefreshToken = DatabaseService.RandomString.Generate(128);
+			String RefreshToken = Tools.RandomString.Generate(128);
 			Boolean SuccessfulGrantCreation = Authentication.TokenGeneration.RefreshToken(UID, RefreshToken);
 			Boolean SuccessfulRefreshCreation = Authentication.TokenGeneration.AccessToken(RefreshToken);
 			if (!SuccessfulGrantCreation && !SuccessfulRefreshCreation)

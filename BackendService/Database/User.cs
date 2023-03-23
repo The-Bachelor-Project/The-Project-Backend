@@ -13,10 +13,14 @@ class User
 		SqlDataReader Reader = Command.ExecuteReader();
 		if (Reader.Read())
 		{
-			String? DbPassword = Reader["password"].ToString();
+			String DbPassword = Reader["password"].ToString()!;
 			String UserID = Reader["user_id"].ToString()!;
 			Reader.Close();
 			//TODO Check password
+
+			if(DbPassword == Tools.Password.Hash(password)){
+				throw new WrongPasswordException("The password is incorrect");
+			}
 
 			return UserID;
 		}
@@ -38,7 +42,7 @@ class User
 			Command = new SqlCommand(SignUpQuery, Connection);
 			Command.Parameters.AddWithValue("@user_id", UID);
 			Command.Parameters.AddWithValue("@email", email);
-			Command.Parameters.AddWithValue("@password", password);
+			Command.Parameters.AddWithValue("@password", Tools.Password.Hash(password));
 			try
 			{
 				Command.ExecuteNonQuery();
