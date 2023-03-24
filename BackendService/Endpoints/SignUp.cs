@@ -12,9 +12,24 @@ public class SignUp
 		{
 			String UID = DatabaseService.User.SignUp(body.email, body.password);
 			String RefreshToken = Tools.RandomString.Generate(128);
-			Boolean SuccessfulRefreshCreation = Authentication.TokenGeneration.RefreshToken(UID, RefreshToken);
-			Boolean SuccessfulAccessCreation = Authentication.TokenGeneration.AccessToken(RefreshToken);
-			if (!SuccessfulRefreshCreation && !SuccessfulAccessCreation)
+			int FamilyID = Authentication.CreateFamily.call();
+			if (FamilyID == -1)
+			{
+				signUpResponse.response = "Could not create token family";
+				throw new IOException();
+			}
+			else if (FamilyID == -2)
+			{
+				signUpResponse.response = "Token family id not an integer";
+				throw new IOException();
+			}
+			else if (FamilyID == -3)
+			{
+				signUpResponse.response = "Could not find family id";
+				throw new IOException();
+			}
+			Boolean SuccessfulTokensCreation = Authentication.RefreshTokens.call(UID, FamilyID).success;
+			if (!SuccessfulTokensCreation)
 			{
 				throw new IOException();
 			}

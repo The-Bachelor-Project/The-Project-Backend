@@ -11,17 +11,15 @@ public class SignIn
 		try
 		{
 			String UserID = DatabaseService.User.SignIn(body.email, body.password);
-			Authentication.GottenTokenResponse GottenRefreshToken = Authentication.GetToken.RefreshToken(UserID);
-			if (GottenRefreshToken.Success)
+			int FamilyID = Authentication.CreateFamily.call();
+			Boolean SuccessfulRefresh = Authentication.RefreshTokens.call(UserID, FamilyID).success;
+			if (SuccessfulRefresh)
 			{
-				Authentication.TokenGeneration.AccessToken(GottenRefreshToken.Token);
 				signInResponse.response = "success";
-				signInResponse.refreshToken = GottenRefreshToken.Token;
-				signInResponse.uid = UserID;
 			}
 			else
 			{
-				signInResponse.response = "error getting refresh token";
+				signInResponse.response = "error";
 			}
 
 		}
