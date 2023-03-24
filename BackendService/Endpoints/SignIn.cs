@@ -21,7 +21,7 @@ public class SignIn
 			}
 			else
 			{
-				signInResponse.response = "error getting grant token";
+				signInResponse.response = "error getting refresh token";
 			}
 
 		}

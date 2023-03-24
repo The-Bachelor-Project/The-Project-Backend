@@ -1,6 +1,6 @@
 namespace BackendService;
 
-class RefreshTokens
+public class RefreshTokens
 {
 	public static RefreshTokensResponse endpoint(RefreshTokensBody body)
 	{
@@ -11,7 +11,7 @@ class RefreshTokens
 	}
 }
 
-class RefreshTokensResponse
+public class RefreshTokensResponse
 {
 	public RefreshTokensResponse(String response, String refreshToken, String accessToken)
 	{

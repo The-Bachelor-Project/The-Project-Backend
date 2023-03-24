@@ -12,9 +12,9 @@ public class SignUp
 		{
 			String UID = DatabaseService.User.SignUp(body.email, body.password);
 			String RefreshToken = Tools.RandomString.Generate(128);
-			Boolean SuccessfulGrantCreation = Authentication.TokenGeneration.RefreshToken(UID, RefreshToken);
-			Boolean SuccessfulRefreshCreation = Authentication.TokenGeneration.AccessToken(RefreshToken);
-			if (!SuccessfulGrantCreation && !SuccessfulRefreshCreation)
+			Boolean SuccessfulRefreshCreation = Authentication.TokenGeneration.RefreshToken(UID, RefreshToken);
+			Boolean SuccessfulAccessCreation = Authentication.TokenGeneration.AccessToken(RefreshToken);
+			if (!SuccessfulRefreshCreation && !SuccessfulAccessCreation)
 			{
 				throw new IOException();
 			}
@@ -23,7 +23,7 @@ public class SignUp
 		}
 		catch (IOException)
 		{
-			signUpResponse.response = "Problem with creating grant and/or refresh token";
+			signUpResponse.response = "Problem with creating refresh and/or refresh token";
 		}
 		catch (Exception e)
 		{
