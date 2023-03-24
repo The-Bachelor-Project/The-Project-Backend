@@ -1,25 +1,28 @@
 using System.Security.Cryptography;
+using System.Text;
 
 namespace Tools;
 
 public class Password
 {
+	//A function named Hash that takes a password and returns a hash based on the sha256 algorithm
 	public static string Hash(string password)
 	{
-		byte[] salt;
-		byte[] buffer2;
-		if (password == null)
+		//Create a new instance of the SHA256 class
+		SHA256 sha256 = SHA256.Create();
+		//Convert the input string to a byte array and compute the hash
+		byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+		//Create a new Stringbuilder to collect the bytes
+		//and create a string.
+		StringBuilder builder = new StringBuilder();
+		//Loop through each byte of the hashed data 
+		//and format each one as a hexadecimal string.
+		for (int i = 0; i < bytes.Length; i++)
 		{
-			throw new ArgumentNullException("password");
+			builder.Append(bytes[i].ToString("x2"));
 		}
-		using (Rfc2898DeriveBytes bytes = new Rfc2898DeriveBytes(password, 0x10, 0x3e8))
-		{
-			salt = bytes.Salt;
-			buffer2 = bytes.GetBytes(0x20);
-		}
-		byte[] dst = new byte[0x31];
-		Buffer.BlockCopy(salt, 0, dst, 1, 0x10);
-		Buffer.BlockCopy(buffer2, 0, dst, 0x11, 0x20);
-		return Convert.ToBase64String(dst);
+		//Return the hexadecimal string.
+		System.Console.WriteLine(builder.ToString() + " is the hash");
+		return builder.ToString();
 	}
 }

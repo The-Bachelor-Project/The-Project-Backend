@@ -14,8 +14,8 @@ public class SignInTest
 			"MSTest",
 			SignInHelper.getPassword()
 		));
-		Assert.IsFalse(signIn.response == "error","SignIn failed");
-		Assert.IsTrue(signIn.response == "success","SignIn failed");
+		Assert.IsFalse(signIn.response == "error","signIn.response was \"" + signIn.response + "\"");
+		Assert.IsTrue(signIn.response == "success","signIn.response was \"" + signIn.response + "\"");
 	}
 
 	[TestMethod]
@@ -27,8 +27,8 @@ public class SignInTest
 			"MSTest",
 			SignInHelper.getPassword()
 		));
-		Assert.IsTrue(signIn.response == "error","SignIn succeed");
-		Assert.IsFalse(signIn.response == "success","SignIn failed");
+		Assert.IsTrue(signIn.response == "error","signIn.response was \"" + signIn.response + "\"");
+		Assert.IsFalse(signIn.response == "success","signIn.response was \"" + signIn.response + "\"");
 	}
 
 	[TestMethod]
@@ -40,7 +40,7 @@ public class SignInTest
 			"MSTest",
 			SignInHelper.getPassword() + SignInHelper.getPassword()
 		));
-		Assert.IsTrue(signIn.response == "error","SignIn succeed");
-		Assert.IsFalse(signIn.response == "success","SignIn failed");
+		Assert.IsTrue(signIn.response == "error","signIn.response was \"" + signIn.response + "\"");
+		Assert.IsFalse(signIn.response == "success","signIn.response was \"" + signIn.response + "\"");
 	}
 }

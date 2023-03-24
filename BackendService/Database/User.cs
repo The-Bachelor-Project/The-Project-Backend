@@ -6,6 +6,7 @@ class User
 {
 	public static String SignIn(String email, String password)
 	{
+		System.Console.WriteLine("SignIn with email: " + email);
 		SqlConnection Connection = Database.createConnection();
 		String Query = "SELECT * FROM Accounts WHERE email = @email";
 		SqlCommand Command = new SqlCommand(Query, Connection);
@@ -18,7 +19,7 @@ class User
 			Reader.Close();
 			//TODO Check password
 
-			if(DbPassword == Tools.Password.Hash(password)){
+			if(DbPassword != Tools.Password.Hash(password)){
 				throw new WrongPasswordException("The password is incorrect");
 			}
 

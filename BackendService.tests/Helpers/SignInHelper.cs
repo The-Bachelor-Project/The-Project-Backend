@@ -21,14 +21,14 @@ class SignInHelper{
 	}
 
 	public static string getEmail(){
-		if(email.Length == 0){
+		if(email == ""){
 			signUp();
 		}
 		return email;
 	}
 
 	public static string getPassword(){
-		if(password.Length == 0){
+		if(password == ""){
 			signUp();
 		}
 		return password;
