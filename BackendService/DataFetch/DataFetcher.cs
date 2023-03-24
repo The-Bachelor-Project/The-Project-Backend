@@ -60,8 +60,8 @@ class DataFetcher
 	//TODO this is not done at all
 	{
 
-		int startTime = TimeConverter.dateOnlyToUnix(startDate);
-		int endTime = TimeConverter.dateOnlyToUnix(endDate);
+		int startTime = Tools.TimeConverter.dateOnlyToUnix(startDate);
+		int endTime = Tools.TimeConverter.dateOnlyToUnix(endDate);
 
 		String tickerExt = YfTranslator.getYfSymbol(ticker, exchange);
 
@@ -81,8 +81,8 @@ class DataFetcher
 	public static async Task<String[]> CurrencyHistory(String currency, DateOnly startDate, DateOnly endDate)
 	{
 		String CorrectCurrency = currency + "USD=X";
-		int StartTime = TimeConverter.dateOnlyToUnix(startDate);
-		int EndTime = TimeConverter.dateOnlyToUnix(endDate);
+		int StartTime = Tools.TimeConverter.dateOnlyToUnix(startDate);
+		int EndTime = Tools.TimeConverter.dateOnlyToUnix(endDate);
 
 		HttpClient client = new HttpClient();
 

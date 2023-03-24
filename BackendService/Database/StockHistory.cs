@@ -41,11 +41,11 @@ class StockHistory
 			command.Parameters.AddWithValue("@exchange", history.exchange);
 			command.Parameters.AddWithValue("@interval", history.interval);
 			command.Parameters.AddWithValue("@start_date", history.start_date);
-			command.Parameters.AddWithValue("@end_date", TimeConverter.dateOnlyToString(endDate));
+			command.Parameters.AddWithValue("@end_date", Tools.TimeConverter.dateOnlyToString(endDate));
 			reader = command.ExecuteReader();
 			while (reader.Read())
 			{
-				history.history = history.history.Append(new Data.StockHistoryData(TimeConverter.dateOnlyToString(DateOnly.FromDateTime((DateTime)reader["end_date"])), Decimal.Parse("" + reader["open_price"].ToString()), Decimal.Parse("" + reader["high_price"].ToString()), Decimal.Parse("" + reader["low_price"].ToString()), Decimal.Parse("" + reader["close_price"].ToString()))).ToArray();
+				history.history = history.history.Append(new Data.StockHistoryData(Tools.TimeConverter.dateOnlyToString(DateOnly.FromDateTime((DateTime)reader["end_date"])), Decimal.Parse("" + reader["open_price"].ToString()), Decimal.Parse("" + reader["high_price"].ToString()), Decimal.Parse("" + reader["low_price"].ToString()), Decimal.Parse("" + reader["close_price"].ToString()))).ToArray();
 			}
 			return history;
 		}

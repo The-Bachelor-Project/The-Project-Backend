@@ -39,11 +39,11 @@ class CurrencyRatesHistory
 			Command.Parameters.AddWithValue("@currency", history.Currency);
 			Command.Parameters.AddWithValue("@interval", history.Interval);
 			Command.Parameters.AddWithValue("@start_date", history.StartDate);
-			Command.Parameters.AddWithValue("@end_date", TimeConverter.dateOnlyToString(EndDate));
+			Command.Parameters.AddWithValue("@end_date", Tools.TimeConverter.dateOnlyToString(EndDate));
 			Reader = Command.ExecuteReader();
 			while (Reader.Read())
 			{
-				history.History = history.History.Append(new Data.CurrencyHistoryData(TimeConverter.dateOnlyToString(DateOnly.FromDateTime((DateTime)Reader["end_date"])), Decimal.Parse("" + Reader["open_price"].ToString()), Decimal.Parse("" + Reader["high_price"].ToString()), Decimal.Parse("" + Reader["low_price"].ToString()), Decimal.Parse("" + Reader["close_price"].ToString()))).ToArray();
+				history.History = history.History.Append(new Data.CurrencyHistoryData(Tools.TimeConverter.dateOnlyToString(DateOnly.FromDateTime((DateTime)Reader["end_date"])), Decimal.Parse("" + Reader["open_price"].ToString()), Decimal.Parse("" + Reader["high_price"].ToString()), Decimal.Parse("" + Reader["low_price"].ToString()), Decimal.Parse("" + Reader["close_price"].ToString()))).ToArray();
 			}
 			return history;
 		}

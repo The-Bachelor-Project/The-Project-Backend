@@ -29,7 +29,7 @@ class CurrencyRatesUpdater
 
 					String UpdateEndTrackingDateQuery = "UPDATE Currencies SET end_tracking_date = @end_tracking_date WHERE code = @currency";
 					Command = new SqlCommand(UpdateEndTrackingDateQuery, Connection);
-					Command.Parameters.AddWithValue("@end_tracking_date", TimeConverter.dateOnlyToString(EndDate));
+					Command.Parameters.AddWithValue("@end_tracking_date", Tools.TimeConverter.dateOnlyToString(EndDate));
 					Command.Parameters.AddWithValue("@currency", currency);
 					Command.ExecuteNonQuery();
 				}
@@ -44,7 +44,7 @@ class CurrencyRatesUpdater
 
 			String UpdateStartTrackingDateQuery = "UPDATE Currencies SET start_tracking_date = @start_tracking_date WHERE code = @currency";
 			Command = new SqlCommand(UpdateStartTrackingDateQuery, Connection);
-			Command.Parameters.AddWithValue("@start_tracking_date", TimeConverter.dateOnlyToString(startDate));
+			Command.Parameters.AddWithValue("@start_tracking_date", Tools.TimeConverter.dateOnlyToString(startDate));
 			Command.Parameters.AddWithValue("@currency", currency);
 			Command.ExecuteNonQuery();
 		}
@@ -92,8 +92,8 @@ class CurrencyRatesUpdater
 
 	private static async Task<DateOnly> _Update(String currency, DateOnly startDate, DateOnly endDate)
 	{
-		int StartTime = TimeConverter.dateOnlyToUnix(startDate);
-		int EndTime = TimeConverter.dateOnlyToUnix(endDate);
+		int StartTime = Tools.TimeConverter.dateOnlyToUnix(startDate);
+		int EndTime = Tools.TimeConverter.dateOnlyToUnix(endDate);
 
 		String[] DataLines = await DataFetcher.CurrencyHistory(currency, startDate, endDate);
 

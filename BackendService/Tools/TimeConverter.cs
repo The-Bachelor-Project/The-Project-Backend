@@ -1,3 +1,5 @@
+namespace Tools;
+
 class TimeConverter
 {
 	public static int dateOnlyToUnix(DateOnly dateOnly)
@@ -6,6 +8,15 @@ class TimeConverter
 		TimeSpan diff = dateOnly.ToDateTime(new TimeOnly(12, 0)).ToUniversalTime() - origin;
 		return int.Parse(Math.Floor(diff.TotalSeconds).ToString());
 	}
+	public static int dateTimeToUnix(DateTime dateTime)
+	{
+		DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+		TimeSpan diff = dateTime.ToUniversalTime() - origin;
+		return int.Parse(Math.Floor(diff.TotalSeconds).ToString());
+	}
+
+
+
 	public static String dateOnlyToString(DateOnly dateOnly)
 	{
 		String res = dateOnly.Year.ToString();

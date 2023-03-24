@@ -31,7 +31,7 @@ class StockPricesUpdater
 
 					String updateEndTrackingDateQuery = "UPDATE Stocks SET end_tracking_date = @end_tracking_date WHERE ticker = @ticker AND exchange = @exchange";
 					command = new SqlCommand(updateEndTrackingDateQuery, connection);
-					command.Parameters.AddWithValue("@end_tracking_date", TimeConverter.dateOnlyToString(endDate));
+					command.Parameters.AddWithValue("@end_tracking_date", Tools.TimeConverter.dateOnlyToString(endDate));
 					command.Parameters.AddWithValue("@ticker", ticker);
 					command.Parameters.AddWithValue("@exchange", exchange);
 					command.ExecuteNonQuery();
@@ -47,7 +47,7 @@ class StockPricesUpdater
 
 			String updateStartTrackingDateQuery = "UPDATE Stocks SET start_tracking_date = @start_tracking_date WHERE ticker = @ticker AND exchange = @exchange";
 			command = new SqlCommand(updateStartTrackingDateQuery, connection);
-			command.Parameters.AddWithValue("@start_tracking_date", TimeConverter.dateOnlyToString(startDate));
+			command.Parameters.AddWithValue("@start_tracking_date", Tools.TimeConverter.dateOnlyToString(startDate));
 			command.Parameters.AddWithValue("@ticker", ticker);
 			command.Parameters.AddWithValue("@exchange", exchange);
 			command.ExecuteNonQuery();
@@ -98,8 +98,8 @@ class StockPricesUpdater
 
 	private static async Task<DateOnly> _update(String ticker, String exchange, DateOnly startDate, DateOnly endDate)
 	{
-		int startTime = TimeConverter.dateOnlyToUnix(startDate);
-		int endTime = TimeConverter.dateOnlyToUnix(endDate);
+		int startTime = Tools.TimeConverter.dateOnlyToUnix(startDate);
+		int endTime = Tools.TimeConverter.dateOnlyToUnix(endDate);
 
 
 		String[] dataLines = await DataFetcher.stockHistory(ticker, exchange, startDate, endDate);
