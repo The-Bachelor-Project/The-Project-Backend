@@ -2,9 +2,12 @@ namespace BackendService;
 
 class RefreshTokens
 {
-	public static void endpoint(RefreshTokensBody body)
+	public static RefreshTokensResponse endpoint(RefreshTokensBody body)
 	{
+		RefreshTokensResponse RefreshTokensResponse = new RefreshTokensResponse("response", "refresh", "access");
 
+
+		return RefreshTokensResponse;
 	}
 }
 
