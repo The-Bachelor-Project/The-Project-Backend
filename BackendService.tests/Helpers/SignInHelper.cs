@@ -1,36 +1,42 @@
 using BackendService;
 using Tools;
 
+namespace BackendService.tests;
+
 class SignInHelper{
-	static string email = "";
-	static string password = "";
+	static string token = "";
 
-	private static void signUp(){
-		Thread thread = new Thread(Program.Main);
-		thread.Start();
-
-		string random = RandomString.Generate(32);
-		email = random + "@test.mail";
-		password = "aB1!" + RandomString.Generate(8);
-
-		SignUpResponse signUp = SignUp.endpoint(new SignUpBody
+	private static void signIn(){
+		SignInResponse signIn = SignIn.endpoint(new SignInBody
 		(
-			email,
-			password
+			getEmail(),
+			"MSTest",
+			getPassword()
 		));
+		token = signIn.refreshToken;
 	}
 
 	public static string getEmail(){
-		if(email == ""){
-			signUp();
-		}
-		return email;
+		return SignUpHelper.getEmail();
 	}
 
 	public static string getPassword(){
-		if(password == ""){
-			signUp();
+		return SignUpHelper.getPassword();
+	}
+
+	public static string getRefreshToken(){
+		if(token == ""){
+			signIn();
 		}
-		return password;
+		return token;
+	}
+
+	public static void setRefreshToken(string newToken){
+		token = newToken;
+	}
+
+	public static void reset(){
+		token = "";
+		SignUpHelper.reset();
 	}
 }

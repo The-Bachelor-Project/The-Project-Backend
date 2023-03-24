@@ -8,11 +8,12 @@ public class SignInTest
 	[TestMethod]
     public void Succeed()
     {
+		SignInHelper.reset();
 		SignInResponse signIn = SignIn.endpoint(new SignInBody
 		(
-			SignInHelper.getEmail(),
+			SignUpHelper.getEmail(),
 			"MSTest",
-			SignInHelper.getPassword()
+			SignUpHelper.getPassword()
 		));
 		Assert.IsFalse(signIn.response == "error","signIn.response was \"" + signIn.response + "\"");
 		Assert.IsTrue(signIn.response == "success","signIn.response was \"" + signIn.response + "\"");
@@ -21,11 +22,12 @@ public class SignInTest
 	[TestMethod]
     public void FailOnEmail()
     {
+		SignInHelper.reset();
 		SignInResponse signIn = SignIn.endpoint(new SignInBody
 		(
-			SignInHelper.getPassword() + SignInHelper.getEmail(),
+			SignUpHelper.getPassword() + SignUpHelper.getEmail(),
 			"MSTest",
-			SignInHelper.getPassword()
+			SignUpHelper.getPassword()
 		));
 		Assert.IsTrue(signIn.response == "error","signIn.response was \"" + signIn.response + "\"");
 		Assert.IsFalse(signIn.response == "success","signIn.response was \"" + signIn.response + "\"");
@@ -34,11 +36,12 @@ public class SignInTest
 	[TestMethod]
     public void FailOnPassword()
     {
+		SignInHelper.reset();
 		SignInResponse signIn = SignIn.endpoint(new SignInBody
 		(
-			SignInHelper.getEmail(),
+			SignUpHelper.getEmail(),
 			"MSTest",
-			SignInHelper.getPassword() + SignInHelper.getPassword()
+			SignUpHelper.getPassword() + SignUpHelper.getPassword()
 		));
 		Assert.IsTrue(signIn.response == "error","signIn.response was \"" + signIn.response + "\"");
 		Assert.IsFalse(signIn.response == "success","signIn.response was \"" + signIn.response + "\"");
