@@ -57,5 +57,9 @@ class Endpoints
 		{
 			return Results.Ok(await CurrencyRatesHistory.endpoint(body));
 		});
+		Application.app.MapPost(API_ENDPOINTS.REFRESH_TOKENS_ENDPOINT, (RefreshTokensBody body) =>
+		{
+			return Results.Ok(RefreshTokens.endpoint(body));
+		});
 	}
 }

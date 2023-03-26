@@ -27,7 +27,7 @@ class CreateFamily
 
 	private static int GetFamilyID()
 	{
-		String GetFamilyID = "SELECT TOP 1 SCOPE_IDENTITY() AS id FROM TokenFamily";
+		String GetFamilyID = "SELECT TOP 1 id FROM TokenFamily ORDER BY id DESC";
 		SqlConnection Connection = DatabaseService.Database.createConnection();
 		SqlCommand Command = new SqlCommand(GetFamilyID, Connection);
 		SqlDataReader Reader = Command.ExecuteReader();
@@ -39,6 +39,7 @@ class CreateFamily
 			}
 			catch (Exception e)
 			{
+				System.Console.WriteLine(e);
 				return -2;
 			}
 		}

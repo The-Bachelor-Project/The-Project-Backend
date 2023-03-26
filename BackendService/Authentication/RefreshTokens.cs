@@ -4,46 +4,87 @@ namespace Authentication;
 
 class RefreshTokens
 {
-	public static RefreshTokensBody call(String UID, int familyID)
+	public static BackendService.RefreshTokensResponse all(String refreshToken)
 	{
-		//TODO: Change the refresh from taking UID to refresh token instead and validate
-		String RefreshToken = Tools.RandomString.Generate(128);
-		String AccessToken = Tools.RandomString.Generate(128);
-		int RefreshExpirationUnix = Authentication.Expiration.GenerateRefresh((24 * 7));
-		int AccessExpirationUnix = Authentication.Expiration.GenerateAccess(30);
-		String CreateTokenRecord = "INSERT INTO Tokens VALUES (@user_id, @refresh_token, @refresh_expiration, @access_token, @access_expiration, @family)";
+		ValidFunctionResponse ValidFunctionResponse = IsRefreshValid(refreshToken);
+		if (ValidFunctionResponse.isValid == 1)
+		{
+			BackendService.RefreshTokensResponse RefreshTokensResponse = SetupTokens.call(ValidFunctionResponse.userID, ValidFunctionResponse.familyID);
+			return RefreshTokensResponse;
+		}
+		else if (ValidFunctionResponse.isValid == 0)
+		{
+			BackendService.RefreshTokensResponse RefreshTokensResponse = new BackendService.RefreshTokensResponse("is_expired", "", "");
+			return RefreshTokensResponse;
+		}
+		else
+		{
+			BackendService.RefreshTokensResponse RefreshTokensResponse = new BackendService.RefreshTokensResponse("error", "", "");
+			return RefreshTokensResponse;
+		}
+	}
+
+	public static ValidFunctionResponse IsRefreshValid(String refreshToken)
+	{
+		String CheckIfValidQuery = "SELECT * FROM CheckIfRefreshIsValid(@RefreshToken, @UnixNow) AS IsValid";
 		SqlConnection Connection = DatabaseService.Database.createConnection();
-		SqlCommand Command = new SqlCommand(CreateTokenRecord, Connection);
-		Command.Parameters.AddWithValue("@user_id", UID);
-		Command.Parameters.AddWithValue("@refresh_token", RefreshToken);
-		Command.Parameters.AddWithValue("@refresh_expiration", RefreshExpirationUnix);
-		Command.Parameters.AddWithValue("@access_token", AccessToken);
-		Command.Parameters.AddWithValue("@access_expiration", AccessExpirationUnix);
-		Command.Parameters.AddWithValue("@family", familyID);
+		SqlCommand Command = new SqlCommand(CheckIfValidQuery, Connection);
+		Command.Parameters.AddWithValue("@RefreshToken", refreshToken);
+		Command.Parameters.AddWithValue("@UnixNow", Tools.TimeConverter.dateTimeToUnix(DateTime.Now));
 		try
 		{
-			Command.ExecuteNonQuery();
-			RefreshTokensBody RefreshTokensBody = new RefreshTokensBody(true, RefreshToken, AccessToken);
-			return RefreshTokensBody;
+			SqlDataReader Reader = Command.ExecuteReader();
+			if (Reader.Read())
+			{
+				int IsValid = int.Parse(Reader["IsValid"].ToString()!);
+				if (IsValid == 1)
+				{
+					return new ValidFunctionResponse(int.Parse(Reader["IsValid"].ToString()!), int.Parse(Reader["FamilyID"].ToString()!), Reader["UserID"].ToString()!);
+				}
+				else
+				{
+					InvalidateFamily(int.Parse(Reader["FamilyID"].ToString()!));
+					return new ValidFunctionResponse(0, 0, "");
+				}
+			}
+			else
+			{
+				return new ValidFunctionResponse(-1, 0, "");
+			}
 		}
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e);
-			RefreshTokensBody RefreshTokensBody = new RefreshTokensBody(false, "", "");
-			return RefreshTokensBody;
+			return new ValidFunctionResponse(-1, 0, "");
 		}
 	}
-}
 
-public class RefreshTokensBody
-{
-	public RefreshTokensBody(Boolean success, String refresh, String acccess)
+	private static void InvalidateFamily(int familyID)
 	{
-		this.success = success;
-		this.refresh = refresh;
-		this.access = acccess;
+		String InvalidateFamilyQuery = "UPDATE TokenFamily SET valid = 0 WHERE id = @family_id";
+		SqlConnection Connection = DatabaseService.Database.createConnection();
+		SqlCommand Command = new SqlCommand(InvalidateFamilyQuery, Connection);
+		Command.Parameters.AddWithValue("@family_id", familyID);
+		try
+		{
+			Command.ExecuteNonQuery();
+		}
+		catch (Exception e)
+		{
+			System.Console.WriteLine(e);
+		}
 	}
-	public Boolean success { get; set; }
-	public String refresh { get; set; }
-	public String access { get; set; }
+
+	public class ValidFunctionResponse
+	{
+		public ValidFunctionResponse(int isValid, int familyID, String userID)
+		{
+			this.isValid = isValid;
+			this.familyID = familyID;
+			this.userID = userID;
+		}
+		public int isValid { get; set; }
+		public int familyID { get; set; }
+		public String userID { get; set; }
+	}
 }

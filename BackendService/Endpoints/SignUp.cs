@@ -28,8 +28,8 @@ public class SignUp
 				signUpResponse.response = "Could not find family id";
 				throw new IOException();
 			}
-			Boolean SuccessfulTokensCreation = Authentication.RefreshTokens.call(UID, FamilyID).success;
-			if (!SuccessfulTokensCreation)
+			String SuccessfulTokensCreation = Authentication.SetupTokens.call(UID, FamilyID).response;
+			if (SuccessfulTokensCreation != "success")
 			{
 				throw new IOException();
 			}
@@ -38,7 +38,7 @@ public class SignUp
 		}
 		catch (IOException)
 		{
-			signUpResponse.response = "Problem with creating refresh and/or refresh token";
+			signUpResponse.response = "Problem with creating refresh and/or access token";
 		}
 		catch (Exception e)
 		{

@@ -4,12 +4,8 @@ public class RefreshTokens
 {
 	public static RefreshTokensResponse endpoint(RefreshTokensBody body)
 	{
-		//TODO: Add refresh tokens endpoint
-
-		RefreshTokensResponse RefreshTokensResponse = new RefreshTokensResponse("response", "refresh", "access");
-
-
-		return RefreshTokensResponse;
+		RefreshTokensResponse RefreshTokensReponse = Authentication.RefreshTokens.all(body.refresh_token);
+		return RefreshTokensReponse;
 	}
 }
 
@@ -28,9 +24,9 @@ public class RefreshTokensResponse
 
 public class RefreshTokensBody
 {
-	public RefreshTokensBody(String refreshToken)
+	public RefreshTokensBody(String refresh_token)
 	{
-		this.refreshToken = refreshToken;
+		this.refresh_token = refresh_token;
 	}
-	public String refreshToken { get; set; }
+	public String refresh_token { get; set; }
 }

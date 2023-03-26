@@ -14,4 +14,5 @@ class API_ENDPOINTS
 	public const String GET_ALL_PORTFOLIOS = "/get_all_portfolios";
 	public const String STOCK_TAG_GENERATION = "/generate_stock_tags";
 	public const String CURRENCY_HISTORY_ENDPOINT = "/currency_history";
+	public const String REFRESH_TOKENS_ENDPOINT = "/refresh_tokens";
 }

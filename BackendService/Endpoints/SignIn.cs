@@ -6,22 +6,13 @@ public class SignIn
 {
 	public static SignInResponse endpoint(SignInBody body)
 	{
-		SignInResponse signInResponse = new SignInResponse("error", "nope", "");
+		SignInResponse signInResponse = new SignInResponse("", "", "");
 
 		try
 		{
 			String UserID = DatabaseService.User.SignIn(body.email, body.password);
 			int FamilyID = Authentication.CreateFamily.call();
-			Boolean SuccessfulRefresh = Authentication.RefreshTokens.call(UserID, FamilyID).success;
-			if (SuccessfulRefresh)
-			{
-				signInResponse.response = "success";
-			}
-			else
-			{
-				signInResponse.response = "error";
-			}
-
+			signInResponse.response = Authentication.SetupTokens.call(UserID, FamilyID).response;
 		}
 		catch (Exception e)
 		{
