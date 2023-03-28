@@ -21,14 +21,42 @@ class SetupTokens
 		try
 		{
 			Command.ExecuteNonQuery();
-			BackendService.RefreshTokensResponse RefreshTokensResponse = new BackendService.RefreshTokensResponse("success", RefreshToken, AccessToken);
-			return RefreshTokensResponse;
+			Boolean SuccessfulUpdate = UpdateValidRefresh(RefreshToken, familyID);
+			if (SuccessfulUpdate)
+			{
+				BackendService.RefreshTokensResponse RefreshTokensResponse = new BackendService.RefreshTokensResponse("success", RefreshToken, AccessToken);
+				return RefreshTokensResponse;
+			}
+			else
+			{
+				BackendService.RefreshTokensResponse RefreshTokensResponse = new BackendService.RefreshTokensResponse("error", "", "");
+				return RefreshTokensResponse;
+			}
+
 		}
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e);
 			BackendService.RefreshTokensResponse RefreshTokensResponse = new BackendService.RefreshTokensResponse("error", "", "");
 			return RefreshTokensResponse;
+		}
+	}
+
+	private static Boolean UpdateValidRefresh(String refreshToken, int familyID)
+	{
+		String UpdateValidRefreshQuery = "UPDATE TokenFamily SET valid_refresh = @refreshToken WHERE id = @familyID";
+		SqlConnection Connection = DatabaseService.Database.createConnection();
+		SqlCommand Command = new SqlCommand(UpdateValidRefreshQuery, Connection);
+		Command.Parameters.AddWithValue("@refreshToken", refreshToken);
+		Command.Parameters.AddWithValue("@familyID", familyID);
+		try
+		{
+			Command.ExecuteNonQuery();
+			return true;
+		}
+		catch (System.Exception)
+		{
+			return false;
 		}
 	}
 }
