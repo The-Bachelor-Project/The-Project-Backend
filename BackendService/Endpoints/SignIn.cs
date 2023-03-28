@@ -12,7 +12,10 @@ public class SignIn
 		{
 			String UserID = DatabaseService.User.SignIn(body.email, body.password);
 			int FamilyID = Authentication.CreateFamily.call();
-			signInResponse.response = Authentication.SetupTokens.call(UserID, FamilyID).response;
+			RefreshTokensResponse RefreshTokensResponse = Authentication.SetupTokens.call(UserID, FamilyID);
+			signInResponse.refreshToken = RefreshTokensResponse.refreshToken;
+			signInResponse.uid = UserID;
+			signInResponse.response = RefreshTokensResponse.response;
 		}
 		catch (Exception e)
 		{
