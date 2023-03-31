@@ -21,16 +21,16 @@ class Application
 		PostUsers.Setup(app); // This is where the endpoints are setup
 		GetUsers.Setup(app);
 		GetStockProfiles.Setup(app);
-		//GetPortfolios.Setup(app);
-		//PostPortfolios.Setup(app);
-		GetStockHistories.Setup(app);
+		GetPortfolios.Setup(app);
+		PostPortfolios.Setup(app);
+		//GetStockHistories.Setup(app);
 		GetTokens.Setup(app);
 		PostTokens.Setup(app);
 		//GetStockTransactions.Setup(app);
 		//PostStockTransactions.Setup(app);
 		//GetSearchResults.Setup(app);
 
-		
+
 
 		app.Run();
 	}
