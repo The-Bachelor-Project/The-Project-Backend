@@ -14,6 +14,8 @@ class GetPortfolios
 
 	public static GetPortfoliosResponse Endpoint(string id, string accessToken)
 	{
-		return new GetPortfoliosResponse("success", new Data.Portfolio("name", id, "currency", (decimal)0.0, true));
+		List<Data.Portfolio> portfolios = new List<Data.Portfolio>();
+		portfolios.Add(new Data.Portfolio("name", id, "currency", (decimal)0.0, true));
+		return new GetPortfoliosResponse("success", portfolios[0]);
 	}
 }
