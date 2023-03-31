@@ -4,20 +4,20 @@ namespace Data;
 
 class StockHistory
 {
-	public StockHistory(string ticker, string exchange, String start_date, String end_date, String interval)
+	public StockHistory(string ticker, string exchange, String startDate, String endDate, String interval)
 	{
 		this.ticker = ticker;
 		this.exchange = exchange;
-		this.start_date = start_date;
-		this.end_date = end_date;
+		this.startDate = startDate;
+		this.endDate = endDate;
 		this.interval = interval;
 		this.history = new StockHistoryData[] { };
 	}
 
 	public String ticker { get; set; }
 	public String exchange { get; set; }
-	public String start_date { get; set; }
-	public String end_date { get; set; }
+	public String startDate { get; set; }
+	public String endDate { get; set; }
 	public String interval { get; set; }
 	public StockHistoryData[] history { get; set; }
 }

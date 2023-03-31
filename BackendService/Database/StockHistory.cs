@@ -26,21 +26,21 @@ class StockHistory
 
 			reader.Close();
 
-			DateOnly startDate = DateOnly.Parse(history.start_date);
+			DateOnly startDate = DateOnly.Parse(history.startDate);
 			if (startDate < trackingDate)
 			{
 				await StockPricesUpdater.update(history.ticker, history.exchange, startDate);
 			}
 
 
-			DateOnly endDate = history.end_date == "" ? DateOnly.FromDateTime(DateTime.Now) : DateOnly.Parse(history.end_date);
+			DateOnly endDate = history.endDate == "" ? DateOnly.FromDateTime(DateTime.Now) : DateOnly.Parse(history.endDate);
 			System.Console.WriteLine(endDate);
 			String getStockHistoryQuery = "SELECT * FROM GetStockPrices(@ticker, @exchange, @interval, @start_date, @end_date)";
 			command = new SqlCommand(getStockHistoryQuery, connection);
 			command.Parameters.AddWithValue("@ticker", history.ticker);
 			command.Parameters.AddWithValue("@exchange", history.exchange);
 			command.Parameters.AddWithValue("@interval", history.interval);
-			command.Parameters.AddWithValue("@start_date", history.start_date);
+			command.Parameters.AddWithValue("@start_date", history.startDate);
 			command.Parameters.AddWithValue("@end_date", Tools.TimeConverter.dateOnlyToString(endDate));
 			reader = command.ExecuteReader();
 			while (reader.Read())
