@@ -1,3 +1,5 @@
+namespace API.v1;
+
 class GetStockHistoriesResponse
 {
 	public GetStockHistoriesResponse(string response, Data.StockHistory history)

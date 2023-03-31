@@ -28,7 +28,7 @@ class Application
 		PostTokens.Setup(app);
 		//GetStockTransactions.Setup(app);
 		//PostStockTransactions.Setup(app);
-		//GetSearchResults.Setup(app);
+		GetSearchResults.Setup(app);
 
 
 
