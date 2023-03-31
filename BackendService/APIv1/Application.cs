@@ -23,12 +23,12 @@ class Application
 		GetStockProfiles.Setup(app);
 		GetPortfolios.Setup(app);
 		PostPortfolios.Setup(app);
-		GetStockHistories.Setup(app);
+		//GetStockHistories.Setup(app);
 		GetTokens.Setup(app);
 		PostTokens.Setup(app);
-		GetStockTransactions.Setup(app);
-		PostStockTransactions.Setup(app);
-		GetSearchResults.Setup(app);
+		//GetStockTransactions.Setup(app);
+		//PostStockTransactions.Setup(app);
+		//GetSearchResults.Setup(app);
 
 
 
