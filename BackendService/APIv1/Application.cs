@@ -26,9 +26,9 @@ class Application
 		GetStockHistories.Setup(app);
 		GetTokens.Setup(app);
 		PostTokens.Setup(app);
-		//GetStockTransactions.Setup(app);
-		//PostStockTransactions.Setup(app);
 		GetSearchResults.Setup(app);
+		GetStockTransactions.Setup(app);
+		PostStockTransactions.Setup(app);
 
 
 
