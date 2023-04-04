@@ -1,4 +1,4 @@
-namespace API.v1;
+namespace API.v1.Endpoints;
 
 class PostTokens
 {
@@ -12,6 +12,6 @@ class PostTokens
 
 	public static TokensResponse Endpoint(PostTokensBody body)
 	{
-		return new TokensResponse("success", "1234","1234435436");
+		return new TokensResponse("success", new Data.TokenSet("4420", "1111"));
 	}
 }

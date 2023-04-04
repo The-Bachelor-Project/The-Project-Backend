@@ -2,7 +2,7 @@ namespace Data;
 
 
 
-class StockHistory
+public class StockHistory
 {
 	public StockHistory(string ticker, string exchange, String startDate, String endDate, String interval)
 	{
@@ -22,7 +22,7 @@ class StockHistory
 	public StockHistoryData[] history { get; set; }
 }
 
-class StockHistoryData
+public class StockHistoryData
 {
 	public StockHistoryData(string date, decimal open_price, decimal high_price, decimal low_price, decimal close_price)
 	{

@@ -1,5 +1,5 @@
 namespace Data;
-class Portfolio
+public class Portfolio
 {
 	public Portfolio(string name, string owner, string currency, decimal balance, bool trackBalance)
 	{

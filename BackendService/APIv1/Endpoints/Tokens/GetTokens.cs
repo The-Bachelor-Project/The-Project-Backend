@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.v1;
+namespace API.v1.Endpoints;
 
 class GetTokens
 {
@@ -14,6 +14,6 @@ class GetTokens
 
 	public static TokensResponse Endpoint(string accessToken)
 	{
-		return new TokensResponse("success", "4420", "1111");
+		return new TokensResponse("success", new Data.TokenSet("44354gbvg20", "1111"));
 	}
 }

@@ -1,15 +1,13 @@
-namespace API.v1;
+namespace API.v1.Endpoints;
 
 public class TokensResponse
 {
-	public TokensResponse(string response, string refreshToken, string accessToken)
+	public TokensResponse(string response, Data.TokenSet tokenSet)
 	{
 		this.response = response;
-		this.refreshToken = refreshToken;
-		this.accessToken = accessToken;
+		this.tokenSet = tokenSet;
 	}
 
 	public string response { get; }
-	public string refreshToken { get; }
-	public string accessToken { get; }
+	public Data.TokenSet tokenSet { get; set; }
 }

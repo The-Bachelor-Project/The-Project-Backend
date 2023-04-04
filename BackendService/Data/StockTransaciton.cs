@@ -1,6 +1,6 @@
 namespace Data;
 
-class StockTransaction
+public class StockTransaction
 {
 	public StockTransaction(string portfolio, string ticker, string exchange, decimal amount, int timestamp, Data.Value price)
 	{

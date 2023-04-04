@@ -2,7 +2,7 @@ namespace Data;
 
 
 
-class CurrencyHistory
+public class CurrencyHistory
 {
 	public CurrencyHistory(String Currency, String StartDate, String EndDate, String Interval)
 	{
@@ -20,7 +20,7 @@ class CurrencyHistory
 	public CurrencyHistoryData[] History { get; set; }
 }
 
-class CurrencyHistoryData
+public class CurrencyHistoryData
 {
 	public CurrencyHistoryData(String Date, Decimal OpenPrice, Decimal HighPrice, Decimal LowPrice, Decimal ClosePrice)
 	{

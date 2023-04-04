@@ -1,4 +1,4 @@
-namespace API.v1;
+namespace API.v1.Endpoints;
 class PostStockTransactionsBody
 {
 	public Data.StockTransaction stockTransaction { get; }

@@ -1,6 +1,6 @@
 namespace Data;
 
-class StockProfile
+public class StockProfile
 {
 	public String? Ticker { get; set; }
 	public String? Exchange { get; set; }

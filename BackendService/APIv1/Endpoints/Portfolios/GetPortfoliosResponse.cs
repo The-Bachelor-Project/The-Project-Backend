@@ -1,4 +1,4 @@
-namespace API.v1;
+namespace API.v1.Endpoints;
 class GetPortfoliosResponse
 {
 	public GetPortfoliosResponse(string response, Data.Portfolio portfolio)

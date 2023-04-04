@@ -1,6 +1,6 @@
 namespace Data;
 
-class Value
+public class Value
 {
 	public Value(decimal amount, String currency)
 	{

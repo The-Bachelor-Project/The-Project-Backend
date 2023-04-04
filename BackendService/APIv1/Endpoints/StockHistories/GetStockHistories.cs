@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.v1;
+namespace API.v1.Endpoints;
 class GetStockHistories
 {
 	public static void Setup(WebApplication app)
