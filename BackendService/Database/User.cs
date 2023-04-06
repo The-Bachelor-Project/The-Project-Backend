@@ -4,7 +4,7 @@ namespace DatabaseService;
 
 class User
 {
-	public static String SignIn(String email, String password)
+	public static String GetUserId(String email, String password)
 	{
 		System.Console.WriteLine("SignIn with email: " + email);
 		SqlConnection Connection = Database.createConnection();

@@ -1,3 +1,5 @@
+using BusinessLogic;
+
 namespace API.v1.Endpoints;
 
 class PostTokens
@@ -12,6 +14,7 @@ class PostTokens
 
 	public static TokensResponse Endpoint(PostTokensBody body)
 	{
-		return new TokensResponse("success", new Data.TokenSet("4420", "1111"));
+		TokenSet NewTokenSet = TokenSet.Create(new User(body.email, body.password).SignIn().Id!);
+		return new TokensResponse("success", NewTokenSet);
 	}
 }

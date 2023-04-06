@@ -10,7 +10,7 @@ public class SignIn
 
 		try
 		{
-			String UserID = DatabaseService.User.SignIn(body.email, body.password);
+			String UserID = DatabaseService.User.GetUserId(body.email, body.password);
 			int FamilyID = Authentication.CreateFamily.call();
 			RefreshTokensResponse RefreshTokensResponse = Authentication.SetupTokens.call(UserID, FamilyID);
 			signInResponse.refreshToken = RefreshTokensResponse.refreshToken;

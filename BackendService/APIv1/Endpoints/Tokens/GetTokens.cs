@@ -1,3 +1,4 @@
+using BusinessLogic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.v1.Endpoints;
@@ -12,8 +13,9 @@ class GetTokens
 		});
 	}
 
-	public static TokensResponse Endpoint(string accessToken)
+	public static TokensResponse Endpoint(string refreshToken)
 	{
-		return new TokensResponse("success", new Data.TokenSet("44354gbvg20", "1111"));
+		TokenSet NewTokenSet = new TokenSet(refreshToken).Refresh();
+		return new TokensResponse("success", NewTokenSet);
 	}
 }

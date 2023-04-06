@@ -1,3 +1,5 @@
+using BusinessLogic;
+
 namespace API.v1.Endpoints;
 
 class PostUsers
@@ -12,6 +14,7 @@ class PostUsers
 
 	public static PostUsersResponse Endpoint(PostUsersBody body)
 	{
-		return new PostUsersResponse("success", "1234");
+		User newUser = new User(body.email, body.password).SignUp();
+		return new PostUsersResponse("success", newUser.Id!);
 	}
 }
