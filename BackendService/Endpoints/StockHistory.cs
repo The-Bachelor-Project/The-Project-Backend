@@ -6,15 +6,16 @@ class StockHistory
 {
 	public static async Task<StockHistoryResponse> endpoint(StockHistoryBody body)
 	{
-		try
-		{
-			Data.StockHistory stockHistory = new Data.StockHistory(body.ticker, body.exchange, body.start_date, body.end_date, body.interval);
-			return new StockHistoryResponse("success", await DatabaseService.StockHistory.Get(stockHistory));
-		}
-		catch (Exception e)
-		{
-			throw e;
-		}
+		//try
+		//{
+		//	Data.StockHistory stockHistory = new Data.StockHistory(body.ticker, body.exchange, body.start_date, body.end_date, body.interval);
+		//	return new StockHistoryResponse("success", await DatabaseService.StockHistory.Get(stockHistory));
+		//}
+		//catch (Exception e)
+		//{
+		//	throw e;
+		//}
+		throw new NotImplementedException();
 	}
 }
 

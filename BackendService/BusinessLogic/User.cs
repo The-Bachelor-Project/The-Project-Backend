@@ -32,4 +32,9 @@ class User
 		Id = DatabaseService.User.GetUserId(Email, Password);
 		return this;
 	}
+
+	public void Delete()
+	{
+		throw new NotImplementedException();
+	}
 }

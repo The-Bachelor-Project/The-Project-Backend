@@ -7,7 +7,7 @@ public class TokenSet
 	public TokenSet(String refreshToken)
 	{
 		RefreshToken = refreshToken;
-		AccessToken = "accessToken";
+		AccessToken = "";
 	}
 	public TokenSet()
 	{
@@ -21,7 +21,6 @@ public class TokenSet
 
 		int FamilyID = Authentication.CreateFamily.call();
 		
-		SignInResponse signInResponse = new SignInResponse("", "", "");
 		RefreshTokensResponse RefreshTokensResponse = Authentication.SetupTokens.call(uid, FamilyID);
 		NewTokenSet.RefreshToken = RefreshTokensResponse.refreshToken;
 		NewTokenSet.AccessToken = RefreshTokensResponse.response;

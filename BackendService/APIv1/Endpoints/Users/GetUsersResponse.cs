@@ -1,4 +1,4 @@
-namespace API.v1.Endpoints;
+namespace API.v1;
 
 public class GetUsersResponse
 {

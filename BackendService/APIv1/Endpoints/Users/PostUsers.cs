@@ -1,6 +1,6 @@
 using BusinessLogic;
 
-namespace API.v1.Endpoints;
+namespace API.v1;
 
 class PostUsers
 {

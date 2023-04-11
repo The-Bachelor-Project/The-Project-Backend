@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.v1.Endpoints;
+namespace API.v1;
 class GetStockHistories
 {
 	public static void Setup(WebApplication app)
@@ -11,8 +11,9 @@ class GetStockHistories
 		});
 	}
 
-	public static GetStockHistoriesResponse Endpoint(string ticker, string exchange, string startDate, string endDate, string interval, string accessToken)
+	public static async Task<GetStockHistoriesResponse> Endpoint(string ticker, string exchange, string startDate, string endDate, string interval, string accessToken)
 	{
-		return new GetStockHistoriesResponse("success", new Data.StockHistory("1","2","3","4","5"));
+		Data.StockHistory Result = await (new Data.Fetcher.StockHistoryDaily()).usd(ticker, exchange, DateOnly.Parse(startDate), DateOnly.Parse(endDate));
+		return new GetStockHistoriesResponse("success", Result);
 	}
 }

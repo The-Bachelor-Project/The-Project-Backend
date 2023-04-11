@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.v1.Endpoints;
+namespace API.v1;
 
 class GetUsers
 {

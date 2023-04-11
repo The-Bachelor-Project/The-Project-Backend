@@ -4,38 +4,46 @@ namespace Data;
 
 public class StockHistory
 {
-	public StockHistory(string ticker, string exchange, String startDate, String endDate, String interval)
+	public StockHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, String interval)
 	{
-		this.ticker = ticker;
-		this.exchange = exchange;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.interval = interval;
-		this.history = new StockHistoryData[] { };
+		this.Ticker = ticker;
+		this.Exchange = exchange;
+		this.StartDate = startDate;
+		this.EndDate = endDate;
+		this.Interval = interval;
+		this.History = new StockHistoryData[] { };
 	}
 
-	public String ticker { get; set; }
-	public String exchange { get; set; }
-	public String startDate { get; set; }
-	public String endDate { get; set; }
-	public String interval { get; set; }
-	public StockHistoryData[] history { get; set; }
+	public StockHistory(string ticker, string exchange, String interval)
+	{
+		this.Ticker = ticker;
+		this.Exchange = exchange;
+		this.Interval = interval;
+		this.History = new StockHistoryData[] { };
+	}
+
+	public String Ticker { get; set; }
+	public String Exchange { get; set; }
+	public DateOnly? StartDate { get; set; }
+	public DateOnly? EndDate { get; set; }
+	public String Interval { get; set; }
+	public StockHistoryData[] History { get; set; }
 }
 
 public class StockHistoryData
 {
-	public StockHistoryData(string date, decimal open_price, decimal high_price, decimal low_price, decimal close_price)
+	public StockHistoryData(DateOnly date, decimal openPrice, decimal highPrice, decimal lowPrice, decimal closePrice)
 	{
-		this.date = date;
-		this.open_price = open_price;
-		this.high_price = high_price;
-		this.low_price = low_price;
-		this.close_price = close_price;
+		this.Date = date;
+		this.OpenPrice = openPrice;
+		this.HighPrice = highPrice;
+		this.LowPrice = lowPrice;
+		this.ClosePrice = closePrice;
 	}
 
-	public String date { get; set; }
-	public Decimal open_price { get; set; }
-	public Decimal high_price { get; set; }
-	public Decimal low_price { get; set; }
-	public Decimal close_price { get; set; }
+	public DateOnly Date { get; set; }
+	public Decimal OpenPrice { get; set; }
+	public Decimal HighPrice { get; set; }
+	public Decimal LowPrice { get; set; }
+	public Decimal ClosePrice { get; set; }
 }

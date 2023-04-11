@@ -1,4 +1,4 @@
-namespace API.v1.Endpoints;
+namespace API.v1;
 class PostPortfolios
 {
 	public static void Setup(WebApplication app)
