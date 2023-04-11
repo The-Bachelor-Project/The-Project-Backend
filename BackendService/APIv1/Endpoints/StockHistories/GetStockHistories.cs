@@ -5,9 +5,9 @@ class GetStockHistories
 {
 	public static void Setup(WebApplication app)
 	{
-		app.MapGet("/v1/stock-histories", ([FromQuery] string ticker, string exchange, string startDate, string endDate, string interval, string accessToken) =>
+		app.MapGet("/v1/stock-histories", async ([FromQuery] string ticker, string exchange, string startDate, string endDate, string interval, string accessToken) =>
 		{
-			return Results.Ok(Endpoint(ticker, exchange, startDate, endDate, interval, accessToken));
+			return Results.Ok(await Endpoint(ticker, exchange, startDate, endDate, interval, accessToken));
 		});
 	}
 

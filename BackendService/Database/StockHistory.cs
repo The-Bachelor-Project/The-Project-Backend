@@ -26,7 +26,7 @@ class StockHistory
 //
 		//	reader.Close();
 //
-		//	DateOnly startDate = DateOnly.Parse(history.StartDate);
+		//	DateOnly startDate = history.StartDate;
 		//	if (startDate < trackingDate)
 		//	{
 		//		await StockPricesUpdater.update(history.Ticker, history.Exchange, startDate);

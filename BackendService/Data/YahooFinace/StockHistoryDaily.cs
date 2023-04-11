@@ -11,31 +11,19 @@ public class StockHistoryDaily : IStockHistoryDaily
 
 	public async Task<StockHistory> usd(String ticker, String exchange, DateOnly startDate, DateOnly endDate)
 	{
+		System.Console.WriteLine("Fetching stock history for " + ticker + " on " + exchange + " from " + startDate + " to " + endDate);
 		int StartTime = Tools.TimeConverter.dateOnlyToUnix(startDate);
 		int EndTime = Tools.TimeConverter.dateOnlyToUnix(endDate);
 		String TickerExt = YfTranslator.getYfSymbol(ticker, exchange);
+
 		HttpClient Client = new HttpClient();
 		String Url = "https://query1.finance.yahoo.com/v7/finance/download/" + TickerExt + "?interval=1d&period1=" + StartTime + "&period2=" + EndTime;
+		//System.Console.WriteLine(Url);
+		HttpResponseMessage StockHistoryRes = await Client.GetAsync(Url);
 
-		HttpResponseMessage StockHistoryRes;
-
-		try{
-			System.Console.WriteLine("test 1");
-			HttpResponseMessage test = new HttpResponseMessage();
-			test = await Client.GetAsync(Url);
-			System.Console.WriteLine("test 2");
-			StockHistoryRes = test;
-			System.Console.WriteLine("test 3");
-		} catch(NotSupportedException){
-			System.Console.WriteLine("test 4");
+		if(StockHistoryRes.StatusCode == System.Net.HttpStatusCode.NotFound)
+		{
 			return new StockHistory(ticker, exchange, "daily");
-			System.Console.WriteLine("test 5");
-		}
-
-		if (StockHistoryRes.StatusCode == System.Net.HttpStatusCode.NotFound){
-			System.Console.WriteLine("test 6");
-			return new StockHistory(ticker, exchange, "daily");
-			System.Console.WriteLine("test 7");
 		}
 
 		String StockHistoryCsv = await StockHistoryRes.Content.ReadAsStringAsync();
@@ -56,14 +44,17 @@ public class StockHistoryDaily : IStockHistoryDaily
 
 		foreach(string Data in DataList){
 			String[] DataSplit = Data.Split(",");
-			StockHistoryData DataPoint = new StockHistoryData(
-				DateOnly.Parse(DataSplit[0]),
-				Decimal.Parse(DataSplit[1]),
-				Decimal.Parse(DataSplit[2]),
-				Decimal.Parse(DataSplit[3]),
-				Decimal.Parse(DataSplit[4])
-			);
-			Result.History = Result.History.Append(DataPoint).ToArray();
+			DateOnly Date = DateOnly.Parse(DataSplit[0]);
+			if(Date >= startDate && Date <= endDate){
+				StockHistoryData DataPoint = new StockHistoryData(
+					DateOnly.Parse(DataSplit[0]),
+					Decimal.Parse(DataSplit[1]),
+					Decimal.Parse(DataSplit[2]),
+					Decimal.Parse(DataSplit[3]),
+					Decimal.Parse(DataSplit[4])
+				);
+				Result.History = Result.History.Append(DataPoint).ToArray();
+			}
 		}
 
 		return Result;
