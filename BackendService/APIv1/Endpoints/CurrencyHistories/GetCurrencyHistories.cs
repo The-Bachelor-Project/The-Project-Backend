@@ -13,7 +13,7 @@ class GetCurrencyHistories
 
 	private static async Task<GetCurrencyHistoriesResponse> Endpoint(string currency, DateOnly startDate, DateOnly endDate, string accessToken)
 	{
-		Data.CurrencyHistory Result = await (new Data.YahooFinance.CurrencyHistory()).Usd(currency, startDate, endDate);
+		Data.CurrencyHistory Result = await (new Data.Fetcher.CurrencyHistory()).Usd(currency, startDate, endDate);
 		return new GetCurrencyHistoriesResponse("success", Result);
 	}
 }

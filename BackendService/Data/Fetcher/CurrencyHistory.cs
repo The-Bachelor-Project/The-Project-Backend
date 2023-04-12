@@ -1,5 +1,6 @@
 using System.Data.SqlClient;
 using Data.Interfaces;
+using Newtonsoft.Json;
 
 namespace Data.Fetcher;
 
@@ -29,7 +30,7 @@ public class CurrencyHistory : ICurrencyHistory
 			catch (Exception)
 			{
 				Data.CurrencyHistory FromYahoo = await (new Data.YahooFinance.CurrencyHistory()).Usd(currency, startDate.AddDays(-7), endDate);
-				//TODO save to DB from here instead of on yahoo implementation
+				_SaveCurrencyHistory(FromYahoo, true, true);
 				return FromYahoo;
 			}
 
@@ -38,16 +39,46 @@ public class CurrencyHistory : ICurrencyHistory
 			if (startDate < StartTrackingDate)
 			{
 				Data.CurrencyHistory FromYahooBefore = await (new Data.YahooFinance.CurrencyHistory()).Usd(currency, startDate.AddDays(-7), StartTrackingDate.AddDays(-1));
-				//SaveStockHistory(FromYahooBefore, true, false);
+				_SaveCurrencyHistory(FromYahooBefore, true, false);
 			}
 			if (endDate > EndTrackingDate)
 			{
 				Data.CurrencyHistory FromYahooAfter = await (new Data.YahooFinance.CurrencyHistory()).Usd(currency, EndTrackingDate.AddDays(1), endDate);
-				//SaveStockHistory(FromYahooAfter, false, true);
+				_SaveCurrencyHistory(FromYahooAfter, false, true);
 			}
 		}
 
 
 		return await (new Data.Database.CurrencyHistory()).Usd(currency, startDate, endDate);
+	}
+
+	void _SaveCurrencyHistory(Data.CurrencyHistory history, bool updateStartTrackingDate, bool updateEndTrackingDate)
+	{
+		System.Console.WriteLine(history.History.Length);
+		if (history.History.Length == 0)
+			return;
+		String InsertIntoCurrencyRatesQuery = "EXEC BulkJsonCurrencyRates @CurrencyRatesBulk, @Code";
+		SqlConnection Connection = new Data.Database.Connection().Create();
+		SqlCommand Command = new SqlCommand(InsertIntoCurrencyRatesQuery, Connection);
+		Command.Parameters.AddWithValue("@CurrencyRatesBulk", JsonConvert.SerializeObject(history.History));
+		Command.Parameters.AddWithValue("@Code", history.Currency);
+		Command.ExecuteNonQuery();
+
+		if (updateStartTrackingDate)
+		{
+			String updateStartTrackingDateQuery = "UPDATE Currencies SET start_tracking_date = @start_tracking_date WHERE code = @code";
+			Command = new SqlCommand(updateStartTrackingDateQuery, Connection);
+			Command.Parameters.AddWithValue("@code", history.Currency);
+			Command.Parameters.AddWithValue("@start_tracking_date", Tools.TimeConverter.dateOnlyToString(history.History.First().Date));
+			Command.ExecuteNonQuery();
+		}
+		if (updateEndTrackingDate)
+		{
+			String updateEndTrackingDateQuery = "UPDATE Currencies SET end_tracking_date = @end_tracking_date WHERE code = @code";
+			Command = new SqlCommand(updateEndTrackingDateQuery, Connection);
+			Command.Parameters.AddWithValue("@code", history.Currency);
+			Command.Parameters.AddWithValue("@end_tracking_date", Tools.TimeConverter.dateOnlyToString(history.History.Last().Date));
+			Command.ExecuteNonQuery();
+		}
 	}
 }

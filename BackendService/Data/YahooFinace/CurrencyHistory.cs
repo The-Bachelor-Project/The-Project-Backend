@@ -1,6 +1,4 @@
-using System.Data.SqlClient;
 using Data.Interfaces;
-using Newtonsoft.Json;
 
 namespace Data.YahooFinance;
 
@@ -21,17 +19,11 @@ class CurrencyHistory : ICurrencyHistory
 		String[] DataLines = StockHistoryCsv.Replace("\r", "").Split("\n");
 
 		Data.CurrencyHistory Result = new Data.CurrencyHistory(currency, startDate, endDate, "daily");
-		String InsertIntoCurrencyRatesQuery = "EXEC BulkJsonCurrencyRates @CurrencyRayesBulk, @Code";
 		for (int i = 1; i < DataLines.Length; i++)
 		{
 			String[] Data = DataLines[i].Split(",");
 			Result.History = Result.History.Append(new Data.CurrencyHistoryData(DateOnly.Parse(Data[0]), Decimal.Parse(Data[1]), Decimal.Parse(Data[2]), Decimal.Parse(Data[3]), Decimal.Parse(Data[4]))).ToArray();
 		}
-		SqlConnection Connection = DatabaseService.Database.createConnection();
-		SqlCommand Command = new SqlCommand(InsertIntoCurrencyRatesQuery, Connection);
-		Command.Parameters.AddWithValue("@CurrencyRayesBulk", JsonConvert.SerializeObject(Result.History));
-		Command.Parameters.AddWithValue("@Code", currency);
-		Command.ExecuteNonQuery();
 		return Result;
 	}
 }

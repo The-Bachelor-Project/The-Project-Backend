@@ -9,7 +9,7 @@ public class StockHistoryDaily : IStockHistoryDaily
 	{
 	}
 
-	public async Task<StockHistory> usd(String ticker, String exchange, DateOnly startDate, DateOnly endDate)
+	public async Task<StockHistory> Usd(String ticker, String exchange, DateOnly startDate, DateOnly endDate)
 	{
 		SqlConnection connection = DatabaseService.Database.createConnection();
 		String getStockHistoryQuery = "SELECT * FROM GetStockPrices(@ticker, @exchange, 'daily', @start_date, @end_date)";

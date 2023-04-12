@@ -11,7 +11,7 @@ public class StockHistoryDaily : IStockHistoryDaily
 	{
 	}
 
-	public async Task<StockHistory> usd(String ticker, String exchange, DateOnly startDate, DateOnly endDate)
+	public async Task<StockHistory> Usd(String ticker, String exchange, DateOnly startDate, DateOnly endDate)
 	{
 		SqlConnection connection = (new Database.Connection()).Create();
 		String getTrackingDateQuery = "SELECT start_tracking_date, end_tracking_date FROM Stocks WHERE ticker = @ticker AND exchange = @exchange";
@@ -31,8 +31,8 @@ public class StockHistoryDaily : IStockHistoryDaily
 			}
 			catch (Exception)
 			{
-				StockHistory FromYahoo = await (new Data.YahooFinance.StockHistoryDaily()).usd(ticker, exchange, startDate.AddDays(-7), endDate);
-				SaveStockHistory(FromYahoo, true, true);
+				StockHistory FromYahoo = await (new Data.YahooFinance.StockHistoryDaily()).Usd(ticker, exchange, startDate.AddDays(-7), endDate);
+				_SaveStockHistory(FromYahoo, true, true);
 				return FromYahoo;
 			}
 
@@ -40,22 +40,22 @@ public class StockHistoryDaily : IStockHistoryDaily
 
 			if (startDate < StartTrackingDate)
 			{
-				StockHistory FromYahooBefore = await (new Data.YahooFinance.StockHistoryDaily()).usd(ticker, exchange, startDate.AddDays(-7), StartTrackingDate.AddDays(-1));
-				SaveStockHistory(FromYahooBefore, true, false);
+				StockHistory FromYahooBefore = await (new Data.YahooFinance.StockHistoryDaily()).Usd(ticker, exchange, startDate.AddDays(-7), StartTrackingDate.AddDays(-1));
+				_SaveStockHistory(FromYahooBefore, true, false);
 			}
 			if (endDate > EndTrackingDate)
 			{
-				StockHistory FromYahooAfter = await (new Data.YahooFinance.StockHistoryDaily()).usd(ticker, exchange, EndTrackingDate.AddDays(1), endDate);
-				SaveStockHistory(FromYahooAfter, false, true);
+				StockHistory FromYahooAfter = await (new Data.YahooFinance.StockHistoryDaily()).Usd(ticker, exchange, EndTrackingDate.AddDays(1), endDate);
+				_SaveStockHistory(FromYahooAfter, false, true);
 			}
 		}
 
-		return await (new Data.Database.StockHistoryDaily()).usd(ticker, exchange, startDate, endDate);
+		return await (new Data.Database.StockHistoryDaily()).Usd(ticker, exchange, startDate, endDate);
 	}
 
 
 
-	void SaveStockHistory(StockHistory history, bool updateStartTrackingDate, bool updateEndTrackingDate)
+	void _SaveStockHistory(StockHistory history, bool updateStartTrackingDate, bool updateEndTrackingDate)
 	{
 		System.Console.WriteLine(history.History.Length);
 		if (history.History.Length == 0)
@@ -63,7 +63,7 @@ public class StockHistoryDaily : IStockHistoryDaily
 
 		String InsertIntoStockPricesQuery = "EXEC BulkJsonStockPrices @StockPricesBulk, @Ticker, @Exchange";
 		dynamic JsonStockPrices = JsonConvert.SerializeObject(history.History);
-		SqlConnection connection = DatabaseService.Database.createConnection();
+		SqlConnection connection = new Data.Database.Connection().Create();
 		SqlCommand command = new SqlCommand();
 
 		command = new SqlCommand(InsertIntoStockPricesQuery, connection);
@@ -76,7 +76,6 @@ public class StockHistoryDaily : IStockHistoryDaily
 		if (updateStartTrackingDate)
 		{
 			String updateStartTrackingDateQuery = "UPDATE Stocks SET start_tracking_date = @start_tracking_date WHERE ticker = @ticker AND exchange = @exchange";
-			connection = DatabaseService.Database.createConnection();
 			command = new SqlCommand(updateStartTrackingDateQuery, connection);
 			command.Parameters.AddWithValue("@ticker", history.Ticker);
 			command.Parameters.AddWithValue("@exchange", history.Exchange);
@@ -86,7 +85,6 @@ public class StockHistoryDaily : IStockHistoryDaily
 		if (updateEndTrackingDate)
 		{
 			String updateEndTrackingDateQuery = "UPDATE Stocks SET end_tracking_date = @end_tracking_date WHERE ticker = @ticker AND exchange = @exchange";
-			connection = DatabaseService.Database.createConnection();
 			command = new SqlCommand(updateEndTrackingDateQuery, connection);
 			command.Parameters.AddWithValue("@ticker", history.Ticker);
 			command.Parameters.AddWithValue("@exchange", history.Exchange);

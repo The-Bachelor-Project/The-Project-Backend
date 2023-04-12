@@ -9,7 +9,7 @@ public class StockHistoryDaily : IStockHistoryDaily
 	{
 	}
 
-	public async Task<StockHistory> usd(String ticker, String exchange, DateOnly startDate, DateOnly endDate)
+	public async Task<StockHistory> Usd(String ticker, String exchange, DateOnly startDate, DateOnly endDate)
 	{
 		System.Console.WriteLine("Fetching stock history for " + ticker + " on " + exchange + " from " + startDate + " to " + endDate);
 		int StartTime = Tools.TimeConverter.dateOnlyToUnix(startDate);
