@@ -1,11 +1,12 @@
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 using Data.Interfaces;
 
 namespace Data.Database;
 
 class StockProfile : IStockProfile
 {
-	public async Task<Data.StockProfile> Get(string ticker, string exchange)
+	public Task<Data.StockProfile> Get(string ticker, string exchange)
 	{
 		Data.StockProfile Profile = new Data.StockProfile();
 		Profile.Ticker = ticker;
@@ -32,6 +33,30 @@ class StockProfile : IStockProfile
 			throw new CouldNotGetStockException();
 		}
 
-		return Profile;
+		return Task.FromResult(Profile);
+	}
+
+	public Task<Data.StockProfile[]> Search(string query)
+	{
+		Data.StockProfile[] results = new Data.StockProfile[] { };
+		Regex regex = new Regex("[A-Za-z0-9]*[A-Za-z0-9]", RegexOptions.IgnoreCase);
+		MatchCollection matchedAuthors = regex.Matches(query);
+		String termTrimmed = matchedAuthors[0].Value.ToLower();
+		for (int i = 1; i < matchedAuthors.Count; i++)
+		{
+			termTrimmed += " " + matchedAuthors[i].Value.ToLower();
+		}
+
+		SqlConnection connection = new Connection().Create();
+		String SqlQuery = "SELECT TOP 100 * FROM Stocks WHERE tags LIKE @tags";
+		SqlCommand command = new SqlCommand(SqlQuery, connection);
+		command.Parameters.AddWithValue("@tags", "%" + query + "%");
+		SqlDataReader reader = command.ExecuteReader();
+		while (reader.Read())
+		{
+			results = results.Append(new Data.StockProfile((String)reader["ticker"], (String)reader["exchange"], (String)reader["company_name"])).ToArray();
+		}
+		reader.Close();
+		return Task.FromResult(results);
 	}
 }

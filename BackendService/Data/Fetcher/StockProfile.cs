@@ -53,4 +53,10 @@ class StockProfile : IStockProfile
 		tags += stockProfile.Name + ",";
 		return tags.ToLower();
 	}
+
+	public async Task<Data.StockProfile[]> Search(string query)
+	{
+		await new Data.YahooFinance.StockProfile().Search(query);
+		return await new Data.Database.StockProfile().Search(query);
+	}
 }

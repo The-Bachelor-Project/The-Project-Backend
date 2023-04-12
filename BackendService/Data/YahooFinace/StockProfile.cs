@@ -1,3 +1,4 @@
+using System.Data.SqlClient;
 using Data.Interfaces;
 using Newtonsoft.Json.Linq;
 
@@ -53,5 +54,43 @@ class StockProfile : IStockProfile
 		return result;
 
 		throw new NotImplementedException();
+	}
+
+	public async Task<Data.StockProfile[]> Search(string query)
+	{
+		HttpClient Client = new HttpClient();
+		HttpResponseMessage AutoCompleteRes = await Client.GetAsync("https://query1.finance.yahoo.com/v6/finance/autocomplete?region=US&lang=en&query=" + query);
+		String AutoCompleteResJson = await AutoCompleteRes.Content.ReadAsStringAsync();
+		dynamic AutoComplete = JObject.Parse(AutoCompleteResJson);
+
+		JArray Results = AutoComplete.ResultSet.Result;
+
+		Data.StockProfile[] ResultStocks = new Data.StockProfile[] { };
+
+		foreach (dynamic res in Results)
+		{
+			if (res.type == "S" || res.type == "s")
+			{
+				string exchange = "";
+				if (YfTranslator.stockAutocomplete.TryGetValue("" + res.exch, out exchange))
+				{
+					String ticker = ("" + res.symbol).Split(".")[0];
+					ResultStocks = ResultStocks.Append(await (new Data.Fetcher.StockProfile()).Get(ticker, exchange)).ToArray();
+				}
+				else
+				{
+					using (SqlConnection connection = DatabaseService.Database.createConnection()) //TODO: This is just for development. Remove before production.
+					{
+						String SqlQuery = "INSERT INTO MissingExchanges (exchange, disp, stock) VALUES (@exchange, @disp, @stock)";
+						SqlCommand command = new SqlCommand(SqlQuery, connection);
+						command.Parameters.AddWithValue("@exchange", "" + res.exch);
+						command.Parameters.AddWithValue("@disp", "" + res.exchDisp);
+						command.Parameters.AddWithValue("@stock", "" + res.symbol);
+						command.ExecuteNonQuery();
+					}
+				}
+			}
+		}
+		return ResultStocks;
 	}
 }
