@@ -6,16 +6,17 @@ class CurrencyRatesHistory
 {
 	public static async Task<CurrencyRatesHistoryResponse> endpoint(CurrencyRatesHistoryBody body)
 	{
-		try
-		{
-			Data.CurrencyHistory CurrencyHistory = new Data.CurrencyHistory(body.currency.ToUpper(), body.start_date, body.end_date, body.interval);
-			return new CurrencyRatesHistoryResponse("success", await DatabaseService.CurrencyRatesHistory.Get(CurrencyHistory));
-		}
-		catch (Exception e)
-		{
-			System.Console.WriteLine(e.StackTrace);
-			throw e;
-		}
+		//try
+		//{
+		//	Data.CurrencyHistory CurrencyHistory = new Data.CurrencyHistory(body.currency.ToUpper(), body.start_date, body.end_date, body.interval);
+		//	return new CurrencyRatesHistoryResponse("success", await DatabaseService.CurrencyRatesHistory.Get(CurrencyHistory));
+		//}
+		//catch (Exception e)
+		//{
+		//	System.Console.WriteLine(e.StackTrace);
+		//	throw e;
+		//}
+		throw new NotImplementedException();
 	}
 }
 
