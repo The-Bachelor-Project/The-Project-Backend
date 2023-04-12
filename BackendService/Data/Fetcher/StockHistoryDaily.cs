@@ -1,5 +1,7 @@
 using System.Data.SqlClient;
 using Data.Interfaces;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Data.Fetcher;
 
@@ -29,7 +31,7 @@ public class StockHistoryDaily : IStockHistoryDaily
 			}
 			catch (Exception)
 			{
-				StockHistory FromYahoo = await (new Data.YahooFinance.StockHistoryDaily()).usd(ticker,exchange, startDate.AddDays(-7), endDate);
+				StockHistory FromYahoo = await (new Data.YahooFinance.StockHistoryDaily()).usd(ticker, exchange, startDate.AddDays(-7), endDate);
 				SaveStockHistory(FromYahoo, true, true);
 				return FromYahoo;
 			}
@@ -38,7 +40,7 @@ public class StockHistoryDaily : IStockHistoryDaily
 
 			if (startDate < StartTrackingDate)
 			{
-				StockHistory FromYahooBefore = await (new Data.YahooFinance.StockHistoryDaily()).usd(ticker,exchange, startDate.AddDays(-7), StartTrackingDate.AddDays(-1));
+				StockHistory FromYahooBefore = await (new Data.YahooFinance.StockHistoryDaily()).usd(ticker, exchange, startDate.AddDays(-7), StartTrackingDate.AddDays(-1));
 				SaveStockHistory(FromYahooBefore, true, false);
 			}
 			if (endDate > EndTrackingDate)
@@ -47,51 +49,47 @@ public class StockHistoryDaily : IStockHistoryDaily
 				SaveStockHistory(FromYahooAfter, false, true);
 			}
 		}
-		
+
 		return await (new Data.Database.StockHistoryDaily()).usd(ticker, exchange, startDate, endDate);
 	}
 
 
 
-	void SaveStockHistory(StockHistory history, bool updateStartTrackingDate, bool updateEndTrackingDate){
-		if(history.History.Length == 0)
+	void SaveStockHistory(StockHistory history, bool updateStartTrackingDate, bool updateEndTrackingDate)
+	{
+		System.Console.WriteLine(history.History.Length);
+		if (history.History.Length == 0)
 			return;
 
-		String insertIntoStockPricesQuery = "INSERT INTO StockPrices VALUES (@ticker, @exchange, @date, @open_price, @high_price, @low_price, @close_price, @volume)";
+		String InsertIntoStockPricesQuery = "EXEC BulkJsonStockPrices @StockPricesBulk, @Ticker, @Exchange";
 		//TODO Use something like INSERT OR UPDATE instead of just INSERT (Maybe MERGE)
 		//TODO Also look into making a DB function that takes a json array to speed up the process
-
+		dynamic JsonStockPrices = JsonConvert.SerializeObject(history.History);
 		SqlConnection connection = DatabaseService.Database.createConnection();
-		foreach(StockHistoryData data in history.History)
-		{
+		SqlCommand command = new SqlCommand();
+
+		command = new SqlCommand(InsertIntoStockPricesQuery, connection);
+		command.Parameters.AddWithValue("@StockPricesBulk", JsonStockPrices);
+		command.Parameters.AddWithValue("@Ticker", history.Ticker);
+		command.Parameters.AddWithValue("@Exchange", history.Exchange);
+		command.ExecuteNonQuery();
 
 
-			SqlCommand command = new SqlCommand(insertIntoStockPricesQuery, connection);
-			command.Parameters.AddWithValue("@ticker", history.Ticker);
-			command.Parameters.AddWithValue("@exchange", history.Exchange);
-			command.Parameters.AddWithValue("@date", Tools.TimeConverter.dateOnlyToString(data.Date));
-			command.Parameters.AddWithValue("@open_price", data.OpenPrice);
-			command.Parameters.AddWithValue("@high_price", data.HighPrice);
-			command.Parameters.AddWithValue("@low_price", data.LowPrice);
-			command.Parameters.AddWithValue("@close_price", data.ClosePrice);
-			command.Parameters.AddWithValue("@volume", 0);
-			command.ExecuteNonQuery();
-		}
-		if(updateStartTrackingDate)
+		if (updateStartTrackingDate)
 		{
 			String updateStartTrackingDateQuery = "UPDATE Stocks SET start_tracking_date = @start_tracking_date WHERE ticker = @ticker AND exchange = @exchange";
 			connection = DatabaseService.Database.createConnection();
-			SqlCommand command = new SqlCommand(updateStartTrackingDateQuery, connection);
+			command = new SqlCommand(updateStartTrackingDateQuery, connection);
 			command.Parameters.AddWithValue("@ticker", history.Ticker);
 			command.Parameters.AddWithValue("@exchange", history.Exchange);
 			command.Parameters.AddWithValue("@start_tracking_date", Tools.TimeConverter.dateOnlyToString(history.History.First().Date));
 			command.ExecuteNonQuery();
 		}
-		if(updateEndTrackingDate)
+		if (updateEndTrackingDate)
 		{
 			String updateEndTrackingDateQuery = "UPDATE Stocks SET end_tracking_date = @end_tracking_date WHERE ticker = @ticker AND exchange = @exchange";
 			connection = DatabaseService.Database.createConnection();
-			SqlCommand command = new SqlCommand(updateEndTrackingDateQuery, connection);
+			command = new SqlCommand(updateEndTrackingDateQuery, connection);
 			command.Parameters.AddWithValue("@ticker", history.Ticker);
 			command.Parameters.AddWithValue("@exchange", history.Exchange);
 			command.Parameters.AddWithValue("@end_tracking_date", Tools.TimeConverter.dateOnlyToString(history.History.Last().Date));

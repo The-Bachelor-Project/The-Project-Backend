@@ -21,7 +21,7 @@ public class StockHistoryDaily : IStockHistoryDaily
 		//System.Console.WriteLine(Url);
 		HttpResponseMessage StockHistoryRes = await Client.GetAsync(Url);
 
-		if(StockHistoryRes.StatusCode == System.Net.HttpStatusCode.NotFound)
+		if (StockHistoryRes.StatusCode == System.Net.HttpStatusCode.NotFound)
 		{
 			return new StockHistory(ticker, exchange, "daily");
 		}
@@ -42,10 +42,12 @@ public class StockHistoryDaily : IStockHistoryDaily
 		List<string> DataList = DataLines.ToList();
 		DataList.RemoveAt(0);
 
-		foreach(string Data in DataList){
+		foreach (string Data in DataList)
+		{
 			String[] DataSplit = Data.Split(",");
 			DateOnly Date = DateOnly.Parse(DataSplit[0]);
-			if(Date >= startDate && Date <= endDate){
+			if (Date >= startDate && Date <= endDate)
+			{
 				StockHistoryData DataPoint = new StockHistoryData(
 					DateOnly.Parse(DataSplit[0]),
 					Decimal.Parse(DataSplit[1]),
