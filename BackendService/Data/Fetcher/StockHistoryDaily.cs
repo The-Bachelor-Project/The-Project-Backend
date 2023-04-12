@@ -62,8 +62,6 @@ public class StockHistoryDaily : IStockHistoryDaily
 			return;
 
 		String InsertIntoStockPricesQuery = "EXEC BulkJsonStockPrices @StockPricesBulk, @Ticker, @Exchange";
-		//TODO Use something like INSERT OR UPDATE instead of just INSERT (Maybe MERGE)
-		//TODO Also look into making a DB function that takes a json array to speed up the process
 		dynamic JsonStockPrices = JsonConvert.SerializeObject(history.History);
 		SqlConnection connection = DatabaseService.Database.createConnection();
 		SqlCommand command = new SqlCommand();
