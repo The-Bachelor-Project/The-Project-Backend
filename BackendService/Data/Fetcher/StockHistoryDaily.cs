@@ -29,7 +29,7 @@ public class StockHistoryDaily : IStockHistoryDaily
 			}
 			catch (Exception)
 			{
-				StockHistory FromYahoo = await (new Data.YahooFinance.StockHistoryDaily()).usd(ticker,exchange, startDate, endDate);
+				StockHistory FromYahoo = await (new Data.YahooFinance.StockHistoryDaily()).usd(ticker,exchange, startDate.AddDays(-7), endDate);
 				SaveStockHistory(FromYahoo, true, true);
 				return FromYahoo;
 			}
@@ -38,7 +38,7 @@ public class StockHistoryDaily : IStockHistoryDaily
 
 			if (startDate < StartTrackingDate)
 			{
-				StockHistory FromYahooBefore = await (new Data.YahooFinance.StockHistoryDaily()).usd(ticker,exchange, startDate, StartTrackingDate.AddDays(-1));
+				StockHistory FromYahooBefore = await (new Data.YahooFinance.StockHistoryDaily()).usd(ticker,exchange, startDate.AddDays(-7), StartTrackingDate.AddDays(-1));
 				SaveStockHistory(FromYahooBefore, true, false);
 			}
 			if (endDate > EndTrackingDate)
