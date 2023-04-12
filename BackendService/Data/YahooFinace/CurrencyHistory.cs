@@ -1,5 +1,6 @@
 using System.Data.SqlClient;
 using Data.Interfaces;
+using Newtonsoft.Json;
 
 namespace Data.YahooFinance;
 
@@ -20,33 +21,17 @@ class CurrencyHistory : ICurrencyHistory
 		String[] DataLines = StockHistoryCsv.Replace("\r", "").Split("\n");
 
 		Data.CurrencyHistory Result = new Data.CurrencyHistory(currency, startDate, endDate, "daily");
-		String InsertIntoCurrencyRatesQuery = "INSERT INTO CurrencyRatesUSD VALUES (@code, @date, @open_price, @high_price, @low_price, @close_price)";
-		foreach (String Line in DataLines)
+		String InsertIntoCurrencyRatesQuery = "EXEC BulkJsonCurrencyRates @CurrencyRayesBulk, @Code";
+		for (int i = 1; i < DataLines.Length; i++)
 		{
-			String[] Data = Line.Split(",");
+			String[] Data = DataLines[i].Split(",");
 			Result.History = Result.History.Append(new Data.CurrencyHistoryData(DateOnly.Parse(Data[0]), Decimal.Parse(Data[1]), Decimal.Parse(Data[2]), Decimal.Parse(Data[3]), Decimal.Parse(Data[4]))).ToArray();
-
-			using (SqlConnection Connection = new Database.Connection().Create())
-			{
-				//FIXME TODO Look into using a BULK INSERT query, you go Frederik
-				SqlCommand Command = new SqlCommand(InsertIntoCurrencyRatesQuery, Connection);
-				Command.Parameters.AddWithValue("@code", currency);
-				Command.Parameters.AddWithValue("@date", Data[0]);
-				Command.Parameters.AddWithValue("@open_price", Decimal.Parse(Data[1]));
-				Command.Parameters.AddWithValue("@high_price", Decimal.Parse(Data[2]));
-				Command.Parameters.AddWithValue("@low_price", Decimal.Parse(Data[3]));
-				Command.Parameters.AddWithValue("@close_price", Decimal.Parse(Data[4]));
-				Command.Parameters.AddWithValue("@volume", int.Parse(Data[6]));
-				try
-				{
-					Command.ExecuteNonQuery();
-				}
-				catch (Exception)
-				{
-				}
-			}
 		}
-
+		SqlConnection Connection = DatabaseService.Database.createConnection();
+		SqlCommand Command = new SqlCommand(InsertIntoCurrencyRatesQuery, Connection);
+		Command.Parameters.AddWithValue("@CurrencyRayesBulk", JsonConvert.SerializeObject(Result.History));
+		Command.Parameters.AddWithValue("@Code", currency);
+		Command.ExecuteNonQuery();
 		return Result;
 	}
 }
