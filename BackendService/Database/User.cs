@@ -19,7 +19,8 @@ class User
 			Reader.Close();
 			//TODO Check password
 
-			if(DbPassword != Tools.Password.Hash(password)){
+			if (DbPassword != Tools.Password.Hash(password))
+			{
 				throw new WrongPasswordException("The password is incorrect");
 			}
 

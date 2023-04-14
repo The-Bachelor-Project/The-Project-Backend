@@ -36,7 +36,30 @@ public class User
 
 	public User SignIn()
 	{
-		Id = DatabaseService.User.GetUserId(Email, Password);
+		System.Console.WriteLine("SignIn with email: " + Email);
+		SqlConnection Connection = DatabaseService.Database.createConnection();
+		String Query = "SELECT * FROM Accounts WHERE email = @email";
+		SqlCommand Command = new SqlCommand(Query, Connection);
+		Command.Parameters.AddWithValue("@email", Email);
+		SqlDataReader Reader = Command.ExecuteReader();
+		if (Reader.Read())
+		{
+			String DbPassword = Reader["password"].ToString()!;
+			String UserID = Reader["user_id"].ToString()!;
+			Reader.Close();
+			//TODO Check password
+
+			if (DbPassword != Tools.Password.Hash(Password))
+			{
+				throw new WrongPasswordException("The password is incorrect");
+			}
+
+			Id = UserID;
+		}
+		else
+		{
+			throw new UserDoesNotExistException("No user with the email \"" + Email + "\" was found");
+		}
 		return this;
 	}
 
