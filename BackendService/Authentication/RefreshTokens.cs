@@ -4,30 +4,32 @@ namespace Authentication;
 
 class RefreshTokens
 {
-	public static BackendService.RefreshTokensResponse all(String refreshToken)
+	public static BusinessLogic.TokenSet all(String refreshToken)
 	{
 		ValidFunctionResponse ValidFunctionResponse = IsRefreshValid(refreshToken);
 		if (ValidFunctionResponse.isValid == 1)
 		{
-			BackendService.RefreshTokensResponse RefreshTokensResponse = SetupTokens.call(ValidFunctionResponse.userID, ValidFunctionResponse.familyID);
-			return RefreshTokensResponse;
+			BusinessLogic.TokenSet TokenSet = SetupTokens.call(ValidFunctionResponse.userID, ValidFunctionResponse.familyID);
+			return TokenSet;
 		}
 		else if (ValidFunctionResponse.isValid == 0)
 		{
-			BackendService.RefreshTokensResponse RefreshTokensResponse = new BackendService.RefreshTokensResponse("is_expired", "", "");
-			return RefreshTokensResponse;
+			//FIXME: Error not being handled
+			BusinessLogic.TokenSet TokenSet = new BusinessLogic.TokenSet("is_expired", "");
+			return TokenSet;
 		}
 		else
 		{
-			BackendService.RefreshTokensResponse RefreshTokensResponse = new BackendService.RefreshTokensResponse("error", "", "");
-			return RefreshTokensResponse;
+			//FIXME: Error not being handled
+			BusinessLogic.TokenSet TokenSet = new BusinessLogic.TokenSet("error", "");
+			return TokenSet;
 		}
 	}
 
 	public static ValidFunctionResponse IsRefreshValid(String refreshToken)
 	{
 		String CheckIfValidQuery = "SELECT * FROM CheckIfRefreshIsValid(@RefreshToken, @UnixNow) AS IsValid";
-		SqlConnection Connection = DatabaseService.Database.createConnection();
+		SqlConnection Connection = new Data.Database.Connection().Create();
 		SqlCommand Command = new SqlCommand(CheckIfValidQuery, Connection);
 		Command.Parameters.AddWithValue("@RefreshToken", refreshToken);
 		Command.Parameters.AddWithValue("@UnixNow", Tools.TimeConverter.dateTimeToUnix(DateTime.Now));
@@ -62,7 +64,7 @@ class RefreshTokens
 	private static void InvalidateFamily(int familyID)
 	{
 		String InvalidateFamilyQuery = "UPDATE TokenFamily SET valid = 0 WHERE id = @family_id";
-		SqlConnection Connection = DatabaseService.Database.createConnection();
+		SqlConnection Connection = new Data.Database.Connection().Create();
 		SqlCommand Command = new SqlCommand(InvalidateFamilyQuery, Connection);
 		Command.Parameters.AddWithValue("@family_id", familyID);
 		try
