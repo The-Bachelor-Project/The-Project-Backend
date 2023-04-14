@@ -79,7 +79,7 @@ class StockProfile : IStockProfile
 				}
 				else
 				{
-					using (SqlConnection connection = DatabaseService.Database.createConnection()) //TODO: This is just for development. Remove before production.
+					using (SqlConnection connection = new Data.Database.Connection().Create()) //TODO: This is just for development. Remove before production.
 					{
 						String SqlQuery = "INSERT INTO MissingExchanges (exchange, disp, stock) VALUES (@exchange, @disp, @stock)";
 						SqlCommand command = new SqlCommand(SqlQuery, connection);

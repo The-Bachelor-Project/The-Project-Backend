@@ -22,22 +22,37 @@ public class User
 
 	public User SignUp()
 	{
-		try
+		SqlConnection Connection = new Data.Database.Connection().Create();
+		String GetEmailQuery = "SELECT email FROM Accounts WHERE email = @email";
+		SqlCommand Command = new SqlCommand(GetEmailQuery, Connection);
+		Command.Parameters.AddWithValue("@email", Email);
+		SqlDataReader Reader = Command.ExecuteReader();
+		if (!Reader.Read())
 		{
-			Id = DatabaseService.User.SignUp(Email, Password);
+			Reader.Close();
+			String UID = Tools.RandomString.Generate(32);
+			String SignUpQuery = "INSERT INTO Accounts (user_id, email, password) VALUES (@user_id, @email, @password)";
+			Command = new SqlCommand(SignUpQuery, Connection);
+			Command.Parameters.AddWithValue("@user_id", UID);
+			Command.Parameters.AddWithValue("@email", Email);
+			Command.Parameters.AddWithValue("@password", Tools.Password.Hash(Password));
+			try
+			{
+				Command.ExecuteNonQuery();
+			}
+			catch (Exception e)
+			{
+				System.Console.WriteLine(e);
+			}
+			return this;
 		}
-		catch (Exception e)
-		{
-			System.Console.WriteLine(e);
-		}
-
-		return this;
+		throw new UserAlreadyExist();
 	}
 
 	public User SignIn()
 	{
 		System.Console.WriteLine("SignIn with email: " + Email);
-		SqlConnection Connection = DatabaseService.Database.createConnection();
+		SqlConnection Connection = new Data.Database.Connection().Create();
 		String Query = "SELECT * FROM Accounts WHERE email = @email";
 		SqlCommand Command = new SqlCommand(Query, Connection);
 		Command.Parameters.AddWithValue("@email", Email);

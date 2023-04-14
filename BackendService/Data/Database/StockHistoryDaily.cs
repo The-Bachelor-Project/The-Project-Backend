@@ -11,7 +11,7 @@ public class StockHistoryDaily : IStockHistoryDaily
 
 	public async Task<StockHistory> Usd(String ticker, String exchange, DateOnly startDate, DateOnly endDate)
 	{
-		SqlConnection connection = DatabaseService.Database.createConnection();
+		SqlConnection connection = new Data.Database.Connection().Create();
 		String getStockHistoryQuery = "SELECT * FROM GetStockPrices(@ticker, @exchange, 'daily', @start_date, @end_date)";
 		SqlCommand command = new SqlCommand(getStockHistoryQuery, connection);
 		command.Parameters.AddWithValue("@ticker", ticker);
