@@ -5,6 +5,11 @@ using BackendService;
 
 public class TokenSet
 {
+	public TokenSet(String refreshToken, String accessToken)
+	{
+		RefreshToken = refreshToken;
+		AccessToken = accessToken;
+	}
 	public TokenSet(String accessToken)
 	{
 		AccessToken = accessToken;
@@ -22,24 +27,26 @@ public class TokenSet
 		return this;
 	}
 
+
+
 	public static TokenSet Create(String uid)
 	{
 		TokenSet NewTokenSet = new TokenSet();
 
 		int FamilyID = Authentication.CreateFamily.call();
 
-		RefreshTokensResponse RefreshTokensResponse = Authentication.SetupTokens.call(uid, FamilyID);
-		NewTokenSet.RefreshToken = RefreshTokensResponse.refreshToken;
-		NewTokenSet.AccessToken = RefreshTokensResponse.response;
+		TokenSet TokenSet = Authentication.SetupTokens.call(uid, FamilyID);
+		NewTokenSet.RefreshToken = TokenSet.RefreshToken;
+		NewTokenSet.AccessToken = TokenSet.AccessToken;
 
 		return NewTokenSet;
 	}
 
 	public TokenSet Refresh()
 	{
-		BackendService.RefreshTokensResponse RefreshTokensResponse = Authentication.RefreshTokens.all(RefreshToken!);
-		RefreshToken = RefreshTokensResponse.refreshToken;
-		AccessToken = RefreshTokensResponse.accessToken;
+		BusinessLogic.TokenSet TokenSet = Authentication.RefreshTokens.all(RefreshToken!);
+		RefreshToken = TokenSet.RefreshToken;
+		AccessToken = TokenSet.AccessToken;
 		return this;
 	}
 

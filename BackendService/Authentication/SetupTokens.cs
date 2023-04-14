@@ -2,7 +2,7 @@ using System.Data.SqlClient;
 namespace Authentication;
 class SetupTokens
 {
-	public static BackendService.RefreshTokensResponse call(String UID, int familyID)
+	public static BusinessLogic.TokenSet call(String UID, int familyID)
 	{
 		int RefreshExpirationUnix = Authentication.Expiration.GenerateRefresh((24 * 7));
 		int AccessExpirationUnix = Authentication.Expiration.GenerateAccess(30);
@@ -24,21 +24,23 @@ class SetupTokens
 			Boolean SuccessfulUpdate = UpdateValidRefresh(RefreshToken, familyID);
 			if (SuccessfulUpdate)
 			{
-				BackendService.RefreshTokensResponse RefreshTokensResponse = new BackendService.RefreshTokensResponse("success", RefreshToken, AccessToken);
-				return RefreshTokensResponse;
+				BusinessLogic.TokenSet TokenSet = new BusinessLogic.TokenSet(RefreshToken, AccessToken);
+				return TokenSet;
 			}
 			else
 			{
-				BackendService.RefreshTokensResponse RefreshTokensResponse = new BackendService.RefreshTokensResponse("error", "", "");
-				return RefreshTokensResponse;
+				//FIXME: Error not being handled
+				BusinessLogic.TokenSet TokenSet = new BusinessLogic.TokenSet("error", "");
+				return TokenSet;
 			}
 
 		}
 		catch (Exception e)
 		{
+			//FIXME: Error not being handled
 			System.Console.WriteLine(e);
-			BackendService.RefreshTokensResponse RefreshTokensResponse = new BackendService.RefreshTokensResponse("error", "", "");
-			return RefreshTokensResponse;
+			BusinessLogic.TokenSet TokenSet = new BusinessLogic.TokenSet("error", "");
+			return TokenSet;
 		}
 	}
 

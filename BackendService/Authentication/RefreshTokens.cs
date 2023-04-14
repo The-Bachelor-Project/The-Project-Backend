@@ -4,23 +4,25 @@ namespace Authentication;
 
 class RefreshTokens
 {
-	public static BackendService.RefreshTokensResponse all(String refreshToken)
+	public static BusinessLogic.TokenSet all(String refreshToken)
 	{
 		ValidFunctionResponse ValidFunctionResponse = IsRefreshValid(refreshToken);
 		if (ValidFunctionResponse.isValid == 1)
 		{
-			BackendService.RefreshTokensResponse RefreshTokensResponse = SetupTokens.call(ValidFunctionResponse.userID, ValidFunctionResponse.familyID);
-			return RefreshTokensResponse;
+			BusinessLogic.TokenSet TokenSet = SetupTokens.call(ValidFunctionResponse.userID, ValidFunctionResponse.familyID);
+			return TokenSet;
 		}
 		else if (ValidFunctionResponse.isValid == 0)
 		{
-			BackendService.RefreshTokensResponse RefreshTokensResponse = new BackendService.RefreshTokensResponse("is_expired", "", "");
-			return RefreshTokensResponse;
+			//FIXME: Error not being handled
+			BusinessLogic.TokenSet TokenSet = new BusinessLogic.TokenSet("is_expired", "");
+			return TokenSet;
 		}
 		else
 		{
-			BackendService.RefreshTokensResponse RefreshTokensResponse = new BackendService.RefreshTokensResponse("error", "", "");
-			return RefreshTokensResponse;
+			//FIXME: Error not being handled
+			BusinessLogic.TokenSet TokenSet = new BusinessLogic.TokenSet("error", "");
+			return TokenSet;
 		}
 	}
 
