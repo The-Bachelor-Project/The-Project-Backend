@@ -1,6 +1,6 @@
 using System.Data.SqlClient;
 
-namespace DatabaseService;
+namespace Data.Database;
 
 class Exchange
 {

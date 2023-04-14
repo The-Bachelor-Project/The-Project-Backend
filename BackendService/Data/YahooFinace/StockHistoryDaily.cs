@@ -28,7 +28,7 @@ public class StockHistoryDaily : IStockHistoryDaily
 
 		String StockHistoryCsv = await StockHistoryRes.Content.ReadAsStringAsync();
 		String[] DataLines = StockHistoryCsv.Replace("\r", "").Split("\n");
-		String CurrencySymbol = DatabaseService.Exchange.GetCurrency(exchange);
+		String CurrencySymbol = Data.Database.Exchange.GetCurrency(exchange);
 
 		//TODO update so the currency converter just returns ones when usd to usd, and then drop DoCurrencyConvert bool
 
