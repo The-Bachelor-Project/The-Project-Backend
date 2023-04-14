@@ -9,7 +9,7 @@ class SetupTokens
 		String RefreshToken = Tools.RandomString.Generate(128);
 		String AccessToken = Tools.RandomString.Generate(128);
 		String CreateTokenRecord = "INSERT INTO Tokens VALUES (@user_id, @refresh_token, @refresh_expiration, @access_token, @access_expiration, @family)";
-		SqlConnection Connection = DatabaseService.Database.createConnection();
+		SqlConnection Connection = new Data.Database.Connection().Create();
 		SqlCommand Command = new SqlCommand(CreateTokenRecord, Connection);
 		Command.Parameters.AddWithValue("@user_id", UID);
 		Command.Parameters.AddWithValue("@refresh_token", RefreshToken);
@@ -47,7 +47,7 @@ class SetupTokens
 	private static Boolean UpdateValidRefresh(String refreshToken, int familyID)
 	{
 		String UpdateValidRefreshQuery = "UPDATE TokenFamily SET valid_refresh = @refreshToken WHERE id = @familyID";
-		SqlConnection Connection = DatabaseService.Database.createConnection();
+		SqlConnection Connection = new Data.Database.Connection().Create();
 		SqlCommand Command = new SqlCommand(UpdateValidRefreshQuery, Connection);
 		Command.Parameters.AddWithValue("@refreshToken", refreshToken);
 		Command.Parameters.AddWithValue("@familyID", familyID);

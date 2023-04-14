@@ -29,7 +29,7 @@ class RefreshTokens
 	public static ValidFunctionResponse IsRefreshValid(String refreshToken)
 	{
 		String CheckIfValidQuery = "SELECT * FROM CheckIfRefreshIsValid(@RefreshToken, @UnixNow) AS IsValid";
-		SqlConnection Connection = DatabaseService.Database.createConnection();
+		SqlConnection Connection = new Data.Database.Connection().Create();
 		SqlCommand Command = new SqlCommand(CheckIfValidQuery, Connection);
 		Command.Parameters.AddWithValue("@RefreshToken", refreshToken);
 		Command.Parameters.AddWithValue("@UnixNow", Tools.TimeConverter.dateTimeToUnix(DateTime.Now));
@@ -64,7 +64,7 @@ class RefreshTokens
 	private static void InvalidateFamily(int familyID)
 	{
 		String InvalidateFamilyQuery = "UPDATE TokenFamily SET valid = 0 WHERE id = @family_id";
-		SqlConnection Connection = DatabaseService.Database.createConnection();
+		SqlConnection Connection = new Data.Database.Connection().Create();
 		SqlCommand Command = new SqlCommand(InvalidateFamilyQuery, Connection);
 		Command.Parameters.AddWithValue("@family_id", familyID);
 		try
