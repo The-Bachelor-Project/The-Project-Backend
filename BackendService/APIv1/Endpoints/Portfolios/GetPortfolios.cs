@@ -6,7 +6,7 @@ class GetPortfolios
 {
 	public static void Setup(WebApplication app)
 	{
-		app.MapGet("/v1/portfolios", ([FromQuery] string id, string accessToken) =>
+		app.MapGet("/v1/portfolios", ([FromQuery] string? id, string accessToken) =>
 		{
 			return Results.Ok(Endpoint(id, accessToken));
 		});
@@ -14,8 +14,15 @@ class GetPortfolios
 
 	public static GetPortfoliosResponse Endpoint(string id, string accessToken)
 	{
-		List<Data.Portfolio> portfolios = new List<Data.Portfolio>();
-		portfolios.Add(new Data.Portfolio("name", id, "currency", (decimal)0.0, true));
-		return new GetPortfoliosResponse("success", portfolios[0]);
+		BusinessLogic.User user = new BusinessLogic.TokenSet(accessToken).GetUser();
+		BusinessLogic.Portfolio portfolio = user.GetPortfolio(id);
+		return new GetPortfoliosResponse("success", new List<BusinessLogic.Portfolio> { portfolio });
+	}
+
+	public static GetPortfoliosResponse Endpoint(string accessToken)
+	{
+		BusinessLogic.User user = new BusinessLogic.TokenSet(accessToken).GetUser();
+		List<BusinessLogic.Portfolio> portfolios = user.GetPortfolios();
+		return new GetPortfoliosResponse("success", portfolios);
 	}
 }

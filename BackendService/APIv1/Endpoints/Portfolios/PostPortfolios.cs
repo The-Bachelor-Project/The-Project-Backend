@@ -11,6 +11,9 @@ class PostPortfolios
 
 	public static PostPortfoliosResponse Endpoint(PostPortfoliosBody body)
 	{
-		return new PostPortfoliosResponse("success", body.accessToken);
+		BusinessLogic.Portfolio portfolio = new BusinessLogic.Portfolio(body.portfolio.Name, body.portfolio.Owner, body.portfolio.Currency, body.portfolio.Balance, body.portfolio.TrackBalance);
+		PostPortfoliosResponse response = new PostPortfoliosResponse("success", portfolio.Id);
+
+		return response;
 	}
 }
