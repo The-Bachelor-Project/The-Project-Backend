@@ -29,15 +29,9 @@ public class StockHistoryDaily : IStockHistoryDaily
 		String StockHistoryCsv = await StockHistoryRes.Content.ReadAsStringAsync();
 		String[] DataLines = StockHistoryCsv.Replace("\r", "").Split("\n");
 		String CurrencySymbol = DatabaseService.Exchange.GetCurrency(exchange);
-		bool DoCurrencyConvert = !(CurrencySymbol == "USD" || CurrencySymbol == "usd");
-		Dictionary<String, CurrencyHistoryData> Rates = new Dictionary<string, CurrencyHistoryData>();
-		//TODO Do this with a function implementing an interface
-		if (DoCurrencyConvert)
-		{
-			await CurrencyRatesUpdater.Update(CurrencySymbol, startDate);
-			await CurrencyConverter.GetRatesAsync(startDate, CurrencySymbol);
-		}
+
 		//TODO update so the currency converter just returns ones when usd to usd, and then drop DoCurrencyConvert bool
+
 		StockHistory Result = new StockHistory(ticker, exchange, startDate, endDate, "daily");
 		List<string> DataList = DataLines.ToList();
 		DataList.RemoveAt(0);

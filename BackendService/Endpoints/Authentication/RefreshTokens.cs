@@ -1,13 +1,6 @@
 namespace BackendService;
 
-public class RefreshTokens
-{
-	public static RefreshTokensResponse endpoint(RefreshTokensBody body)
-	{
-		RefreshTokensResponse RefreshTokensReponse = Authentication.RefreshTokens.all(body.refresh_token);
-		return RefreshTokensReponse;
-	}
-}
+
 
 public class RefreshTokensResponse
 {
@@ -20,13 +13,4 @@ public class RefreshTokensResponse
 	public String response { get; set; }
 	public String refreshToken { get; set; }
 	public String accessToken { get; set; }
-}
-
-public class RefreshTokensBody
-{
-	public RefreshTokensBody(String refresh_token)
-	{
-		this.refresh_token = refresh_token;
-	}
-	public String refresh_token { get; set; }
 }
