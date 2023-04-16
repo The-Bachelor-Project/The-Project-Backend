@@ -8,7 +8,10 @@ class GetPortfolios
 	{
 		app.MapGet("/v1/portfolios", ([FromQuery] string? id, string accessToken) =>
 		{
-			return Results.Ok(Endpoint(id, accessToken));
+			if (id is null || id == "")
+				return Results.Ok(Endpoint(accessToken));
+			else
+				return Results.Ok(Endpoint(id, accessToken));
 		});
 	}
 

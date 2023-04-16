@@ -11,10 +11,14 @@ class PostPortfolios
 
 	public static PostPortfoliosResponse Endpoint(PostPortfoliosBody body)
 	{
-		BusinessLogic.Portfolio portfolio = new BusinessLogic.Portfolio(body.portfolio.Name, body.portfolio.Owner, body.portfolio.Currency, body.portfolio.Balance, body.portfolio.TrackBalance);
+		BusinessLogic.User user = new BusinessLogic.TokenSet(body.accessToken).GetUser();
+		System.Console.WriteLine("User: " + user.Id);
+		BusinessLogic.Portfolio portfolio = new BusinessLogic.Portfolio(body.portfolio.Name, user.Id!, body.portfolio.Currency, body.portfolio.Balance, body.portfolio.TrackBalance);
 		portfolio.AddToDb();
-		PostPortfoliosResponse response = new PostPortfoliosResponse("success", portfolio.Id);
-
-		return response;
+		if (portfolio.Id != null)
+		{
+			return new PostPortfoliosResponse("success", portfolio.Id);
+		}
+		return new PostPortfoliosResponse("error", null);
 	}
 }
