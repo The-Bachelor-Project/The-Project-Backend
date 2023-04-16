@@ -38,7 +38,7 @@ public class StockTransaction
 		Command.Parameters.AddWithValue("@amount_adjusted", Amount); //TODO: Should be adjusted in the future
 		Command.Parameters.AddWithValue("@amount_owned", Amount); //TODO: Should be calculated in the future
 		Command.Parameters.AddWithValue("@timestamp", Timestamp);
-		Command.Parameters.AddWithValue("@price_amount", Amount);
+		Command.Parameters.AddWithValue("@price_amount", Price);
 		Command.Parameters.AddWithValue("@price_currency", Currency);
 		Command.ExecuteNonQuery();
 
