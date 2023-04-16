@@ -19,6 +19,6 @@ class PostPortfolios
 		{
 			return new PostPortfoliosResponse("success", portfolio.Id);
 		}
-		return new PostPortfoliosResponse("error", null);
+		return new PostPortfoliosResponse("error", "");
 	}
 }

@@ -21,9 +21,9 @@ public class StockTransaction
 
 		try
 		{
-			await new Data.Fetcher.StockProfile().Get(Ticker, Exchange);
+			await new Data.Fetcher.StockProfile().Get(Ticker!, Exchange!);
 		}
-		catch (Exception e)
+		catch (Exception)
 		{
 			throw new CouldNotGetStockException();
 		}
@@ -47,6 +47,6 @@ public class StockTransaction
 
 	public Portfolio GetPortfolio()
 	{
-		return new Portfolio(PortfolioId);
+		return new Portfolio(PortfolioId!);
 	}
 }

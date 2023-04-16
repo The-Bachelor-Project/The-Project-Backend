@@ -58,6 +58,6 @@ public class TokenSet
 		Command.Parameters.AddWithValue("@access_token", AccessToken);
 		SqlDataReader Reader = Command.ExecuteReader();
 		Reader.Read();
-		return new User(Reader["user_id"].ToString());
+		return new User(Reader["user_id"].ToString()!);
 	}
 }

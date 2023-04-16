@@ -35,7 +35,7 @@ public class User
 			Command = new SqlCommand(SignUpQuery, Connection);
 			Command.Parameters.AddWithValue("@user_id", UID);
 			Command.Parameters.AddWithValue("@email", Email);
-			Command.Parameters.AddWithValue("@password", Tools.Password.Hash(Password));
+			Command.Parameters.AddWithValue("@password", Tools.Password.Hash(Password!));
 			try
 			{
 				Command.ExecuteNonQuery();
@@ -64,7 +64,7 @@ public class User
 			Reader.Close();
 			//TODO Check password
 
-			if (DbPassword != Tools.Password.Hash(Password))
+			if (DbPassword != Tools.Password.Hash(Password!))
 			{
 				throw new WrongPasswordException("The password is incorrect");
 			}
@@ -94,9 +94,9 @@ public class User
 		while (Reader.Read())
 		{
 			Portfolio portfolio = new Portfolio(
-				Reader["uid"].ToString(),
-				Reader["name"].ToString(),
-				Reader["owner"].ToString(),
+				Reader["uid"].ToString()!,
+				Reader["name"].ToString()!,
+				Reader["owner"].ToString()!,
 				Reader["currency"].ToString()!,
 				Convert.ToDecimal(Reader["balance"]),
 				true //Convert.ToBoolean(Reader["track_balance"]) //TODO add to database to it can be used here
@@ -118,9 +118,9 @@ public class User
 		if (Reader.Read())
 		{
 			Portfolio portfolio = new Portfolio(
-				Reader["uid"].ToString(),
-				Reader["name"].ToString(),
-				Reader["owner"].ToString(),
+				Reader["uid"].ToString()!,
+				Reader["name"].ToString()!,
+				Reader["owner"].ToString()!,
 				Reader["currency"].ToString()!,
 				Convert.ToDecimal(Reader["balance"]),
 				true //Convert.ToBoolean(Reader["track_balance"]) //TODO add to database to it can be used here

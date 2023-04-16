@@ -9,7 +9,7 @@ public class StockHistoryDaily : IStockHistoryDaily
 	{
 	}
 
-	public async Task<StockHistory> Usd(String ticker, String exchange, DateOnly startDate, DateOnly endDate)
+	public Task<StockHistory> Usd(String ticker, String exchange, DateOnly startDate, DateOnly endDate)
 	{
 		SqlConnection connection = new Data.Database.Connection().Create();
 		String getStockHistoryQuery = "SELECT * FROM GetStockPrices(@ticker, @exchange, 'daily', @start_date, @end_date)";
@@ -37,6 +37,6 @@ public class StockHistoryDaily : IStockHistoryDaily
 		Result.EndDate = Result.History.Last().Date;
 
 
-		return Result;
+		return Task.FromResult(Result);
 	}
 }

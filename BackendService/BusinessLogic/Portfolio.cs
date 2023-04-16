@@ -4,10 +4,6 @@ namespace BusinessLogic;
 
 public class Portfolio
 {
-	private string? v1;
-	private string v2;
-	private decimal v3;
-	private bool v4;
 
 	public Portfolio(string id)
 	{

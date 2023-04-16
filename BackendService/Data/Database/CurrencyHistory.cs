@@ -9,7 +9,7 @@ public class CurrencyHistory : ICurrencyHistory
 	{
 	}
 
-	public async Task<Data.CurrencyHistory> Usd(string currency, DateOnly startDate, DateOnly endDate)
+	public Task<Data.CurrencyHistory> Usd(string currency, DateOnly startDate, DateOnly endDate)
 	{
 		SqlConnection Connection = new Database.Connection().Create();
 		String GetCurrencyHistoryQuery = "SELECT * FROM GetCurrencyRates(@currency, @interval, @start_date, @end_date)";
@@ -36,6 +36,6 @@ public class CurrencyHistory : ICurrencyHistory
 		Result.StartDate = Result.History.First().Date;
 		Result.EndDate = Result.History.Last().Date;
 
-		return Result;
+		return Task.FromResult(Result);
 	}
 }
