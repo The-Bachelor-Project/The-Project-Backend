@@ -51,6 +51,17 @@ public class Portfolio
 		return this;
 	}
 
+	public User GetOwner()
+	{
+		SqlConnection Connection = new Data.Database.Connection().Create();
+		String Query = "SELECT owner FROM Portfolios WHERE uid = @uid";
+		SqlCommand Command = new SqlCommand(Query, Connection);
+		Command.Parameters.AddWithValue("@uid", Id);
+		SqlDataReader Reader = Command.ExecuteReader();
+		Reader.Read();
+		return new User(Reader["owner"].ToString()!);
+	}
+
 
 	public StockTransaction[] GetStockTransactions()
 	{

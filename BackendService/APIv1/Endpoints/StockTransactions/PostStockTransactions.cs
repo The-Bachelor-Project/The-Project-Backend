@@ -1,3 +1,5 @@
+using System.Data.SqlClient;
+
 namespace API.v1;
 
 class PostStockTransactions
@@ -14,16 +16,15 @@ class PostStockTransactions
 	{
 		BusinessLogic.User user = new BusinessLogic.TokenSet(body.accessToken).GetUser();
 		System.Console.WriteLine("User: " + user.Id);
+		BusinessLogic.User Owner = new BusinessLogic.Portfolio(body.transaction.portfolio).GetOwner();
 		BusinessLogic.StockTransaction StockTransaction = new BusinessLogic.StockTransaction();
-		System.Console.WriteLine("----------------------------------");
-		System.Console.WriteLine(body.stockTransaction.portfolio);
-		StockTransaction.PortfolioId = body.stockTransaction.portfolio;
-		StockTransaction.Ticker = body.stockTransaction.ticker;
-		StockTransaction.Exchange = body.stockTransaction.exchange;
-		StockTransaction.Amount = body.stockTransaction.amount;
-		StockTransaction.Timestamp = body.stockTransaction.timestamp;
-		StockTransaction.Currency = body.stockTransaction.currency;
-		StockTransaction.Price = body.stockTransaction.price;
+		StockTransaction.PortfolioId = body.transaction.portfolio;
+		StockTransaction.Ticker = body.transaction.ticker;
+		StockTransaction.Exchange = body.transaction.exchange;
+		StockTransaction.Amount = body.transaction.amount;
+		StockTransaction.Timestamp = body.transaction.timestamp;
+		StockTransaction.Currency = body.transaction.currency;
+		StockTransaction.Price = body.transaction.price;
 		await StockTransaction.AddToDb();
 		if (StockTransaction.Id != null)
 		{
