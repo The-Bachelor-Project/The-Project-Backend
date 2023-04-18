@@ -34,6 +34,8 @@ public class Portfolio
 	public Decimal? Balance { get; set; }
 	public Boolean? TrackBalance { get; set; }
 
+	public List<StockTransaction> StockTransactions { get; set; } = new List<StockTransaction>();
+
 
 	public Portfolio AddToDb()
 	{
@@ -63,8 +65,29 @@ public class Portfolio
 	}
 
 
-	public StockTransaction[] GetStockTransactions()
+	public Portfolio UpdateStockTransactions()
 	{
-		throw new NotImplementedException();
+		SqlConnection Connection = new Data.Database.Connection().Create();
+		String Query = "SELECT * FROM StockTransactions WHERE portfolio = @portfolio";
+		SqlCommand Command = new SqlCommand(Query, Connection);
+		Command.Parameters.AddWithValue("@portfolio", Id);
+		SqlDataReader Reader = Command.ExecuteReader();
+		StockTransactions = new List<StockTransaction>();
+		while (Reader.Read())
+		{
+			StockTransactions.Add(new StockTransaction());
+			StockTransactions.Last().Id = Reader["uid"].ToString();
+			StockTransactions.Last().PortfolioId = Id;
+			StockTransactions.Last().Ticker = Reader["ticker"].ToString();
+			StockTransactions.Last().Exchange = Reader["exchange"].ToString();
+			StockTransactions.Last().Amount = Convert.ToDecimal(Reader["amount"]);
+			StockTransactions.Last().AmountAdjusted = Convert.ToDecimal(Reader["amount_adjusted"]);
+			StockTransactions.Last().AmountOwned = Convert.ToDecimal(Reader["amount_owned"]);
+			StockTransactions.Last().Timestamp = Convert.ToInt32(Reader["timestamp"]);
+			StockTransactions.Last().Currency = Reader["currency"].ToString();
+			StockTransactions.Last().Price = Convert.ToDecimal(Reader["price"]);
+		}
+
+		return this;
 	}
 }

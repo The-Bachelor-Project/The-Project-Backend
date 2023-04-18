@@ -25,7 +25,7 @@ class GetPortfolios
 	public static GetPortfoliosResponse Endpoint(string accessToken)
 	{
 		BusinessLogic.User user = new BusinessLogic.TokenSet(accessToken).GetUser();
-		List<BusinessLogic.Portfolio> portfolios = user.GetPortfolios();
+		List<BusinessLogic.Portfolio> portfolios = user.UpdatePortfolios().Portfolios;
 		return new GetPortfoliosResponse("success", portfolios);
 	}
 }

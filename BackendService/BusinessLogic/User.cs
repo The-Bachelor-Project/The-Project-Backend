@@ -8,6 +8,8 @@ public class User
 	public String? Email { get; set; }
 	public String? Password { get; set; }
 
+	public List<Portfolio> Portfolios = new List<Portfolio>();
+
 	public User(string email, string password)
 	{
 		this.Email = email;
@@ -83,14 +85,14 @@ public class User
 		throw new NotImplementedException();
 	}
 
-	public List<Portfolio> GetPortfolios()
+	public User UpdatePortfolios()
 	{
 		SqlConnection Connection = new Data.Database.Connection().Create();
 		String Query = "SELECT * FROM Portfolios WHERE owner = @owner";
 		SqlCommand Command = new SqlCommand(Query, Connection);
 		Command.Parameters.AddWithValue("@owner", Id);
 		SqlDataReader Reader = Command.ExecuteReader();
-		List<Portfolio> portfolios = new List<Portfolio>();
+		Portfolios = new List<Portfolio>();
 		while (Reader.Read())
 		{
 			Portfolio portfolio = new Portfolio(
@@ -101,9 +103,9 @@ public class User
 				Convert.ToDecimal(Reader["balance"]),
 				true //Convert.ToBoolean(Reader["track_balance"]) //TODO add to database to it can be used here
 			);
-			portfolios.Add(portfolio);
+			Portfolios.Add(portfolio);
 		}
-		return portfolios;
+		return this;
 	}
 
 	public Portfolio GetPortfolio(string id)
