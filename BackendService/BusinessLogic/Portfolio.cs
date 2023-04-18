@@ -76,7 +76,7 @@ public class Portfolio
 		while (Reader.Read())
 		{
 			StockTransactions.Add(new StockTransaction());
-			StockTransactions.Last().Id = Reader["uid"].ToString();
+			StockTransactions.Last().Id = Reader["id"].ToString();
 			StockTransactions.Last().PortfolioId = Id;
 			StockTransactions.Last().Ticker = Reader["ticker"].ToString();
 			StockTransactions.Last().Exchange = Reader["exchange"].ToString();
@@ -84,8 +84,8 @@ public class Portfolio
 			StockTransactions.Last().AmountAdjusted = Convert.ToDecimal(Reader["amount_adjusted"]);
 			StockTransactions.Last().AmountOwned = Convert.ToDecimal(Reader["amount_owned"]);
 			StockTransactions.Last().Timestamp = Convert.ToInt32(Reader["timestamp"]);
-			StockTransactions.Last().Currency = Reader["currency"].ToString();
-			StockTransactions.Last().Price = Convert.ToDecimal(Reader["price"]);
+			StockTransactions.Last().Currency = Reader["price_currency"].ToString();
+			StockTransactions.Last().Price = Convert.ToDecimal(Reader["price_amount"]);
 		}
 
 		return this;

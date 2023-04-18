@@ -39,9 +39,11 @@ public class StockTransaction
 		SqlDataReader Reader = Command3.ExecuteReader();
 
 
+
 		decimal AmountOwned = Reader.Read() ? Reader.GetDecimal(0) : 0;
 
 		decimal AmountAdjusted = Amount!.Value; //TODO: Should be adjusted in the future
+		Reader.Close();
 
 
 		String InsertStockTransaction = "INSERT INTO StockTransactions(portfolio, ticker, exchange, amount, amount_adjusted, amount_owned, timestamp, price_amount, price_currency) VALUES (@portfolio, @ticker, @exchange, @amount, @amount_adjusted, @amount_owned, @timestamp, @price_amount, @price_currency)";
@@ -58,6 +60,7 @@ public class StockTransaction
 		Command.ExecuteNonQuery();
 
 
+
 		String UpdateStockTransactions = "UPDATE StockTransactions SET amount_owned = amount_owned + @amount_adjusted WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp > @timestamp";
 		SqlCommand Command2 = new SqlCommand(UpdateStockTransactions, Connection);
 		Command2.Parameters.AddWithValue("@portfolio", PortfolioId);
@@ -66,6 +69,7 @@ public class StockTransaction
 		Command2.Parameters.AddWithValue("@amount_adjusted", AmountAdjusted);
 		Command2.Parameters.AddWithValue("@timestamp", Timestamp);
 		Command2.ExecuteNonQuery();
+
 
 
 		return this; //TODO Update Id before returning, maybe by making a function on the database
