@@ -6,7 +6,7 @@ class GetTransactions
 {
 	public static void Setup(WebApplication app)
 	{
-		app.MapGet("/v1/stock-transactions", ([FromQuery] string accessToken) =>
+		app.MapGet("/v1/transactions", ([FromQuery] string accessToken) =>
 		{
 			return Results.Ok(Endpoint(accessToken));
 		});

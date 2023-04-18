@@ -30,6 +30,7 @@ class Application
 		GetStockTransactions.Setup(app);
 		PostStockTransactions.Setup(app);
 		GetCurrencyHistories.Setup(app);
+		GetTransactions.Setup(app);
 
 
 
