@@ -23,7 +23,7 @@ jobs:
           include-prerelease: true
 
       - name: Open project directory
-        tun: cd BackendService
+        run: cd BackendService
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
