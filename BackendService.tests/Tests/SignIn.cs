@@ -19,31 +19,29 @@ public class SignInTest
 		Assert.IsTrue(SignIn.response == "success", "signIn.response was \"" + SignIn.response + "\"");
 	}
 
-	// 	[TestMethod]
-	// 	public void FailOnEmail()
-	// 	{
-	// 		SignInHelper.reset();
-	// 		SignInResponse signIn = SignIn.endpoint(new SignInBody
-	// 		(
-	// 			SignUpHelper.getPassword() + SignUpHelper.getEmail(),
-	// 			"MSTest",
-	// 			SignUpHelper.getPassword()
-	// 		));
-	// 		Assert.IsTrue(signIn.response == "error", "signIn.response was \"" + signIn.response + "\"");
-	// 		Assert.IsFalse(signIn.response == "success", "signIn.response was \"" + signIn.response + "\"");
-	// 	}
+	[TestMethod]
+	public void FailOnEmail()
+	{
+		SignInHelper.reset();
+		TokensResponse SignIn = PostTokens.Endpoint(new PostTokensBody
+		(
+			SignUpHelper.getPassword() + SignUpHelper.getEmail(),
+			SignUpHelper.getPassword()
+		));
+		Assert.IsTrue(SignIn.response == "error", "signIn.response was \"" + SignIn.response + "\"");
+		Assert.IsFalse(SignIn.response == "success", "signIn.response was \"" + SignIn.response + "\"");
+	}
 
-	// 	[TestMethod]
-	// 	public void FailOnPassword()
-	// 	{
-	// 		SignInHelper.reset();
-	// 		SignInResponse signIn = SignIn.endpoint(new SignInBody
-	// 		(
-	// 			SignUpHelper.getEmail(),
-	// 			"MSTest",
-	// 			SignUpHelper.getPassword() + SignUpHelper.getPassword()
-	// 		));
-	// 		Assert.IsTrue(signIn.response == "error", "signIn.response was \"" + signIn.response + "\"");
-	// 		Assert.IsFalse(signIn.response == "success", "signIn.response was \"" + signIn.response + "\"");
-	// 	}
+	[TestMethod]
+	public void FailOnPassword()
+	{
+		SignInHelper.reset();
+		TokensResponse SignIn = PostTokens.Endpoint(new PostTokensBody
+		(
+			SignUpHelper.getEmail(),
+			SignUpHelper.getPassword() + SignUpHelper.getPassword()
+		));
+		Assert.IsTrue(SignIn.response == "error", "signIn.response was \"" + SignIn.response + "\"");
+		Assert.IsFalse(SignIn.response == "success", "signIn.response was \"" + SignIn.response + "\"");
+	}
 }

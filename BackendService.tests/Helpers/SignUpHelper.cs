@@ -8,7 +8,7 @@ class SignUpHelper
 	static string email = "";
 	static string password = "";
 
-	private static void signUp()
+	private static void SignUp()
 	{
 		Backend.Start();
 
@@ -27,7 +27,7 @@ class SignUpHelper
 	{
 		if (email == "")
 		{
-			signUp();
+			SignUp();
 		}
 		return email;
 	}
@@ -36,7 +36,7 @@ class SignUpHelper
 	{
 		if (password == "")
 		{
-			signUp();
+			SignUp();
 		}
 		return password;
 	}
