@@ -2,7 +2,7 @@ using BusinessLogic;
 
 namespace API.v1;
 
-class PostTokens
+public class PostTokens
 {
 	public static void Setup(WebApplication app)
 	{
