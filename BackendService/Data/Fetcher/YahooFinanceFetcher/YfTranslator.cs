@@ -1,4 +1,4 @@
-namespace Data.YahooFinance;
+namespace Data.Fetcher.YahooFinanceFetcher;
 public class YfTranslator
 {
 	public static Dictionary<String, String> stockAutocomplete = new Dictionary<string, string>(){

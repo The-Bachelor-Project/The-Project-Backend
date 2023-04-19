@@ -27,12 +27,12 @@ public class CurrencyFetcher : ICurrencyFetcher
 			String[] Data = DataLines[i].Split(",");
 			if (Data[1] == "null")
 			{
-				CurrencyHistoryData temp = new Data.CurrencyHistoryData(DateOnly.Parse(Data[0]), Result.History.Last().OpenPrice, Result.History.Last().HighPrice, Result.History.Last().LowPrice, Result.History.Last().ClosePrice);
-				Result.History = Result.History.Append(temp).ToArray();
+				Data.DatePrice temp = new Data.DatePrice(DateOnly.Parse(Data[0]), Result.History.Last().openPrice, Result.History.Last().highPrice, Result.History.Last().lowPrice, Result.History.Last().closePrice);
+				Result.History.Add(temp);
 			}
 			else
 			{
-				Result.History = Result.History.Append(new Data.CurrencyHistoryData(DateOnly.Parse(Data[0]), Decimal.Parse(Data[1]), Decimal.Parse(Data[2]), Decimal.Parse(Data[3]), Decimal.Parse(Data[4]))).ToArray();
+				Result.History.Add(new Data.DatePrice(DateOnly.Parse(Data[0]), new StockApp.Money(Decimal.Parse(Data[1])), new StockApp.Money(Decimal.Parse(Data[2])), new StockApp.Money(Decimal.Parse(Data[3])), new StockApp.Money(Decimal.Parse(Data[4]))));
 			}
 		}
 		return Result;

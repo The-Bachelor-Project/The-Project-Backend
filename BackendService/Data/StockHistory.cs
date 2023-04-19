@@ -11,7 +11,7 @@ public class StockHistory
 		this.StartDate = startDate;
 		this.EndDate = endDate;
 		this.Interval = interval;
-		this.History = new StockHistoryData[] { };
+		this.History = new List<Data.DatePrice>();
 	}
 
 	public StockHistory(string ticker, string exchange, String interval)
@@ -19,7 +19,7 @@ public class StockHistory
 		this.Ticker = ticker;
 		this.Exchange = exchange;
 		this.Interval = interval;
-		this.History = new StockHistoryData[] { };
+		this.History = new List<Data.DatePrice>();
 	}
 
 	public String Ticker { get; set; }
@@ -27,25 +27,5 @@ public class StockHistory
 	public DateOnly? StartDate { get; set; }
 	public DateOnly? EndDate { get; set; }
 	public String Interval { get; set; }
-	public StockHistoryData[] History { get; set; }
-}
-
-public class StockHistoryData
-{
-	public StockHistoryData(DateOnly date, decimal openPrice, decimal highPrice, decimal lowPrice, decimal closePrice)
-	{
-		this.Date = date;
-		this.OpenPrice = openPrice;
-		this.HighPrice = highPrice;
-		this.LowPrice = lowPrice;
-		this.ClosePrice = closePrice;
-
-		//TODO make money object
-	}
-
-	public DateOnly Date { get; set; }
-	public Decimal OpenPrice { get; set; }
-	public Decimal HighPrice { get; set; }
-	public Decimal LowPrice { get; set; }
-	public Decimal ClosePrice { get; set; }
+	public List<Data.DatePrice> History { get; set; }
 }

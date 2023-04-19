@@ -12,8 +12,10 @@ public class StockTransaction
 	public Decimal? AmountAdjusted { get; set; }
 	public Decimal? AmountOwned { get; set; }
 	public int? Timestamp { get; set; }
-	public String? Currency { get; set; }
-	public Decimal? Price { get; set; }
+	//public String? Currency { get; set; }
+	//public Decimal? Price { get; set; }
+
+	public Money Price { get; set; }
 
 
 
@@ -55,8 +57,8 @@ public class StockTransaction
 		Command.Parameters.AddWithValue("@amount_adjusted", AmountAdjusted);
 		Command.Parameters.AddWithValue("@amount_owned", AmountOwned + AmountAdjusted);
 		Command.Parameters.AddWithValue("@timestamp", Timestamp);
-		Command.Parameters.AddWithValue("@price_amount", Price);
-		Command.Parameters.AddWithValue("@price_currency", Currency);
+		Command.Parameters.AddWithValue("@price_amount", Price.amount);
+		Command.Parameters.AddWithValue("@price_currency", Price.currency);
 		Command.ExecuteNonQuery();
 
 

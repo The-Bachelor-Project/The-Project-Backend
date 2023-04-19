@@ -1,6 +1,5 @@
 using System.Data.SqlClient;
 using Data.Fetcher.Interfaces;
-using Data.YahooFinance;
 using Newtonsoft.Json.Linq;
 
 namespace Data.Fetcher.YahooFinanceFetcher;

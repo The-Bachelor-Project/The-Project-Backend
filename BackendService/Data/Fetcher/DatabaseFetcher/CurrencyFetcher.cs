@@ -22,18 +22,18 @@ public class CurrencyFetcher : ICurrencyFetcher
 		Data.CurrencyHistory Result = new Data.CurrencyHistory(currency, startDate, endDate, "daily");
 		while (reader.Read())
 		{
-			Result.History = Result.History.Append(new Data.CurrencyHistoryData(
+			Result.History.Add(new Data.DatePrice(
 				DateOnly.FromDateTime((DateTime)reader["end_date"]),
-				Decimal.Parse("" + reader["open_price"].ToString()),
-				Decimal.Parse("" + reader["high_price"].ToString()),
-				Decimal.Parse("" + reader["low_price"].ToString()),
-				Decimal.Parse("" + reader["close_price"].ToString())
-			)).ToArray();
+				new StockApp.Money(Decimal.Parse("" + reader["open_price"].ToString())),
+				new StockApp.Money(Decimal.Parse("" + reader["high_price"].ToString())),
+				new StockApp.Money(Decimal.Parse("" + reader["low_price"].ToString())),
+				new StockApp.Money(Decimal.Parse("" + reader["close_price"].ToString()))
+			));
 		}
 
 
-		Result.StartDate = Result.History.First().Date;
-		Result.EndDate = Result.History.Last().Date;
+		Result.StartDate = Result.History.First().date;
+		Result.EndDate = Result.History.Last().date;
 
 		return Task.FromResult(Result);
 	}

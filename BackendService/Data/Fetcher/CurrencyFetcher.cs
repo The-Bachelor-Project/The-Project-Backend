@@ -52,8 +52,8 @@ public class CurrencyFetcher : ICurrencyFetcher
 
 	private void SaveCurrencyHistory(Data.CurrencyHistory history, bool updateStartTrackingDate, bool updateEndTrackingDate)
 	{
-		System.Console.WriteLine(history.History.Length);
-		if (history.History.Length == 0)
+		System.Console.WriteLine(history.History.Count);
+		if (history.History.Count == 0)
 			return;
 		String InsertIntoCurrencyRatesQuery = "EXEC BulkJsonCurrencyRates @CurrencyRatesBulk, @Code";
 		SqlConnection Connection = new Data.Database.Connection().Create();
@@ -67,7 +67,7 @@ public class CurrencyFetcher : ICurrencyFetcher
 			String updateStartTrackingDateQuery = "UPDATE Currencies SET start_tracking_date = @start_tracking_date WHERE code = @code";
 			Command = new SqlCommand(updateStartTrackingDateQuery, Connection);
 			Command.Parameters.AddWithValue("@code", history.Currency);
-			Command.Parameters.AddWithValue("@start_tracking_date", Tools.TimeConverter.dateOnlyToString(history.History.First().Date));
+			Command.Parameters.AddWithValue("@start_tracking_date", Tools.TimeConverter.dateOnlyToString(history.History.First().date));
 			Command.ExecuteNonQuery();
 		}
 		if (updateEndTrackingDate)
@@ -75,7 +75,7 @@ public class CurrencyFetcher : ICurrencyFetcher
 			String updateEndTrackingDateQuery = "UPDATE Currencies SET end_tracking_date = @end_tracking_date WHERE code = @code";
 			Command = new SqlCommand(updateEndTrackingDateQuery, Connection);
 			Command.Parameters.AddWithValue("@code", history.Currency);
-			Command.Parameters.AddWithValue("@end_tracking_date", Tools.TimeConverter.dateOnlyToString(history.History.Last().Date));
+			Command.Parameters.AddWithValue("@end_tracking_date", Tools.TimeConverter.dateOnlyToString(history.History.Last().date));
 			Command.ExecuteNonQuery();
 		}
 	}

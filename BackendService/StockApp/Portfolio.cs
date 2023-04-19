@@ -84,8 +84,8 @@ public class Portfolio
 			StockTransactions.Last().AmountAdjusted = Convert.ToDecimal(Reader["amount_adjusted"]);
 			StockTransactions.Last().AmountOwned = Convert.ToDecimal(Reader["amount_owned"]);
 			StockTransactions.Last().Timestamp = Convert.ToInt32(Reader["timestamp"]);
-			StockTransactions.Last().Currency = Reader["price_currency"].ToString();
-			StockTransactions.Last().Price = Convert.ToDecimal(Reader["price_amount"]);
+			StockTransactions.Last().Price.currency = Reader["price_currency"].ToString();
+			StockTransactions.Last().Price.amount = Convert.ToDecimal(Reader["price_amount"]);
 		}
 
 		return this;

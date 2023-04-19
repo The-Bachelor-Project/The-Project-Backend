@@ -23,8 +23,8 @@ class PostStockTransactions
 		StockTransaction.Exchange = body.transaction.exchange;
 		StockTransaction.Amount = body.transaction.amount;
 		StockTransaction.Timestamp = body.transaction.timestamp;
-		StockTransaction.Currency = body.transaction.currency;
-		StockTransaction.Price = body.transaction.price;
+		StockTransaction.Price.currency = body.transaction.currency;
+		StockTransaction.Price.amount = body.transaction.price;
 		await StockTransaction.AddToDb();
 		if (StockTransaction.Id != null)
 		{
