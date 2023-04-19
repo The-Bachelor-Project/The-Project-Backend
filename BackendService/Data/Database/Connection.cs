@@ -4,7 +4,7 @@ namespace Data.Database;
 
 class Connection
 {
-	
+
 	public SqlConnection Create()
 	{
 		SqlConnectionStringBuilder builder = buildConnectionString();

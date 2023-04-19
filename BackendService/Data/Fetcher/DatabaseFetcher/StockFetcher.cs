@@ -1,6 +1,7 @@
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 using Data.Fetcher.Interfaces;
+using StockApp;
 
 namespace Data.Fetcher.DatabaseFetcher;
 
@@ -8,7 +9,33 @@ public class StockFetcher : IStockFetcher
 {
 	public Task<StockHistory> GetHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, string interval)
 	{
-		throw new NotImplementedException();
+		SqlConnection connection = new Data.Database.Connection().Create();
+		String getStockHistoryQuery = "SELECT * FROM GetStockPrices(@ticker, @exchange, 'daily', @start_date, @end_date)";
+		SqlCommand command = new SqlCommand(getStockHistoryQuery, connection);
+		command.Parameters.AddWithValue("@ticker", ticker);
+		command.Parameters.AddWithValue("@exchange", exchange);
+		command.Parameters.AddWithValue("@start_date", Tools.TimeConverter.dateOnlyToString(startDate));
+		command.Parameters.AddWithValue("@end_date", Tools.TimeConverter.dateOnlyToString(endDate));
+		SqlDataReader reader = command.ExecuteReader();
+
+		StockHistory Result = new StockHistory(ticker, exchange, "daily");
+		while (reader.Read())
+		{
+			Result.History.Add(new Data.DatePrice(
+				DateOnly.FromDateTime((DateTime)reader["end_date"]),
+				new Money(Decimal.Parse("" + reader["open_price"].ToString())),
+				new Money(Decimal.Parse("" + reader["high_price"].ToString())),
+				new Money(Decimal.Parse("" + reader["low_price"].ToString())),
+				new Money(Decimal.Parse("" + reader["close_price"].ToString()))
+			));
+		}
+
+
+		Result.StartDate = Result.History.First().date;
+		Result.EndDate = Result.History.Last().date;
+
+
+		return Task.FromResult(Result);
 	}
 
 	public Task<Data.StockProfile> GetProfile(string ticker, string exchange)
