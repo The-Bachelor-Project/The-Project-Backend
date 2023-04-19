@@ -4,7 +4,7 @@ using Data.Interfaces;
 
 namespace Data.Database;
 
-class StockProfile : IStockProfile
+public class StockProfile : IStockProfile
 {
 	public Task<Data.StockProfile> Get(string ticker, string exchange)
 	{

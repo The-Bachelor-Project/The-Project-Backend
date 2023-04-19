@@ -4,7 +4,7 @@ using Data.Interfaces;
 
 namespace Data.Fetcher;
 
-class StockProfile : IStockProfile
+public class StockProfile : IStockProfile
 {
 	public async Task<Data.StockProfile> Get(string ticker, string exchange)
 	{

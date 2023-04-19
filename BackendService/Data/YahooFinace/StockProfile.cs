@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Data.YahooFinance;
 
-class StockProfile : IStockProfile
+public class StockProfile : IStockProfile
 {
 	public async Task<Data.StockProfile> Get(string ticker, string exchange)
 	{
