@@ -8,42 +8,40 @@ public class SignInTest
 	[TestMethod]
 	public void Succeed()
 	{
-		SignInHelper.reset();
+		SignInHelper.Reset();
 		TokensResponse SignIn = PostTokens.Endpoint(new PostTokensBody
 		(
-			SignUpHelper.getEmail(),
-			SignUpHelper.getPassword()
+			SignUpHelper.GetEmail(),
+			SignUpHelper.GetPassword()
 		));
-		System.Console.WriteLine(SignIn.response);
-		Assert.IsFalse(SignIn.response == "", "signIn.response was \"" + SignIn.response + "\"");
-		Assert.IsTrue(SignIn.response == "success", "signIn.response was \"" + SignIn.response + "\"");
+		System.Console.WriteLine(SignIn.Response);
+		Assert.IsFalse(SignIn.Response == "", "signIn.response was \"" + SignIn.Response + "\"");
+		Assert.IsTrue(SignIn.Response == "success", "signIn.response was \"" + SignIn.Response + "\"");
 	}
 
-	// 	[TestMethod]
-	// 	public void FailOnEmail()
-	// 	{
-	// 		SignInHelper.reset();
-	// 		SignInResponse signIn = SignIn.endpoint(new SignInBody
-	// 		(
-	// 			SignUpHelper.getPassword() + SignUpHelper.getEmail(),
-	// 			"MSTest",
-	// 			SignUpHelper.getPassword()
-	// 		));
-	// 		Assert.IsTrue(signIn.response == "error", "signIn.response was \"" + signIn.response + "\"");
-	// 		Assert.IsFalse(signIn.response == "success", "signIn.response was \"" + signIn.response + "\"");
-	// 	}
+	[TestMethod]
+	public void FailOnEmail()
+	{
+		SignInHelper.Reset();
+		TokensResponse SignIn = PostTokens.Endpoint(new PostTokensBody
+		(
+			SignUpHelper.GetPassword() + SignUpHelper.GetEmail(),
+			SignUpHelper.GetPassword()
+		));
+		Assert.IsTrue(SignIn.Response == "error", "signIn.response was \"" + SignIn.Response + "\"");
+		Assert.IsFalse(SignIn.Response == "success", "signIn.response was \"" + SignIn.Response + "\"");
+	}
 
-	// 	[TestMethod]
-	// 	public void FailOnPassword()
-	// 	{
-	// 		SignInHelper.reset();
-	// 		SignInResponse signIn = SignIn.endpoint(new SignInBody
-	// 		(
-	// 			SignUpHelper.getEmail(),
-	// 			"MSTest",
-	// 			SignUpHelper.getPassword() + SignUpHelper.getPassword()
-	// 		));
-	// 		Assert.IsTrue(signIn.response == "error", "signIn.response was \"" + signIn.response + "\"");
-	// 		Assert.IsFalse(signIn.response == "success", "signIn.response was \"" + signIn.response + "\"");
-	// 	}
+	[TestMethod]
+	public void FailOnPassword()
+	{
+		SignInHelper.Reset();
+		TokensResponse SignIn = PostTokens.Endpoint(new PostTokensBody
+		(
+			SignUpHelper.GetEmail(),
+			SignUpHelper.GetPassword() + SignUpHelper.GetPassword()
+		));
+		Assert.IsTrue(SignIn.Response == "error", "signIn.response was \"" + SignIn.Response + "\"");
+		Assert.IsFalse(SignIn.Response == "success", "signIn.response was \"" + SignIn.Response + "\"");
+	}
 }
