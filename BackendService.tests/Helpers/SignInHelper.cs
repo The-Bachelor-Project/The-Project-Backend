@@ -8,32 +8,32 @@ class SignInHelper
 	static string RefreshToken = "";
 	static string AccessToken = "";
 
-	private static void signIn()
+	private static void SignIn()
 	{
 		TokensResponse SignIn = PostTokens.Endpoint(new PostTokensBody
 		(
-			SignUpHelper.getEmail(),
-			SignUpHelper.getPassword()
+			SignUpHelper.GetEmail(),
+			SignUpHelper.GetPassword()
 		));
-		RefreshToken = SignIn.tokenSet.RefreshToken!;
-		AccessToken = SignIn.tokenSet.AccessToken!;
+		RefreshToken = SignIn.TokenSet.RefreshToken!;
+		AccessToken = SignIn.TokenSet.AccessToken!;
 	}
 
-	public static string getEmail()
+	public static string GetEmail()
 	{
-		return SignUpHelper.getEmail();
+		return SignUpHelper.GetEmail();
 	}
 
-	public static string getPassword()
+	public static string GetPassword()
 	{
-		return SignUpHelper.getPassword();
+		return SignUpHelper.GetPassword();
 	}
 
-	public static string getRefreshToken()
+	public static string GetRefreshToken()
 	{
 		if (RefreshToken == "")
 		{
-			signIn();
+			SignIn();
 		}
 		return RefreshToken;
 	}
@@ -42,25 +42,25 @@ class SignInHelper
 	{
 		if (AccessToken == "")
 		{
-			signIn();
+			SignIn();
 		}
 		return AccessToken;
 	}
 
-	public static void setRefreshToken(string newToken)
+	public static void SetRefreshToken(string newToken)
 	{
 		RefreshToken = newToken;
 	}
 
-	public static void setAccessToken(string newToken)
+	public static void SetAccessToken(string newToken)
 	{
 		AccessToken = newToken;
 	}
 
-	public static void reset()
+	public static void Reset()
 	{
 		RefreshToken = "";
 		AccessToken = "";
-		SignUpHelper.reset();
+		SignUpHelper.Reset();
 	}
 }
