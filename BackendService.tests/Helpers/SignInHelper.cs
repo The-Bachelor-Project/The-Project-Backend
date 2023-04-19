@@ -1,42 +1,66 @@
 using BackendService;
 using Tools;
-
+using API.v1;
 namespace BackendService.tests;
 
-class SignInHelper{
-	static string token = "";
+class SignInHelper
+{
+	static string RefreshToken = "";
+	static string AccessToken = "";
 
-	private static void signIn(){
-		SignInResponse signIn = SignIn.endpoint(new SignInBody
+	private static void signIn()
+	{
+		TokensResponse SignIn = PostTokens.Endpoint(new PostTokensBody
 		(
-			getEmail(),
-			"MSTest",
-			getPassword()
+			SignUpHelper.getEmail(),
+			SignUpHelper.getPassword()
 		));
-		token = signIn.refreshToken;
+		RefreshToken = SignIn.tokenSet.RefreshToken!;
+		AccessToken = SignIn.tokenSet.AccessToken!;
 	}
 
-	public static string getEmail(){
+	public static string getEmail()
+	{
 		return SignUpHelper.getEmail();
 	}
 
-	public static string getPassword(){
+	public static string getPassword()
+	{
 		return SignUpHelper.getPassword();
 	}
 
-	public static string getRefreshToken(){
-		if(token == ""){
+	public static string getRefreshToken()
+	{
+		if (RefreshToken == "")
+		{
 			signIn();
 		}
-		return token;
+		return RefreshToken;
 	}
 
-	public static void setRefreshToken(string newToken){
-		token = newToken;
+	public static String GetAccessToken()
+	{
+		if (AccessToken == "")
+		{
+			signIn();
+		}
+		return AccessToken;
 	}
 
-	public static void reset(){
-		token = "";
+	public static void setRefreshToken(string newToken)
+	{
+		RefreshToken = newToken;
+	}
+
+	public static void setAccessToken(string newToken)
+	{
+		AccessToken = newToken;
+	}
+
+	public static void reset()
+	{
+		RefreshToken = "";
+		AccessToken = "";
 		SignUpHelper.reset();
 	}
 }

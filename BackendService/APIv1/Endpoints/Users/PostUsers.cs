@@ -2,7 +2,7 @@ using BusinessLogic;
 
 namespace API.v1;
 
-class PostUsers
+public class PostUsers
 {
 	public static void Setup(WebApplication app)
 	{

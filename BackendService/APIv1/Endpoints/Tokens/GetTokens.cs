@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.v1;
 
-class GetTokens
+public class GetTokens
 {
 	public static void Setup(WebApplication app)
 	{
