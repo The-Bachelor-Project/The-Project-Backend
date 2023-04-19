@@ -1,6 +1,6 @@
 using System.Data.SqlClient;
 
-namespace BusinessLogic;
+namespace StockApp;
 
 public class Portfolio
 {

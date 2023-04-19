@@ -14,10 +14,10 @@ class PostStockTransactions
 
 	public static async Task<PostStockTransactionsResponse> EndpointAsync(PostStockTransactionsBody body)
 	{
-		BusinessLogic.User user = new BusinessLogic.TokenSet(body.accessToken).GetUser();
+		StockApp.User user = new StockApp.TokenSet(body.accessToken).GetUser();
 		System.Console.WriteLine("User: " + user.Id);
-		BusinessLogic.User Owner = new BusinessLogic.Portfolio(body.transaction.portfolio).GetOwner();
-		BusinessLogic.StockTransaction StockTransaction = new BusinessLogic.StockTransaction();
+		StockApp.User Owner = new StockApp.Portfolio(body.transaction.portfolio).GetOwner();
+		StockApp.StockTransaction StockTransaction = new StockApp.StockTransaction();
 		StockTransaction.PortfolioId = body.transaction.portfolio;
 		StockTransaction.Ticker = body.transaction.ticker;
 		StockTransaction.Exchange = body.transaction.exchange;

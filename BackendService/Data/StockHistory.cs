@@ -39,6 +39,8 @@ public class StockHistoryData
 		this.HighPrice = highPrice;
 		this.LowPrice = lowPrice;
 		this.ClosePrice = closePrice;
+
+		//TODO make money object
 	}
 
 	public DateOnly Date { get; set; }

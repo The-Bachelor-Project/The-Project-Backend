@@ -11,9 +11,9 @@ class PostPortfolios
 
 	public static PostPortfoliosResponse Endpoint(PostPortfoliosBody body)
 	{
-		BusinessLogic.User user = new BusinessLogic.TokenSet(body.accessToken).GetUser();
+		StockApp.User user = new StockApp.TokenSet(body.accessToken).GetUser();
 		System.Console.WriteLine("User: " + user.Id);
-		BusinessLogic.Portfolio portfolio = new BusinessLogic.Portfolio(body.portfolio.Name, user.Id!, body.portfolio.Currency, body.portfolio.Balance, body.portfolio.TrackBalance);
+		StockApp.Portfolio portfolio = new StockApp.Portfolio(body.portfolio.Name, user.Id!, body.portfolio.Currency, body.portfolio.Balance, body.portfolio.TrackBalance);
 		portfolio.AddToDb();
 		if (portfolio.Id != null)
 		{

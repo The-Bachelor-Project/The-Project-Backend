@@ -2,7 +2,7 @@ using System.Data.SqlClient;
 namespace Authentication;
 class SetupTokens
 {
-	public static BusinessLogic.TokenSet call(String UID, int familyID)
+	public static StockApp.TokenSet call(String UID, int familyID)
 	{
 		int RefreshExpirationUnix = Authentication.Expiration.GenerateRefresh((24 * 7));
 		int AccessExpirationUnix = Authentication.Expiration.GenerateAccess(30);
@@ -24,13 +24,13 @@ class SetupTokens
 			Boolean SuccessfulUpdate = UpdateValidRefresh(RefreshToken, familyID);
 			if (SuccessfulUpdate)
 			{
-				BusinessLogic.TokenSet TokenSet = new BusinessLogic.TokenSet(RefreshToken, AccessToken);
+				StockApp.TokenSet TokenSet = new StockApp.TokenSet(RefreshToken, AccessToken);
 				return TokenSet;
 			}
 			else
 			{
 				//FIXME: Error not being handled
-				BusinessLogic.TokenSet TokenSet = new BusinessLogic.TokenSet("error", "");
+				StockApp.TokenSet TokenSet = new StockApp.TokenSet("error", "");
 				return TokenSet;
 			}
 
@@ -39,7 +39,7 @@ class SetupTokens
 		{
 			//FIXME: Error not being handled
 			System.Console.WriteLine(e);
-			BusinessLogic.TokenSet TokenSet = new BusinessLogic.TokenSet("error", "");
+			StockApp.TokenSet TokenSet = new StockApp.TokenSet("error", "");
 			return TokenSet;
 		}
 	}

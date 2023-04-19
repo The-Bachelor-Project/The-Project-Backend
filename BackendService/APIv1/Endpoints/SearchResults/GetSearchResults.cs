@@ -17,7 +17,7 @@ class GetSearchResults
 		GetSearchResultsResponse Results = new GetSearchResultsResponse("success");
 		if (stocks)
 		{
-			Results.stocks = new Data.Fetcher.StockProfile().Search(query).Result;
+			Results.stocks = new Data.Fetcher.StockFetcher().Search(query).Result;
 		}
 		return Results;
 	}

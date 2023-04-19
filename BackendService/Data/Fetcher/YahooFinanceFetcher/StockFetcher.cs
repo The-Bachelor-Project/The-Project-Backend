@@ -1,12 +1,18 @@
 using System.Data.SqlClient;
-using Data.Interfaces;
+using Data.Fetcher.Interfaces;
+using Data.YahooFinance;
 using Newtonsoft.Json.Linq;
 
-namespace Data.YahooFinance;
+namespace Data.Fetcher.YahooFinanceFetcher;
 
-public class StockProfile : IStockProfile
+public class StockFetcher : IStockFetcher
 {
-	public async Task<Data.StockProfile> Get(string ticker, string exchange)
+	public Task<StockHistory> GetHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, string interval)
+	{
+		throw new NotImplementedException();
+	}
+
+	public async Task<Data.StockProfile> GetProfile(string ticker, string exchange)
 	{
 		String tickerExt = YfTranslator.getYfSymbol(ticker, exchange);
 
@@ -52,8 +58,6 @@ public class StockProfile : IStockProfile
 		}
 
 		return result;
-
-		throw new NotImplementedException();
 	}
 
 	public async Task<Data.StockProfile[]> Search(string query)
@@ -75,7 +79,7 @@ public class StockProfile : IStockProfile
 				if (YfTranslator.stockAutocomplete.TryGetValue("" + res.exch, out exchange))
 				{
 					String ticker = ("" + res.symbol).Split(".")[0];
-					ResultStocks = ResultStocks.Append(await (new Data.Fetcher.StockProfile()).Get(ticker, exchange)).ToArray();
+					ResultStocks = ResultStocks.Append(await (new StockFetcher()).GetProfile(ticker, exchange)).ToArray();
 				}
 				else
 				{

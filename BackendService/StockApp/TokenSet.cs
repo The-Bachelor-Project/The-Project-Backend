@@ -1,4 +1,4 @@
-namespace BusinessLogic;
+namespace StockApp;
 
 using System.Data.SqlClient;
 using BackendService;
@@ -44,7 +44,7 @@ public class TokenSet
 
 	public TokenSet Refresh()
 	{
-		BusinessLogic.TokenSet TokenSet = Authentication.RefreshTokens.all(RefreshToken!);
+		StockApp.TokenSet TokenSet = Authentication.RefreshTokens.all(RefreshToken!);
 		RefreshToken = TokenSet.RefreshToken;
 		AccessToken = TokenSet.AccessToken;
 		return this;

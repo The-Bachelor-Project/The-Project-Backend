@@ -1,4 +1,4 @@
-using BusinessLogic;
+using StockApp;
 
 namespace API.v1;
 

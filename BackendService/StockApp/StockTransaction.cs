@@ -1,6 +1,6 @@
 using System.Data.SqlClient;
 
-namespace BusinessLogic;
+namespace StockApp;
 
 public class StockTransaction
 {
@@ -23,7 +23,7 @@ public class StockTransaction
 
 		try
 		{
-			await new Data.Fetcher.StockProfile().Get(Ticker!, Exchange!);
+			await new Data.Fetcher.StockFetcher().GetProfile(Ticker!, Exchange!);
 		}
 		catch (Exception)
 		{

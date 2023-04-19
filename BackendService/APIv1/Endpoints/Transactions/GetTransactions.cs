@@ -14,9 +14,9 @@ class GetTransactions
 
 	public static GetTransactionsResponse Endpoint(string accessToken)
 	{
-		BusinessLogic.User user = new BusinessLogic.TokenSet(accessToken).GetUser();
+		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
 		user.UpdatePortfolios();
-		foreach (BusinessLogic.Portfolio portfolio in user.Portfolios)
+		foreach (StockApp.Portfolio portfolio in user.Portfolios)
 		{
 			portfolio.UpdateStockTransactions();
 		}

@@ -1,10 +1,14 @@
-using Data.Interfaces;
+using System.Data.SqlClient;
+using Data.Fetcher.Interfaces;
+using Newtonsoft.Json;
 
-namespace Data.YahooFinance;
+namespace Data.Fetcher.YahooFinanceFetcher;
 
-class CurrencyHistory : ICurrencyHistory
+public class CurrencyFetcher : ICurrencyFetcher
 {
-	public async Task<Data.CurrencyHistory> Usd(String currency, DateOnly startDate, DateOnly endDate)
+
+
+	public async Task<Data.CurrencyHistory> GetHistory(string currency, DateOnly startDate, DateOnly endDate)
 	{
 		int StartTime = Tools.TimeConverter.dateOnlyToUnix(startDate);
 		int EndTime = Tools.TimeConverter.dateOnlyToUnix(endDate);

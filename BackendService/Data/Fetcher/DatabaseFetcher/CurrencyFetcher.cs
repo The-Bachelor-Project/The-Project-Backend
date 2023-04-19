@@ -1,15 +1,14 @@
 using System.Data.SqlClient;
-using Data.Interfaces;
+using Data.Fetcher.Interfaces;
+using Newtonsoft.Json;
 
-namespace Data.Database;
+namespace Data.Fetcher.DatabaseFetcher;
 
-public class CurrencyHistory : ICurrencyHistory
+public class CurrencyFetcher : ICurrencyFetcher
 {
-	public CurrencyHistory()
-	{
-	}
 
-	public Task<Data.CurrencyHistory> Usd(string currency, DateOnly startDate, DateOnly endDate)
+
+	public Task<Data.CurrencyHistory> GetHistory(string currency, DateOnly startDate, DateOnly endDate)
 	{
 		SqlConnection Connection = new Database.Connection().Create();
 		String GetCurrencyHistoryQuery = "SELECT * FROM GetCurrencyRates(@currency, @interval, @start_date, @end_date)";

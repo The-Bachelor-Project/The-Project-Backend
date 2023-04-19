@@ -13,6 +13,6 @@ class GetStockProfiles
 	}
 	public static async Task<GetStockProfilesResponse> Endpoint(string ticker, string exchange, string accessToken)
 	{
-		return new GetStockProfilesResponse("success", await (new Data.Fetcher.StockProfile().Get(ticker, exchange)));
+		return new GetStockProfilesResponse("success", await (new Data.Fetcher.StockFetcher().GetProfile(ticker, exchange)));
 	}
 }

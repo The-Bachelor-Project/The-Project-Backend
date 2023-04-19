@@ -13,7 +13,7 @@ class GetStockHistories
 
 	public static async Task<GetStockHistoriesResponse> Endpoint(string ticker, string exchange, string startDate, string endDate, string interval, string accessToken)
 	{
-		Data.StockHistory Result = await (new Data.Fetcher.StockHistoryDaily()).Usd(ticker, exchange, DateOnly.Parse(startDate), DateOnly.Parse(endDate));
+		Data.StockHistory Result = await (new Data.Fetcher.StockFetcher()).GetHistory(ticker, exchange, DateOnly.Parse(startDate), DateOnly.Parse(endDate), "daily");
 		return new GetStockHistoriesResponse("success", Result);
 	}
 }

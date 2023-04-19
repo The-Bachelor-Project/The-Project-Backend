@@ -1,36 +1,48 @@
 using System.Data.SqlClient;
-using Data.Database;
-using Data.Interfaces;
+using Data.Fetcher.Interfaces;
 
 namespace Data.Fetcher;
 
-public class StockProfile : IStockProfile
+public class StockFetcher : IStockFetcher
 {
-	public async Task<Data.StockProfile> Get(string ticker, string exchange)
+	public Task<StockHistory> GetHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, string interval)
+	{
+		throw new NotImplementedException();
+	}
+
+	public async Task<Data.StockProfile> GetProfile(string ticker, string exchange)
 	{
 		try
 		{
 			// Get the stock profile from the database
-			Data.Database.StockProfile Database = new Data.Database.StockProfile();
-			Data.StockProfile Profile = await Database.Get(ticker, exchange);
+			DatabaseFetcher.StockFetcher Database = new DatabaseFetcher.StockFetcher();
+			Data.StockProfile Profile = await Database.GetProfile(ticker, exchange);
 			System.Console.WriteLine("Got stock profile from database");
 			return Profile;
 		}
 		catch (CouldNotGetStockException)
 		{
 			// If the stock profile is not in the database, get it from the API
-			Data.YahooFinance.StockProfile API = new Data.YahooFinance.StockProfile();
-			Data.StockProfile Profile = await API.Get(ticker, exchange);
+			YahooFinanceFetcher.StockFetcher API = new YahooFinanceFetcher.StockFetcher();
+			Data.StockProfile Profile = await API.GetProfile(ticker, exchange);
 			System.Console.WriteLine("Got stock profile from API");
-			_Save(Profile);
+			Save(Profile);
 			return Profile;
 		}
 	}
 
-	private void _Save(Data.StockProfile profile)
+	public async Task<Data.StockProfile[]> Search(string query)
 	{
-		String tags = _GenerateTags(profile);
-		SqlConnection connection = new Connection().Create();
+		await new YahooFinanceFetcher.StockFetcher().Search(query); //TODO in the future check if search has already been performed recently
+		return await new DatabaseFetcher.StockFetcher().Search(query);
+	}
+
+
+
+	private void Save(Data.StockProfile profile)
+	{
+		String tags = GenerateTags(profile);
+		SqlConnection connection = new Data.Database.Connection().Create();
 		String query = "INSERT INTO Stocks (ticker, exchange, company_name, industry, sector, website, country, tags) VALUES (@ticker, @exchange, @name, @industry, @sector, @website, @country, @tags)";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@ticker", profile.Ticker);
@@ -44,7 +56,7 @@ public class StockProfile : IStockProfile
 		command.ExecuteNonQuery();
 	}
 
-	public String _GenerateTags(Data.StockProfile stockProfile)
+	public String GenerateTags(Data.StockProfile stockProfile)
 	{
 		//TODO: Make variants for NOVO-B, NOVO B, AT&T, ATT, AT T, so fourth
 		String tags = "";
@@ -52,11 +64,5 @@ public class StockProfile : IStockProfile
 		tags += stockProfile.Ticker + " " + stockProfile.Exchange + ",";
 		tags += stockProfile.Name + ",";
 		return tags.ToLower();
-	}
-
-	public async Task<Data.StockProfile[]> Search(string query)
-	{
-		await new Data.YahooFinance.StockProfile().Search(query);
-		return await new Data.Database.StockProfile().Search(query);
 	}
 }

@@ -1,19 +1,24 @@
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
-using Data.Interfaces;
+using Data.Fetcher.Interfaces;
 
-namespace Data.Database;
+namespace Data.Fetcher.DatabaseFetcher;
 
-public class StockProfile : IStockProfile
+public class StockFetcher : IStockFetcher
 {
-	public Task<Data.StockProfile> Get(string ticker, string exchange)
+	public Task<StockHistory> GetHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, string interval)
+	{
+		throw new NotImplementedException();
+	}
+
+	public Task<Data.StockProfile> GetProfile(string ticker, string exchange)
 	{
 		Data.StockProfile Profile = new Data.StockProfile();
 		Profile.Ticker = ticker;
 		Profile.Exchange = exchange;
 
 
-		SqlConnection Connection = (new Connection()).Create();
+		SqlConnection Connection = (new Data.Database.Connection()).Create();
 		String Query = "SELECT * FROM Stocks WHERE ticker = @ticker AND exchange = @exchange";
 		SqlCommand Command = new SqlCommand(Query, Connection);
 		Command.Parameters.AddWithValue("@ticker", ticker);
@@ -47,7 +52,7 @@ public class StockProfile : IStockProfile
 			termTrimmed += " " + matchedAuthors[i].Value.ToLower();
 		}
 
-		SqlConnection connection = new Connection().Create();
+		SqlConnection connection = new Data.Database.Connection().Create();
 		String SqlQuery = "SELECT TOP 100 * FROM Stocks WHERE tags LIKE @tags";
 		SqlCommand command = new SqlCommand(SqlQuery, connection);
 		command.Parameters.AddWithValue("@tags", "%" + query + "%");

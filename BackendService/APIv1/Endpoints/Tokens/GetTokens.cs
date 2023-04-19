@@ -1,4 +1,4 @@
-using BusinessLogic;
+using StockApp;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.v1;

@@ -1,16 +1,14 @@
 using System.Data.SqlClient;
-using Data.Interfaces;
+using Data.Fetcher.Interfaces;
 using Newtonsoft.Json;
 
 namespace Data.Fetcher;
 
-public class CurrencyHistory : ICurrencyHistory
+public class CurrencyFetcher : ICurrencyFetcher
 {
-	public CurrencyHistory()
-	{
-	}
 
-	public async Task<Data.CurrencyHistory> Usd(string currency, DateOnly startDate, DateOnly endDate)
+
+	public async Task<Data.CurrencyHistory> GetHistory(string currency, DateOnly startDate, DateOnly endDate)
 	{
 		SqlConnection Connection = (new Database.Connection()).Create();
 		String GetTrackingDateQuery = "SELECT start_tracking_date, end_tracking_date FROM Currencies WHERE code = @currency";
@@ -29,8 +27,8 @@ public class CurrencyHistory : ICurrencyHistory
 			}
 			catch (Exception)
 			{
-				Data.CurrencyHistory FromYahoo = await (new Data.YahooFinance.CurrencyHistory()).Usd(currency, startDate.AddDays(-7), endDate);
-				_SaveCurrencyHistory(FromYahoo, true, true);
+				Data.CurrencyHistory FromYahoo = await (new Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher()).GetHistory(currency, startDate.AddDays(-7), endDate);
+				SaveCurrencyHistory(FromYahoo, true, true);
 				return FromYahoo;
 			}
 
@@ -38,21 +36,21 @@ public class CurrencyHistory : ICurrencyHistory
 
 			if (startDate < StartTrackingDate)
 			{
-				Data.CurrencyHistory FromYahooBefore = await (new Data.YahooFinance.CurrencyHistory()).Usd(currency, startDate.AddDays(-7), StartTrackingDate.AddDays(-1));
-				_SaveCurrencyHistory(FromYahooBefore, true, false);
+				Data.CurrencyHistory FromYahooBefore = await (new Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher()).GetHistory(currency, startDate.AddDays(-7), StartTrackingDate.AddDays(-1));
+				SaveCurrencyHistory(FromYahooBefore, true, false);
 			}
 			if (endDate > EndTrackingDate)
 			{
-				Data.CurrencyHistory FromYahooAfter = await (new Data.YahooFinance.CurrencyHistory()).Usd(currency, EndTrackingDate.AddDays(1), endDate);
-				_SaveCurrencyHistory(FromYahooAfter, false, true);
+				Data.CurrencyHistory FromYahooAfter = await (new Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher()).GetHistory(currency, EndTrackingDate.AddDays(1), endDate);
+				SaveCurrencyHistory(FromYahooAfter, false, true);
 			}
 		}
 
 
-		return await (new Data.Database.CurrencyHistory()).Usd(currency, startDate, endDate);
+		return await (new Data.Fetcher.DatabaseFetcher.CurrencyFetcher()).GetHistory(currency, startDate, endDate);
 	}
 
-	void _SaveCurrencyHistory(Data.CurrencyHistory history, bool updateStartTrackingDate, bool updateEndTrackingDate)
+	private void SaveCurrencyHistory(Data.CurrencyHistory history, bool updateStartTrackingDate, bool updateEndTrackingDate)
 	{
 		System.Console.WriteLine(history.History.Length);
 		if (history.History.Length == 0)

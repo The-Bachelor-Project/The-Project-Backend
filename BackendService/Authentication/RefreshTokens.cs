@@ -4,24 +4,24 @@ namespace Authentication;
 
 class RefreshTokens
 {
-	public static BusinessLogic.TokenSet all(String refreshToken)
+	public static StockApp.TokenSet all(String refreshToken)
 	{
 		ValidFunctionResponse ValidFunctionResponse = IsRefreshValid(refreshToken);
 		if (ValidFunctionResponse.isValid == 1)
 		{
-			BusinessLogic.TokenSet TokenSet = SetupTokens.call(ValidFunctionResponse.userID, ValidFunctionResponse.familyID);
+			StockApp.TokenSet TokenSet = SetupTokens.call(ValidFunctionResponse.userID, ValidFunctionResponse.familyID);
 			return TokenSet;
 		}
 		else if (ValidFunctionResponse.isValid == 0)
 		{
 			//FIXME: Error not being handled
-			BusinessLogic.TokenSet TokenSet = new BusinessLogic.TokenSet("is_expired", "");
+			StockApp.TokenSet TokenSet = new StockApp.TokenSet("is_expired", "");
 			return TokenSet;
 		}
 		else
 		{
 			//FIXME: Error not being handled
-			BusinessLogic.TokenSet TokenSet = new BusinessLogic.TokenSet("error", "");
+			StockApp.TokenSet TokenSet = new StockApp.TokenSet("error", "");
 			return TokenSet;
 		}
 	}

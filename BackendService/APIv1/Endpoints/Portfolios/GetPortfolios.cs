@@ -17,15 +17,15 @@ class GetPortfolios
 
 	public static GetPortfoliosResponse Endpoint(string id, string accessToken)
 	{
-		BusinessLogic.User user = new BusinessLogic.TokenSet(accessToken).GetUser();
-		BusinessLogic.Portfolio portfolio = user.GetPortfolio(id);
-		return new GetPortfoliosResponse("success", new List<BusinessLogic.Portfolio> { portfolio });
+		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
+		StockApp.Portfolio portfolio = user.GetPortfolio(id);
+		return new GetPortfoliosResponse("success", new List<StockApp.Portfolio> { portfolio });
 	}
 
 	public static GetPortfoliosResponse Endpoint(string accessToken)
 	{
-		BusinessLogic.User user = new BusinessLogic.TokenSet(accessToken).GetUser();
-		List<BusinessLogic.Portfolio> portfolios = user.UpdatePortfolios().Portfolios;
+		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
+		List<StockApp.Portfolio> portfolios = user.UpdatePortfolios().Portfolios;
 		return new GetPortfoliosResponse("success", portfolios);
 	}
 }
