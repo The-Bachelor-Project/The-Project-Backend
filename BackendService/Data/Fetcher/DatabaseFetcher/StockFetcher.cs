@@ -18,10 +18,10 @@ public class StockFetcher : IStockFetcher
 		command.Parameters.AddWithValue("@end_date", Tools.TimeConverter.dateOnlyToString(endDate));
 		SqlDataReader reader = command.ExecuteReader();
 
-		StockHistory Result = new StockHistory(ticker, exchange, "daily");
+		StockHistory result = new StockHistory(ticker, exchange, "daily");
 		while (reader.Read())
 		{
-			Result.History.Add(new Data.DatePrice(
+			result.history.Add(new Data.DatePrice(
 				DateOnly.FromDateTime((DateTime)reader["end_date"]),
 				new Money(Decimal.Parse("" + reader["open_price"].ToString())),
 				new Money(Decimal.Parse("" + reader["high_price"].ToString())),
@@ -31,41 +31,41 @@ public class StockFetcher : IStockFetcher
 		}
 
 
-		Result.StartDate = Result.History.First().date;
-		Result.EndDate = Result.History.Last().date;
+		result.startDate = result.history.First().date;
+		result.endDate = result.history.Last().date;
 
 
-		return Task.FromResult(Result);
+		return Task.FromResult(result);
 	}
 
 	public Task<Data.StockProfile> GetProfile(string ticker, string exchange)
 	{
-		Data.StockProfile Profile = new Data.StockProfile();
-		Profile.Ticker = ticker;
-		Profile.Exchange = exchange;
+		Data.StockProfile profile = new Data.StockProfile();
+		profile.ticker = ticker;
+		profile.exchange = exchange;
 
 
-		SqlConnection Connection = (new Data.Database.Connection()).Create();
-		String Query = "SELECT * FROM Stocks WHERE ticker = @ticker AND exchange = @exchange";
-		SqlCommand Command = new SqlCommand(Query, Connection);
-		Command.Parameters.AddWithValue("@ticker", ticker);
-		Command.Parameters.AddWithValue("@exchange", exchange);
-		SqlDataReader Reader = Command.ExecuteReader();
+		SqlConnection connection = (new Data.Database.Connection()).Create();
+		String query = "SELECT * FROM Stocks WHERE ticker = @ticker AND exchange = @exchange";
+		SqlCommand command = new SqlCommand(query, connection);
+		command.Parameters.AddWithValue("@ticker", ticker);
+		command.Parameters.AddWithValue("@exchange", exchange);
+		SqlDataReader reader = command.ExecuteReader();
 
-		if (Reader.Read())
+		if (reader.Read())
 		{
-			Profile.Name = Reader["company_name"].ToString();
-			Profile.Industry = Reader["industry"].ToString();
-			Profile.Sector = Reader["sector"].ToString();
-			Profile.Website = Reader["website"].ToString();
-			Profile.Country = Reader["country"].ToString();
+			profile.name = reader["company_name"].ToString();
+			profile.industry = reader["industry"].ToString();
+			profile.sector = reader["sector"].ToString();
+			profile.website = reader["website"].ToString();
+			profile.country = reader["country"].ToString();
 		}
 		else
 		{
 			throw new CouldNotGetStockException();
 		}
 
-		return Task.FromResult(Profile);
+		return Task.FromResult(profile);
 	}
 
 	public Task<Data.StockProfile[]> Search(string query)
@@ -80,8 +80,8 @@ public class StockFetcher : IStockFetcher
 		}
 
 		SqlConnection connection = new Data.Database.Connection().Create();
-		String SqlQuery = "SELECT TOP 100 * FROM Stocks WHERE tags LIKE @tags";
-		SqlCommand command = new SqlCommand(SqlQuery, connection);
+		String sqlQuery = "SELECT TOP 100 * FROM Stocks WHERE tags LIKE @tags";
+		SqlCommand command = new SqlCommand(sqlQuery, connection);
 		command.Parameters.AddWithValue("@tags", "%" + query + "%");
 		SqlDataReader reader = command.ExecuteReader();
 		while (reader.Read())

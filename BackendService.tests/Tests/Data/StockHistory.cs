@@ -10,20 +10,20 @@ public class StockProfileTest
 	{
 		StockProfile Result = await new Data.Fetcher.StockProfile().Get("goog", "nasdaq");
 		Assert.IsFalse(Result == null);
-		Assert.IsTrue(Result.Name == "Alphabet Inc.");
+		Assert.IsTrue(Result.name == "Alphabet Inc.");
 	}
 	[TestMethod]
 	public async Task DatabaseTest()
 	{
 		StockProfile Result = await new Data.Database.StockProfile().Get("goog", "nasdaq");
 		Assert.IsFalse(Result == null);
-		Assert.IsTrue(Result.Name == "Alphabet Inc.");
+		Assert.IsTrue(Result.name == "Alphabet Inc.");
 	}
 	[TestMethod]
 	public async Task YahooTest()
 	{
 		StockProfile Result = await new Data.YahooFinance.StockProfile().Get("goog", "nasdaq");
 		Assert.IsFalse(Result == null);
-		Assert.IsTrue(Result.Name == "Alphabet Inc.");
+		Assert.IsTrue(Result.name == "Alphabet Inc.");
 	}
 }

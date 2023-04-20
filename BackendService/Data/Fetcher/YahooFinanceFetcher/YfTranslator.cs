@@ -20,7 +20,7 @@ public class YfTranslator
 		{"TSE",".TO"}
 	};
 
-	public static String getYfSymbol(String ticker, String exchange)
+	public static String GetYfSymbol(String ticker, String exchange)
 	{
 		String? stockExtension;
 		stockSymbolExtension.TryGetValue(exchange.ToUpper(), out stockExtension);

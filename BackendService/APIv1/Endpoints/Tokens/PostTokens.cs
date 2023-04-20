@@ -14,7 +14,7 @@ public class PostTokens
 
 	public static TokensResponse Endpoint(PostTokensBody body)
 	{
-		TokenSet NewTokenSet = TokenSet.Create(new User(body.email, body.password).SignIn().Id!);
-		return new TokensResponse("success", NewTokenSet);
+		TokenSet newTokenSet = TokenSet.Create(new User(body.email, body.password).SignIn().id!);
+		return new TokensResponse("success", newTokenSet);
 	}
 }

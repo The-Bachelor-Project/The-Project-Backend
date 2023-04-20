@@ -25,7 +25,7 @@ class GetPortfolios
 	public static GetPortfoliosResponse Endpoint(string accessToken)
 	{
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
-		List<StockApp.Portfolio> portfolios = user.UpdatePortfolios().Portfolios;
+		List<StockApp.Portfolio> portfolios = user.UpdatePortfolios().portfolios;
 		return new GetPortfoliosResponse("success", portfolios);
 	}
 }

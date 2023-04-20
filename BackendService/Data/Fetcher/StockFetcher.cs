@@ -17,31 +17,31 @@ public class StockFetcher : IStockFetcher
 
 		if (reader.Read())
 		{
-			DateOnly StartTrackingDate;
-			DateOnly EndTrackingDate;
+			DateOnly startTrackingDate;
+			DateOnly endTrackingDate;
 			try
 			{
-				StartTrackingDate = DateOnly.FromDateTime((DateTime)reader["start_tracking_date"]);
-				EndTrackingDate = DateOnly.FromDateTime((DateTime)reader["end_tracking_date"]);
+				startTrackingDate = DateOnly.FromDateTime((DateTime)reader["start_tracking_date"]);
+				endTrackingDate = DateOnly.FromDateTime((DateTime)reader["end_tracking_date"]);
 			}
 			catch (Exception)
 			{
-				StockHistory FromYahoo = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, startDate.AddDays(-7), endDate, interval);
-				SaveStockHistory(FromYahoo, true, true);
-				return FromYahoo;
+				StockHistory fromYahoo = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, startDate.AddDays(-7), endDate, interval);
+				SaveStockHistory(fromYahoo, true, true);
+				return fromYahoo;
 			}
 
 			reader.Close();
 
-			if (startDate < StartTrackingDate)
+			if (startDate < startTrackingDate)
 			{
-				StockHistory FromYahooBefore = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, startDate.AddDays(-7), StartTrackingDate.AddDays(-1), interval);
-				SaveStockHistory(FromYahooBefore, true, false);
+				StockHistory fromYahooBefore = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, startDate.AddDays(-7), startTrackingDate.AddDays(-1), interval);
+				SaveStockHistory(fromYahooBefore, true, false);
 			}
-			if (endDate > EndTrackingDate)
+			if (endDate > endTrackingDate)
 			{
-				StockHistory FromYahooAfter = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, EndTrackingDate.AddDays(1), endDate, interval);
-				SaveStockHistory(FromYahooAfter, false, true);
+				StockHistory fromYahooAfter = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, endTrackingDate.AddDays(1), endDate, interval);
+				SaveStockHistory(fromYahooAfter, false, true);
 			}
 		}
 
@@ -53,19 +53,19 @@ public class StockFetcher : IStockFetcher
 		try
 		{
 			// Get the stock profile from the database
-			DatabaseFetcher.StockFetcher Database = new DatabaseFetcher.StockFetcher();
-			Data.StockProfile Profile = await Database.GetProfile(ticker, exchange);
+			DatabaseFetcher.StockFetcher database = new DatabaseFetcher.StockFetcher();
+			Data.StockProfile profile = await database.GetProfile(ticker, exchange);
 			System.Console.WriteLine("Got stock profile from database");
-			return Profile;
+			return profile;
 		}
 		catch (CouldNotGetStockException)
 		{
 			// If the stock profile is not in the database, get it from the API
-			YahooFinanceFetcher.StockFetcher API = new YahooFinanceFetcher.StockFetcher();
-			Data.StockProfile Profile = await API.GetProfile(ticker, exchange);
+			YahooFinanceFetcher.StockFetcher api = new YahooFinanceFetcher.StockFetcher();
+			Data.StockProfile profile = await api.GetProfile(ticker, exchange);
 			System.Console.WriteLine("Got stock profile from API");
-			SaveProfile(Profile);
-			return Profile;
+			SaveProfile(profile);
+			return profile;
 		}
 	}
 
@@ -83,13 +83,13 @@ public class StockFetcher : IStockFetcher
 		SqlConnection connection = new Data.Database.Connection().Create();
 		String query = "INSERT INTO Stocks (ticker, exchange, company_name, industry, sector, website, country, tags) VALUES (@ticker, @exchange, @name, @industry, @sector, @website, @country, @tags)";
 		SqlCommand command = new SqlCommand(query, connection);
-		command.Parameters.AddWithValue("@ticker", profile.Ticker);
-		command.Parameters.AddWithValue("@exchange", profile.Exchange);
-		command.Parameters.AddWithValue("@name", profile.Name);
-		command.Parameters.AddWithValue("@industry", profile.Industry);
-		command.Parameters.AddWithValue("@sector", profile.Sector);
-		command.Parameters.AddWithValue("@website", profile.Website);
-		command.Parameters.AddWithValue("@country", profile.Country);
+		command.Parameters.AddWithValue("@ticker", profile.ticker);
+		command.Parameters.AddWithValue("@exchange", profile.exchange);
+		command.Parameters.AddWithValue("@name", profile.name);
+		command.Parameters.AddWithValue("@industry", profile.industry);
+		command.Parameters.AddWithValue("@sector", profile.sector);
+		command.Parameters.AddWithValue("@website", profile.website);
+		command.Parameters.AddWithValue("@country", profile.country);
 		command.Parameters.AddWithValue("@tags", tags);
 		command.ExecuteNonQuery();
 	}
@@ -98,28 +98,28 @@ public class StockFetcher : IStockFetcher
 	{
 		//TODO: Make variants for NOVO-B, NOVO B, AT&T, ATT, AT T, so fourth
 		String tags = "";
-		tags += stockProfile.Exchange + " " + stockProfile.Ticker + ",";
-		tags += stockProfile.Ticker + " " + stockProfile.Exchange + ",";
-		tags += stockProfile.Name + ",";
+		tags += stockProfile.exchange + " " + stockProfile.ticker + ",";
+		tags += stockProfile.ticker + " " + stockProfile.exchange + ",";
+		tags += stockProfile.name + ",";
 		return tags.ToLower();
 	}
 
 
 	private void SaveStockHistory(StockHistory history, bool updateStartTrackingDate, bool updateEndTrackingDate)
 	{
-		System.Console.WriteLine(history.History.Count);
-		if (history.History.Count == 0)
+		System.Console.WriteLine(history.history.Count);
+		if (history.history.Count == 0)
 			return;
 		//TODO FIXME StockPricesBulk is now broken
-		String InsertIntoStockPricesQuery = "EXEC BulkJsonStockPrices @StockPricesBulk, @Ticker, @Exchange";
-		dynamic JsonStockPrices = JsonConvert.SerializeObject(history.History);
+		String insertIntoStockPricesQuery = "EXEC BulkJsonStockPrices @StockPricesBulk, @Ticker, @Exchange";
+		dynamic jsonStockPrices = JsonConvert.SerializeObject(history.history);
 		SqlConnection connection = new Data.Database.Connection().Create();
 		SqlCommand command = new SqlCommand();
 
-		command = new SqlCommand(InsertIntoStockPricesQuery, connection);
-		command.Parameters.AddWithValue("@StockPricesBulk", JsonStockPrices);
-		command.Parameters.AddWithValue("@Ticker", history.Ticker);
-		command.Parameters.AddWithValue("@Exchange", history.Exchange);
+		command = new SqlCommand(insertIntoStockPricesQuery, connection);
+		command.Parameters.AddWithValue("@StockPricesBulk", jsonStockPrices);
+		command.Parameters.AddWithValue("@Ticker", history.ticker);
+		command.Parameters.AddWithValue("@Exchange", history.exchange);
 		command.ExecuteNonQuery();
 
 
@@ -127,18 +127,18 @@ public class StockFetcher : IStockFetcher
 		{
 			String updateStartTrackingDateQuery = "UPDATE Stocks SET start_tracking_date = @start_tracking_date WHERE ticker = @ticker AND exchange = @exchange";
 			command = new SqlCommand(updateStartTrackingDateQuery, connection);
-			command.Parameters.AddWithValue("@ticker", history.Ticker);
-			command.Parameters.AddWithValue("@exchange", history.Exchange);
-			command.Parameters.AddWithValue("@start_tracking_date", Tools.TimeConverter.dateOnlyToString(history.History.First().date));
+			command.Parameters.AddWithValue("@ticker", history.ticker);
+			command.Parameters.AddWithValue("@exchange", history.exchange);
+			command.Parameters.AddWithValue("@start_tracking_date", Tools.TimeConverter.dateOnlyToString(history.history.First().date));
 			command.ExecuteNonQuery();
 		}
 		if (updateEndTrackingDate)
 		{
 			String updateEndTrackingDateQuery = "UPDATE Stocks SET end_tracking_date = @end_tracking_date WHERE ticker = @ticker AND exchange = @exchange";
 			command = new SqlCommand(updateEndTrackingDateQuery, connection);
-			command.Parameters.AddWithValue("@ticker", history.Ticker);
-			command.Parameters.AddWithValue("@exchange", history.Exchange);
-			command.Parameters.AddWithValue("@end_tracking_date", Tools.TimeConverter.dateOnlyToString(history.History.Last().date));
+			command.Parameters.AddWithValue("@ticker", history.ticker);
+			command.Parameters.AddWithValue("@exchange", history.exchange);
+			command.Parameters.AddWithValue("@end_tracking_date", Tools.TimeConverter.dateOnlyToString(history.history.Last().date));
 			command.ExecuteNonQuery();
 		}
 	}

@@ -10,31 +10,31 @@ public class CurrencyFetcher : ICurrencyFetcher
 
 	public async Task<Data.CurrencyHistory> GetHistory(string currency, DateOnly startDate, DateOnly endDate)
 	{
-		int StartTime = Tools.TimeConverter.dateOnlyToUnix(startDate);
-		int EndTime = Tools.TimeConverter.dateOnlyToUnix(endDate);
+		int startTime = Tools.TimeConverter.dateOnlyToUnix(startDate);
+		int endTime = Tools.TimeConverter.dateOnlyToUnix(endDate);
 
-		HttpClient Client = new HttpClient();
+		HttpClient client = new HttpClient();
 
-		String url = "https://query1.finance.yahoo.com/v7/finance/download/" + currency + "USD=X" + "?interval=1d&period1=" + StartTime + "&period2=" + EndTime;
-		HttpResponseMessage StockHistoryRes = await Client.GetAsync(url);
-		String StockHistoryCsv = await StockHistoryRes.Content.ReadAsStringAsync();
+		String url = "https://query1.finance.yahoo.com/v7/finance/download/" + currency + "USD=X" + "?interval=1d&period1=" + startTime + "&period2=" + endTime;
+		HttpResponseMessage stockHistoryRes = await client.GetAsync(url);
+		String stockHistoryCsv = await stockHistoryRes.Content.ReadAsStringAsync();
 
-		String[] DataLines = StockHistoryCsv.Replace("\r", "").Split("\n");
+		String[] dataLines = stockHistoryCsv.Replace("\r", "").Split("\n");
 
-		Data.CurrencyHistory Result = new Data.CurrencyHistory(currency, startDate, endDate, "daily");
-		for (int i = 1; i < DataLines.Length; i++)
+		Data.CurrencyHistory result = new Data.CurrencyHistory(currency, startDate, endDate, "daily");
+		for (int i = 1; i < dataLines.Length; i++)
 		{
-			String[] Data = DataLines[i].Split(",");
-			if (Data[1] == "null")
+			String[] data = dataLines[i].Split(",");
+			if (data[1] == "null")
 			{
-				Data.DatePrice temp = new Data.DatePrice(DateOnly.Parse(Data[0]), Result.History.Last().openPrice, Result.History.Last().highPrice, Result.History.Last().lowPrice, Result.History.Last().closePrice);
-				Result.History.Add(temp);
+				Data.DatePrice temp = new Data.DatePrice(DateOnly.Parse(data[0]), result.history.Last().openPrice, result.history.Last().highPrice, result.history.Last().lowPrice, result.history.Last().closePrice);
+				result.history.Add(temp);
 			}
 			else
 			{
-				Result.History.Add(new Data.DatePrice(DateOnly.Parse(Data[0]), new StockApp.Money(Decimal.Parse(Data[1])), new StockApp.Money(Decimal.Parse(Data[2])), new StockApp.Money(Decimal.Parse(Data[3])), new StockApp.Money(Decimal.Parse(Data[4]))));
+				result.history.Add(new Data.DatePrice(DateOnly.Parse(data[0]), new StockApp.Money(Decimal.Parse(data[1])), new StockApp.Money(Decimal.Parse(data[2])), new StockApp.Money(Decimal.Parse(data[3])), new StockApp.Money(Decimal.Parse(data[4]))));
 			}
 		}
-		return Result;
+		return result;
 	}
 }

@@ -12,12 +12,12 @@ class PostPortfolios
 	public static PostPortfoliosResponse Endpoint(PostPortfoliosBody body)
 	{
 		StockApp.User user = new StockApp.TokenSet(body.accessToken).GetUser();
-		System.Console.WriteLine("User: " + user.Id);
-		StockApp.Portfolio portfolio = new StockApp.Portfolio(body.portfolio.Name, user.Id!, body.portfolio.Currency, body.portfolio.Balance, body.portfolio.TrackBalance);
+		System.Console.WriteLine("User: " + user.id);
+		StockApp.Portfolio portfolio = new StockApp.Portfolio(body.portfolio.name, user.id!, body.portfolio.currency, body.portfolio.balance, body.portfolio.trackBalance);
 		portfolio.AddToDb();
-		if (portfolio.Id != null)
+		if (portfolio.id != null)
 		{
-			return new PostPortfoliosResponse("success", portfolio.Id);
+			return new PostPortfoliosResponse("success", portfolio.id);
 		}
 		return new PostPortfoliosResponse("error", "");
 	}

@@ -16,11 +16,11 @@ class GetTransactions
 	{
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
 		user.UpdatePortfolios();
-		foreach (StockApp.Portfolio portfolio in user.Portfolios)
+		foreach (StockApp.Portfolio portfolio in user.portfolios)
 		{
 			portfolio.UpdateStockTransactions();
 		}
 
-		return new GetTransactionsResponse("success", user.Portfolios);
+		return new GetTransactionsResponse("success", user.portfolios);
 	}
 }

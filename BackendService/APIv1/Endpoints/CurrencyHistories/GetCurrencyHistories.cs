@@ -13,7 +13,7 @@ class GetCurrencyHistories
 
 	private static async Task<GetCurrencyHistoriesResponse> Endpoint(string currency, DateOnly startDate, DateOnly endDate, string accessToken)
 	{
-		Data.CurrencyHistory Result = await (new Data.Fetcher.CurrencyFetcher()).GetHistory(currency, startDate, endDate);
-		return new GetCurrencyHistoriesResponse("success", Result);
+		Data.CurrencyHistory result = await (new Data.Fetcher.CurrencyFetcher()).GetHistory(currency, startDate, endDate);
+		return new GetCurrencyHistoriesResponse("success", result);
 	}
 }

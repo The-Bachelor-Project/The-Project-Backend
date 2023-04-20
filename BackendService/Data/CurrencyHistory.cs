@@ -6,16 +6,16 @@ public class CurrencyHistory
 {
 	public CurrencyHistory(String Currency, DateOnly StartDate, DateOnly EndDate, String Interval)
 	{
-		this.Currency = Currency;
-		this.StartDate = StartDate;
-		this.EndDate = EndDate;
-		this.Interval = Interval;
-		this.History = new List<Data.DatePrice>();
+		this.currency = Currency;
+		this.startDate = StartDate;
+		this.endDate = EndDate;
+		this.interval = Interval;
+		this.history = new List<Data.DatePrice>();
 	}
 
-	public String Currency { get; set; }
-	public DateOnly StartDate { get; set; }
-	public DateOnly EndDate { get; set; }
-	public String Interval { get; set; }
-	public List<Data.DatePrice> History { get; set; }
+	public String currency { get; set; }
+	public DateOnly startDate { get; set; }
+	public DateOnly endDate { get; set; }
+	public String interval { get; set; }
+	public List<Data.DatePrice> history { get; set; }
 }

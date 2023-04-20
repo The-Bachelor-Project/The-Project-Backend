@@ -15,8 +15,8 @@ class SignInHelper
 			SignUpHelper.GetEmail(),
 			SignUpHelper.GetPassword()
 		));
-		RefreshToken = SignIn.TokenSet.RefreshToken!;
-		AccessToken = SignIn.TokenSet.AccessToken!;
+		RefreshToken = SignIn.tokenSet.refreshToken!;
+		AccessToken = SignIn.tokenSet.accessToken!;
 	}
 
 	public static string GetEmail()

@@ -7,84 +7,84 @@ public class Portfolio
 
 	public Portfolio(string id)
 	{
-		this.Id = id;
+		this.id = id;
 	}
 	public Portfolio(string name, string owner, string currency, decimal balance, bool trackBalance)
 	{
-		this.Name = name;
-		this.Owner = owner;
-		this.Currency = currency;
-		this.Balance = balance;
-		this.TrackBalance = trackBalance;
+		this.name = name;
+		this.owner = owner;
+		this.currency = currency;
+		this.balance = balance;
+		this.trackBalance = trackBalance;
 	}
 	public Portfolio(string id, string name, string owner, string currency, decimal balance, bool trackBalance)
 	{
-		this.Id = id;
-		this.Name = name;
-		this.Owner = owner;
-		this.Currency = currency;
-		this.Balance = balance;
-		this.TrackBalance = trackBalance;
+		this.id = id;
+		this.name = name;
+		this.owner = owner;
+		this.currency = currency;
+		this.balance = balance;
+		this.trackBalance = trackBalance;
 	}
 
-	public String? Id { get; set; }
-	public String? Name { get; set; }
-	public String? Owner { get; set; }
-	public String? Currency { get; set; }
-	public Decimal? Balance { get; set; }
-	public Boolean? TrackBalance { get; set; }
+	public String? id { get; set; }
+	public String? name { get; set; }
+	public String? owner { get; set; }
+	public String? currency { get; set; }
+	public Decimal? balance { get; set; }
+	public Boolean? trackBalance { get; set; }
 
-	public List<StockTransaction> StockTransactions { get; set; } = new List<StockTransaction>();
+	public List<StockTransaction> stockTransactions { get; set; } = new List<StockTransaction>();
 
 
 	public Portfolio AddToDb()
 	{
-		SqlConnection Connection = new Data.Database.Connection().Create();
-		Id = Tools.RandomString.Generate(32);
-		String Query = "INSERT INTO Portfolios (uid, name, owner, currency, balance) VALUES (@uid, @name, @owner, @currency, @balance)";
-		SqlCommand Command = new SqlCommand(Query, Connection);
-		Command.Parameters.AddWithValue("@uid", Id);
-		Command.Parameters.AddWithValue("@name", Name);
-		Command.Parameters.AddWithValue("@owner", Owner);
-		Command.Parameters.AddWithValue("@currency", Currency);
-		Command.Parameters.AddWithValue("@balance", Balance);
-		Command.ExecuteNonQuery();
+		SqlConnection connection = new Data.Database.Connection().Create();
+		id = Tools.RandomString.Generate(32);
+		String query = "INSERT INTO Portfolios (uid, name, owner, currency, balance) VALUES (@uid, @name, @owner, @currency, @balance)";
+		SqlCommand command = new SqlCommand(query, connection);
+		command.Parameters.AddWithValue("@uid", id);
+		command.Parameters.AddWithValue("@name", name);
+		command.Parameters.AddWithValue("@owner", owner);
+		command.Parameters.AddWithValue("@currency", currency);
+		command.Parameters.AddWithValue("@balance", balance);
+		command.ExecuteNonQuery();
 
 		return this;
 	}
 
 	public User GetOwner()
 	{
-		SqlConnection Connection = new Data.Database.Connection().Create();
-		String Query = "SELECT owner FROM Portfolios WHERE uid = @uid";
-		SqlCommand Command = new SqlCommand(Query, Connection);
-		Command.Parameters.AddWithValue("@uid", Id);
-		SqlDataReader Reader = Command.ExecuteReader();
-		Reader.Read();
-		return new User(Reader["owner"].ToString()!);
+		SqlConnection connection = new Data.Database.Connection().Create();
+		String query = "SELECT owner FROM Portfolios WHERE uid = @uid";
+		SqlCommand command = new SqlCommand(query, connection);
+		command.Parameters.AddWithValue("@uid", id);
+		SqlDataReader reader = command.ExecuteReader();
+		reader.Read();
+		return new User(reader["owner"].ToString()!);
 	}
 
 
 	public Portfolio UpdateStockTransactions()
 	{
-		SqlConnection Connection = new Data.Database.Connection().Create();
-		String Query = "SELECT * FROM StockTransactions WHERE portfolio = @portfolio";
-		SqlCommand Command = new SqlCommand(Query, Connection);
-		Command.Parameters.AddWithValue("@portfolio", Id);
-		SqlDataReader Reader = Command.ExecuteReader();
-		StockTransactions = new List<StockTransaction>();
-		while (Reader.Read())
+		SqlConnection connection = new Data.Database.Connection().Create();
+		String query = "SELECT * FROM StockTransactions WHERE portfolio = @portfolio";
+		SqlCommand command = new SqlCommand(query, connection);
+		command.Parameters.AddWithValue("@portfolio", id);
+		SqlDataReader reader = command.ExecuteReader();
+		stockTransactions = new List<StockTransaction>();
+		while (reader.Read())
 		{
-			StockTransactions.Add(new StockTransaction());
-			StockTransactions.Last().Id = Reader["id"].ToString();
-			StockTransactions.Last().PortfolioId = Id;
-			StockTransactions.Last().Ticker = Reader["ticker"].ToString();
-			StockTransactions.Last().Exchange = Reader["exchange"].ToString();
-			StockTransactions.Last().Amount = Convert.ToDecimal(Reader["amount"]);
-			StockTransactions.Last().AmountAdjusted = Convert.ToDecimal(Reader["amount_adjusted"]);
-			StockTransactions.Last().AmountOwned = Convert.ToDecimal(Reader["amount_owned"]);
-			StockTransactions.Last().Timestamp = Convert.ToInt32(Reader["timestamp"]);
-			StockTransactions.Last().Price = new Money(Convert.ToDecimal(Reader["price_amount"]), Reader["price_currency"].ToString()!);
+			stockTransactions.Add(new StockTransaction());
+			stockTransactions.Last().id = reader["id"].ToString();
+			stockTransactions.Last().portfolioId = id;
+			stockTransactions.Last().ticker = reader["ticker"].ToString();
+			stockTransactions.Last().exchange = reader["exchange"].ToString();
+			stockTransactions.Last().amount = Convert.ToDecimal(reader["amount"]);
+			stockTransactions.Last().amountAdjusted = Convert.ToDecimal(reader["amount_adjusted"]);
+			stockTransactions.Last().amountOwned = Convert.ToDecimal(reader["amount_owned"]);
+			stockTransactions.Last().timestamp = Convert.ToInt32(reader["timestamp"]);
+			stockTransactions.Last().price = new Money(Convert.ToDecimal(reader["price_amount"]), reader["price_currency"].ToString()!);
 		}
 
 		return this;

@@ -16,13 +16,13 @@ class PortfolioBody
 {
 	public PortfolioBody(string name, string currency, decimal balance, bool trackBalance)
 	{
-		this.Name = name;
-		this.Currency = currency;
-		this.Balance = balance;
-		this.TrackBalance = trackBalance;
+		this.name = name;
+		this.currency = currency;
+		this.balance = balance;
+		this.trackBalance = trackBalance;
 	}
-	public String Name { get; set; }
-	public String Currency { get; set; }
-	public Decimal Balance { get; set; }
-	public Boolean TrackBalance { get; set; }
+	public String name { get; set; }
+	public String currency { get; set; }
+	public Decimal balance { get; set; }
+	public Boolean trackBalance { get; set; }
 }

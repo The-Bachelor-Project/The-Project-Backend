@@ -14,12 +14,12 @@ class GetSearchResults
 
 	public static GetSearchResultsResponse Endpoint(string query, bool stocks, string accessToken)
 	{
-		GetSearchResultsResponse Results = new GetSearchResultsResponse("success");
+		GetSearchResultsResponse results = new GetSearchResultsResponse("success");
 		if (stocks)
 		{
-			Results.stocks = new Data.Fetcher.StockFetcher().Search(query).Result;
+			results.stocks = new Data.Fetcher.StockFetcher().Search(query).Result;
 		}
-		return Results;
+		return results;
 	}
 
 }

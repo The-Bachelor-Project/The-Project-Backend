@@ -15,6 +15,6 @@ public class PostUsers
 	public static PostUsersResponse Endpoint(PostUsersBody body)
 	{
 		User newUser = new User(body.email, body.password).SignUp();
-		return new PostUsersResponse("success", newUser.Id!);
+		return new PostUsersResponse("success", newUser.id!);
 	}
 }

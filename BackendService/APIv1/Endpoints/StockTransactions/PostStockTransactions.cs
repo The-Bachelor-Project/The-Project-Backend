@@ -15,20 +15,20 @@ class PostStockTransactions
 	public static async Task<PostStockTransactionsResponse> EndpointAsync(PostStockTransactionsBody body)
 	{
 		StockApp.User user = new StockApp.TokenSet(body.accessToken).GetUser();
-		System.Console.WriteLine("User: " + user.Id);
-		StockApp.User Owner = new StockApp.Portfolio(body.transaction.portfolio).GetOwner();
+		System.Console.WriteLine("User: " + user.id);
+		StockApp.User owner = new StockApp.Portfolio(body.transaction.portfolio).GetOwner();
 		StockApp.StockTransaction StockTransaction = new StockApp.StockTransaction();
-		StockTransaction.PortfolioId = body.transaction.portfolio;
-		StockTransaction.Ticker = body.transaction.ticker;
-		StockTransaction.Exchange = body.transaction.exchange;
-		StockTransaction.Amount = body.transaction.amount;
-		StockTransaction.Timestamp = body.transaction.timestamp;
-		StockTransaction.Price.currency = body.transaction.currency;
-		StockTransaction.Price.amount = body.transaction.price;
+		StockTransaction.portfolioId = body.transaction.portfolio;
+		StockTransaction.ticker = body.transaction.ticker;
+		StockTransaction.exchange = body.transaction.exchange;
+		StockTransaction.amount = body.transaction.amount;
+		StockTransaction.timestamp = body.transaction.timestamp;
+		StockTransaction.price.currency = body.transaction.currency;
+		StockTransaction.price.amount = body.transaction.price;
 		await StockTransaction.AddToDb();
-		if (StockTransaction.Id != null)
+		if (StockTransaction.id != null)
 		{
-			return new PostStockTransactionsResponse("success", StockTransaction.Id);
+			return new PostStockTransactionsResponse("success", StockTransaction.id);
 		}
 		return new PostStockTransactionsResponse("error", null);
 	}

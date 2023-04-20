@@ -4,48 +4,48 @@ namespace Authentication;
 
 class RefreshTokens
 {
-	public static StockApp.TokenSet all(String refreshToken)
+	public static StockApp.TokenSet All(String refreshToken)
 	{
-		ValidFunctionResponse ValidFunctionResponse = IsRefreshValid(refreshToken);
-		if (ValidFunctionResponse.isValid == 1)
+		ValidFunctionResponse validFunctionResponse = IsRefreshValid(refreshToken);
+		if (validFunctionResponse.isValid == 1)
 		{
-			StockApp.TokenSet TokenSet = SetupTokens.call(ValidFunctionResponse.userID, ValidFunctionResponse.familyID);
-			return TokenSet;
+			StockApp.TokenSet tokenSet = SetupTokens.Call(validFunctionResponse.userID, validFunctionResponse.familyID);
+			return tokenSet;
 		}
-		else if (ValidFunctionResponse.isValid == 0)
+		else if (validFunctionResponse.isValid == 0)
 		{
 			//FIXME: Error not being handled
-			StockApp.TokenSet TokenSet = new StockApp.TokenSet("is_expired", "");
-			return TokenSet;
+			StockApp.TokenSet tokenSet = new StockApp.TokenSet("is_expired", "");
+			return tokenSet;
 		}
 		else
 		{
 			//FIXME: Error not being handled
-			StockApp.TokenSet TokenSet = new StockApp.TokenSet("error", "");
-			return TokenSet;
+			StockApp.TokenSet tokenSet = new StockApp.TokenSet("error", "");
+			return tokenSet;
 		}
 	}
 
 	public static ValidFunctionResponse IsRefreshValid(String refreshToken)
 	{
-		String CheckIfValidQuery = "SELECT * FROM CheckIfRefreshIsValid(@RefreshToken, @UnixNow) AS IsValid";
-		SqlConnection Connection = new Data.Database.Connection().Create();
-		SqlCommand Command = new SqlCommand(CheckIfValidQuery, Connection);
-		Command.Parameters.AddWithValue("@RefreshToken", refreshToken);
-		Command.Parameters.AddWithValue("@UnixNow", Tools.TimeConverter.dateTimeToUnix(DateTime.Now));
+		String checkIfValidQuery = "SELECT * FROM CheckIfRefreshIsValid(@RefreshToken, @UnixNow) AS IsValid";
+		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlCommand command = new SqlCommand(checkIfValidQuery, connection);
+		command.Parameters.AddWithValue("@RefreshToken", refreshToken);
+		command.Parameters.AddWithValue("@UnixNow", Tools.TimeConverter.dateTimeToUnix(DateTime.Now));
 		try
 		{
-			SqlDataReader Reader = Command.ExecuteReader();
-			if (Reader.Read())
+			SqlDataReader reader = command.ExecuteReader();
+			if (reader.Read())
 			{
-				int IsValid = int.Parse(Reader["IsValid"].ToString()!);
-				if (IsValid == 1)
+				int isValid = int.Parse(reader["IsValid"].ToString()!);
+				if (isValid == 1)
 				{
-					return new ValidFunctionResponse(int.Parse(Reader["IsValid"].ToString()!), int.Parse(Reader["FamilyID"].ToString()!), Reader["UserID"].ToString()!);
+					return new ValidFunctionResponse(int.Parse(reader["IsValid"].ToString()!), int.Parse(reader["FamilyID"].ToString()!), reader["UserID"].ToString()!);
 				}
 				else
 				{
-					InvalidateFamily(int.Parse(Reader["FamilyID"].ToString()!));
+					InvalidateFamily(int.Parse(reader["FamilyID"].ToString()!));
 					return new ValidFunctionResponse(0, 0, "");
 				}
 			}
@@ -63,13 +63,13 @@ class RefreshTokens
 
 	private static void InvalidateFamily(int familyID)
 	{
-		String InvalidateFamilyQuery = "UPDATE TokenFamily SET valid = 0 WHERE id = @family_id";
-		SqlConnection Connection = new Data.Database.Connection().Create();
-		SqlCommand Command = new SqlCommand(InvalidateFamilyQuery, Connection);
-		Command.Parameters.AddWithValue("@family_id", familyID);
+		String invalidateFamilyQuery = "UPDATE TokenFamily SET valid = 0 WHERE id = @family_id";
+		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlCommand command = new SqlCommand(invalidateFamilyQuery, connection);
+		command.Parameters.AddWithValue("@family_id", familyID);
 		try
 		{
-			Command.ExecuteNonQuery();
+			command.ExecuteNonQuery();
 		}
 		catch (Exception e)
 		{

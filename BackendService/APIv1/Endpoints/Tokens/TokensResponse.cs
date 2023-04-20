@@ -6,10 +6,10 @@ public class TokensResponse
 {
 	public TokensResponse(string response, TokenSet tokenSet)
 	{
-		this.Response = response;
-		this.TokenSet = tokenSet;
+		this.response = response;
+		this.tokenSet = tokenSet;
 	}
 
-	public string Response { get; }
-	public TokenSet TokenSet { get; set; }
+	public string response { get; }
+	public TokenSet tokenSet { get; set; }
 }

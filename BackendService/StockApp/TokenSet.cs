@@ -7,23 +7,23 @@ public class TokenSet
 {
 	public TokenSet(String refreshToken, String accessToken)
 	{
-		RefreshToken = refreshToken;
-		AccessToken = accessToken;
+		this.refreshToken = refreshToken;
+		this.accessToken = accessToken;
 	}
 	public TokenSet(String accessToken)
 	{
-		AccessToken = accessToken;
+		this.accessToken = accessToken;
 	}
 	public TokenSet()
 	{
 	}
 
-	public String? RefreshToken { get; set; }
-	public String? AccessToken { get; set; }
+	public String? refreshToken { get; set; }
+	public String? accessToken { get; set; }
 
 	public TokenSet SetRefreshToken(String refreshToken)
 	{
-		RefreshToken = refreshToken;
+		this.refreshToken = refreshToken;
 		return this;
 	}
 
@@ -31,33 +31,33 @@ public class TokenSet
 
 	public static TokenSet Create(String uid)
 	{
-		TokenSet NewTokenSet = new TokenSet();
+		TokenSet newTokenSet = new TokenSet();
 
-		int FamilyID = Authentication.CreateFamily.call();
+		int familyID = Authentication.CreateFamily.Call();
 
-		TokenSet TokenSet = Authentication.SetupTokens.call(uid, FamilyID);
-		NewTokenSet.RefreshToken = TokenSet.RefreshToken;
-		NewTokenSet.AccessToken = TokenSet.AccessToken;
+		TokenSet tokenSet = Authentication.SetupTokens.Call(uid, familyID);
+		newTokenSet.refreshToken = tokenSet.refreshToken;
+		newTokenSet.accessToken = tokenSet.accessToken;
 
-		return NewTokenSet;
+		return newTokenSet;
 	}
 
 	public TokenSet Refresh()
 	{
-		StockApp.TokenSet TokenSet = Authentication.RefreshTokens.all(RefreshToken!);
-		RefreshToken = TokenSet.RefreshToken;
-		AccessToken = TokenSet.AccessToken;
+		StockApp.TokenSet tokenSet = Authentication.RefreshTokens.All(refreshToken!);
+		refreshToken = tokenSet.refreshToken;
+		accessToken = tokenSet.accessToken;
 		return this;
 	}
 
 	public User GetUser()
 	{
-		SqlConnection Connection = new Data.Database.Connection().Create();
-		String Query = "SELECT user_id FROM Tokens WHERE access_token = @access_token";
-		SqlCommand Command = new SqlCommand(Query, Connection);
-		Command.Parameters.AddWithValue("@access_token", AccessToken);
-		SqlDataReader Reader = Command.ExecuteReader();
-		Reader.Read();
-		return new User(Reader["user_id"].ToString()!);
+		SqlConnection connection = new Data.Database.Connection().Create();
+		String query = "SELECT user_id FROM Tokens WHERE access_token = @access_token";
+		SqlCommand command = new SqlCommand(query, connection);
+		command.Parameters.AddWithValue("@access_token", accessToken);
+		SqlDataReader reader = command.ExecuteReader();
+		reader.Read();
+		return new User(reader["user_id"].ToString()!);
 	}
 }

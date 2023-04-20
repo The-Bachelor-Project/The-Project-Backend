@@ -15,7 +15,7 @@ public class GetTokens
 
 	public static TokensResponse Endpoint(string refreshToken)
 	{
-		TokenSet NewTokenSet = new TokenSet().SetRefreshToken(refreshToken).Refresh();
-		return new TokensResponse("success", NewTokenSet);
+		TokenSet newTokenSet = new TokenSet().SetRefreshToken(refreshToken).Refresh();
+		return new TokensResponse("success", newTokenSet);
 	}
 }
