@@ -2,7 +2,7 @@ namespace StockApp;
 
 public class Money
 {
-	public const string DEFAULT_CURRENCY = "USD";
+	public const string DEFAULT_CURRENCY = "usd";
 
 	public decimal amount { get; set; }
 	public string currency { get; set; }

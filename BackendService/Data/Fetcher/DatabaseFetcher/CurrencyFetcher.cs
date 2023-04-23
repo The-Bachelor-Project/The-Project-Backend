@@ -10,6 +10,7 @@ public class CurrencyFetcher : ICurrencyFetcher
 
 	public Task<Data.CurrencyHistory> GetHistory(string currency, DateOnly startDate, DateOnly endDate)
 	{
+		System.Console.WriteLine(currency);
 		SqlConnection connection = new Database.Connection().Create();
 		String getCurrencyHistoryQuery = "SELECT * FROM GetCurrencyRates(@currency, @interval, @start_date, @end_date)";
 		SqlCommand command = new SqlCommand(getCurrencyHistoryQuery, connection);
@@ -23,7 +24,7 @@ public class CurrencyFetcher : ICurrencyFetcher
 		while (reader.Read())
 		{
 			result.history.Add(new Data.DatePrice(
-				DateOnly.FromDateTime((DateTime)reader["end_date"]),
+				DateOnly.FromDateTime(DateTime.Parse(reader["end_date"].ToString()!)),
 				new StockApp.Money(Decimal.Parse("" + reader["open_price"].ToString())),
 				new StockApp.Money(Decimal.Parse("" + reader["high_price"].ToString())),
 				new StockApp.Money(Decimal.Parse("" + reader["low_price"].ToString())),

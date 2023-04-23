@@ -9,6 +9,20 @@ public class StockFetcher : IStockFetcher
 	public async Task<StockHistory> GetHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, string interval)
 	{
 		System.Console.WriteLine("Fetching stock history for " + ticker + " on " + exchange + " from " + startDate + " to " + endDate);
+
+		SqlConnection connection = new Database.Connection().Create();
+		String getCurrencyQuery = "SELECT currency FROM Exchanges WHERE symbol = @symbol";
+		SqlCommand command = new SqlCommand(getCurrencyQuery, connection);
+		command.Parameters.AddWithValue("@symbol", exchange);
+		SqlDataReader reader = command.ExecuteReader();
+
+		if (!reader.Read())
+		{
+			throw new Exception("Exchange not found");
+		}
+
+		String currency = reader["currency"].ToString()!;
+
 		int startTime = Tools.TimeConverter.dateOnlyToUnix(startDate);
 		int endTime = Tools.TimeConverter.dateOnlyToUnix(endDate);
 		String tickerExt = YfTranslator.GetYfSymbol(ticker, exchange);
@@ -27,8 +41,6 @@ public class StockFetcher : IStockFetcher
 		String[] dataLines = stockHistoryCsv.Replace("\r", "").Split("\n");
 		String currencySymbol = Data.Database.Exchange.GetCurrency(exchange);
 
-		//TODO update so the currency converter just returns ones when usd to usd, and then drop DoCurrencyConvert bool
-
 		StockHistory result = new StockHistory(ticker, exchange, startDate, endDate, "daily");
 		List<string> dataList = dataLines.ToList();
 		dataList.RemoveAt(0);
@@ -41,14 +53,16 @@ public class StockFetcher : IStockFetcher
 			{
 				Data.DatePrice dataPoint = new Data.DatePrice(
 					DateOnly.Parse(dataSplit[0]),
-					new StockApp.Money(Decimal.Parse(dataSplit[1])),
-					new StockApp.Money(Decimal.Parse(dataSplit[2])),
-					new StockApp.Money(Decimal.Parse(dataSplit[3])),
-					new StockApp.Money(Decimal.Parse(dataSplit[4]))
+					new StockApp.Money(Decimal.Parse(dataSplit[1]), currency),
+					new StockApp.Money(Decimal.Parse(dataSplit[2]), currency),
+					new StockApp.Money(Decimal.Parse(dataSplit[3]), currency),
+					new StockApp.Money(Decimal.Parse(dataSplit[4]), currency)
 				);
 				result.history.Add(dataPoint);
 			}
 		}
+
+		await new Tools.StockHistoryConverter().Convert(result, "USD");
 
 		return result;
 	}
