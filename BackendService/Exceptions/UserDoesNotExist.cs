@@ -1,4 +1,4 @@
-class UserDoesNotExistException : Exception
+public class UserDoesNotExistException : Exception
 {
 	public UserDoesNotExistException()
 	{ }
