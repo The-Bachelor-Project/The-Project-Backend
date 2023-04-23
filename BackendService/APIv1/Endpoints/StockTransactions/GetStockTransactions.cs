@@ -15,7 +15,7 @@ class GetStockTransactions
 	public static GetStockTransactionsResponse Endpoint(string id, string ticker, string exchange, string portfolio, string accessToken)
 	{
 		List<Data.StockTransaction> stockTransactions = new List<Data.StockTransaction>();
-		stockTransactions.Add(new Data.StockTransaction(portfolio, ticker, exchange, (decimal)0.0, 1000, 0, "usd"));
+		stockTransactions.Add(new Data.StockTransaction(portfolio, ticker, exchange, (decimal)0.0, 1000, 0, "USD"));
 		return new GetStockTransactionsResponse("success", stockTransactions);
 	}
 }
