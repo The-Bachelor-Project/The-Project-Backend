@@ -16,6 +16,7 @@ public class CurrencyFetcher : ICurrencyFetcher
 		HttpClient client = new HttpClient();
 
 		String url = "https://query1.finance.yahoo.com/v7/finance/download/" + currency + "USD=X" + "?interval=1d&period1=" + startTime + "&period2=" + endTime;
+		System.Console.WriteLine(url);
 		HttpResponseMessage stockHistoryRes = await client.GetAsync(url);
 		String stockHistoryCsv = await stockHistoryRes.Content.ReadAsStringAsync();
 

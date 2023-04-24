@@ -17,7 +17,9 @@ public class YfTranslator
 		{"NYSE",""},
 		{"NASDAQ",""},
 		{"STO",".ST"},
-		{"TSE",".TO"}
+		{"TSE",".TO"},
+		{"HEL", ".HE"},
+		{"LON", ".L"}
 	};
 
 	public static String GetYfSymbol(String ticker, String exchange)

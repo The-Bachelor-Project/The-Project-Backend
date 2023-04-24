@@ -29,7 +29,7 @@ public class StockFetcher : IStockFetcher
 
 		HttpClient client = new HttpClient();
 		String url = "https://query1.finance.yahoo.com/v7/finance/download/" + tickerExt + "?interval=1d&period1=" + startTime + "&period2=" + endTime;
-		//System.Console.WriteLine(Url);
+		System.Console.WriteLine(url);
 		HttpResponseMessage stockHistoryRes = await client.GetAsync(url);
 
 		if (stockHistoryRes.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -49,7 +49,7 @@ public class StockFetcher : IStockFetcher
 		{
 			String[] dataSplit = data.Split(",");
 			DateOnly date = DateOnly.Parse(dataSplit[0]);
-			if (date >= startDate && date <= endDate)
+			if (date >= startDate && date <= endDate && dataSplit[1] != "null")
 			{
 				Data.DatePrice dataPoint = new Data.DatePrice(
 					DateOnly.Parse(dataSplit[0]),

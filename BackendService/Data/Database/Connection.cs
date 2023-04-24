@@ -2,7 +2,7 @@ using System.Data.SqlClient;
 
 namespace Data.Database;
 
-class Connection
+public class Connection
 {
 
 	public SqlConnection Create()

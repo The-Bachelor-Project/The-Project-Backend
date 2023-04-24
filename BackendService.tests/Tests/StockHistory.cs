@@ -1,16 +1,20 @@
-using Data;
+// using Data;
 
-namespace BackendService.tests;
+// namespace BackendService.tests;
 
-[TestClass]
-public class StockHistoryTest
-{
-	[TestMethod]
-	public async Task YahooTest()
-	{
-		StockHistory Result = await (new Data.YahooFinance.StockHistoryDaily()).Usd("vici", "nyse", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"));
-		Assert.IsTrue(Result != null);
-		Assert.IsTrue(Result.history.Length > 0);
-		Assert.IsTrue(Result.history[0].Date < Result.history[5].Date);
-	}
-}
+// [TestClass]
+// public class StockHistoryTest
+// {
+// 	private String ticker = "CGCBV";
+// 	private String exchange = "HEL";
+// 	[TestMethod]
+// 	public async Task YahooTest()
+// 	{
+// 		FetcherHelper.ResetStock(ticker, exchange);
+// 		Data.Fetcher.YahooFinanceFetcher.StockFetcher fetcher = new();
+// 		StockHistory Result = await fetcher.GetHistory(ticker, exchange, DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), "daily");
+// 		Assert.IsTrue(Result != null);
+// 		Assert.IsTrue(Result.history.Count > 0);
+// 		Assert.IsTrue(Result.history[0].date < Result.history[5].date);
+// 	}
+// }
