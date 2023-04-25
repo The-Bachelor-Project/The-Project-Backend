@@ -62,7 +62,7 @@ public class StockFetcher : IStockFetcher
 			}
 		}
 
-		await new Tools.StockHistoryConverter().Convert(result, "USD");
+		await new Tools.PriceHistoryConverter().Convert(result.history, "USD");
 
 		return result;
 	}
