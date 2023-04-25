@@ -4,28 +4,28 @@ using Data;
 
 namespace Tools;
 
-public class StockHistoryConverter
+public class PriceHistoryConverter
 {
-	public async Task<Data.StockHistory> Convert(Data.StockHistory stockHistory, String newCurrency)
+	public async Task<List<Data.DatePrice>> Convert(List<Data.DatePrice> priceHistory, String newCurrency)
 	{
 		newCurrency = newCurrency.ToUpper();
 		if (newCurrency != "USD")
 		{
 			throw new Exception("Only USD is supported at the moment");
 		}
-		if (stockHistory.history.First().closePrice.currency.ToUpper() == "USD")
+		if (priceHistory.First().closePrice.currency.ToUpper() == "USD")
 		{
-			return stockHistory;
+			return priceHistory;
 		}
 
-		DateOnly startDate = stockHistory.startDate!.Value;
-		DateOnly endDate = stockHistory.endDate!.Value;
+		DateOnly startDate = priceHistory.First().date;
+		DateOnly endDate = priceHistory.Last().date;
 
-		Data.CurrencyHistory currencyHistory = await new Data.Fetcher.CurrencyFetcher().GetHistory(stockHistory.history.First().closePrice.currency, startDate, endDate);
+		Data.CurrencyHistory currencyHistory = await new Data.Fetcher.CurrencyFetcher().GetHistory(priceHistory.First().closePrice.currency, startDate, endDate);
 
 		int currencyCounter = 0;
 
-		foreach (Data.DatePrice datePrice in stockHistory.history)
+		foreach (Data.DatePrice datePrice in priceHistory)
 		{
 			bool found = false;
 
@@ -52,6 +52,6 @@ public class StockHistoryConverter
 			}
 		}
 
-		return stockHistory;
+		return priceHistory;
 	}
 }
