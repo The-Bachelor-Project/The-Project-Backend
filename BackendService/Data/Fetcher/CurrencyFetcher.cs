@@ -27,27 +27,67 @@ public class CurrencyFetcher : ICurrencyFetcher
 			}
 			catch (Exception)
 			{
-				Data.CurrencyHistory fromYahoo = await (new Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher()).GetHistory(currency, startDate.AddDays(-7), endDate);
-				SaveCurrencyHistory(fromYahoo, true, true);
-				return fromYahoo;
+				if (currency.ToUpper() == "GBX")
+				{
+					Data.CurrencyHistory gbpHistory = await (new Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher()).GetHistory("GBP", startDate.AddDays(-7), endDate);
+					Data.CurrencyHistory fromYahoo = ConvertToGBX(gbpHistory, startDate, endDate);
+					SaveCurrencyHistory(fromYahoo, true, true);
+					SaveCurrencyHistory(gbpHistory, true, true);
+					return fromYahoo;
+				}
+				else
+				{
+					Data.CurrencyHistory fromYahoo = await (new Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher()).GetHistory(currency, startDate.AddDays(-7), endDate);
+					SaveCurrencyHistory(fromYahoo, true, true);
+					return fromYahoo;
+				}
+
 			}
 
 			reader.Close();
 
 			if (startDate < startTrackingDate)
 			{
-				Data.CurrencyHistory fromYahooBefore = await (new Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher()).GetHistory(currency, startDate.AddDays(-7), startTrackingDate.AddDays(-1));
+				Data.CurrencyHistory? fromYahooBefore = null;
+				if (currency.ToUpper() == "GBX")
+				{
+					Data.CurrencyHistory gbpHistory = await (new Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher()).GetHistory("GBP", startDate.AddDays(-7), startTrackingDate.AddDays(-1));
+					fromYahooBefore = ConvertToGBX(gbpHistory, startDate, endDate);
+					SaveCurrencyHistory(gbpHistory, true, false);
+				}
+				else
+				{
+					fromYahooBefore = await (new Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher()).GetHistory(currency, startDate.AddDays(-7), startTrackingDate.AddDays(-1));
+				}
 				SaveCurrencyHistory(fromYahooBefore, true, false);
 			}
 			if (endDate > endTrackingDate)
 			{
-				Data.CurrencyHistory fromYahooAfter = await (new Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher()).GetHistory(currency, endTrackingDate.AddDays(1), endDate);
+				Data.CurrencyHistory? fromYahooAfter = null;
+				if (currency.ToUpper() == "GBX")
+				{
+					Data.CurrencyHistory gbpHistory = await (new Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher()).GetHistory("GBP", endTrackingDate.AddDays(1), endDate);
+					fromYahooAfter = ConvertToGBX(gbpHistory, startDate, endDate);
+					SaveCurrencyHistory(gbpHistory, false, true);
+				}
+				else
+				{
+					fromYahooAfter = await (new Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher()).GetHistory(currency, endTrackingDate.AddDays(1), endDate);
+				}
+
 				SaveCurrencyHistory(fromYahooAfter, false, true);
 			}
 		}
 
-
-		return await (new Data.Fetcher.DatabaseFetcher.CurrencyFetcher()).GetHistory(currency, startDate, endDate);
+		if (currency.ToUpper() == "GBX")
+		{
+			Data.CurrencyHistory gbpHistory = await (new Data.Fetcher.DatabaseFetcher.CurrencyFetcher()).GetHistory("GBP", startDate, endDate);
+			return ConvertToGBX(gbpHistory, startDate, endDate); ;
+		}
+		else
+		{
+			return await (new Data.Fetcher.DatabaseFetcher.CurrencyFetcher()).GetHistory(currency, startDate, endDate);
+		}
 	}
 
 	private void SaveCurrencyHistory(Data.CurrencyHistory history, bool updateStartTrackingDate, bool updateEndTrackingDate)
@@ -78,5 +118,23 @@ public class CurrencyFetcher : ICurrencyFetcher
 			command.Parameters.AddWithValue("@end_tracking_date", Tools.TimeConverter.dateOnlyToString(history.history.Last().date));
 			command.ExecuteNonQuery();
 		}
+	}
+
+	private Data.CurrencyHistory ConvertToGBX(Data.CurrencyHistory history, DateOnly startDate, DateOnly endDate)
+	{
+		String currency = "GBX";
+		history.currency = currency;
+		for (int i = 0; i < history.history.Count; i++)
+		{
+			history.history[i].openPrice.amount = history.history[i].openPrice.amount / 100;
+			history.history[i].openPrice.currency = currency;
+			history.history[i].closePrice.amount = history.history[i].closePrice.amount / 100;
+			history.history[i].closePrice.currency = currency;
+			history.history[i].highPrice.amount = history.history[i].highPrice.amount / 100;
+			history.history[i].highPrice.currency = currency;
+			history.history[i].lowPrice.amount = history.history[i].lowPrice.amount / 100;
+			history.history[i].lowPrice.currency = currency;
+		}
+		return history;
 	}
 }

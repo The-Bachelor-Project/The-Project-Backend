@@ -6,7 +6,7 @@ public class YFCurrencyFetcherTest
 {
 	public Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher fetcher = new();
 
-	//TODO: Codes is missing GBX, as this can not be gotten from YF. Fix this
+	// Codes is missing GBX, as this can not be gotten from YF.
 	[TestMethod]
 	public async Task YFCurrenciesFetcher()
 	{

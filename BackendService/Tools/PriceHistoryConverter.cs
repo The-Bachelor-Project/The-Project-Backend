@@ -20,7 +20,6 @@ public class PriceHistoryConverter
 
 		DateOnly startDate = priceHistory.First().date;
 		DateOnly endDate = priceHistory.Last().date;
-
 		Data.CurrencyHistory currencyHistory = await new Data.Fetcher.CurrencyFetcher().GetHistory(priceHistory.First().closePrice.currency, startDate, endDate);
 
 		int currencyCounter = 0;

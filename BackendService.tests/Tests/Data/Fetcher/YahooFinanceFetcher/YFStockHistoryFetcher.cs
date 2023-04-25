@@ -50,15 +50,14 @@ public class YFStockHistoryFetcherTest
 		Assert.IsTrue(result.history[0].date < result.history[5].date);
 	}
 
-	//TODO: Fix GBX on YahooFinance - only able to fetch GBP
-	// [TestMethod]
-	// public async Task YFLonHistoryFetcherTest()
-	// {
-	// 	StockHistory result = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory("SHEL", "LON", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), "daily");
-	// 	Assert.IsTrue(result != null);
-	// 	Assert.IsTrue(result.history.Count > 0);
-	// 	Assert.IsTrue(result.history[0].date < Result.history[5].date);
-	// }
+	[TestMethod]
+	public async Task YFLonHistoryFetcherTest()
+	{
+		StockHistory result = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory("SHEL", "LON", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), "daily");
+		Assert.IsTrue(result != null);
+		Assert.IsTrue(result.history.Count > 0);
+		Assert.IsTrue(result.history[0].date < result.history[5].date);
+	}
 
 	[TestMethod]
 	public async Task YFHelHistoryFetcherTest()
