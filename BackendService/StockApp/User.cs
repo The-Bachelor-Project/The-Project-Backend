@@ -131,4 +131,9 @@ public class User
 		}
 		throw new Exception("Portfolio not found");
 	}
+
+	public List<Data.DatePrice> GetValueHistory(string currency, DateOnly startData, DateOnly endDate)
+	{
+		throw new NotImplementedException();
+	}
 }

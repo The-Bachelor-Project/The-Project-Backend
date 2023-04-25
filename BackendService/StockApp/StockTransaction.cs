@@ -30,6 +30,7 @@ public class StockTransaction
 		}
 
 		String getAmountOwned = "SELECT TOP 1 amount_owned FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp < @timestamp ORDER BY timestamp DESC";
+
 		SqlCommand command3 = new SqlCommand(getAmountOwned, connection);
 		command3.Parameters.AddWithValue("@portfolio", portfolioId);
 		command3.Parameters.AddWithValue("@ticker", ticker);

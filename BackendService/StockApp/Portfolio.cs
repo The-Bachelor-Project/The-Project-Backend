@@ -35,6 +35,8 @@ public class Portfolio
 	public Boolean? trackBalance { get; set; }
 
 	public List<StockTransaction> stockTransactions { get; set; } = new List<StockTransaction>();
+	public List<StockPosition> stockPositions { get; set; } = new List<StockPosition>();
+
 
 
 	public Portfolio AddToDb()
@@ -88,5 +90,26 @@ public class Portfolio
 		}
 
 		return this;
+	}
+
+	public Portfolio UpdateStockPositions()
+	{
+		SqlConnection connection = new Data.Database.Connection().Create();
+		String query = "SELECT DISTINCT ticker, exchange FROM StockTransactions WHERE portfolio = @portfolio";
+		SqlCommand command = new SqlCommand(query, connection);
+		command.Parameters.AddWithValue("@portfolio", id);
+		SqlDataReader reader = command.ExecuteReader();
+		stockPositions = new List<StockPosition>();
+		while (reader.Read())
+		{
+			stockPositions.Add(new StockPosition(this, new Stock(reader["ticker"].ToString()!, reader["ticker"].ToString()!)));
+		}
+
+		return this;
+	}
+
+	public List<Data.DatePrice> GetValueHistory(string currency, DateOnly startData, DateOnly endDate)
+	{
+		throw new NotImplementedException();
 	}
 }
