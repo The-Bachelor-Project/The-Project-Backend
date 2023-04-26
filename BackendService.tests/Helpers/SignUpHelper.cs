@@ -5,45 +5,40 @@ namespace BackendService.tests;
 
 class SignUpHelper
 {
-	static string Email = "";
-	static string Password = "";
+	static string email = "";
+	static string password = "";
 
 	private static void SignUp()
 	{
 		Backend.Start();
 
-		string Random = RandomString.Generate(32);
-		Email = Random + "@test.mail";
-		Password = "aB1!" + RandomString.Generate(8);
-
-		PostUsersResponse SignUp = PostUsers.Endpoint(new PostUsersBody
-		(
-			Email,
-			Password
-		));
+		string random = RandomString.Generate(32);
+		email = random + "@test.mail";
+		password = "aB1!" + RandomString.Generate(8);
+		StockApp.User user = new StockApp.User(email, password).SignUp();
 	}
 
 	public static string GetEmail()
 	{
-		if (Email == "")
+		if (email == "")
 		{
 			SignUp();
 		}
-		return Email;
+		return email;
 	}
 
 	public static string GetPassword()
 	{
-		if (Password == "")
+		if (password == "")
 		{
 			SignUp();
 		}
-		return Password;
+		return password;
 	}
 
 	public static void Reset()
 	{
-		Email = "";
-		Password = "";
+		email = "";
+		password = "";
 	}
 }

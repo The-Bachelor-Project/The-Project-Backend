@@ -1,6 +1,6 @@
 namespace API.v1;
 
-class PostPortfoliosResponse
+public class PostPortfoliosResponse
 {
 	public PostPortfoliosResponse(string response, string id)
 	{

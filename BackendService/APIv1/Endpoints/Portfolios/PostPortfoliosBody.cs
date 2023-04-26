@@ -1,6 +1,6 @@
 namespace API.v1;
 
-class PostPortfoliosBody
+public class PostPortfoliosBody
 {
 	public PortfolioBody portfolio { get; }
 	public string accessToken { get; }
@@ -12,7 +12,7 @@ class PostPortfoliosBody
 	}
 }
 
-class PortfolioBody
+public class PortfolioBody
 {
 	public PortfolioBody(string name, string currency, decimal balance, bool trackBalance)
 	{

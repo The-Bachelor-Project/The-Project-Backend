@@ -5,18 +5,14 @@ namespace BackendService.tests;
 
 class SignInHelper
 {
-	static string RefreshToken = "";
-	static string AccessToken = "";
+	static string refreshToken = "";
+	static string accessToken = "";
 
 	private static void SignIn()
 	{
-		TokensResponse SignIn = PostTokens.Endpoint(new PostTokensBody
-		(
-			SignUpHelper.GetEmail(),
-			SignUpHelper.GetPassword()
-		));
-		RefreshToken = SignIn.tokenSet.refreshToken!;
-		AccessToken = SignIn.tokenSet.accessToken!;
+		StockApp.TokenSet tokenSet = StockApp.TokenSet.Create(new StockApp.User(SignUpHelper.GetEmail(), SignUpHelper.GetPassword()).SignIn().id!);
+		refreshToken = tokenSet.refreshToken!;
+		accessToken = tokenSet.accessToken!;
 	}
 
 	public static string GetEmail()
@@ -31,36 +27,36 @@ class SignInHelper
 
 	public static string GetRefreshToken()
 	{
-		if (RefreshToken == "")
+		if (refreshToken == "")
 		{
 			SignIn();
 		}
-		return RefreshToken;
+		return refreshToken;
 	}
 
 	public static String GetAccessToken()
 	{
-		if (AccessToken == "")
+		if (accessToken == "")
 		{
 			SignIn();
 		}
-		return AccessToken;
+		return accessToken;
 	}
 
 	public static void SetRefreshToken(string newToken)
 	{
-		RefreshToken = newToken;
+		refreshToken = newToken;
 	}
 
 	public static void SetAccessToken(string newToken)
 	{
-		AccessToken = newToken;
+		accessToken = newToken;
 	}
 
 	public static void Reset()
 	{
-		RefreshToken = "";
-		AccessToken = "";
+		refreshToken = "";
+		accessToken = "";
 		SignUpHelper.Reset();
 	}
 }

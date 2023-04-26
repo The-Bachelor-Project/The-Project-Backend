@@ -8,13 +8,11 @@ public class SignInTest
 	[TestMethod]
 	public void Succeed()
 	{
-		SignInHelper.Reset();
 		TokensResponse SignIn = PostTokens.Endpoint(new PostTokensBody
 		(
-			SignUpHelper.GetEmail(),
-			SignUpHelper.GetPassword()
+			Assembly.email,
+			Assembly.password
 		));
-		System.Console.WriteLine(SignIn.response);
 		Assert.IsFalse(SignIn.response == "", "signIn.response was \"" + SignIn.response + "\"");
 		Assert.IsTrue(SignIn.response == "success", "signIn.response was \"" + SignIn.response + "\"");
 	}
@@ -27,8 +25,8 @@ public class SignInTest
 		{
 			TokensResponse signIn = PostTokens.Endpoint(new PostTokensBody
 		(
-			SignUpHelper.GetPassword() + SignUpHelper.GetEmail(),
-			SignUpHelper.GetPassword()
+			Assembly.password + Assembly.email,
+			Assembly.password
 		));
 		});
 	}
@@ -41,8 +39,8 @@ public class SignInTest
 		{
 			TokensResponse signIn = PostTokens.Endpoint(new PostTokensBody
 		(
-			SignUpHelper.GetEmail(),
-			SignUpHelper.GetPassword() + SignUpHelper.GetPassword()
+			Assembly.email,
+			Assembly.password + Assembly.password
 		));
 		});
 	}
