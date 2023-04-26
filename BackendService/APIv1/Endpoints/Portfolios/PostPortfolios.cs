@@ -1,5 +1,5 @@
 namespace API.v1;
-class PostPortfolios
+public class PostPortfolios
 {
 	public static void Setup(WebApplication app)
 	{

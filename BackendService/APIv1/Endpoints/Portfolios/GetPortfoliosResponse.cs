@@ -1,5 +1,5 @@
 namespace API.v1;
-class GetPortfoliosResponse
+public class GetPortfoliosResponse
 {
 	public GetPortfoliosResponse(string response, List<StockApp.Portfolio> portfolios)
 	{

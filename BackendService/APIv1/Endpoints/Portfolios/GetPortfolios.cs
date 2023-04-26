@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.v1;
 
-class GetPortfolios
+public class GetPortfolios
 {
 	public static void Setup(WebApplication app)
 	{
