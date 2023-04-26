@@ -18,9 +18,9 @@ public class YFCurrencyFetcherTest
 			try
 			{
 				CurrencyHistory result = await fetcher.GetHistory(code, DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"));
-				Assert.IsTrue(result != null);
-				Assert.IsTrue(result.history.Count > 0);
-				Assert.IsTrue(result.history[0].date < result.history[5].date);
+				Assert.IsTrue(result != null, "Currency history is null");
+				Assert.IsTrue(result.history.Count > 0, "Currency history is empty");
+				Assert.IsTrue(result.history[0].date < result.history[5].date, "Currency history is not sorted correctly");
 			}
 			catch (AssertFailedException)
 			{

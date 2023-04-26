@@ -28,7 +28,7 @@ public class SignInTest
 			Assembly.password + Assembly.email,
 			Assembly.password
 		));
-		});
+		}, "User was logged in with email, even though it is wrong");
 	}
 
 	[TestMethod]
@@ -42,6 +42,6 @@ public class SignInTest
 			Assembly.email,
 			Assembly.password + Assembly.password
 		));
-		});
+		}, "User was logged in with password, even though it is wrong");
 	}
 }

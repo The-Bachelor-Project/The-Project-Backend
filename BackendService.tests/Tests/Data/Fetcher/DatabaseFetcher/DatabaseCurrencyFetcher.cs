@@ -12,9 +12,9 @@ public class DatabaseCurrencyFethcer
 		if (isSaved)
 		{
 			CurrencyHistory result = await new Data.Fetcher.DatabaseFetcher.CurrencyFetcher().GetHistory(code, DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"));
-			Assert.IsTrue(result != null);
-			Assert.IsTrue(result.history.Count > 0);
-			Assert.IsTrue(result.history[0].date < result.history[5].date);
+			Assert.IsTrue(result != null, "Currency history is null");
+			Assert.IsTrue(result.history.Count > 0, "Currency history is empty");
+			Assert.IsTrue(result.history[0].date < result.history[5].date, "Currency history is not sorted correctly");
 		}
 		else
 		{
@@ -30,10 +30,10 @@ public class DatabaseCurrencyFethcer
 		if (isSaved)
 		{
 			CurrencyHistory result = await new Data.Fetcher.DatabaseFetcher.CurrencyFetcher().GetHistory(code, DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"));
-			Assert.IsTrue(result.currency == code);
-			Assert.IsTrue(result != null);
-			Assert.IsTrue(result.history.Count > 0);
-			Assert.IsTrue(result.history[0].date < result.history[5].date);
+			Assert.IsTrue(result.currency == code, "Currency code is not correct, should be " + code + " but is " + result.currency);
+			Assert.IsTrue(result != null, "Currency history is null");
+			Assert.IsTrue(result.history.Count > 0, "Currency history is empty");
+			Assert.IsTrue(result.history[0].date < result.history[5].date, "Currency history is not sorted correctly");
 		}
 		else
 		{

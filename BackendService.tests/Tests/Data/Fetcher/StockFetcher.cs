@@ -13,9 +13,9 @@ public class StockFetcherTest
 		if (isReset)
 		{
 			StockHistory result = await new Data.Fetcher.StockFetcher().GetHistory(ticker, exchange, DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), "daily");
-			Assert.IsTrue(result != null);
-			Assert.IsTrue(result.history.Count > 0);
-			Assert.IsTrue(result.history[0].date < result.history[5].date);
+			Assert.IsTrue(result != null, "Result is null");
+			Assert.IsTrue(result.history.Count > 0, "Result history is empty");
+			Assert.IsTrue(result.history[0].date < result.history[5].date, "Result history is not sorted correctly");
 		}
 		else
 		{
@@ -32,9 +32,9 @@ public class StockFetcherTest
 		if (isSaved)
 		{
 			StockHistory result = await new Data.Fetcher.StockFetcher().GetHistory(ticker, exchange, DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), "daily");
-			Assert.IsTrue(result != null);
-			Assert.IsTrue(result.history.Count > 0);
-			Assert.IsTrue(result.history[0].date < result.history[5].date);
+			Assert.IsTrue(result != null, "Result is null");
+			Assert.IsTrue(result.history.Count > 0, "Result history is empty");
+			Assert.IsTrue(result.history[0].date < result.history[5].date, "Result history is not sorted correctly");
 		}
 		else
 		{
@@ -51,9 +51,9 @@ public class StockFetcherTest
 		if (isDeleted)
 		{
 			StockProfile result = await new Data.Fetcher.StockFetcher().GetProfile(ticker, exchange);
-			Assert.IsTrue(result != null);
-			Assert.IsTrue(result.name == "Global Net Lease, Inc.");
-			Assert.IsTrue(result.ticker == "GNL");
+			Assert.IsTrue(result != null, "Result is null");
+			Assert.IsTrue(result.name == "Global Net Lease, Inc.", "Result name is not correct, should be Global Net Lease, Inc. but is " + result.name);
+			Assert.IsTrue(result.ticker == "GNL", "Result ticker is not correct, should be GNL but is " + result.ticker);
 		}
 		else
 		{
@@ -70,9 +70,9 @@ public class StockFetcherTest
 		if (isSaved)
 		{
 			StockProfile result = await new Data.Fetcher.StockFetcher().GetProfile(ticker, exchange);
-			Assert.IsTrue(result != null);
-			Assert.IsTrue(result.name == "Global Net Lease, Inc.");
-			Assert.IsTrue(result.ticker == "GNL");
+			Assert.IsTrue(result != null, "Result is null");
+			Assert.IsTrue(result.name == "Global Net Lease, Inc.", "Result name is not correct, should be Global Net Lease, Inc. but is " + result.name);
+			Assert.IsTrue(result.ticker == "GNL", "Result ticker is not correct, should be GNL but is " + result.ticker);
 		}
 		else
 		{
