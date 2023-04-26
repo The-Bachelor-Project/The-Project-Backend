@@ -102,14 +102,35 @@ public class Portfolio
 		stockPositions = new List<StockPosition>();
 		while (reader.Read())
 		{
-			stockPositions.Add(new StockPosition(this, new Stock(reader["ticker"].ToString()!, reader["ticker"].ToString()!)));
+			stockPositions.Add(new StockPosition(this, new Stock(reader["ticker"].ToString()!, reader["exchange"].ToString()!)));
 		}
 
 		return this;
 	}
 
-	public List<Data.DatePrice> GetValueHistory(string currency, DateOnly startData, DateOnly endDate)
+	public async Task<Data.Portfolio> GetValueHistory(string currency, DateOnly startData, DateOnly endDate)
 	{
-		throw new NotImplementedException();
+		UpdateStockPositions();
+		UpdateStockTransactions();
+
+		List<Data.DatePrice> valueHistory = new List<Data.DatePrice>();
+		List<Data.Position> dataPositions = new List<Data.Position>();
+
+		foreach (StockPosition position in stockPositions)
+		{
+			Data.Position dataPosition = await position.GetValueHistory(currency, startData, endDate);
+			dataPositions.Add(dataPosition);
+
+			if (valueHistory.Count == 0)
+			{
+				valueHistory = dataPosition.valueHistory;
+			}
+			else
+			{
+				Data.DatePrice.AddLists(valueHistory, dataPosition.valueHistory);
+			}
+		}
+
+		return new Data.Portfolio("[NAME]"/* TODO Get name */, currency, valueHistory, dataPositions);
 	}
 }

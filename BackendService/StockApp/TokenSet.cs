@@ -57,7 +57,10 @@ public class TokenSet
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@access_token", accessToken);
 		SqlDataReader reader = command.ExecuteReader();
-		reader.Read();
-		return new User(reader["user_id"].ToString()!);
+		if (reader.Read())
+		{
+			return new User(reader["user_id"].ToString()!);
+		}
+		throw new Exception("User not found");
 	}
 }

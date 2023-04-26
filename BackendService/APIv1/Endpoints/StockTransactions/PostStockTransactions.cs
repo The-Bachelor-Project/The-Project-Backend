@@ -23,8 +23,7 @@ class PostStockTransactions
 		StockTransaction.exchange = body.transaction.exchange;
 		StockTransaction.amount = body.transaction.amount;
 		StockTransaction.timestamp = body.transaction.timestamp;
-		StockTransaction.price.currency = body.transaction.currency;
-		StockTransaction.price.amount = body.transaction.price;
+		StockTransaction.price = new StockApp.Money(body.transaction.price.amount, body.transaction.price.currency);
 		await StockTransaction.AddToDb();
 		if (StockTransaction.id != null)
 		{

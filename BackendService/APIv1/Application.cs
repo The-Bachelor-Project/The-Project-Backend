@@ -31,6 +31,7 @@ class Application
 		PostStockTransactions.Setup(app);
 		GetCurrencyHistories.Setup(app);
 		GetTransactions.Setup(app);
+		GetValueHistory.Setup(app);
 
 
 

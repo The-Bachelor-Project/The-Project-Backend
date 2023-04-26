@@ -9,6 +9,7 @@ public class StockFetcher : IStockFetcher
 {
 	public Task<StockHistory> GetHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, string interval)
 	{
+		System.Console.WriteLine("Getting stock history from database for " + ticker + " " + exchange + " " + startDate + " " + endDate + " " + interval);
 		SqlConnection connection = new Data.Database.Connection().Create();
 		String getStockHistoryQuery = "SELECT * FROM GetStockPrices(@ticker, @exchange, 'daily', @start_date, @end_date)";
 		SqlCommand command = new SqlCommand(getStockHistoryQuery, connection);
@@ -23,10 +24,10 @@ public class StockFetcher : IStockFetcher
 		{
 			result.history.Add(new Data.DatePrice(
 				DateOnly.FromDateTime((DateTime)reader["end_date"]),
-				new Money(Decimal.Parse("" + reader["open_price"].ToString())),
-				new Money(Decimal.Parse("" + reader["high_price"].ToString())),
-				new Money(Decimal.Parse("" + reader["low_price"].ToString())),
-				new Money(Decimal.Parse("" + reader["close_price"].ToString()))
+				new Money(Decimal.Parse("" + reader["open_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
+				new Money(Decimal.Parse("" + reader["high_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
+				new Money(Decimal.Parse("" + reader["low_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
+				new Money(Decimal.Parse("" + reader["close_price"].ToString()), Data.Money.DEFAULT_CURRENCY)
 			));
 		}
 

@@ -1,0 +1,15 @@
+namespace Data;
+
+public class Money
+{
+	public const string DEFAULT_CURRENCY = "USD";
+
+	public decimal amount { get; set; }
+	public string currency { get; set; }
+
+	public Money(decimal amount, string currency)
+	{
+		this.amount = amount;
+		this.currency = currency;
+	}
+}

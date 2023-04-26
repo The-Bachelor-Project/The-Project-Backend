@@ -25,10 +25,10 @@ public class CurrencyFetcher : ICurrencyFetcher
 		{
 			result.history.Add(new Data.DatePrice(
 				DateOnly.FromDateTime(DateTime.Parse(reader["end_date"].ToString()!)),
-				new StockApp.Money(Decimal.Parse("" + reader["open_price"].ToString())),
-				new StockApp.Money(Decimal.Parse("" + reader["high_price"].ToString())),
-				new StockApp.Money(Decimal.Parse("" + reader["low_price"].ToString())),
-				new StockApp.Money(Decimal.Parse("" + reader["close_price"].ToString()))
+				new Data.Money(Decimal.Parse("" + reader["open_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
+				new Data.Money(Decimal.Parse("" + reader["high_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
+				new Data.Money(Decimal.Parse("" + reader["low_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
+				new Data.Money(Decimal.Parse("" + reader["close_price"].ToString()), Data.Money.DEFAULT_CURRENCY)
 			));
 		}
 

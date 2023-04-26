@@ -19,4 +19,40 @@ public class DatePrice
 	public Money highPrice { get; set; }
 	public Money lowPrice { get; set; }
 	public Money closePrice { get; set; }
+
+
+	public static List<DatePrice> AddLists(List<DatePrice> list1, List<DatePrice> list2)
+	{
+		DateOnly startDate = list1[0].date < list2[0].date ? list1[0].date : list2[0].date;
+		DateOnly endDate = list1[^1].date > list2[^1].date ? list1[^1].date : list2[^1].date;
+
+		List<DatePrice> result = new List<DatePrice>();
+
+		for (DateOnly date = startDate; date <= endDate; date = date.AddDays(1))
+		{
+			Money openPrice = new Money(0, list1[0].openPrice.currency);
+			Money highPrice = new Money(0, list1[0].openPrice.currency);
+			Money lowPrice = new Money(0, list1[0].openPrice.currency);
+			Money closePrice = new Money(0, list1[0].openPrice.currency);
+
+			if (list1.Exists(x => x.date == date))
+			{
+				openPrice.amount += list1.Find(x => x.date == date).openPrice.amount;
+				highPrice.amount += list1.Find(x => x.date == date).highPrice.amount;
+				lowPrice.amount += list1.Find(x => x.date == date).lowPrice.amount;
+				closePrice.amount += list1.Find(x => x.date == date).closePrice.amount;
+			}
+			if (list2.Exists(x => x.date == date))
+			{
+				openPrice.amount += list2.Find(x => x.date == date).openPrice.amount;
+				highPrice.amount += list2.Find(x => x.date == date).highPrice.amount;
+				lowPrice.amount += list2.Find(x => x.date == date).lowPrice.amount;
+				closePrice.amount += list2.Find(x => x.date == date).closePrice.amount;
+			}
+
+			result.Add(new DatePrice(date, openPrice, highPrice, lowPrice, closePrice));
+		}
+
+		return result;
+	}
 }

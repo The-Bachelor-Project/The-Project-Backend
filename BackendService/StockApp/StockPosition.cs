@@ -14,7 +14,7 @@ public class StockPosition
 
 	public List<StockTransaction> stockTransactions { get; set; } = new List<StockTransaction>();
 
-	public async Task<List<Data.DatePrice>> GetValueHistory(string currency, DateOnly startData, DateOnly endDate)
+	public async Task<Data.Position> GetValueHistory(string currency, DateOnly startData, DateOnly endDate)
 	{
 		UpdateStockTransactions(startData, endDate);
 		List<Data.DatePrice> valueHistory = new List<Data.DatePrice>();
@@ -30,12 +30,18 @@ public class StockPosition
 
 		while (currentDate <= endDate)
 		{
+
 			if (transactionIndex < stockTransactions.Count)
 			{
-				if (Tools.TimeConverter.UnixTimeStampToDateOnly(stockTransactions[transactionIndex].timestamp!.Value) == currentDate)
+				System.Console.WriteLine(currentDate);
+				while (Tools.TimeConverter.UnixTimeStampToDateOnly(stockTransactions[transactionIndex].timestamp!.Value) == currentDate)
 				{
 					currentlyOwned = stockTransactions[transactionIndex].amountOwned!.Value;
 					transactionIndex++;
+					if (transactionIndex >= stockTransactions.Count)
+					{
+						break;
+					}
 				}
 			}
 			if (stockIndex < stockHistory.history.Count)
@@ -47,22 +53,21 @@ public class StockPosition
 				}
 			}
 			valueHistory.Add(new Data.DatePrice(currentDate,
-				new Money(currencyStockPrice.openPrice!.amount * currentlyOwned),
-				new Money(currencyStockPrice.highPrice!.amount * currentlyOwned),
-				new Money(currencyStockPrice.lowPrice!.amount * currentlyOwned),
-				new Money(currencyStockPrice.closePrice!.amount * currentlyOwned)));
-
+				new Data.Money(currencyStockPrice.openPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
+				new Data.Money(currencyStockPrice.highPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
+				new Data.Money(currencyStockPrice.lowPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
+				new Data.Money(currencyStockPrice.closePrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY)));
 			currentDate = currentDate.AddDays(1);
 		}
 
-		return valueHistory;
+		return new Data.Position(stock.ticker, stock.exchange, valueHistory);
 	}
 
 	public StockPosition UpdateStockTransactions(DateOnly startDate, DateOnly endDate)
 	{
 		SqlConnection connection = new Data.Database.Connection().Create();
 		// String query = "SELECT * FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp >= @startDate AND timestamp <= @endDate";
-		String query = "SELECT * FROM(SELECT TOP 1 * FROM StockTransactions	WHERE timestamp < @startDate ORDER BY timestamp DESC) AS last_row UNION ALL SELECT * FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp >= @startDate AND timestamp <= @endDate";
+		String query = "SELECT * FROM(SELECT TOP 1 * FROM StockTransactions	WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp < @startDate ORDER BY timestamp DESC) AS last_row UNION ALL SELECT * FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp >= @startDate AND timestamp <= @endDate";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@portfolio", portfolio.id);
 		command.Parameters.AddWithValue("@ticker", stock.ticker);
@@ -71,8 +76,10 @@ public class StockPosition
 		command.Parameters.AddWithValue("@endDate", Tools.TimeConverter.dateOnlyToUnix(endDate));
 		SqlDataReader reader = command.ExecuteReader();
 		stockTransactions = new List<StockTransaction>();
+		System.Console.WriteLine("StockTransactions: " + reader.HasRows);
 		while (reader.Read())
 		{
+			System.Console.WriteLine("StockTransactions: " + Tools.TimeConverter.UnixTimeStampToDateOnly(Convert.ToInt32(reader["timestamp"])));
 			stockTransactions.Add(new StockTransaction());
 			stockTransactions.Last().id = reader["id"].ToString();
 			stockTransactions.Last().portfolioId = portfolio.id;

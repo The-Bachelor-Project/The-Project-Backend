@@ -53,10 +53,10 @@ public class StockFetcher : IStockFetcher
 			{
 				Data.DatePrice dataPoint = new Data.DatePrice(
 					DateOnly.Parse(dataSplit[0]),
-					new StockApp.Money(Decimal.Parse(dataSplit[1]), currency),
-					new StockApp.Money(Decimal.Parse(dataSplit[2]), currency),
-					new StockApp.Money(Decimal.Parse(dataSplit[3]), currency),
-					new StockApp.Money(Decimal.Parse(dataSplit[4]), currency)
+					new Data.Money(Decimal.Parse(dataSplit[1]), currency),
+					new Data.Money(Decimal.Parse(dataSplit[2]), currency),
+					new Data.Money(Decimal.Parse(dataSplit[3]), currency),
+					new Data.Money(Decimal.Parse(dataSplit[4]), currency)
 				);
 				result.history.Add(dataPoint);
 			}

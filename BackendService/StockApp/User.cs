@@ -132,8 +132,28 @@ public class User
 		throw new Exception("Portfolio not found");
 	}
 
-	public List<Data.DatePrice> GetValueHistory(string currency, DateOnly startData, DateOnly endDate)
+	public async Task<Data.UserAssetsValueHistory> GetValueHistory(string currency, DateOnly startData, DateOnly endDate)
 	{
-		throw new NotImplementedException();
+		UpdatePortfolios();
+
+		List<Data.DatePrice> valueHistory = new List<Data.DatePrice>();
+		List<Data.Portfolio> dataPortfolios = new List<Data.Portfolio>();
+
+		foreach (Portfolio portfolio in portfolios)
+		{
+			Data.Portfolio dataPortfolio = await portfolio.GetValueHistory(currency, startData, endDate);
+			dataPortfolios.Add(dataPortfolio);
+
+			if (valueHistory.Count == 0)
+			{
+				valueHistory = dataPortfolio.valueHistory;
+			}
+			else
+			{
+				Data.DatePrice.AddLists(valueHistory, dataPortfolio.valueHistory);
+			}
+		}
+
+		return new Data.UserAssetsValueHistory(valueHistory, dataPortfolios);
 	}
 }
