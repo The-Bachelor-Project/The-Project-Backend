@@ -22,6 +22,7 @@ public class DatabaseCurrencyFethcer
 		}
 	}
 
+	// Specific for YF, as GBX is not supported, so test is to check if GBP is correctly converted to GBX in our DB
 	[TestMethod]
 	public async Task DatabaseGBXHistoryFetcherTest()
 	{

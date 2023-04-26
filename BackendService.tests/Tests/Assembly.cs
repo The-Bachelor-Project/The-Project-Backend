@@ -10,7 +10,6 @@ public class Assembly
 	public static String portfolioID = "";
 	public static String email = "";
 	public static String password = "";
-	public static StockApp.TokenSet? tokenSet = null;
 
 	[AssemblyInitialize]
 	public static void Initialize(TestContext context)

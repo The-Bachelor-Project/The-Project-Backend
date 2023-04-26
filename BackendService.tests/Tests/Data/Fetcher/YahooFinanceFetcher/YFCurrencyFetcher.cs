@@ -6,11 +6,11 @@ public class YFCurrencyFetcherTest
 {
 	public Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher fetcher = new();
 
-	// Codes is missing GBX, as this can not be gotten from YF.
+
 	[TestMethod]
 	public async Task YFCurrenciesFetcher()
 	{
-		String[] codes = new string[] { "USD", "DKK", "SEK", "NOK", "EUR", "CAD", "GBP" };
+		String[] codes = new string[] { "USD", "DKK", "SEK", "NOK", "EUR", "CAD", "GBP" }; // Codes is missing GBX, as this can not be gotten from YF.
 		List<String> problemCurrencies = new List<String>();
 
 		foreach (String code in codes)
