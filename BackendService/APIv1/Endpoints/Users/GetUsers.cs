@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.v1;
 
-class GetUsers
+public class GetUsers
 {
 	public static void Setup(WebApplication app)
 	{

@@ -2,7 +2,7 @@ using System.Data.SqlClient;
 
 namespace API.v1;
 
-class PostStockTransactions
+public class PostStockTransactions
 {
 	public static void Setup(WebApplication app)
 	{
@@ -25,6 +25,8 @@ class PostStockTransactions
 		StockTransaction.timestamp = body.transaction.timestamp;
 		StockTransaction.price = new StockApp.Money(body.transaction.price.amount, body.transaction.price.currency);
 		await StockTransaction.AddToDb();
+		System.Console.WriteLine("StockTransaction id: " + StockTransaction.id);
+		//TODO: Fix stock transaction returning error, even if it succeeds, as stocktransaction id is not being set
 		if (StockTransaction.id != null)
 		{
 			return new PostStockTransactionsResponse("success", StockTransaction.id);

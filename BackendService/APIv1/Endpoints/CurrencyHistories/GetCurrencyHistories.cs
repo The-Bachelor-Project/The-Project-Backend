@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 namespace API.v1;
 
-class GetCurrencyHistories
+public class GetCurrencyHistories
 {
 	public static void Setup(WebApplication app)
 	{
@@ -11,7 +11,7 @@ class GetCurrencyHistories
 		});
 	}
 
-	private static async Task<GetCurrencyHistoriesResponse> Endpoint(string currency, DateOnly startDate, DateOnly endDate, string accessToken)
+	public static async Task<GetCurrencyHistoriesResponse> Endpoint(string currency, DateOnly startDate, DateOnly endDate, string accessToken)
 	{
 		Data.CurrencyHistory result = await (new Data.Fetcher.CurrencyFetcher()).GetHistory(currency, startDate, endDate);
 		return new GetCurrencyHistoriesResponse("success", result);

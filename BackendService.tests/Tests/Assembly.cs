@@ -7,7 +7,7 @@ public class Assembly
 {
 	public static StockApp.User? user = null;
 	public static String accessToken = "";
-	public static String portfolioID = "";
+	public static String[] portfolioIds = new String[4];
 	public static String email = "";
 	public static String password = "";
 
@@ -35,17 +35,21 @@ public class Assembly
 
 	private static void DeletePortfolio()
 	{
-		SqlConnection connection = new Data.Database.Connection().Create();
-		String query = "DELETE FROM Portfolios WHERE uid = @id";
-		SqlCommand command = new SqlCommand(query, connection);
-		command.Parameters.AddWithValue("@id", portfolioID);
-		try
+		foreach (String id in portfolioIds)
 		{
-			command.ExecuteNonQuery();
-		}
-		catch (System.Exception)
-		{
-			System.Console.WriteLine("Portfolio could not be deleted");
+			SqlConnection connection = new Data.Database.Connection().Create();
+			String query = "DELETE FROM Portfolios WHERE uid = @id";
+			SqlCommand command = new SqlCommand(query, connection);
+			command.Parameters.AddWithValue("@id", id);
+			try
+			{
+				command.ExecuteNonQuery();
+			}
+			catch (System.Exception)
+			{
+				System.Console.WriteLine("Portfolio with id " + id + " could not be deleted");
+			}
+			connection.Close();
 		}
 	}
 

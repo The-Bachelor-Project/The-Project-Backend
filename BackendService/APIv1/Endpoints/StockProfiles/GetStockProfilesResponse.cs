@@ -1,6 +1,6 @@
 namespace API.v1;
 
-class GetStockProfilesResponse
+public class GetStockProfilesResponse
 {
 	public GetStockProfilesResponse(string response, Data.StockProfile stock)
 	{

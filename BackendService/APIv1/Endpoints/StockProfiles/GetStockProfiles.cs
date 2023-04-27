@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.v1;
 
-class GetStockProfiles
+public class GetStockProfiles
 {
 	public static void Setup(WebApplication app)
 	{

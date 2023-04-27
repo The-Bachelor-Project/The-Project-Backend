@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.v1;
 
-class GetSearchResults
+public class GetSearchResults
 {
 	public static void Setup(WebApplication app)
 	{
@@ -23,7 +23,7 @@ class GetSearchResults
 	}
 
 }
-class GetSearchResultsResponse
+public class GetSearchResultsResponse
 {
 	public GetSearchResultsResponse(string response)
 	{

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.v1;
 
-class GetStockTransactions
+public class GetStockTransactions
 {
 	public static void Setup(WebApplication app)
 	{

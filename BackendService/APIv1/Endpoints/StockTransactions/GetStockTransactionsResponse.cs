@@ -1,6 +1,6 @@
 namespace API.v1;
 
-class GetStockTransactionsResponse
+public class GetStockTransactionsResponse
 {
 	public string response { get; }
 	public List<Data.StockTransaction> stockTransactions { get; }

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.v1;
-class GetStockHistories
+public class GetStockHistories
 {
 	public static void Setup(WebApplication app)
 	{
