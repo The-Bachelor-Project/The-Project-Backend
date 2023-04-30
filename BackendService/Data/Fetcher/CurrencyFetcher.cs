@@ -30,11 +30,10 @@ public class CurrencyFetcher : ICurrencyFetcher
 
 				Data.CurrencyHistory fromYahoo = await (new Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher()).GetHistory(currency, startDate.AddDays(-7), endDate);
 				SaveCurrencyHistory(fromYahoo, true, true);
+				reader.Close();
 				return fromYahoo;
 
 			}
-
-			reader.Close();
 
 			if (startDate < startTrackingDate)
 			{
@@ -49,6 +48,7 @@ public class CurrencyFetcher : ICurrencyFetcher
 				SaveCurrencyHistory(fromYahooAfter, false, true);
 			}
 		}
+		reader.Close();
 		return await (new Data.Fetcher.DatabaseFetcher.CurrencyFetcher()).GetHistory(currency, startDate, endDate);
 	}
 

@@ -20,8 +20,13 @@ public class StockPosition
 		List<Data.DatePrice> valueHistory = new List<Data.DatePrice>();
 
 		Data.StockHistory stockHistory = await new Data.Fetcher.StockFetcher().GetHistory(stock.ticker, stock.exchange, startData, endDate, "daily");
+		decimal currentlyOwned = 0;
 
-		decimal currentlyOwned = stockTransactions.First().amountOwned!.Value - stockTransactions.First().amountAdjusted!.Value;
+		if (stockTransactions.Count > 0)
+		{
+			currentlyOwned = stockTransactions.First().amountOwned!.Value - stockTransactions.First().amountAdjusted!.Value;
+		}
+
 		Data.DatePrice currencyStockPrice = stockHistory.history.First();
 		DateOnly currentDate = startData;
 
@@ -82,7 +87,9 @@ public class StockPosition
 		command.Parameters.AddWithValue("@exchange", stock.exchange);
 		command.Parameters.AddWithValue("@startDate", Tools.TimeConverter.dateOnlyToUnix(startDate));
 		command.Parameters.AddWithValue("@endDate", Tools.TimeConverter.dateOnlyToUnix(endDate));
+		System.Console.WriteLine("test 7");
 		SqlDataReader reader = command.ExecuteReader();
+		System.Console.WriteLine("test 8");
 		stockTransactions = new List<StockTransaction>();
 		System.Console.WriteLine("StockTransactions: " + reader.HasRows);
 		while (reader.Read())
@@ -99,7 +106,7 @@ public class StockPosition
 			stockTransactions.Last().timestamp = Convert.ToInt32(reader["timestamp"]);
 			stockTransactions.Last().price = new Money(Convert.ToDecimal(reader["price_amount"]), reader["price_currency"].ToString()!);
 		}
-
+		reader.Close();
 		return this;
 	}
 }

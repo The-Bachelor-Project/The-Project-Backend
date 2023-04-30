@@ -4,13 +4,16 @@ namespace Data.Database;
 
 public class Connection
 {
-
+	static SqlConnection? connection = null;
 	public SqlConnection Create()
 	{
 		SqlConnectionStringBuilder builder = buildConnectionString();
 		String connectionString = builder.ConnectionString;
-		SqlConnection connection = new SqlConnection(connectionString);
-		connection.Open();
+		if (connection == null)
+		{
+			connection = new SqlConnection(connectionString);
+			connection.Open();
+		}
 		return connection;
 	}
 

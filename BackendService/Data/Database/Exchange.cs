@@ -11,13 +11,12 @@ class Exchange
 		SqlCommand command = new SqlCommand(getCurrencyQuery, connection);
 		command.Parameters.AddWithValue("@symbol", exchange);
 		SqlDataReader reader = command.ExecuteReader();
+		String currency = "";
 		if (reader.Read())
 		{
-			return reader["currency"].ToString()!;
+			currency = reader["currency"].ToString()!;
 		}
-		else
-		{
-			return "";
-		}
+		reader.Close();
+		return currency;
 	}
 }

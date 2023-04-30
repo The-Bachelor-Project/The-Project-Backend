@@ -59,8 +59,11 @@ public class TokenSet
 		SqlDataReader reader = command.ExecuteReader();
 		if (reader.Read())
 		{
-			return new User(reader["user_id"].ToString()!);
+			User user = new User(reader["user_id"].ToString()!);
+			reader.Close();
+			return user;
 		}
+		reader.Close();
 		throw new Exception("User not found");
 	}
 }

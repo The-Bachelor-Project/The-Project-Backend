@@ -63,7 +63,9 @@ public class Portfolio
 		command.Parameters.AddWithValue("@uid", id);
 		SqlDataReader reader = command.ExecuteReader();
 		reader.Read();
-		return new User(reader["owner"].ToString()!);
+		User user = new User(reader["owner"].ToString()!);
+		reader.Close();
+		return user;
 	}
 
 
@@ -88,7 +90,7 @@ public class Portfolio
 			stockTransactions.Last().timestamp = Convert.ToInt32(reader["timestamp"]);
 			stockTransactions.Last().price = new Money(Convert.ToDecimal(reader["price_amount"]), reader["price_currency"].ToString()!);
 		}
-
+		reader.Close();
 		return this;
 	}
 
@@ -103,8 +105,9 @@ public class Portfolio
 		while (reader.Read())
 		{
 			stockPositions.Add(new StockPosition(this, new Stock(reader["ticker"].ToString()!, reader["exchange"].ToString()!)));
+			System.Console.WriteLine(stockPositions.Last().stock.ticker + " " + stockPositions.Last().stock.exchange);
 		}
-
+		reader.Close();
 		return this;
 	}
 
@@ -118,6 +121,7 @@ public class Portfolio
 
 		foreach (StockPosition position in stockPositions)
 		{
+			System.Console.WriteLine("This is a test");
 			Data.Position dataPosition = await position.GetValueHistory(currency, startData, endDate);
 			dataPositions.Add(dataPosition);
 

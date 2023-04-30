@@ -35,7 +35,7 @@ public class CurrencyFetcher : ICurrencyFetcher
 
 		result.startDate = result.history.First().date;
 		result.endDate = result.history.Last().date;
-
+		reader.Close();
 		return Task.FromResult(result);
 	}
 }

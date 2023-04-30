@@ -30,7 +30,7 @@ public class StockFetcher : IStockFetcher
 				new Money(Decimal.Parse("" + reader["close_price"].ToString()), Data.Money.DEFAULT_CURRENCY)
 			));
 		}
-
+		reader.Close();
 
 		result.startDate = result.history.First().date;
 		result.endDate = result.history.Last().date;
@@ -63,9 +63,10 @@ public class StockFetcher : IStockFetcher
 		}
 		else
 		{
+			reader.Close();
 			throw new CouldNotGetStockException();
 		}
-
+		reader.Close();
 		return Task.FromResult(profile);
 	}
 

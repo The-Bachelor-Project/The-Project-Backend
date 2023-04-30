@@ -46,8 +46,10 @@ public class User
 			{
 				System.Console.WriteLine(e);
 			}
+			reader.Close();
 			return this;
 		}
+		reader.Close();
 		throw new UserAlreadyExist();
 	}
 
@@ -63,11 +65,11 @@ public class User
 		{
 			String dbPassword = reader["password"].ToString()!;
 			String userID = reader["user_id"].ToString()!;
-			reader.Close();
 			//TODO Check password
 
 			if (dbPassword != Tools.Password.Hash(password!))
 			{
+				reader.Close();
 				throw new WrongPasswordException("The password is incorrect");
 			}
 
@@ -77,6 +79,7 @@ public class User
 		{
 			throw new UserDoesNotExistException("No user with the email \"" + email + "\" was found");
 		}
+		reader.Close();
 		return this;
 	}
 
@@ -105,6 +108,7 @@ public class User
 			);
 			portfolios.Add(portfolio);
 		}
+		reader.Close();
 		return this;
 	}
 
@@ -127,8 +131,10 @@ public class User
 				Convert.ToDecimal(reader["balance"]),
 				true //Convert.ToBoolean(Reader["track_balance"]) //TODO add to database to it can be used here
 			);
+			reader.Close();
 			return portfolio;
 		}
+		reader.Close();
 		throw new Exception("Portfolio not found");
 	}
 

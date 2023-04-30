@@ -35,16 +35,19 @@ class CreateFamily
 		{
 			try
 			{
+				reader.Close();
 				return int.Parse(reader["id"].ToString()!);
 			}
 			catch (Exception e)
 			{
+				reader.Close();
 				System.Console.WriteLine(e);
 				return -2;
 			}
 		}
 		else
 		{
+			reader.Close();
 			return -3;
 		}
 

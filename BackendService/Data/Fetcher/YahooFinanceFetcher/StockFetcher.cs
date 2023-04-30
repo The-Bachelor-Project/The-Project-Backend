@@ -18,10 +18,12 @@ public class StockFetcher : IStockFetcher
 
 		if (!reader.Read())
 		{
+			reader.Close();
 			throw new Exception("Exchange not found");
 		}
 
 		String currency = reader["currency"].ToString()!;
+		reader.Close();
 
 		int startTime = Tools.TimeConverter.dateOnlyToUnix(startDate);
 		int endTime = Tools.TimeConverter.dateOnlyToUnix(endDate);
@@ -63,7 +65,6 @@ public class StockFetcher : IStockFetcher
 		}
 
 		await new Tools.PriceHistoryConverter().Convert(result.history, "USD");
-
 		return result;
 	}
 
