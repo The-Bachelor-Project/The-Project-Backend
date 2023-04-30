@@ -8,6 +8,10 @@ public class PriceHistoryConverter
 {
 	public async Task<List<Data.DatePrice>> Convert(List<Data.DatePrice> priceHistory, String newCurrency)
 	{
+		if (priceHistory.Count == 0)
+		{
+			return priceHistory;
+		}
 		newCurrency = newCurrency.ToUpper();
 		if (newCurrency != "USD")
 		{

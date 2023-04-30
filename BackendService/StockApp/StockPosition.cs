@@ -52,11 +52,19 @@ public class StockPosition
 					stockIndex++;
 				}
 			}
-			valueHistory.Add(new Data.DatePrice(currentDate,
-				new Data.Money(currencyStockPrice.openPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
-				new Data.Money(currencyStockPrice.highPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
-				new Data.Money(currencyStockPrice.lowPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
-				new Data.Money(currencyStockPrice.closePrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY)));
+
+			if (valueHistory.Count > 0 || currentlyOwned != 0)
+			{
+				valueHistory.Add(new Data.DatePrice(currentDate,
+					new Data.Money(currencyStockPrice.openPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
+					new Data.Money(currencyStockPrice.highPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
+					new Data.Money(currencyStockPrice.lowPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
+					new Data.Money(currencyStockPrice.closePrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY)));
+			}
+			if (transactionIndex == stockTransactions.Count && currentlyOwned == 0)
+			{
+				break; //TODO check if this works
+			}
 			currentDate = currentDate.AddDays(1);
 		}
 
