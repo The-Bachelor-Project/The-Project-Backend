@@ -46,7 +46,7 @@ public class StockTransaction
 		reader.Close();
 
 
-		String insertStockTransaction = "INSERT INTO StockTransactions(portfolio, ticker, exchange, amount, amount_adjusted, amount_owned, timestamp, price_amount, price_currency) VALUES (@portfolio, @ticker, @exchange, @amount, @amount_adjusted, @amount_owned, @timestamp, @price_amount, @price_currency)";
+		String insertStockTransaction = "INSERT INTO StockTransactions(portfolio, ticker, exchange, amount, amount_adjusted, amount_owned, timestamp, price_amount, price_currency) OUTPUT INSERTED.id VALUES (@portfolio, @ticker, @exchange, @amount, @amount_adjusted, @amount_owned, @timestamp, @price_amount, @price_currency)";
 		SqlCommand command = new SqlCommand(insertStockTransaction, connection);
 		command.Parameters.AddWithValue("@portfolio", portfolioId);
 		command.Parameters.AddWithValue("@ticker", ticker);
@@ -57,7 +57,7 @@ public class StockTransaction
 		command.Parameters.AddWithValue("@timestamp", timestamp);
 		command.Parameters.AddWithValue("@price_amount", price!.amount);
 		command.Parameters.AddWithValue("@price_currency", price.currency);
-		command.ExecuteNonQuery();
+		id = (command.ExecuteScalar()).ToString();
 
 
 
