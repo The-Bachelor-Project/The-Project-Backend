@@ -139,15 +139,14 @@ public class StockFetcher : IStockFetcher
 				}
 				else
 				{
-					using (SqlConnection connection = new Data.Database.Connection().Create()) //TODO: This is just for development. Remove before production.
-					{
-						String sqlQuery = "INSERT INTO MissingExchanges (exchange, disp, stock) VALUES (@exchange, @disp, @stock)";
-						SqlCommand command = new SqlCommand(sqlQuery, connection);
-						command.Parameters.AddWithValue("@exchange", "" + res.exch);
-						command.Parameters.AddWithValue("@disp", "" + res.exchDisp);
-						command.Parameters.AddWithValue("@stock", "" + res.symbol);
-						command.ExecuteNonQuery();
-					}
+					SqlConnection connection = new Data.Database.Connection().Create();
+					String sqlQuery = "INSERT INTO MissingExchanges (exchange, disp, stock) VALUES (@exchange, @disp, @stock)";
+					SqlCommand command = new SqlCommand(sqlQuery, connection);
+					command.Parameters.AddWithValue("@exchange", "" + res.exch);
+					command.Parameters.AddWithValue("@disp", "" + res.exchDisp);
+					command.Parameters.AddWithValue("@stock", "" + res.symbol);
+					command.ExecuteNonQuery();
+
 				}
 			}
 		}

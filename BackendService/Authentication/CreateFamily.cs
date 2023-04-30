@@ -20,7 +20,6 @@ class CreateFamily
 			System.Console.WriteLine(e);
 			return -1;
 		}
-		connection.Close();
 		int familyID = GetFamilyID();
 		return familyID;
 	}
@@ -35,8 +34,9 @@ class CreateFamily
 		{
 			try
 			{
+				int familyId = int.Parse(reader["id"].ToString()!);
 				reader.Close();
-				return int.Parse(reader["id"].ToString()!);
+				return familyId;
 			}
 			catch (Exception e)
 			{

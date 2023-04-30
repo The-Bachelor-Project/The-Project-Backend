@@ -26,24 +26,25 @@ public class StockFetcher : IStockFetcher
 			}
 			catch (Exception)
 			{
+				reader.Close();
 				StockHistory fromYahoo = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, startDate.AddDays(-7), endDate, interval);
 				SaveStockHistory(fromYahoo, true, true);
-				reader.Close();
 				return fromYahoo;
 			}
 
 			if (startDate < startTrackingDate)
 			{
+				reader.Close();
 				StockHistory fromYahooBefore = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, startDate.AddDays(-7), startTrackingDate.AddDays(-1), interval);
 				SaveStockHistory(fromYahooBefore, true, false);
 			}
 			if (endDate > endTrackingDate)
 			{
+				reader.Close();
 				StockHistory fromYahooAfter = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, endTrackingDate.AddDays(1), endDate, interval);
 				SaveStockHistory(fromYahooAfter, false, true);
 			}
 		}
-
 		reader.Close();
 		return await new Data.Fetcher.DatabaseFetcher.StockFetcher().GetHistory(ticker, exchange, startDate, endDate, interval);
 	}
