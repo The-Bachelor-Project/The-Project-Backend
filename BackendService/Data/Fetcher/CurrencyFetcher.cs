@@ -27,23 +27,24 @@ public class CurrencyFetcher : ICurrencyFetcher
 			}
 			catch (Exception)
 			{
-
+				reader.Close();
 				Data.CurrencyHistory fromYahoo = await (new Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher()).GetHistory(currency, startDate.AddDays(-7), endDate);
 				SaveCurrencyHistory(fromYahoo, true, true);
-				reader.Close();
+
 				return fromYahoo;
 
 			}
 
 			if (startDate < startTrackingDate)
 			{
-
+				reader.Close();
 				Data.CurrencyHistory fromYahooBefore = await (new Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher()).GetHistory(currency, startDate.AddDays(-7), startTrackingDate.AddDays(-1));
 
 				SaveCurrencyHistory(fromYahooBefore, true, false);
 			}
 			if (endDate > endTrackingDate)
 			{
+				reader.Close();
 				Data.CurrencyHistory fromYahooAfter = await (new Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher()).GetHistory(currency, endTrackingDate.AddDays(1), endDate);
 				SaveCurrencyHistory(fromYahooAfter, false, true);
 			}
