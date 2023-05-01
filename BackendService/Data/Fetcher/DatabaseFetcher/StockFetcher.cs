@@ -1,7 +1,6 @@
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 using Data.Fetcher.Interfaces;
-using StockApp;
 
 namespace Data.Fetcher.DatabaseFetcher;
 
@@ -10,6 +9,8 @@ public class StockFetcher : IStockFetcher
 	public Task<StockHistory> GetHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, string interval)
 	{
 		System.Console.WriteLine("Getting stock history from database for " + ticker + " " + exchange + " " + startDate + " " + endDate + " " + interval);
+		StockHistory result = new StockHistory(ticker, exchange, "daily");
+
 		SqlConnection connection = new Data.Database.Connection().Create();
 		String getStockHistoryQuery = "SELECT * FROM GetStockPrices(@ticker, @exchange, 'daily', @start_date, @end_date)";
 		SqlCommand command = new SqlCommand(getStockHistoryQuery, connection);
@@ -19,7 +20,6 @@ public class StockFetcher : IStockFetcher
 		command.Parameters.AddWithValue("@end_date", Tools.TimeConverter.dateOnlyToString(endDate));
 		SqlDataReader reader = command.ExecuteReader();
 
-		StockHistory result = new StockHistory(ticker, exchange, "daily");
 		while (reader.Read())
 		{
 			result.history.Add(new Data.DatePrice(

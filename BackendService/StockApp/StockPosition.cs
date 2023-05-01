@@ -87,11 +87,12 @@ public class StockPosition
 		command.Parameters.AddWithValue("@exchange", stock.exchange);
 		command.Parameters.AddWithValue("@startDate", Tools.TimeConverter.dateOnlyToUnix(startDate));
 		command.Parameters.AddWithValue("@endDate", Tools.TimeConverter.dateOnlyToUnix(endDate));
-		System.Console.WriteLine("test 7");
+
 		SqlDataReader reader = command.ExecuteReader();
-		System.Console.WriteLine("test 8");
+
 		stockTransactions = new List<StockTransaction>();
 		System.Console.WriteLine("StockTransactions: " + reader.HasRows);
+
 		while (reader.Read())
 		{
 			System.Console.WriteLine("StockTransactions: " + Tools.TimeConverter.UnixTimeStampToDateOnly(Convert.ToInt32(reader["timestamp"])));

@@ -31,16 +31,15 @@ public class StockFetcher : IStockFetcher
 				SaveStockHistory(fromYahoo, true, true);
 				return fromYahoo;
 			}
+			reader.Close();
 
 			if (startDate < startTrackingDate)
 			{
-				reader.Close();
 				StockHistory fromYahooBefore = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, startDate.AddDays(-7), startTrackingDate.AddDays(-1), interval);
 				SaveStockHistory(fromYahooBefore, true, false);
 			}
 			if (endDate > endTrackingDate)
 			{
-				reader.Close();
 				StockHistory fromYahooAfter = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, endTrackingDate.AddDays(1), endDate, interval);
 				SaveStockHistory(fromYahooAfter, false, true);
 			}

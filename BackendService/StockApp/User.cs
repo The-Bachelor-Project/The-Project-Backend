@@ -74,13 +74,11 @@ public class User
 			}
 
 			id = userID;
-		}
-		else
-		{
-			throw new UserDoesNotExistException("No user with the email \"" + email + "\" was found");
+			reader.Close();
+			return this;
 		}
 		reader.Close();
-		return this;
+		throw new UserDoesNotExistException("No user with the email \"" + email + "\" was found");
 	}
 
 	public void Delete()

@@ -39,15 +39,16 @@ class RefreshTokens
 			if (reader.Read())
 			{
 				int isValid = int.Parse(reader["IsValid"].ToString()!);
+				int familyID = int.Parse(reader["IsValid"].ToString()!);
+				String userID = reader["IsValid"].ToString()!;
+				reader.Close();
 				if (isValid == 1)
 				{
-					reader.Close();
-					return new ValidFunctionResponse(int.Parse(reader["IsValid"].ToString()!), int.Parse(reader["FamilyID"].ToString()!), reader["UserID"].ToString()!);
+					return new ValidFunctionResponse(isValid, familyID, userID);
 				}
 				else
 				{
-					reader.Close();
-					InvalidateFamily(int.Parse(reader["FamilyID"].ToString()!));
+					InvalidateFamily(familyID);
 					return new ValidFunctionResponse(0, 0, "");
 				}
 			}

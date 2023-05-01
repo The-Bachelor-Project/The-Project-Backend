@@ -62,10 +62,14 @@ public class Portfolio
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@uid", id);
 		SqlDataReader reader = command.ExecuteReader();
-		reader.Read();
-		User user = new User(reader["owner"].ToString()!);
-		reader.Close();
-		return user;
+		if (reader.Read())
+		{
+			String userId = reader["owner"].ToString()!;
+			reader.Close();
+			User user = new User(userId);
+			return user;
+		}
+		throw new Exception();
 	}
 
 
