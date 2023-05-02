@@ -52,7 +52,7 @@ public class StockFetcherTest
 		{
 			StockProfile result = await new Data.Fetcher.StockFetcher().GetProfile(ticker, exchange);
 			Assert.IsTrue(result != null, "Result is null");
-			Assert.IsTrue(result.name == "Global Net Lease, Inc.", "Result name is not correct, should be Global Net Lease, Inc. but is " + result.name);
+			Assert.IsTrue(result.displayName == "Global Net Lease, Inc.", "Result name is not correct, should be Global Net Lease, Inc. but is " + result.displayName);
 			Assert.IsTrue(result.ticker == "GNL", "Result ticker is not correct, should be GNL but is " + result.ticker);
 		}
 		else
@@ -71,7 +71,7 @@ public class StockFetcherTest
 		{
 			StockProfile result = await new Data.Fetcher.StockFetcher().GetProfile(ticker, exchange);
 			Assert.IsTrue(result != null, "Result is null");
-			Assert.IsTrue(result.name == "Global Net Lease, Inc.", "Result name is not correct, should be Global Net Lease, Inc. but is " + result.name);
+			Assert.IsTrue(result.displayName == "Global Net Lease, Inc.", "Result name is not correct, should be Global Net Lease, Inc. but is " + result.displayName);
 			Assert.IsTrue(result.ticker == "GNL", "Result ticker is not correct, should be GNL but is " + result.ticker);
 		}
 		else

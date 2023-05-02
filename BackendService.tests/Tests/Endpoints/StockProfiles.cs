@@ -12,6 +12,6 @@ public class StockProfileTest
 		Assert.IsTrue(response.response == "success", "response should be \"success\" but was " + response.response);
 		Assert.IsTrue(response.stock!.ticker == ticker, "ticker should be " + ticker + " but was " + response.stock!.ticker);
 		Assert.IsTrue(response.stock!.exchange == exchange, "exchange should be " + exchange + " but was " + response.stock!.exchange);
-		Assert.IsFalse(response.stock!.name == "", "name should not be empty");
+		Assert.IsFalse(response.stock!.displayName == "", "name should not be empty");
 	}
 }

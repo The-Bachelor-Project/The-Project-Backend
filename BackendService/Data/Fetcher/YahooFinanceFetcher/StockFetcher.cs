@@ -87,35 +87,33 @@ public class StockFetcher : IStockFetcher
 		HttpResponseMessage quoteRes = await client.GetAsync("https://query1.finance.yahoo.com/v6/finance/quote?symbols=" + tickerExt);
 		String quoteJson = await quoteRes.Content.ReadAsStringAsync();
 		dynamic quote = JObject.Parse(quoteJson);
-		System.Console.WriteLine(quoteJson);
 
 		result.ticker = ticker;
 		result.exchange = exchange;
-		result.name = quote.quoteResponse.result[0].shortName;
 		try
 		{
-			result.industry = quoteSummary.quoteSummary.result[0].assetProfile.industry;
-			result.sector = quoteSummary.quoteSummary.result[0].assetProfile.sector;
-			result.website = quoteSummary.quoteSummary.result[0].assetProfile.website;
-			result.country = quoteSummary.quoteSummary.result[0].assetProfile.country;
+			result.displayName = quote.quoteResponse.result[0].displayName ??
+								  quote.quoteResponse.result[0].shortName ??
+								  quote.quoteResponse.result[0].longName ??
+								  throw new Exception("Stock does not have a name");
 		}
-		catch (Exception)
+		catch (System.Exception e)
 		{
-			result.industry = "";
-			result.sector = "";
-			result.website = "";
-			result.country = "";
+			System.Console.WriteLine(e);
 		}
 
-
-		if (result.name == null) //FIXME this is a botch solution
-		{
-			result.name = quote.quoteResponse.result[0].longName;
-		}
-		if (result.website == null) //FIXME this is a botch solution
-		{
-			result.website = "";
-		}
+		result.shortName = quote.quoteResponse.result[0].shortName ?? "";
+		result.longName = quote.quoteResponse.result[0].longName ?? "";
+		result.sharesOutstanding = quote?.quoteResponse?.result?[0]?.sharesOutstanding ?? 0;
+		result.financialCurrency = quote?.quoteResponse?.result?[0]?.financialCurrency ?? "";
+		result.industry = quoteSummary?.quoteSummary?.result?[0]?.assetProfile?.industry ?? "";
+		result.sector = quoteSummary?.quoteSummary?.result?[0]?.assetProfile?.sector ?? "";
+		result.website = quoteSummary?.quoteSummary?.result?[0]?.assetProfile?.website ?? "";
+		result.country = quoteSummary?.quoteSummary?.result?[0]?.assetProfile?.country ?? "";
+		result.state = quoteSummary?.quoteSummary?.result?[0]?.assetProfile?.state ?? "";
+		result.city = quoteSummary?.quoteSummary?.result?[0]?.assetProfile?.city ?? "";
+		result.address = quoteSummary?.quoteSummary?.result?[0]?.assetProfile?.address1 ?? "";
+		result.zip = quoteSummary?.quoteSummary?.result?[0]?.assetProfile?.zip ?? "";
 
 		return result;
 	}

@@ -81,11 +81,19 @@ public class StockFetcher : IStockFetcher
 	{
 		String tags = GenerateTags(profile);
 		SqlConnection connection = new Data.Database.Connection().Create();
-		String query = "INSERT INTO Stocks (ticker, exchange, company_name, industry, sector, website, country, tags) VALUES (@ticker, @exchange, @name, @industry, @sector, @website, @country, @tags)";
+		String query = "INSERT INTO Stocks (ticker, exchange, company_name, short_name, long_name, address, city, state, zip, financial_currency, shares_outstanding, industry, sector, website, country, tags) VALUES (@ticker, @exchange, @name, @short_name, @long_name, @address, @city, @state, @zip, @financial_currency, @shares_outstanding, @industry, @sector, @website, @country, @tags)";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@ticker", profile.ticker);
 		command.Parameters.AddWithValue("@exchange", profile.exchange);
-		command.Parameters.AddWithValue("@name", profile.name);
+		command.Parameters.AddWithValue("@name", profile.displayName);
+		command.Parameters.AddWithValue("@short_name", profile.shortName);
+		command.Parameters.AddWithValue("@long_name", profile.longName);
+		command.Parameters.AddWithValue("@address", profile.address);
+		command.Parameters.AddWithValue("@city", profile.city);
+		command.Parameters.AddWithValue("@state", profile.state);
+		command.Parameters.AddWithValue("@zip", profile.zip);
+		command.Parameters.AddWithValue("@financial_currency", profile.financialCurrency);
+		command.Parameters.AddWithValue("@shares_outstanding", profile.sharesOutstanding);
 		command.Parameters.AddWithValue("@industry", profile.industry);
 		command.Parameters.AddWithValue("@sector", profile.sector);
 		command.Parameters.AddWithValue("@website", profile.website);
@@ -100,7 +108,7 @@ public class StockFetcher : IStockFetcher
 		String tags = "";
 		tags += stockProfile.exchange + " " + stockProfile.ticker + ",";
 		tags += stockProfile.ticker + " " + stockProfile.exchange + ",";
-		tags += stockProfile.name + ",";
+		tags += stockProfile.displayName + ",";
 		return tags.ToLower();
 	}
 

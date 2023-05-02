@@ -13,6 +13,7 @@ public class YfTranslator
 	};
 	public static Dictionary<String, String> stockSymbolExtension = new Dictionary<string, string>(){
 		{"FRA",".F"},
+		{"ETR", ".DE"},
 		{"CPH",".CO"},
 		{"NYSE",""},
 		{"NASDAQ",""},

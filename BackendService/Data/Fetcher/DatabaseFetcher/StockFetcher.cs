@@ -55,7 +55,15 @@ public class StockFetcher : IStockFetcher
 
 		if (reader.Read())
 		{
-			profile.name = reader["company_name"].ToString();
+			profile.displayName = reader["company_name"].ToString();
+			profile.shortName = reader["short_name"].ToString();
+			profile.longName = reader["long_name"].ToString();
+			profile.address = reader["address"].ToString();
+			profile.city = reader["city"].ToString();
+			profile.state = reader["state"].ToString();
+			profile.zip = reader["zip"].ToString();
+			profile.financialCurrency = reader["financial_currency"].ToString();
+			profile.sharesOutstanding = (Decimal.TryParse(reader["shares_outstanding"].ToString(), out decimal number) ? number : 0);
 			profile.industry = reader["industry"].ToString();
 			profile.sector = reader["sector"].ToString();
 			profile.website = reader["website"].ToString();
