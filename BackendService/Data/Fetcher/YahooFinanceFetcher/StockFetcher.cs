@@ -65,6 +65,10 @@ public class StockFetcher : IStockFetcher
 		}
 
 		await new Tools.PriceHistoryConverter().Convert(result.history, "USD");
+		foreach (Data.DatePrice item in result.history)
+		{
+			System.Console.WriteLine(item.highPrice.amount);
+		}
 		return result;
 	}
 
@@ -135,7 +139,7 @@ public class StockFetcher : IStockFetcher
 				if (YfTranslator.stockAutocomplete.TryGetValue("" + res.exch, out exchange))
 				{
 					String ticker = ("" + res.symbol).Split(".")[0];
-					resultStocks = resultStocks.Append(await (new StockFetcher()).GetProfile(ticker, exchange)).ToArray();
+					resultStocks = resultStocks.Append(await (new Data.Fetcher.StockFetcher()).GetProfile(ticker, exchange)).ToArray();
 				}
 				else
 				{

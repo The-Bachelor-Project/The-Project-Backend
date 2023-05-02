@@ -26,35 +26,26 @@ public class PriceHistoryConverter
 		DateOnly endDate = priceHistory.Last().date;
 		Data.CurrencyHistory currencyHistory = await new Data.Fetcher.CurrencyFetcher().GetHistory(priceHistory.First().closePrice.currency, startDate, endDate);
 
-		int currencyCounter = 0;
-
-		foreach (Data.DatePrice datePrice in priceHistory)
+		Dictionary<DateOnly, Data.DatePrice> priceDictionary = priceHistory.ToDictionary(x => x.date, x => x);
+		Dictionary<DateOnly, Data.DatePrice> currencyDictionary = currencyHistory.history.ToDictionary(x => x.date, x => x);
+		List<Data.DatePrice> newPriceHistory = new List<Data.DatePrice>();
+		foreach (DateOnly date in priceDictionary.Keys.Intersect(currencyDictionary.Keys))
 		{
-			bool found = false;
+			Data.DatePrice currencyPrice = currencyDictionary[date];
+			priceDictionary[date].openPrice.amount *= currencyPrice.openPrice.amount;
+			priceDictionary[date].closePrice.amount *= currencyPrice.closePrice.amount;
+			priceDictionary[date].highPrice.amount *= currencyPrice.highPrice.amount;
+			priceDictionary[date].lowPrice.amount *= currencyPrice.lowPrice.amount;
 
-			while (!found)
-			{
-				if (currencyCounter >= currencyHistory.history.Count)
-				{
-					throw new Exception("Currency history is shorter than stock history");
-				}
-				if (currencyHistory.history[currencyCounter].date == datePrice.date)
-				{
-					found = true;
-					datePrice.openPrice.amount *= currencyHistory.history[currencyCounter].openPrice.amount;
-					datePrice.highPrice.amount *= currencyHistory.history[currencyCounter].highPrice.amount;
-					datePrice.lowPrice.amount *= currencyHistory.history[currencyCounter].lowPrice.amount;
-					datePrice.closePrice.amount *= currencyHistory.history[currencyCounter].closePrice.amount;
+			priceDictionary[date].openPrice.currency = newCurrency;
+			priceDictionary[date].closePrice.currency = newCurrency;
+			priceDictionary[date].highPrice.currency = newCurrency;
+			priceDictionary[date].lowPrice.currency = newCurrency;
 
-					datePrice.openPrice.currency = newCurrency;
-					datePrice.highPrice.currency = newCurrency;
-					datePrice.lowPrice.currency = newCurrency;
-					datePrice.closePrice.currency = newCurrency;
-				}
-				currencyCounter++;
-			}
+			newPriceHistory.Add(priceDictionary[date]);
 		}
 
+		priceHistory = newPriceHistory;
 		return priceHistory;
 	}
 }
