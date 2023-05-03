@@ -63,9 +63,36 @@ public class StockFetcher : IStockFetcher
 				}
 			}
 			await new Tools.PriceHistoryConverter().Convert(result.history, "USD");
-			foreach (Data.DatePrice item in result.history)
+			foreach (Data.DatePrice datePrice in result.history)
 			{
-				System.Console.WriteLine(item.highPrice.amount);
+				if (datePrice.highPrice.currency != "USD")
+				{
+					if (result.history.Count == 1)
+					{
+						result.history.Clear();
+						break;
+					}
+
+					int indexOfWrongPrice = result.history.IndexOf(datePrice);
+					if (indexOfWrongPrice - 1 > 0)
+					{
+						datePrice.highPrice.amount = result.history[indexOfWrongPrice - 1].highPrice.amount;
+						datePrice.lowPrice.amount = result.history[indexOfWrongPrice - 1].lowPrice.amount;
+						datePrice.openPrice.amount = result.history[indexOfWrongPrice - 1].openPrice.amount;
+						datePrice.closePrice.amount = result.history[indexOfWrongPrice - 1].closePrice.amount;
+					}
+					else if (indexOfWrongPrice + 1 < result.history.Count - 1)
+					{
+						datePrice.highPrice.amount = result.history[indexOfWrongPrice + 1].highPrice.amount;
+						datePrice.lowPrice.amount = result.history[indexOfWrongPrice + 1].lowPrice.amount;
+						datePrice.openPrice.amount = result.history[indexOfWrongPrice + 1].openPrice.amount;
+						datePrice.closePrice.amount = result.history[indexOfWrongPrice + 1].closePrice.amount;
+					}
+					datePrice.closePrice.currency = "USD";
+					datePrice.highPrice.currency = "USD";
+					datePrice.lowPrice.currency = "USD";
+					datePrice.openPrice.currency = "USD";
+				}
 			}
 			return result;
 		}
