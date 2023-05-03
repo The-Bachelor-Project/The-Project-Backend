@@ -44,7 +44,7 @@ public class PortfoliosTest
 	{
 		GetPortfoliosResponse response = GetPortfolios.Endpoint(Assembly.accessToken);
 		List<StockApp.Portfolio> sortedPortfolios = response.portfolios;
-		sortedPortfolios.Sort((port1, port2) => port1.name.CompareTo(port2.name));
+		sortedPortfolios.Sort((port1, port2) => port1.name!.CompareTo(port2.name));
 		Assert.IsTrue(response.response == "success", "response should be \"success\" but was " + response.response);
 		Assert.IsTrue(response.portfolios.Count == 4, "number of portfolios should be 4 but was " + response.portfolios.Count);
 		Assert.IsTrue(response.portfolios[2].name == names[2], "name of portfolio should be " + names[2] + " but was " + response.portfolios[2].name);

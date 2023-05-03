@@ -37,17 +37,17 @@ public class DatePrice
 
 			if (list1.Exists(x => x.date == date))
 			{
-				openPrice.amount += list1.Find(x => x.date == date).openPrice.amount;
-				highPrice.amount += list1.Find(x => x.date == date).highPrice.amount;
-				lowPrice.amount += list1.Find(x => x.date == date).lowPrice.amount;
-				closePrice.amount += list1.Find(x => x.date == date).closePrice.amount;
+				openPrice.amount += list1.Find(x => x.date == date)!.openPrice.amount;
+				highPrice.amount += list1.Find(x => x.date == date)!.highPrice.amount;
+				lowPrice.amount += list1.Find(x => x.date == date)!.lowPrice.amount;
+				closePrice.amount += list1.Find(x => x.date == date)!.closePrice.amount;
 			}
 			if (list2.Exists(x => x.date == date))
 			{
-				openPrice.amount += list2.Find(x => x.date == date).openPrice.amount;
-				highPrice.amount += list2.Find(x => x.date == date).highPrice.amount;
-				lowPrice.amount += list2.Find(x => x.date == date).lowPrice.amount;
-				closePrice.amount += list2.Find(x => x.date == date).closePrice.amount;
+				openPrice.amount += list2.Find(x => x.date == date)!.openPrice.amount;
+				highPrice.amount += list2.Find(x => x.date == date)!.highPrice.amount;
+				lowPrice.amount += list2.Find(x => x.date == date)!.lowPrice.amount;
+				closePrice.amount += list2.Find(x => x.date == date)!.closePrice.amount;
 			}
 
 			result.Add(new DatePrice(date, openPrice, highPrice, lowPrice, closePrice));

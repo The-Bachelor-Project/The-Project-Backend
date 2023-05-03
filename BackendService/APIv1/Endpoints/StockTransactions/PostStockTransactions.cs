@@ -31,6 +31,6 @@ public class PostStockTransactions
 		{
 			return new PostStockTransactionsResponse("success", StockTransaction.id);
 		}
-		return new PostStockTransactionsResponse("error", null);
+		return new PostStockTransactionsResponse("error", "");
 	}
 }
