@@ -36,16 +36,13 @@ public class StockTransaction
 		command3.Parameters.AddWithValue("@ticker", ticker);
 		command3.Parameters.AddWithValue("@exchange", exchange);
 		command3.Parameters.AddWithValue("@timestamp", timestamp);
-		SqlDataReader reader = command3.ExecuteReader();
+		using (SqlDataReader reader = command3.ExecuteReader())
+		{
+			decimal amountOwned = reader.Read() ? reader.GetDecimal(0) : 0;
 
-
-
-		decimal amountOwned = reader.Read() ? reader.GetDecimal(0) : 0;
-
-		decimal amountAdjusted = amount!.Value; //TODO: Should be adjusted in the future
-		reader.Close();
-
-
+			decimal amountAdjusted = amount!.Value; //TODO: Should be adjusted in the future
+			reader.Close();
+		}
 		String insertStockTransaction = "INSERT INTO StockTransactions(portfolio, ticker, exchange, amount, amount_adjusted, amount_owned, timestamp, price_amount, price_currency) OUTPUT INSERTED.id VALUES (@portfolio, @ticker, @exchange, @amount, @amount_adjusted, @amount_owned, @timestamp, @price_amount, @price_currency)";
 		SqlCommand command = new SqlCommand(insertStockTransaction, connection);
 		command.Parameters.AddWithValue("@portfolio", portfolioId);

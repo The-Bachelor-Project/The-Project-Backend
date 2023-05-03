@@ -28,29 +28,31 @@ public class User
 		String getEmailQuery = "SELECT email FROM Accounts WHERE email = @email";
 		SqlCommand command = new SqlCommand(getEmailQuery, connection);
 		command.Parameters.AddWithValue("@email", email);
-		SqlDataReader reader = command.ExecuteReader();
-		if (!reader.Read())
+		using (SqlDataReader reader = command.ExecuteReader())
 		{
-			reader.Close();
-			String uid = Tools.RandomString.Generate(32);
-			String signUpQuery = "INSERT INTO Accounts (user_id, email, password) VALUES (@user_id, @email, @password)";
-			command = new SqlCommand(signUpQuery, connection);
-			command.Parameters.AddWithValue("@user_id", uid);
-			command.Parameters.AddWithValue("@email", email);
-			command.Parameters.AddWithValue("@password", Tools.Password.Hash(password!));
-			try
+			if (!reader.Read())
 			{
-				command.ExecuteNonQuery();
-			}
-			catch (Exception e)
-			{
-				System.Console.WriteLine(e);
+				reader.Close();
+				String uid = Tools.RandomString.Generate(32);
+				String signUpQuery = "INSERT INTO Accounts (user_id, email, password) VALUES (@user_id, @email, @password)";
+				command = new SqlCommand(signUpQuery, connection);
+				command.Parameters.AddWithValue("@user_id", uid);
+				command.Parameters.AddWithValue("@email", email);
+				command.Parameters.AddWithValue("@password", Tools.Password.Hash(password!));
+				try
+				{
+					command.ExecuteNonQuery();
+				}
+				catch (Exception e)
+				{
+					System.Console.WriteLine(e);
+				}
+				reader.Close();
+				return this;
 			}
 			reader.Close();
-			return this;
+			throw new UserAlreadyExist();
 		}
-		reader.Close();
-		throw new UserAlreadyExist();
 	}
 
 	public User SignIn()
@@ -60,24 +62,26 @@ public class User
 		String query = "SELECT * FROM Accounts WHERE email = @email";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@email", email);
-		SqlDataReader reader = command.ExecuteReader();
-		if (reader.Read())
+		using (SqlDataReader reader = command.ExecuteReader())
 		{
-			String dbPassword = reader["password"].ToString()!;
-			String userID = reader["user_id"].ToString()!;
-			//TODO Check password
-
-			if (dbPassword != Tools.Password.Hash(password!))
+			if (reader.Read())
 			{
-				reader.Close();
-				throw new WrongPasswordException("The password is incorrect");
-			}
+				String dbPassword = reader["password"].ToString()!;
+				String userID = reader["user_id"].ToString()!;
+				//TODO Check password
 
-			id = userID;
+				if (dbPassword != Tools.Password.Hash(password!))
+				{
+					reader.Close();
+					throw new WrongPasswordException("The password is incorrect");
+				}
+
+				id = userID;
+				reader.Close();
+				return this;
+			}
 			reader.Close();
-			return this;
 		}
-		reader.Close();
 		throw new UserDoesNotExistException("No user with the email \"" + email + "\" was found");
 	}
 
@@ -92,21 +96,23 @@ public class User
 		String query = "SELECT * FROM Portfolios WHERE owner = @owner";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@owner", id);
-		SqlDataReader reader = command.ExecuteReader();
-		portfolios = new List<Portfolio>();
-		while (reader.Read())
+		using (SqlDataReader reader = command.ExecuteReader())
 		{
-			Portfolio portfolio = new Portfolio(
-				reader["uid"].ToString()!,
-				reader["name"].ToString()!,
-				reader["owner"].ToString()!,
-				reader["currency"].ToString()!,
-				Convert.ToDecimal(reader["balance"]),
-				true //Convert.ToBoolean(Reader["track_balance"]) //TODO add to database to it can be used here
-			);
-			portfolios.Add(portfolio);
+			portfolios = new List<Portfolio>();
+			while (reader.Read())
+			{
+				Portfolio portfolio = new Portfolio(
+					reader["uid"].ToString()!,
+					reader["name"].ToString()!,
+					reader["owner"].ToString()!,
+					reader["currency"].ToString()!,
+					Convert.ToDecimal(reader["balance"]),
+					true //Convert.ToBoolean(Reader["track_balance"]) //TODO add to database to it can be used here
+				);
+				portfolios.Add(portfolio);
+			}
+			reader.Close();
 		}
-		reader.Close();
 		return this;
 	}
 
@@ -117,22 +123,24 @@ public class User
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@owner", this.id);
 		command.Parameters.AddWithValue("@uid", id);
-		SqlDataReader reader = command.ExecuteReader();
-		List<Portfolio> portfolios = new List<Portfolio>();
-		if (reader.Read())
+		using (SqlDataReader reader = command.ExecuteReader())
 		{
-			Portfolio portfolio = new Portfolio(
-				reader["uid"].ToString()!,
-				reader["name"].ToString()!,
-				reader["owner"].ToString()!,
-				reader["currency"].ToString()!,
-				Convert.ToDecimal(reader["balance"]),
-				true //Convert.ToBoolean(Reader["track_balance"]) //TODO add to database to it can be used here
-			);
+			List<Portfolio> portfolios = new List<Portfolio>();
+			if (reader.Read())
+			{
+				Portfolio portfolio = new Portfolio(
+					reader["uid"].ToString()!,
+					reader["name"].ToString()!,
+					reader["owner"].ToString()!,
+					reader["currency"].ToString()!,
+					Convert.ToDecimal(reader["balance"]),
+					true //Convert.ToBoolean(Reader["track_balance"]) //TODO add to database to it can be used here
+				);
+				reader.Close();
+				return portfolio;
+			}
 			reader.Close();
-			return portfolio;
 		}
-		reader.Close();
 		throw new Exception("Portfolio not found");
 	}
 

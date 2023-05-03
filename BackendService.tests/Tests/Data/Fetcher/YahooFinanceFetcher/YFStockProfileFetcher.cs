@@ -10,14 +10,14 @@ public class YFStockProfileFetcherTest
 	{
 		StockProfile result = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetProfile("tsla", "nasdaq");
 		Assert.IsFalse(result == null, "Result is null");
-		Assert.IsTrue(result.displayName == "Tesla, Inc.", "Result name is not correct, should be Tesla, Inc. but is " + result.displayName);
+		Assert.IsTrue(result.displayName == "Tesla", "Result name is not correct, should be Tesla but is " + result.displayName);
 	}
 	[TestMethod]
 	public async Task YFNyseProfileFetcherTest()
 	{
 		StockProfile result = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetProfile("bgs", "nyse");
 		Assert.IsFalse(result == null, "Result is null");
-		Assert.IsTrue(result.displayName == "B&G Foods, Inc. B&G Foods, Inc.", "Result name is not correct, should be B&G Foods, Inc. B&G Foods, Inc. but is " + result.displayName);
+		Assert.IsTrue(result.displayName == "B&G Foods", "Result name is not correct, should be B&G Foods but is " + result.displayName);
 	}
 
 	[TestMethod]

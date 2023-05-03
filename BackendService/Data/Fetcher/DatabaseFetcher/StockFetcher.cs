@@ -18,20 +18,20 @@ public class StockFetcher : IStockFetcher
 		command.Parameters.AddWithValue("@exchange", exchange);
 		command.Parameters.AddWithValue("@start_date", Tools.TimeConverter.dateOnlyToString(startDate));
 		command.Parameters.AddWithValue("@end_date", Tools.TimeConverter.dateOnlyToString(endDate));
-		SqlDataReader reader = command.ExecuteReader();
-
-		while (reader.Read())
+		using (SqlDataReader reader = command.ExecuteReader())
 		{
-			result.history.Add(new Data.DatePrice(
-				DateOnly.FromDateTime((DateTime)reader["end_date"]),
-				new Money(Decimal.Parse("" + reader["open_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
-				new Money(Decimal.Parse("" + reader["high_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
-				new Money(Decimal.Parse("" + reader["low_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
-				new Money(Decimal.Parse("" + reader["close_price"].ToString()), Data.Money.DEFAULT_CURRENCY)
-			));
+			while (reader.Read())
+			{
+				result.history.Add(new Data.DatePrice(
+					DateOnly.FromDateTime((DateTime)reader["end_date"]),
+					new Money(Decimal.Parse("" + reader["open_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
+					new Money(Decimal.Parse("" + reader["high_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
+					new Money(Decimal.Parse("" + reader["low_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
+					new Money(Decimal.Parse("" + reader["close_price"].ToString()), Data.Money.DEFAULT_CURRENCY)
+				));
+			}
+			reader.Close();
 		}
-		reader.Close();
-
 		result.startDate = result.history.First().date;
 		result.endDate = result.history.Last().date;
 
@@ -51,31 +51,34 @@ public class StockFetcher : IStockFetcher
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@ticker", ticker);
 		command.Parameters.AddWithValue("@exchange", exchange);
-		SqlDataReader reader = command.ExecuteReader();
-
-		if (reader.Read())
+		using (SqlDataReader reader = command.ExecuteReader())
 		{
-			profile.displayName = reader["company_name"].ToString();
-			profile.shortName = reader["short_name"].ToString();
-			profile.longName = reader["long_name"].ToString();
-			profile.address = reader["address"].ToString();
-			profile.city = reader["city"].ToString();
-			profile.state = reader["state"].ToString();
-			profile.zip = reader["zip"].ToString();
-			profile.financialCurrency = reader["financial_currency"].ToString();
-			profile.sharesOutstanding = (Decimal.TryParse(reader["shares_outstanding"].ToString(), out decimal number) ? number : 0);
-			profile.industry = reader["industry"].ToString();
-			profile.sector = reader["sector"].ToString();
-			profile.website = reader["website"].ToString();
-			profile.country = reader["country"].ToString();
-		}
-		else
-		{
+			if (reader.Read())
+			{
+				profile.displayName = reader["company_name"].ToString();
+				profile.shortName = reader["short_name"].ToString();
+				profile.longName = reader["long_name"].ToString();
+				profile.address = reader["address"].ToString();
+				profile.city = reader["city"].ToString();
+				profile.state = reader["state"].ToString();
+				profile.zip = reader["zip"].ToString();
+				profile.financialCurrency = reader["financial_currency"].ToString();
+				profile.sharesOutstanding = (Decimal.TryParse(reader["shares_outstanding"].ToString(), out decimal number) ? number : 0);
+				profile.industry = reader["industry"].ToString();
+				profile.sector = reader["sector"].ToString();
+				profile.website = reader["website"].ToString();
+				profile.country = reader["country"].ToString();
+			}
+			else
+			{
+				reader.Close();
+				throw new CouldNotGetStockException();
+			}
 			reader.Close();
-			throw new CouldNotGetStockException();
+			return Task.FromResult(profile);
 		}
-		reader.Close();
-		return Task.FromResult(profile);
+
+
 	}
 
 	public Task<Data.StockProfile[]> Search(string query)
@@ -93,12 +96,14 @@ public class StockFetcher : IStockFetcher
 		String sqlQuery = "SELECT TOP 100 * FROM Stocks WHERE tags LIKE @tags";
 		SqlCommand command = new SqlCommand(sqlQuery, connection);
 		command.Parameters.AddWithValue("@tags", "%" + query + "%");
-		SqlDataReader reader = command.ExecuteReader();
-		while (reader.Read())
+		using (SqlDataReader reader = command.ExecuteReader())
 		{
-			results = results.Append(new Data.StockProfile((String)reader["ticker"], (String)reader["exchange"], (String)reader["company_name"])).ToArray();
+			while (reader.Read())
+			{
+				results = results.Append(new Data.StockProfile((String)reader["ticker"], (String)reader["exchange"], (String)reader["company_name"])).ToArray();
+			}
+			reader.Close();
+			return Task.FromResult(results);
 		}
-		reader.Close();
-		return Task.FromResult(results);
 	}
 }

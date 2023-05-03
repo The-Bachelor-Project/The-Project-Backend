@@ -10,13 +10,15 @@ class Exchange
 		SqlConnection connection = new Data.Database.Connection().Create();
 		SqlCommand command = new SqlCommand(getCurrencyQuery, connection);
 		command.Parameters.AddWithValue("@symbol", exchange);
-		SqlDataReader reader = command.ExecuteReader();
-		String currency = "";
-		if (reader.Read())
+		using (SqlDataReader reader = command.ExecuteReader())
 		{
-			currency = reader["currency"].ToString()!;
+			String currency = "";
+			if (reader.Read())
+			{
+				currency = reader["currency"].ToString()!;
+			}
+			reader.Close();
+			return currency;
 		}
-		reader.Close();
-		return currency;
 	}
 }

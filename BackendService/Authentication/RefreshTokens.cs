@@ -35,27 +35,29 @@ class RefreshTokens
 		command.Parameters.AddWithValue("@UnixNow", Tools.TimeConverter.dateTimeToUnix(DateTime.Now));
 		try
 		{
-			SqlDataReader reader = command.ExecuteReader();
-			if (reader.Read())
+			using (SqlDataReader reader = command.ExecuteReader())
 			{
-				int isValid = int.Parse(reader["IsValid"].ToString()!);
-				int familyID = int.Parse(reader["IsValid"].ToString()!);
-				String userID = reader["IsValid"].ToString()!;
-				reader.Close();
-				if (isValid == 1)
+				if (reader.Read())
 				{
-					return new ValidFunctionResponse(isValid, familyID, userID);
+					int isValid = int.Parse(reader["IsValid"].ToString()!);
+					int familyID = int.Parse(reader["IsValid"].ToString()!);
+					String userID = reader["IsValid"].ToString()!;
+					reader.Close();
+					if (isValid == 1)
+					{
+						return new ValidFunctionResponse(isValid, familyID, userID);
+					}
+					else
+					{
+						InvalidateFamily(familyID);
+						return new ValidFunctionResponse(0, 0, "");
+					}
 				}
 				else
 				{
-					InvalidateFamily(familyID);
-					return new ValidFunctionResponse(0, 0, "");
+					reader.Close();
+					return new ValidFunctionResponse(-1, 0, "");
 				}
-			}
-			else
-			{
-				reader.Close();
-				return new ValidFunctionResponse(-1, 0, "");
 			}
 		}
 		catch (Exception e)

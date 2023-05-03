@@ -13,39 +13,40 @@ public class StockFetcher : IStockFetcher
 		SqlCommand command = new SqlCommand(getTrackingDateQuery, connection);
 		command.Parameters.AddWithValue("@ticker", ticker);
 		command.Parameters.AddWithValue("@exchange", exchange);
-		SqlDataReader reader = command.ExecuteReader();
-
-		if (reader.Read())
+		using (SqlDataReader reader = command.ExecuteReader())
 		{
-			DateOnly startTrackingDate;
-			DateOnly endTrackingDate;
-			try
+			if (reader.Read())
 			{
-				startTrackingDate = DateOnly.FromDateTime((DateTime)reader["start_tracking_date"]);
-				endTrackingDate = DateOnly.FromDateTime((DateTime)reader["end_tracking_date"]);
-			}
-			catch (Exception)
-			{
+				DateOnly startTrackingDate;
+				DateOnly endTrackingDate;
+				try
+				{
+					startTrackingDate = DateOnly.FromDateTime((DateTime)reader["start_tracking_date"]);
+					endTrackingDate = DateOnly.FromDateTime((DateTime)reader["end_tracking_date"]);
+				}
+				catch (Exception)
+				{
+					reader.Close();
+					StockHistory fromYahoo = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, startDate.AddDays(-7), endDate, interval);
+					SaveStockHistory(fromYahoo, true, true);
+					return fromYahoo;
+				}
 				reader.Close();
-				StockHistory fromYahoo = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, startDate.AddDays(-7), endDate, interval);
-				SaveStockHistory(fromYahoo, true, true);
-				return fromYahoo;
+
+				if (startDate < startTrackingDate)
+				{
+					StockHistory fromYahooBefore = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, startDate.AddDays(-7), startTrackingDate.AddDays(-1), interval);
+					SaveStockHistory(fromYahooBefore, true, false);
+				}
+				if (endDate > endTrackingDate)
+				{
+					StockHistory fromYahooAfter = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, endTrackingDate.AddDays(1), endDate, interval);
+					SaveStockHistory(fromYahooAfter, false, true);
+				}
 			}
 			reader.Close();
-
-			if (startDate < startTrackingDate)
-			{
-				StockHistory fromYahooBefore = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, startDate.AddDays(-7), startTrackingDate.AddDays(-1), interval);
-				SaveStockHistory(fromYahooBefore, true, false);
-			}
-			if (endDate > endTrackingDate)
-			{
-				StockHistory fromYahooAfter = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, endTrackingDate.AddDays(1), endDate, interval);
-				SaveStockHistory(fromYahooAfter, false, true);
-			}
+			return await new Data.Fetcher.DatabaseFetcher.StockFetcher().GetHistory(ticker, exchange, startDate, endDate, interval);
 		}
-		reader.Close();
-		return await new Data.Fetcher.DatabaseFetcher.StockFetcher().GetHistory(ticker, exchange, startDate, endDate, interval);
 	}
 
 	public async Task<Data.StockProfile> GetProfile(string ticker, string exchange)

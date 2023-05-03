@@ -14,62 +14,62 @@ public class StockFetcher : IStockFetcher
 		String getCurrencyQuery = "SELECT currency FROM Exchanges WHERE symbol = @symbol";
 		SqlCommand command = new SqlCommand(getCurrencyQuery, connection);
 		command.Parameters.AddWithValue("@symbol", exchange);
-		SqlDataReader reader = command.ExecuteReader();
-
-		if (!reader.Read())
+		using (SqlDataReader reader = command.ExecuteReader())
 		{
-			reader.Close();
-			throw new Exception("Exchange not found");
-		}
-
-		String currency = reader["currency"].ToString()!;
-		reader.Close();
-
-		int startTime = Tools.TimeConverter.dateOnlyToUnix(startDate);
-		int endTime = Tools.TimeConverter.dateOnlyToUnix(endDate);
-		String tickerExt = YfTranslator.GetYfSymbol(ticker, exchange);
-
-		HttpClient client = new HttpClient();
-		String url = "https://query1.finance.yahoo.com/v7/finance/download/" + tickerExt + "?interval=1d&period1=" + startTime + "&period2=" + endTime;
-		System.Console.WriteLine(url);
-		HttpResponseMessage stockHistoryRes = await client.GetAsync(url);
-
-		if (stockHistoryRes.StatusCode == System.Net.HttpStatusCode.NotFound)
-		{
-			return new StockHistory(ticker, exchange, "daily");
-		}
-
-		String stockHistoryCsv = await stockHistoryRes.Content.ReadAsStringAsync();
-		String[] dataLines = stockHistoryCsv.Replace("\r", "").Split("\n");
-		String currencySymbol = Data.Database.Exchange.GetCurrency(exchange);
-
-		StockHistory result = new StockHistory(ticker, exchange, startDate, endDate, "daily");
-		List<string> dataList = dataLines.ToList();
-		dataList.RemoveAt(0);
-
-		foreach (string data in dataList)
-		{
-			String[] dataSplit = data.Split(",");
-			DateOnly date = DateOnly.Parse(dataSplit[0]);
-			if (date >= startDate && date <= endDate && dataSplit[1] != "null")
+			if (!reader.Read())
 			{
-				Data.DatePrice dataPoint = new Data.DatePrice(
-					DateOnly.Parse(dataSplit[0]),
-					new Data.Money(Decimal.Parse(dataSplit[1]), currency),
-					new Data.Money(Decimal.Parse(dataSplit[2]), currency),
-					new Data.Money(Decimal.Parse(dataSplit[3]), currency),
-					new Data.Money(Decimal.Parse(dataSplit[4]), currency)
-				);
-				result.history.Add(dataPoint);
+				reader.Close();
+				throw new Exception("Exchange not found");
 			}
-		}
 
-		await new Tools.PriceHistoryConverter().Convert(result.history, "USD");
-		foreach (Data.DatePrice item in result.history)
-		{
-			System.Console.WriteLine(item.highPrice.amount);
+			String currency = reader["currency"].ToString()!;
+			reader.Close();
+
+			int startTime = Tools.TimeConverter.dateOnlyToUnix(startDate);
+			int endTime = Tools.TimeConverter.dateOnlyToUnix(endDate);
+			String tickerExt = YfTranslator.GetYfSymbol(ticker, exchange);
+
+			HttpClient client = new HttpClient();
+			String url = "https://query1.finance.yahoo.com/v7/finance/download/" + tickerExt + "?interval=1d&period1=" + startTime + "&period2=" + endTime;
+			System.Console.WriteLine(url);
+			HttpResponseMessage stockHistoryRes = await client.GetAsync(url);
+
+			if (stockHistoryRes.StatusCode == System.Net.HttpStatusCode.NotFound)
+			{
+				return new StockHistory(ticker, exchange, "daily");
+			}
+
+			String stockHistoryCsv = await stockHistoryRes.Content.ReadAsStringAsync();
+			String[] dataLines = stockHistoryCsv.Replace("\r", "").Split("\n");
+			String currencySymbol = Data.Database.Exchange.GetCurrency(exchange);
+
+			StockHistory result = new StockHistory(ticker, exchange, startDate, endDate, "daily");
+			List<string> dataList = dataLines.ToList();
+			dataList.RemoveAt(0);
+
+			foreach (string data in dataList)
+			{
+				String[] dataSplit = data.Split(",");
+				DateOnly date = DateOnly.Parse(dataSplit[0]);
+				if (date >= startDate && date <= endDate && dataSplit[1] != "null")
+				{
+					Data.DatePrice dataPoint = new Data.DatePrice(
+						DateOnly.Parse(dataSplit[0]),
+						new Data.Money(Decimal.Parse(dataSplit[1]), currency),
+						new Data.Money(Decimal.Parse(dataSplit[2]), currency),
+						new Data.Money(Decimal.Parse(dataSplit[3]), currency),
+						new Data.Money(Decimal.Parse(dataSplit[4]), currency)
+					);
+					result.history.Add(dataPoint);
+				}
+			}
+			await new Tools.PriceHistoryConverter().Convert(result.history, "USD");
+			foreach (Data.DatePrice item in result.history)
+			{
+				System.Console.WriteLine(item.highPrice.amount);
+			}
+			return result;
 		}
-		return result;
 	}
 
 	public async Task<Data.StockProfile> GetProfile(string ticker, string exchange)

@@ -88,26 +88,27 @@ public class StockPosition
 		command.Parameters.AddWithValue("@startDate", Tools.TimeConverter.dateOnlyToUnix(startDate));
 		command.Parameters.AddWithValue("@endDate", Tools.TimeConverter.dateOnlyToUnix(endDate));
 
-		SqlDataReader reader = command.ExecuteReader();
-
-		stockTransactions = new List<StockTransaction>();
-		System.Console.WriteLine("StockTransactions: " + reader.HasRows);
-
-		while (reader.Read())
+		using (SqlDataReader reader = command.ExecuteReader())
 		{
-			System.Console.WriteLine("StockTransactions: " + Tools.TimeConverter.UnixTimeStampToDateOnly(Convert.ToInt32(reader["timestamp"])));
-			stockTransactions.Add(new StockTransaction());
-			stockTransactions.Last().id = reader["id"].ToString();
-			stockTransactions.Last().portfolioId = portfolio.id;
-			stockTransactions.Last().ticker = reader["ticker"].ToString();
-			stockTransactions.Last().exchange = reader["exchange"].ToString();
-			stockTransactions.Last().amount = Convert.ToDecimal(reader["amount"]);
-			stockTransactions.Last().amountAdjusted = Convert.ToDecimal(reader["amount_adjusted"]);
-			stockTransactions.Last().amountOwned = Convert.ToDecimal(reader["amount_owned"]);
-			stockTransactions.Last().timestamp = Convert.ToInt32(reader["timestamp"]);
-			stockTransactions.Last().price = new Money(Convert.ToDecimal(reader["price_amount"]), reader["price_currency"].ToString()!);
+			stockTransactions = new List<StockTransaction>();
+			System.Console.WriteLine("StockTransactions: " + reader.HasRows);
+
+			while (reader.Read())
+			{
+				System.Console.WriteLine("StockTransactions: " + Tools.TimeConverter.UnixTimeStampToDateOnly(Convert.ToInt32(reader["timestamp"])));
+				stockTransactions.Add(new StockTransaction());
+				stockTransactions.Last().id = reader["id"].ToString();
+				stockTransactions.Last().portfolioId = portfolio.id;
+				stockTransactions.Last().ticker = reader["ticker"].ToString();
+				stockTransactions.Last().exchange = reader["exchange"].ToString();
+				stockTransactions.Last().amount = Convert.ToDecimal(reader["amount"]);
+				stockTransactions.Last().amountAdjusted = Convert.ToDecimal(reader["amount_adjusted"]);
+				stockTransactions.Last().amountOwned = Convert.ToDecimal(reader["amount_owned"]);
+				stockTransactions.Last().timestamp = Convert.ToInt32(reader["timestamp"]);
+				stockTransactions.Last().price = new Money(Convert.ToDecimal(reader["price_amount"]), reader["price_currency"].ToString()!);
+			}
+			reader.Close();
+			return this;
 		}
-		reader.Close();
-		return this;
 	}
 }

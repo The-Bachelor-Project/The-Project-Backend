@@ -56,14 +56,17 @@ public class TokenSet
 		String query = "SELECT user_id FROM Tokens WHERE access_token = @access_token";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@access_token", accessToken);
-		SqlDataReader reader = command.ExecuteReader();
-		if (reader.Read())
+		using (SqlDataReader reader = command.ExecuteReader())
 		{
-			User user = new User(reader["user_id"].ToString()!);
+			if (reader.Read())
+			{
+				User user = new User(reader["user_id"].ToString()!);
+				reader.Close();
+				return user;
+			}
 			reader.Close();
-			return user;
 		}
-		reader.Close();
+
 		throw new Exception("User not found");
 	}
 }

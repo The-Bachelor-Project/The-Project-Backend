@@ -18,24 +18,25 @@ public class CurrencyFetcher : ICurrencyFetcher
 		command.Parameters.AddWithValue("@start_date", Tools.TimeConverter.dateOnlyToString(startDate));
 		command.Parameters.AddWithValue("@end_date", Tools.TimeConverter.dateOnlyToString(endDate));
 		command.Parameters.AddWithValue("@interval", "daily");
-		SqlDataReader reader = command.ExecuteReader();
-
-		Data.CurrencyHistory result = new Data.CurrencyHistory(currency, startDate, endDate, "daily");
-		while (reader.Read())
+		using (SqlDataReader reader = command.ExecuteReader())
 		{
-			result.history.Add(new Data.DatePrice(
-				DateOnly.FromDateTime(DateTime.Parse(reader["end_date"].ToString()!)),
-				new Data.Money(Decimal.Parse("" + reader["open_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
-				new Data.Money(Decimal.Parse("" + reader["high_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
-				new Data.Money(Decimal.Parse("" + reader["low_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
-				new Data.Money(Decimal.Parse("" + reader["close_price"].ToString()), Data.Money.DEFAULT_CURRENCY)
-			));
+			Data.CurrencyHistory result = new Data.CurrencyHistory(currency, startDate, endDate, "daily");
+			while (reader.Read())
+			{
+				result.history.Add(new Data.DatePrice(
+					DateOnly.FromDateTime(DateTime.Parse(reader["end_date"].ToString()!)),
+					new Data.Money(Decimal.Parse("" + reader["open_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
+					new Data.Money(Decimal.Parse("" + reader["high_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
+					new Data.Money(Decimal.Parse("" + reader["low_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
+					new Data.Money(Decimal.Parse("" + reader["close_price"].ToString()), Data.Money.DEFAULT_CURRENCY)
+				));
+			}
+			reader.Close();
+
+			result.startDate = result.history.First().date;
+			result.endDate = result.history.Last().date;
+
+			return Task.FromResult(result);
 		}
-		reader.Close();
-
-		result.startDate = result.history.First().date;
-		result.endDate = result.history.Last().date;
-
-		return Task.FromResult(result);
 	}
 }

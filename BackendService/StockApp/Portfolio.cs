@@ -61,15 +61,18 @@ public class Portfolio
 		String query = "SELECT owner FROM Portfolios WHERE uid = @uid";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@uid", id);
-		SqlDataReader reader = command.ExecuteReader();
-		if (reader.Read())
+		using (SqlDataReader reader = command.ExecuteReader())
 		{
-			String userId = reader["owner"].ToString()!;
-			reader.Close();
-			User user = new User(userId);
-			return user;
+			if (reader.Read())
+			{
+				String userId = reader["owner"].ToString()!;
+				reader.Close();
+				User user = new User(userId);
+				return user;
+			}
+			throw new Exception();
 		}
-		throw new Exception();
+
 	}
 
 
@@ -79,23 +82,25 @@ public class Portfolio
 		String query = "SELECT * FROM StockTransactions WHERE portfolio = @portfolio";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@portfolio", id);
-		SqlDataReader reader = command.ExecuteReader();
-		stockTransactions = new List<StockTransaction>();
-		while (reader.Read())
+		using (SqlDataReader reader = command.ExecuteReader())
 		{
-			stockTransactions.Add(new StockTransaction());
-			stockTransactions.Last().id = reader["id"].ToString();
-			stockTransactions.Last().portfolioId = id;
-			stockTransactions.Last().ticker = reader["ticker"].ToString();
-			stockTransactions.Last().exchange = reader["exchange"].ToString();
-			stockTransactions.Last().amount = Convert.ToDecimal(reader["amount"]);
-			stockTransactions.Last().amountAdjusted = Convert.ToDecimal(reader["amount_adjusted"]);
-			stockTransactions.Last().amountOwned = Convert.ToDecimal(reader["amount_owned"]);
-			stockTransactions.Last().timestamp = Convert.ToInt32(reader["timestamp"]);
-			stockTransactions.Last().price = new Money(Convert.ToDecimal(reader["price_amount"]), reader["price_currency"].ToString()!);
+			stockTransactions = new List<StockTransaction>();
+			while (reader.Read())
+			{
+				stockTransactions.Add(new StockTransaction());
+				stockTransactions.Last().id = reader["id"].ToString();
+				stockTransactions.Last().portfolioId = id;
+				stockTransactions.Last().ticker = reader["ticker"].ToString();
+				stockTransactions.Last().exchange = reader["exchange"].ToString();
+				stockTransactions.Last().amount = Convert.ToDecimal(reader["amount"]);
+				stockTransactions.Last().amountAdjusted = Convert.ToDecimal(reader["amount_adjusted"]);
+				stockTransactions.Last().amountOwned = Convert.ToDecimal(reader["amount_owned"]);
+				stockTransactions.Last().timestamp = Convert.ToInt32(reader["timestamp"]);
+				stockTransactions.Last().price = new Money(Convert.ToDecimal(reader["price_amount"]), reader["price_currency"].ToString()!);
+			}
+			reader.Close();
+			return this;
 		}
-		reader.Close();
-		return this;
 	}
 
 	public Portfolio UpdateStockPositions()
@@ -104,15 +109,17 @@ public class Portfolio
 		String query = "SELECT DISTINCT ticker, exchange FROM StockTransactions WHERE portfolio = @portfolio";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@portfolio", id);
-		SqlDataReader reader = command.ExecuteReader();
-		stockPositions = new List<StockPosition>();
-		while (reader.Read())
+		using (SqlDataReader reader = command.ExecuteReader())
 		{
-			stockPositions.Add(new StockPosition(this, new Stock(reader["ticker"].ToString()!, reader["exchange"].ToString()!)));
-			System.Console.WriteLine(stockPositions.Last().stock.ticker + " " + stockPositions.Last().stock.exchange);
+			stockPositions = new List<StockPosition>();
+			while (reader.Read())
+			{
+				stockPositions.Add(new StockPosition(this, new Stock(reader["ticker"].ToString()!, reader["exchange"].ToString()!)));
+				System.Console.WriteLine(stockPositions.Last().stock.ticker + " " + stockPositions.Last().stock.exchange);
+			}
+			reader.Close();
+			return this;
 		}
-		reader.Close();
-		return this;
 	}
 
 	public async Task<Data.Portfolio> GetValueHistory(string currency, DateOnly startData, DateOnly endDate)

@@ -29,27 +29,28 @@ class CreateFamily
 		String getFamilyID = "SELECT TOP 1 id FROM TokenFamily ORDER BY id DESC";
 		SqlConnection connection = new Data.Database.Connection().Create();
 		SqlCommand command = new SqlCommand(getFamilyID, connection);
-		SqlDataReader reader = command.ExecuteReader();
-		if (reader.Read())
+		using (SqlDataReader reader = command.ExecuteReader())
 		{
-			try
+			if (reader.Read())
 			{
-				int familyId = int.Parse(reader["id"].ToString()!);
-				reader.Close();
-				return familyId;
+				try
+				{
+					int familyId = int.Parse(reader["id"].ToString()!);
+					reader.Close();
+					return familyId;
+				}
+				catch (Exception e)
+				{
+					reader.Close();
+					System.Console.WriteLine(e);
+					return -2;
+				}
 			}
-			catch (Exception e)
+			else
 			{
 				reader.Close();
-				System.Console.WriteLine(e);
-				return -2;
+				return -3;
 			}
 		}
-		else
-		{
-			reader.Close();
-			return -3;
-		}
-
 	}
 }
