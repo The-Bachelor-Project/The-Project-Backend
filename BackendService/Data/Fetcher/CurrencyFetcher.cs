@@ -24,6 +24,7 @@ public class CurrencyFetcher : ICurrencyFetcher
 				{
 					startTrackingDate = DateOnly.FromDateTime((DateTime)reader["start_tracking_date"]);
 					endTrackingDate = DateOnly.FromDateTime((DateTime)reader["end_tracking_date"]);
+					reader.Close();
 				}
 				catch (Exception)
 				{
@@ -34,7 +35,6 @@ public class CurrencyFetcher : ICurrencyFetcher
 					return fromYahoo;
 
 				}
-				reader.Close();
 
 				if (startDate < startTrackingDate)
 				{

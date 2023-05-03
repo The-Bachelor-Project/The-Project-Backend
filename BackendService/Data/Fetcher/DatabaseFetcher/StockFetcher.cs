@@ -30,13 +30,12 @@ public class StockFetcher : IStockFetcher
 					new Money(Decimal.Parse("" + reader["close_price"].ToString()), Data.Money.DEFAULT_CURRENCY)
 				));
 			}
+			result.startDate = result.history.First().date;
+			result.endDate = result.history.Last().date;
 			reader.Close();
+
+			return Task.FromResult(result);
 		}
-		result.startDate = result.history.First().date;
-		result.endDate = result.history.Last().date;
-
-
-		return Task.FromResult(result);
 	}
 
 	public Task<Data.StockProfile> GetProfile(string ticker, string exchange)

@@ -47,7 +47,6 @@ public class User
 				{
 					System.Console.WriteLine(e);
 				}
-				reader.Close();
 				return this;
 			}
 			reader.Close();
@@ -68,21 +67,20 @@ public class User
 			{
 				String dbPassword = reader["password"].ToString()!;
 				String userID = reader["user_id"].ToString()!;
+				reader.Close();
 				//TODO Check password
 
 				if (dbPassword != Tools.Password.Hash(password!))
 				{
-					reader.Close();
 					throw new WrongPasswordException("The password is incorrect");
 				}
 
 				id = userID;
-				reader.Close();
 				return this;
 			}
 			reader.Close();
+			throw new UserDoesNotExistException("No user with the email \"" + email + "\" was found");
 		}
-		throw new UserDoesNotExistException("No user with the email \"" + email + "\" was found");
 	}
 
 	public void Delete()
@@ -112,8 +110,9 @@ public class User
 				portfolios.Add(portfolio);
 			}
 			reader.Close();
+			return this;
 		}
-		return this;
+
 	}
 
 	public Portfolio GetPortfolio(string id)
@@ -140,8 +139,9 @@ public class User
 				return portfolio;
 			}
 			reader.Close();
+			throw new Exception("Portfolio not found");
 		}
-		throw new Exception("Portfolio not found");
+
 	}
 
 	public async Task<Data.UserAssetsValueHistory> GetValueHistory(string currency, DateOnly startData, DateOnly endDate)

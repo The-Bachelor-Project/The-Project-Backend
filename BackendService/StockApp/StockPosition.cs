@@ -108,6 +108,7 @@ public class StockPosition
 				stockTransactions.Last().price = new Money(Convert.ToDecimal(reader["price_amount"]), reader["price_currency"].ToString()!);
 			}
 			reader.Close();
+
 			return this;
 		}
 	}

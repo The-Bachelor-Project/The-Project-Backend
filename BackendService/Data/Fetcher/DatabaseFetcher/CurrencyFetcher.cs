@@ -31,11 +31,9 @@ public class CurrencyFetcher : ICurrencyFetcher
 					new Data.Money(Decimal.Parse("" + reader["close_price"].ToString()), Data.Money.DEFAULT_CURRENCY)
 				));
 			}
-			reader.Close();
-
 			result.startDate = result.history.First().date;
 			result.endDate = result.history.Last().date;
-
+			reader.Close();
 			return Task.FromResult(result);
 		}
 	}

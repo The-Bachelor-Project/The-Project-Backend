@@ -38,7 +38,6 @@ public class StockFetcher : IStockFetcher
 			{
 				return new StockHistory(ticker, exchange, "daily");
 			}
-
 			String stockHistoryCsv = await stockHistoryRes.Content.ReadAsStringAsync();
 			String[] dataLines = stockHistoryCsv.Replace("\r", "").Split("\n");
 			String currencySymbol = Data.Database.Exchange.GetCurrency(exchange);

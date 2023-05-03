@@ -39,7 +39,6 @@ public class StockTransaction
 		using (SqlDataReader reader = command3.ExecuteReader())
 		{
 			decimal amountOwned = reader.Read() ? reader.GetDecimal(0) : 0;
-
 			decimal amountAdjusted = amount!.Value; //TODO: Should be adjusted in the future
 			reader.Close();
 		}

@@ -23,6 +23,7 @@ public class StockFetcher : IStockFetcher
 				{
 					startTrackingDate = DateOnly.FromDateTime((DateTime)reader["start_tracking_date"]);
 					endTrackingDate = DateOnly.FromDateTime((DateTime)reader["end_tracking_date"]);
+					reader.Close();
 				}
 				catch (Exception)
 				{
@@ -31,8 +32,6 @@ public class StockFetcher : IStockFetcher
 					SaveStockHistory(fromYahoo, true, true);
 					return fromYahoo;
 				}
-				reader.Close();
-
 				if (startDate < startTrackingDate)
 				{
 					StockHistory fromYahooBefore = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, startDate.AddDays(-7), startTrackingDate.AddDays(-1), interval);

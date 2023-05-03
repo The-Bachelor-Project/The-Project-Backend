@@ -66,10 +66,11 @@ public class Portfolio
 			if (reader.Read())
 			{
 				String userId = reader["owner"].ToString()!;
-				reader.Close();
 				User user = new User(userId);
+				reader.Close();
 				return user;
 			}
+			reader.Close();
 			throw new Exception();
 		}
 

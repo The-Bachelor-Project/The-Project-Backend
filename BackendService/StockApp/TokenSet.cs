@@ -65,8 +65,7 @@ public class TokenSet
 				return user;
 			}
 			reader.Close();
+			throw new Exception("User not found");
 		}
-
-		throw new Exception("User not found");
 	}
 }
