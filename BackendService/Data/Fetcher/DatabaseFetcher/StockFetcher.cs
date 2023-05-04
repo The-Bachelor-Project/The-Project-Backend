@@ -99,7 +99,7 @@ public class StockFetcher : IStockFetcher
 		{
 			while (reader.Read())
 			{
-				results = results.Append(new Data.StockProfile((String)reader["ticker"], (String)reader["exchange"], (String)reader["company_name"])).ToArray();
+				results = results.Append(new Data.StockProfile((String)reader["ticker"], (String)reader["exchange"], (String)reader["company_name"], (String)reader["country"])).ToArray();
 			}
 			reader.Close();
 			return Task.FromResult(results);
