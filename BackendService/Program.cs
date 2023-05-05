@@ -25,7 +25,7 @@ public class Program
 		//Application.app.Run();
 
 
-		API.v1.Application.setup();
+		API.v1.Application.Setup();
 	}
 }
 
