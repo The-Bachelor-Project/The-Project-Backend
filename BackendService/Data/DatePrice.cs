@@ -23,6 +23,15 @@ public class DatePrice
 
 	public static List<DatePrice> AddLists(List<DatePrice> list1, List<DatePrice> list2)
 	{
+		if (list1.Count == 0)
+		{
+			return list2;
+		}
+		if (list2.Count == 0)
+		{
+			return list1;
+		}
+
 		DateOnly startDate = list1[0].date < list2[0].date ? list1[0].date : list2[0].date;
 		DateOnly endDate = list1[^1].date > list2[^1].date ? list1[^1].date : list2[^1].date;
 

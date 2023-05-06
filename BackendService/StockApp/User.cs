@@ -168,4 +168,22 @@ public class User
 
 		return new Data.UserAssetsValueHistory(valueHistory, dataPortfolios);
 	}
+
+	public List<Data.StockTransaction> GetAllStockTransactions()
+	{
+		UpdatePortfolios();
+
+		List<Data.StockTransaction> transactions = new List<Data.StockTransaction>();
+
+		foreach (Portfolio portfolio in portfolios)
+		{
+			portfolio.UpdateStockTransactions();
+			foreach (StockTransaction transaction in portfolio.stockTransactions)
+			{
+				transactions.Add(new Data.StockTransaction(transaction.portfolioId!, transaction.ticker!, transaction.exchange!, transaction.amount ?? 0, transaction.timestamp ?? 0, new Data.Money(transaction.price!.amount, transaction.price.currency)));
+			}
+		}
+
+		return transactions;
+	}
 }

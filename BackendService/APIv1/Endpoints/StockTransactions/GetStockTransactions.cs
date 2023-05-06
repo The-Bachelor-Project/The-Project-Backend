@@ -6,16 +6,20 @@ public class GetStockTransactions
 {
 	public static void Setup(WebApplication app)
 	{
-		app.MapGet("/v1/stock-transactions", ([FromQuery] string id, string ticker, string exchange, string portfolio, string accessToken) =>
+		app.MapGet("/v1/stock-transactions", ([FromQuery] string accessToken) =>
 		{
-			return Results.Ok(Endpoint(id, ticker, exchange, portfolio, accessToken));
+			return Results.Ok(Endpoint(accessToken));
 		});
 	}
 
-	public static GetStockTransactionsResponse Endpoint(string id, string ticker, string exchange, string portfolio, string accessToken)
+	public static GetStockTransactionsResponse Endpoint(string accessToken)
 	{
-		List<Data.StockTransaction> stockTransactions = new List<Data.StockTransaction>();
-		stockTransactions.Add(new Data.StockTransaction(portfolio, ticker, exchange, (decimal)0.0, 1000, new Data.Money(0, Data.Money.DEFAULT_CURRENCY)));
+		if (accessToken == null)
+		{
+			return new GetStockTransactionsResponse("error", new List<Data.StockTransaction>());
+		}
+		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
+		List<Data.StockTransaction> stockTransactions = user.GetAllStockTransactions();
 		return new GetStockTransactionsResponse("success", stockTransactions);
 	}
 }
