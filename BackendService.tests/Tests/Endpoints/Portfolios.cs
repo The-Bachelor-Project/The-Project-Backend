@@ -18,7 +18,7 @@ public class PortfoliosTest
 			Decimal balance = balances[i];
 			Boolean trackBalance = trackBalances[i];
 			PostPortfoliosBody body = new PostPortfoliosBody(new PortfolioBody(name, currency, balance, trackBalance), Assembly.accessToken);
-			PostPortfoliosResponse response = PostPortfolios.Endpoint(body);
+			PostPortfoliosResponse response = PostPortfolios.Endpoint(body, Assembly.accessToken);
 			Assembly.portfolioIds[i] = response.id;
 			Assert.IsTrue(response.response == "success", "response should be \"success\" but was " + response.response);
 			Assert.IsTrue(response.id != "", "portfolio id should not be empty");

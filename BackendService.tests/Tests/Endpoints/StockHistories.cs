@@ -8,7 +8,7 @@ public class StockHistoriesTest
 	{
 		String ticker = "AAPL";
 		String exchange = "NASDAQ";
-		API.v1.GetStockHistoriesResponse response = await API.v1.GetStockHistories.Endpoint(ticker, exchange, "2021-01-01", "2022-01-01", "daily", Assembly.accessToken);
+		API.v1.GetStockHistoriesResponse response = await API.v1.GetStockHistories.Endpoint(ticker, exchange, "2021-01-01", "2022-01-01", "daily");
 		Assert.IsTrue(response.response == "success", "response should be \"success\" but was " + response.response);
 		Assert.IsTrue(response.history.ticker == ticker, "ticker should be " + ticker + " but was " + response.history.ticker);
 		Assert.IsTrue(response.history.exchange == exchange, "exchange should be " + exchange + " but was " + response.history.exchange);

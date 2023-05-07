@@ -6,7 +6,7 @@ public class SearchResultsTest
 	[TestMethod]
 	public void EndpointGetSingleSearchResult()
 	{
-		API.v1.GetSearchResultsResponse response = API.v1.GetSearchResults.Endpoint("AAPL", true, Assembly.accessToken);
+		API.v1.GetSearchResultsResponse response = API.v1.GetSearchResults.Endpoint("AAPL", true);
 		Assert.IsTrue(response.response == "success", "response should be \"success\" but was " + response.response);
 		Assert.IsTrue(response.stocks.Length == 1, "response.stocks.Length should be 1 but was " + response.stocks.Length);
 		Assert.IsTrue(response.stocks[0].displayName == "Apple Inc.", "response.stocks[0].name should be \"Apple Inc.\" but was " + response.stocks[0].displayName);

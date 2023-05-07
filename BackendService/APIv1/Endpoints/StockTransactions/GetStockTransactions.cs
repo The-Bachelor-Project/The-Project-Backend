@@ -6,18 +6,20 @@ public class GetStockTransactions
 {
 	public static void Setup(WebApplication app)
 	{
-		app.MapGet("/v1/stock-transactions", ([FromQuery] string accessToken) =>
+		app.MapGet("/v1/stock-transactions", (HttpContext context) =>
 		{
+			String? accessToken = context.Items["AccessToken"] as String;
+			if (accessToken is null)
+			{
+				context.Response.StatusCode = 401;
+				return Results.Ok(new GetPortfoliosResponse("error", new List<StockApp.Portfolio> { }));
+			}
 			return Results.Ok(Endpoint(accessToken));
 		});
 	}
 
 	public static GetStockTransactionsResponse Endpoint(string accessToken)
 	{
-		if (accessToken == null)
-		{
-			return new GetStockTransactionsResponse("error", new List<Data.StockTransaction>());
-		}
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
 		List<Data.StockTransaction> stockTransactions = user.GetAllStockTransactions();
 		return new GetStockTransactionsResponse("success", stockTransactions);

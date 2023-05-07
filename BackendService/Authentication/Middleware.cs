@@ -32,7 +32,7 @@ class Middleware : IMiddleware
 			await context.Response.WriteAsync("No access token provided for authentication.");
 			return;
 		}
-
+		context.Items["AccessToken"] = accessToken;
 		await next(context);
 	}
 }

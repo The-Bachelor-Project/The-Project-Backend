@@ -6,13 +6,13 @@ public class GetSearchResults
 {
 	public static void Setup(WebApplication app)
 	{
-		app.MapGet("/v1/search-results", ([FromQuery] string query, bool stocks, string accessToken) =>
+		app.MapGet("/v1/search-results", ([FromQuery] string query, bool stocks) =>
 		{
-			return Results.Ok(Endpoint(query, stocks, accessToken));
+			return Results.Ok(Endpoint(query, stocks));
 		});
 	}
 
-	public static GetSearchResultsResponse Endpoint(string query, bool stocks, string accessToken)
+	public static GetSearchResultsResponse Endpoint(string query, bool stocks)
 	{
 		GetSearchResultsResponse results = new GetSearchResultsResponse("success");
 		if (stocks)

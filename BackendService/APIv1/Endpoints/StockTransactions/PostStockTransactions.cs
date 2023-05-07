@@ -6,15 +6,21 @@ public class PostStockTransactions
 {
 	public static void Setup(WebApplication app)
 	{
-		app.MapPost("/v1/stock-transactions", (PostStockTransactionsBody body) =>
+		app.MapPost("/v1/stock-transactions", (HttpContext context, PostStockTransactionsBody body) =>
 		{
-			return Results.Ok(EndpointAsync(body));
+			String? accessToken = context.Items["AccessToken"] as String;
+			if (accessToken is null)
+			{
+				context.Response.StatusCode = 401;
+				return Results.Ok(new GetPortfoliosResponse("error", new List<StockApp.Portfolio> { }));
+			}
+			return Results.Ok(EndpointAsync(body, accessToken));
 		});
 	}
 
-	public static async Task<PostStockTransactionsResponse> EndpointAsync(PostStockTransactionsBody body)
+	public static async Task<PostStockTransactionsResponse> EndpointAsync(PostStockTransactionsBody body, String accessToken)
 	{
-		StockApp.User user = new StockApp.TokenSet(body.accessToken).GetUser();
+		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
 		System.Console.WriteLine("User: " + user.id);
 		StockApp.User owner = new StockApp.Portfolio(body.transaction.portfolio).GetOwner();
 		StockApp.StockTransaction StockTransaction = new StockApp.StockTransaction();
