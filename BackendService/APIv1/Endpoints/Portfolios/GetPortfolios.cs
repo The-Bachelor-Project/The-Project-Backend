@@ -6,7 +6,7 @@ public class GetPortfolios
 {
 	public static void Setup(WebApplication app)
 	{
-		app.MapGet("/v1/portfolios", (HttpContext context, [FromQuery] string? id) =>
+		app.MapGet("/v1/portfolios", (HttpContext context) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
 			if (accessToken is null)
@@ -15,10 +15,7 @@ public class GetPortfolios
 				return Results.Ok(new GetPortfoliosResponse("error", new List<StockApp.Portfolio> { }));
 			}
 
-			if (id is null || id == "")
-				return Results.Ok(Endpoint(accessToken));
-			else
-				return Results.Ok(Endpoint(id, accessToken));
+			return Results.Ok(Endpoint(accessToken));
 		});
 	}
 
