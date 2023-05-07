@@ -4,7 +4,7 @@ using Data;
 [TestClass]
 public class DatabaseCurrencyFethcer
 {
-	[TestMethod]
+	[TestMethod, Priority(1)]
 	public async Task DatabaseCurrencyHistoryFetcherTest()
 	{
 		String code = "EUR";
@@ -23,7 +23,7 @@ public class DatabaseCurrencyFethcer
 	}
 
 	// Specific for YF, as GBX is not supported, so test is to check if GBP is correctly converted to GBX in our DB
-	[TestMethod]
+	[TestMethod, Priority(1)]
 	public async Task DatabaseGBXHistoryFetcherTest()
 	{
 		String code = "GBX";

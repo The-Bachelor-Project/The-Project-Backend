@@ -47,6 +47,7 @@ public class TokenSet
 		StockApp.TokenSet tokenSet = Authentication.RefreshTokens.All(refreshToken!);
 		refreshToken = tokenSet.refreshToken;
 		accessToken = tokenSet.accessToken;
+
 		return this;
 	}
 

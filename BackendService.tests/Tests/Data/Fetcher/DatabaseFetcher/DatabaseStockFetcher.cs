@@ -4,7 +4,7 @@ using Data;
 [TestClass]
 public class DatabaseStockFetcherTest
 {
-	[TestMethod]
+	[TestMethod, Priority(1)]
 	public async Task DatabaseStockHistoryFetcherTest()
 	{
 		Boolean isSaved = await FetcherHelper.SaveStockHistoryToDB("goog", "nasdaq");
@@ -21,6 +21,7 @@ public class DatabaseStockFetcherTest
 		}
 	}
 
+	[TestMethod, Priority(1)]
 	public async Task DatabaseStockProfileFetcherTest()
 	{
 		Boolean isSaved = await FetcherHelper.SaveStockProfileToDB("goog", "nasdaq");

@@ -3,7 +3,7 @@ namespace BackendService.tests;
 [TestClass]
 public class CurrencyHistoriesTest
 {
-	[TestMethod]
+	[TestMethod, Priority(1)]
 	public async Task EndpointGetCurrencyHistoriesTest()
 	{
 		String currency = "CAD";

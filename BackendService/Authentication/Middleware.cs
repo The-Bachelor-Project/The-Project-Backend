@@ -1,5 +1,5 @@
 namespace Authentication;
-class Middleware : IMiddleware
+public class Middleware : IMiddleware
 {
 	public async Task InvokeAsync(HttpContext context, RequestDelegate next)
 	{

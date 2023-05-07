@@ -2,7 +2,7 @@ using System.Data.SqlClient;
 
 namespace Authentication;
 
-class Authenticate
+public class Authenticate
 {
 	public static bool AccessToken(string accessToken)
 	{

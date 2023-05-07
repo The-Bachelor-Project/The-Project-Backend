@@ -8,7 +8,7 @@ public class PortfoliosTest
 	private Decimal[] balances = new Decimal[] { 123.123m, 456.456m, 789.789m, 101.101m };
 	private Boolean[] trackBalances = new Boolean[] { true, false, true, false };
 
-	[TestMethod]
+	[TestMethod, Priority(1)]
 	public void EndpointPostPortfolioTest()
 	{
 		for (int i = 0; i < names.Length; i++)
@@ -26,7 +26,7 @@ public class PortfoliosTest
 
 	}
 
-	[TestMethod]
+	[TestMethod, Priority(1)]
 	public void EndpointGetSinglePortfolioTest()
 	{
 		GetPortfoliosResponse response = GetPortfolios.Endpoint(Assembly.portfolioIds[0], Assembly.accessToken);
@@ -39,7 +39,7 @@ public class PortfoliosTest
 		Assert.IsTrue(response.portfolios[0].trackBalance == trackBalances[0], "trackBalance of portfolio should be " + trackBalances[0] + " but was " + response.portfolios[0].trackBalance);
 	}
 
-	[TestMethod]
+	[TestMethod, Priority(1)]
 	public void EndpointGetMultiplePortfolios()
 	{
 		GetPortfoliosResponse response = GetPortfolios.Endpoint(Assembly.accessToken);

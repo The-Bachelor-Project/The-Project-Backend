@@ -56,8 +56,9 @@ class SetupTokens
 			command.ExecuteNonQuery();
 			return true;
 		}
-		catch (System.Exception)
+		catch (System.Exception e)
 		{
+			System.Console.WriteLine(e);
 			return false;
 		}
 	}

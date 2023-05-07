@@ -7,6 +7,7 @@ public class Assembly
 {
 	public static StockApp.User? user = null;
 	public static String accessToken = "";
+	public static String refreshToken = "";
 	public static String[] portfolioIds = new String[4];
 	public static String email = "";
 	public static String password = "";
@@ -21,6 +22,7 @@ public class Assembly
 	private static void SetupUser()
 	{
 		accessToken = SignInHelper.GetAccessToken();
+		refreshToken = SignInHelper.GetRefreshToken();
 		user = new StockApp.TokenSet(accessToken).GetUser();
 		email = SignUpHelper.GetEmail();
 		password = SignUpHelper.GetPassword();

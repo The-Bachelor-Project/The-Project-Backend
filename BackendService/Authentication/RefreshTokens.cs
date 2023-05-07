@@ -2,7 +2,7 @@ using System.Data.SqlClient;
 
 namespace Authentication;
 
-class RefreshTokens
+public class RefreshTokens
 {
 	public static StockApp.TokenSet All(String refreshToken)
 	{
@@ -14,13 +14,11 @@ class RefreshTokens
 		}
 		else if (validFunctionResponse.isValid == 0)
 		{
-			//FIXME: Error not being handled
 			StockApp.TokenSet tokenSet = new StockApp.TokenSet("is_expired", "");
 			return tokenSet;
 		}
 		else
 		{
-			//FIXME: Error not being handled
 			StockApp.TokenSet tokenSet = new StockApp.TokenSet("error", "");
 			return tokenSet;
 		}
@@ -33,6 +31,8 @@ class RefreshTokens
 		SqlCommand command = new SqlCommand(checkIfValidQuery, connection);
 		command.Parameters.AddWithValue("@RefreshToken", refreshToken);
 		command.Parameters.AddWithValue("@UnixNow", Tools.TimeConverter.dateTimeToUnix(DateTime.Now));
+		System.Console.WriteLine("RefreshToken: " + refreshToken);
+		System.Console.WriteLine("UnixNow: " + Tools.TimeConverter.dateTimeToUnix(DateTime.Now));
 		try
 		{
 			using (SqlDataReader reader = command.ExecuteReader())
@@ -40,8 +40,8 @@ class RefreshTokens
 				if (reader.Read())
 				{
 					int isValid = int.Parse(reader["IsValid"].ToString()!);
-					int familyID = int.Parse(reader["IsValid"].ToString()!);
-					String userID = reader["IsValid"].ToString()!;
+					int familyID = int.Parse(reader["FamilyId"].ToString()!);
+					String userID = reader["UserID"].ToString()!;
 					reader.Close();
 					if (isValid == 1)
 					{

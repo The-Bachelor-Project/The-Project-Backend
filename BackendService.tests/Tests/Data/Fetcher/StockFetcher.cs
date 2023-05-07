@@ -4,7 +4,7 @@ using Data;
 [TestClass]
 public class StockFetcherTest
 {
-	[TestMethod]
+	[TestMethod, Priority(1)]
 	public async Task SaveStockHistoryToDBFromYFTest()
 	{
 		String ticker = "GNL";
@@ -23,7 +23,7 @@ public class StockFetcherTest
 		}
 	}
 
-	[TestMethod]
+	[TestMethod, Priority(1)]
 	public async Task StockHistoryAlreadyInDBTest()
 	{
 		String ticker = "GNL";
@@ -42,7 +42,7 @@ public class StockFetcherTest
 		}
 	}
 
-	[TestMethod]
+	[TestMethod, Priority(1)]
 	public async Task SaveStockProfileToDBFromYFTest()
 	{
 		String ticker = "GNL";
@@ -61,7 +61,7 @@ public class StockFetcherTest
 		}
 	}
 
-	[TestMethod]
+	[TestMethod, Priority(1)]
 	public async Task StockProfileAlreadyInDBTest()
 	{
 		String ticker = "GNL";

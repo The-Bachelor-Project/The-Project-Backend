@@ -4,7 +4,7 @@ using Data;
 [TestClass]
 public class CurrencyFetcherTest
 {
-	[TestMethod]
+	[TestMethod, Priority(1)]
 	public async Task SaveCurrencyHistoryToDBFromYFTest()
 	{
 		String code = "CAD";
@@ -22,7 +22,7 @@ public class CurrencyFetcherTest
 		}
 	}
 
-	[TestMethod]
+	[TestMethod, Priority(1)]
 	public async Task CurrencyHistoryAlreadyInDBTest()
 	{
 		String code = "CAD";
