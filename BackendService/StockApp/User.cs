@@ -162,7 +162,7 @@ public class User
 			}
 			else
 			{
-				Data.DatePrice.AddLists(valueHistory, dataPortfolio.valueHistory);
+				valueHistory = Data.DatePrice.AddLists(valueHistory, dataPortfolio.valueHistory);
 			}
 		}
 

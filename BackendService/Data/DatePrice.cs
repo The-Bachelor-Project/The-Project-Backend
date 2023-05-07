@@ -62,6 +62,7 @@ public class DatePrice
 			result.Add(new DatePrice(date, openPrice, highPrice, lowPrice, closePrice));
 		}
 
+
 		return result;
 	}
 }

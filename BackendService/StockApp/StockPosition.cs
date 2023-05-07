@@ -21,10 +21,23 @@ public class StockPosition
 
 		Data.StockHistory stockHistory = await new Data.Fetcher.StockFetcher().GetHistory(stock.ticker, stock.exchange, startData, endDate, "daily");
 		decimal currentlyOwned = 0;
+		System.Console.WriteLine("Stock ffd   " + stock.ticker + "    " + stockTransactions.Count);
 
 		if (stockTransactions.Count > 0)
 		{
-			currentlyOwned = stockTransactions.First().amountOwned!.Value - stockTransactions.First().amountAdjusted!.Value;
+			if (Tools.TimeConverter.UnixTimeStampToDateOnly(stockTransactions.First().timestamp!.Value) < startData)
+			{
+				currentlyOwned = stockTransactions.First().amountOwned!.Value;
+			}
+			else
+			{
+				currentlyOwned = stockTransactions.First().amountOwned!.Value - stockTransactions.First().amountAdjusted!.Value;
+			}
+
+		}
+		else
+		{
+			return new Data.Position(stock.ticker, stock.exchange, valueHistory);
 		}
 
 		Data.DatePrice currencyStockPrice = stockHistory.history.First();
@@ -58,18 +71,13 @@ public class StockPosition
 				}
 			}
 
-			if (valueHistory.Count > 0 || currentlyOwned != 0)
-			{
-				valueHistory.Add(new Data.DatePrice(currentDate,
-					new Data.Money(currencyStockPrice.openPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
-					new Data.Money(currencyStockPrice.highPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
-					new Data.Money(currencyStockPrice.lowPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
-					new Data.Money(currencyStockPrice.closePrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY)));
-			}
-			if (transactionIndex == stockTransactions.Count && currentlyOwned == 0)
-			{
-				break; //TODO check if this works
-			}
+
+			valueHistory.Add(new Data.DatePrice(currentDate,
+				new Data.Money(currencyStockPrice.openPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
+				new Data.Money(currencyStockPrice.highPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
+				new Data.Money(currencyStockPrice.lowPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
+				new Data.Money(currencyStockPrice.closePrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY)));
+
 			currentDate = currentDate.AddDays(1);
 		}
 
@@ -78,9 +86,10 @@ public class StockPosition
 
 	public StockPosition UpdateStockTransactions(DateOnly startDate, DateOnly endDate)
 	{
+		System.Console.WriteLine("UpdateStockTransactions: " + startDate + " " + endDate + " " + stock.ticker + " " + stock.exchange + " " + portfolio.id);
 		SqlConnection connection = new Data.Database.Connection().Create();
-		// String query = "SELECT * FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp >= @startDate AND timestamp <= @endDate";
-		String query = "SELECT * FROM(SELECT TOP 1 * FROM StockTransactions	WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp < @startDate ORDER BY timestamp DESC) AS last_row UNION ALL SELECT * FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp >= @startDate AND timestamp <= @endDate";
+		String query = "SELECT * FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp <= @endDate";
+		//String query = "SELECT * FROM(SELECT TOP 1 * FROM StockTransactions	WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp < @startDate ORDER BY timestamp DESC) AS first_row UNION ALL SELECT * FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp >= @startDate AND timestamp <= @endDate ORDER BY timestamp DESC";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@portfolio", portfolio.id);
 		command.Parameters.AddWithValue("@ticker", stock.ticker);
@@ -91,21 +100,30 @@ public class StockPosition
 		using (SqlDataReader reader = command.ExecuteReader())
 		{
 			stockTransactions = new List<StockTransaction>();
-			System.Console.WriteLine("StockTransactions: " + reader.HasRows);
+
+			int startTimeStamp = Tools.TimeConverter.dateOnlyToUnix(startDate);
 
 			while (reader.Read())
 			{
-				System.Console.WriteLine("StockTransactions: " + Tools.TimeConverter.UnixTimeStampToDateOnly(Convert.ToInt32(reader["timestamp"])));
-				stockTransactions.Add(new StockTransaction());
-				stockTransactions.Last().id = reader["id"].ToString();
-				stockTransactions.Last().portfolioId = portfolio.id;
-				stockTransactions.Last().ticker = reader["ticker"].ToString();
-				stockTransactions.Last().exchange = reader["exchange"].ToString();
-				stockTransactions.Last().amount = Convert.ToDecimal(reader["amount"]);
-				stockTransactions.Last().amountAdjusted = Convert.ToDecimal(reader["amount_adjusted"]);
-				stockTransactions.Last().amountOwned = Convert.ToDecimal(reader["amount_owned"]);
-				stockTransactions.Last().timestamp = Convert.ToInt32(reader["timestamp"]);
-				stockTransactions.Last().price = new Money(Convert.ToDecimal(reader["price_amount"]), reader["price_currency"].ToString()!);
+				System.Console.WriteLine("StockTransactions: " + "    " + reader["ticker"].ToString() + "   " + Tools.TimeConverter.UnixTimeStampToDateOnly(Convert.ToInt32(reader["timestamp"])));
+
+				StockTransaction newStockTransaction = new StockTransaction();
+
+				newStockTransaction.id = reader["id"].ToString();
+				newStockTransaction.portfolioId = portfolio.id;
+				newStockTransaction.ticker = reader["ticker"].ToString();
+				newStockTransaction.exchange = reader["exchange"].ToString();
+				newStockTransaction.amount = Convert.ToDecimal(reader["amount"]);
+				newStockTransaction.amountAdjusted = Convert.ToDecimal(reader["amount_adjusted"]);
+				newStockTransaction.amountOwned = Convert.ToDecimal(reader["amount_owned"]);
+				newStockTransaction.timestamp = Convert.ToInt32(reader["timestamp"]);
+				newStockTransaction.price = new Money(Convert.ToDecimal(reader["price_amount"]), reader["price_currency"].ToString()!);
+
+				if (newStockTransaction.timestamp < startTimeStamp && stockTransactions.Count == 1)
+				{
+					stockTransactions = new List<StockTransaction>();
+				}
+				stockTransactions.Add(newStockTransaction);
 			}
 			reader.Close();
 

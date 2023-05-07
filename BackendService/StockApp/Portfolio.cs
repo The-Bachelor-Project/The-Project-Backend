@@ -133,17 +133,19 @@ public class Portfolio
 
 		foreach (StockPosition position in stockPositions)
 		{
-			System.Console.WriteLine("This is a test");
 			Data.Position dataPosition = await position.GetValueHistory(currency, startData, endDate);
-			dataPositions.Add(dataPosition);
+			if (dataPosition.valueHistory.Count > 0)
+			{
+				dataPositions.Add(dataPosition);
 
-			if (valueHistory.Count == 0)
-			{
-				valueHistory = dataPosition.valueHistory;
-			}
-			else
-			{
-				Data.DatePrice.AddLists(valueHistory, dataPosition.valueHistory);
+				if (valueHistory.Count == 0)
+				{
+					valueHistory = dataPosition.valueHistory;
+				}
+				else
+				{
+					valueHistory = Data.DatePrice.AddLists(valueHistory, dataPosition.valueHistory);
+				}
 			}
 		}
 
