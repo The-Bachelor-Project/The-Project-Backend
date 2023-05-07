@@ -36,4 +36,18 @@ public class MiddleWareTest
 
 		Assert.IsTrue(context.Response.StatusCode == 401, "statuscode should be 401 but was " + context.Response.StatusCode);
 	}
+
+	[TestMethod]
+	public async Task AuthenticateNoToken()
+	{
+		HttpContext context = new DefaultHttpContext();
+		context.Request.Path = "/v1/endpoint";
+		context.Request.Method = "GET";
+
+		Authentication.Middleware middleware = new Authentication.Middleware();
+
+		await middleware.InvokeAsync(context, (ctx) => Task.FromResult(0));
+
+		Assert.IsTrue(context.Response.StatusCode == 401, "statuscode should be 401 but was " + context.Response.StatusCode);
+	}
 }

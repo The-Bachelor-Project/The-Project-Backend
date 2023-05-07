@@ -11,9 +11,28 @@ public class Middleware : IMiddleware
 
 		if (context.Request.Path == "/v1/tokens" && context.Request.Method == "GET")
 		{
-			// TODO: Maybe check for authentication with the refreshtoken here, instead of on the endpoint
-			await next(context);
-			return;
+			String? refreshToken = context.Request.Headers["Authorization"];
+			if (refreshToken != null)
+			{
+				if (Authentication.Authenticate.RefreshToken(refreshToken).isValid == 0)
+				{
+					context.Response.StatusCode = 401;
+					await context.Response.WriteAsync("Refresh token is invalid.");
+					return;
+				}
+				else
+				{
+					context.Items["RefreshToken"] = refreshToken;
+					await next(context);
+					return;
+				}
+			}
+			else
+			{
+				context.Response.StatusCode = 401;
+				await context.Response.WriteAsync("No refresh token provided for authentication.");
+				return;
+			}
 		}
 
 		String? accessToken = context.Request.Headers["Authorization"];
