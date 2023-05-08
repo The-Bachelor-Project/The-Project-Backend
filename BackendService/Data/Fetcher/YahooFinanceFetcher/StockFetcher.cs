@@ -130,11 +130,12 @@ public class StockFetcher : IStockFetcher
 			System.Console.WriteLine(e);
 		}
 
+
 		result.shortName = quote.quoteResponse.result[0].shortName ?? "";
 		result.longName = quote.quoteResponse.result[0].longName ?? "";
 		result.sharesOutstanding = quote?.quoteResponse?.result?[0]?.sharesOutstanding ?? 0;
 		result.financialCurrency = quote?.quoteResponse?.result?[0]?.financialCurrency ?? "";
-		result.industry = quoteSummary?.quoteSummary?.result?[0]?.assetProfile?.industry ?? "";
+		result.industry = quoteSummary!.quoteSummary!.result?[0]!.assetProfile!.industry ?? "";
 		result.sector = quoteSummary?.quoteSummary?.result?[0]?.assetProfile?.sector ?? "";
 		result.website = quoteSummary?.quoteSummary?.result?[0]?.assetProfile?.website ?? "";
 		result.country = quoteSummary?.quoteSummary?.result?[0]?.assetProfile?.country ?? "";
@@ -167,7 +168,14 @@ public class StockFetcher : IStockFetcher
 				if (YfTranslator.stockAutocomplete.TryGetValue("" + res.exch, out exchange))
 				{
 					String ticker = ("" + res.symbol).Split(".")[0];
-					resultStocks = resultStocks.Append(await (new Data.Fetcher.StockFetcher()).GetProfile(ticker, exchange)).ToArray();
+					try
+					{
+						resultStocks = resultStocks.Append(await (new Data.Fetcher.StockFetcher()).GetProfile(ticker, exchange)).ToArray();
+					}
+					catch (Exception e)
+					{
+						//TODO maybe do something about this, i dunno
+					}
 				}
 				else
 				{
