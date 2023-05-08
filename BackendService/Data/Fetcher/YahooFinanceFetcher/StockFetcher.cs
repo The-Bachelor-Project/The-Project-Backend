@@ -142,6 +142,8 @@ public class StockFetcher : IStockFetcher
 		result.city = quoteSummary?.quoteSummary?.result?[0]?.assetProfile?.city ?? "";
 		result.address = quoteSummary?.quoteSummary?.result?[0]?.assetProfile?.address1 ?? "";
 		result.zip = quoteSummary?.quoteSummary?.result?[0]?.assetProfile?.zip ?? "";
+		result.trailingAnnualDividendRate = quote?.quoteResponse?.result[0]?.trailingAnnualDividendRate ?? 0;
+		result.trailingAnnualDividendYield = quote?.quoteResponse?.result[0]?.trailingAnnualDividendYield ?? 0;
 
 		return result;
 	}

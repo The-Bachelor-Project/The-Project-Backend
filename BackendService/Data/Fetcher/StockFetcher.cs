@@ -90,7 +90,7 @@ public class StockFetcher : IStockFetcher
 	{
 		String tags = GenerateTags(profile);
 		SqlConnection connection = new Data.Database.Connection().Create();
-		String query = "INSERT INTO Stocks (ticker, exchange, company_name, short_name, long_name, address, city, state, zip, financial_currency, shares_outstanding, industry, sector, website, country, tags) VALUES (@ticker, @exchange, @name, @short_name, @long_name, @address, @city, @state, @zip, @financial_currency, @shares_outstanding, @industry, @sector, @website, @country, @tags)";
+		String query = "INSERT INTO Stocks (ticker, exchange, company_name, short_name, long_name, address, city, state, zip, financial_currency, shares_outstanding, industry, sector, website, country, trailing_annual_dividend_rate, trailing_annual_dividend_yield, tags) VALUES (@ticker, @exchange, @name, @short_name, @long_name, @address, @city, @state, @zip, @financial_currency, @shares_outstanding, @industry, @sector, @website, @country, @trailing_annual_dividend_rate, @trailing_annual_dividend_yield, @tags)";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@ticker", profile.ticker);
 		command.Parameters.AddWithValue("@exchange", profile.exchange);
@@ -107,6 +107,8 @@ public class StockFetcher : IStockFetcher
 		command.Parameters.AddWithValue("@sector", profile.sector);
 		command.Parameters.AddWithValue("@website", profile.website);
 		command.Parameters.AddWithValue("@country", profile.country);
+		command.Parameters.AddWithValue("@trailing_annual_dividend_rate", profile.trailingAnnualDividendRate);
+		command.Parameters.AddWithValue("@trailing_annual_dividend_yield", profile.trailingAnnualDividendYield);
 		command.Parameters.AddWithValue("@tags", tags);
 		command.ExecuteNonQuery();
 	}

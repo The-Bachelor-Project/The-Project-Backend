@@ -17,6 +17,8 @@ public class StockProfile
 	public String? zip { get; set; }
 	public String? financialCurrency { get; set; }
 	public Decimal? sharesOutstanding { get; set; }
+	public Decimal? trailingAnnualDividendRate { get; set; }
+	public Decimal? trailingAnnualDividendYield { get; set; }
 	int trackingDate;
 
 	public StockProfile() { }
