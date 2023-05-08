@@ -37,7 +37,7 @@ public class CurrencyFetcher : ICurrencyFetcher
 				String[] data = dataLines[i].Split(",");
 				if (data[1] == "null")
 				{
-					Data.DatePrice temp = new Data.DatePrice(DateOnly.Parse(data[0]), result.history.Last().openPrice, result.history.Last().highPrice, result.history.Last().lowPrice, result.history.Last().closePrice);
+					Data.DatePriceOHLC temp = new Data.DatePriceOHLC(DateOnly.Parse(data[0]), result.history.Last().openPrice, result.history.Last().highPrice, result.history.Last().lowPrice, result.history.Last().closePrice);
 					temp.openPrice.amount /= 100;
 					temp.highPrice.amount /= 100;
 					temp.lowPrice.amount /= 100;
@@ -46,7 +46,7 @@ public class CurrencyFetcher : ICurrencyFetcher
 				}
 				else
 				{
-					Data.DatePrice temp = new Data.DatePrice(DateOnly.Parse(data[0]), new Data.Money(Decimal.Parse(data[1]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[2]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[3]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[4]), Data.Money.DEFAULT_CURRENCY));
+					Data.DatePriceOHLC temp = new Data.DatePriceOHLC(DateOnly.Parse(data[0]), new Data.Money(Decimal.Parse(data[1]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[2]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[3]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[4]), Data.Money.DEFAULT_CURRENCY));
 					temp.openPrice.amount /= 100;
 					temp.highPrice.amount /= 100;
 					temp.lowPrice.amount /= 100;
@@ -63,12 +63,12 @@ public class CurrencyFetcher : ICurrencyFetcher
 				String[] data = dataLines[i].Split(",");
 				if (data[1] == "null")
 				{
-					Data.DatePrice temp = new Data.DatePrice(DateOnly.Parse(data[0]), result.history.Last().openPrice, result.history.Last().highPrice, result.history.Last().lowPrice, result.history.Last().closePrice);
+					Data.DatePriceOHLC temp = new Data.DatePriceOHLC(DateOnly.Parse(data[0]), result.history.Last().openPrice, result.history.Last().highPrice, result.history.Last().lowPrice, result.history.Last().closePrice);
 					result.history.Add(temp);
 				}
 				else
 				{
-					result.history.Add(new Data.DatePrice(DateOnly.Parse(data[0]), new Data.Money(Decimal.Parse(data[1]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[2]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[3]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[4]), Data.Money.DEFAULT_CURRENCY)));
+					result.history.Add(new Data.DatePriceOHLC(DateOnly.Parse(data[0]), new Data.Money(Decimal.Parse(data[1]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[2]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[3]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[4]), Data.Money.DEFAULT_CURRENCY)));
 				}
 			}
 		}

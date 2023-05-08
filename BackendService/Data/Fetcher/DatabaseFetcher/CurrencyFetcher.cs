@@ -23,7 +23,7 @@ public class CurrencyFetcher : ICurrencyFetcher
 			Data.CurrencyHistory result = new Data.CurrencyHistory(currency, startDate, endDate, "daily");
 			while (reader.Read())
 			{
-				result.history.Add(new Data.DatePrice(
+				result.history.Add(new Data.DatePriceOHLC(
 					DateOnly.FromDateTime(DateTime.Parse(reader["end_date"].ToString()!)),
 					new Data.Money(Decimal.Parse("" + reader["open_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
 					new Data.Money(Decimal.Parse("" + reader["high_price"].ToString()), Data.Money.DEFAULT_CURRENCY),

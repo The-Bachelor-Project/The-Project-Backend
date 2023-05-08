@@ -22,7 +22,7 @@ public class StockFetcher : IStockFetcher
 		{
 			while (reader.Read())
 			{
-				result.history.Add(new Data.DatePrice(
+				result.history.Add(new Data.DatePriceOHLC(
 					DateOnly.FromDateTime((DateTime)reader["end_date"]),
 					new Money(Decimal.Parse("" + reader["open_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
 					new Money(Decimal.Parse("" + reader["high_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
@@ -103,6 +103,31 @@ public class StockFetcher : IStockFetcher
 			}
 			reader.Close();
 			return Task.FromResult(results);
+		}
+	}
+
+	public Task<List<Dividend>> GetDividends(string ticker, string exchange, DateOnly startDate, DateOnly endDate)
+	{
+		System.Console.WriteLine("Getting dividends from database for " + ticker + " " + exchange + " " + startDate + " " + endDate);
+		List<Dividend> dividends = new List<Dividend>();
+		SqlConnection connection = new Data.Database.Connection().Create();
+		String getDividendsQuery = "SELECT * FROM StockDividends WHERE ticker = @ticker AND exchange = @exchange AND date >= @start_date AND date <= @end_date";
+		SqlCommand command = new SqlCommand(getDividendsQuery, connection);
+		command.Parameters.AddWithValue("@ticker", ticker);
+		command.Parameters.AddWithValue("@exchange", exchange);
+		command.Parameters.AddWithValue("@start_date", Tools.TimeConverter.dateOnlyToString(startDate));
+		command.Parameters.AddWithValue("@end_date", Tools.TimeConverter.dateOnlyToString(endDate));
+		using (SqlDataReader reader = command.ExecuteReader())
+		{
+			while (reader.Read())
+			{
+				dividends.Add(new Data.Dividend(
+					DateOnly.FromDateTime((DateTime)reader["date"]),
+					new Money(Decimal.Parse("" + reader["payout"].ToString()), Data.Money.DEFAULT_CURRENCY)
+				));
+			}
+			reader.Close();
+			return Task.FromResult(dividends);
 		}
 	}
 }

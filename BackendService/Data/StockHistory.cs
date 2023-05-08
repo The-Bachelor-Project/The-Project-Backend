@@ -11,7 +11,8 @@ public class StockHistory
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.interval = interval;
-		this.history = new List<Data.DatePrice>();
+		this.history = new List<Data.DatePriceOHLC>();
+		this.dividends = new List<Data.Dividend>();
 	}
 
 	public StockHistory(string ticker, string exchange, String interval)
@@ -19,7 +20,8 @@ public class StockHistory
 		this.ticker = ticker;
 		this.exchange = exchange;
 		this.interval = interval;
-		this.history = new List<Data.DatePrice>();
+		this.history = new List<Data.DatePriceOHLC>();
+		this.dividends = new List<Data.Dividend>();
 	}
 
 	public String ticker { get; set; }
@@ -27,5 +29,6 @@ public class StockHistory
 	public DateOnly? startDate { get; set; }
 	public DateOnly? endDate { get; set; }
 	public String interval { get; set; }
-	public List<Data.DatePrice> history { get; set; }
+	public List<Data.DatePriceOHLC> history { get; set; }
+	public List<Data.Dividend> dividends { get; set; }
 }

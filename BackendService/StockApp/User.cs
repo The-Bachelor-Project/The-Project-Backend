@@ -148,7 +148,7 @@ public class User
 	{
 		UpdatePortfolios();
 
-		List<Data.DatePrice> valueHistory = new List<Data.DatePrice>();
+		List<Data.DatePriceOHLC> valueHistory = new List<Data.DatePriceOHLC>();
 		List<Data.Portfolio> dataPortfolios = new List<Data.Portfolio>();
 
 		foreach (Portfolio portfolio in portfolios)
@@ -162,7 +162,7 @@ public class User
 			}
 			else
 			{
-				valueHistory = Data.DatePrice.AddLists(valueHistory, dataPortfolio.valueHistory);
+				valueHistory = Data.DatePriceOHLC.AddLists(valueHistory, dataPortfolio.valueHistory);
 			}
 		}
 

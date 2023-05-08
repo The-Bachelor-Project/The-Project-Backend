@@ -3,9 +3,9 @@ using StockApp;
 
 namespace Data;
 
-public class DatePrice
+public class DatePriceOHLC
 {
-	public DatePrice(DateOnly date, Money openPrice, Money highPrice, Money lowPrice, Money closePrice)
+	public DatePriceOHLC(DateOnly date, Money openPrice, Money highPrice, Money lowPrice, Money closePrice)
 	{
 		this.date = date;
 		this.openPrice = openPrice;
@@ -21,7 +21,7 @@ public class DatePrice
 	public Money closePrice { get; set; }
 
 
-	public static List<DatePrice> AddLists(List<DatePrice> list1, List<DatePrice> list2)
+	public static List<DatePriceOHLC> AddLists(List<DatePriceOHLC> list1, List<DatePriceOHLC> list2)
 	{
 		if (list1.Count == 0)
 		{
@@ -35,7 +35,7 @@ public class DatePrice
 		DateOnly startDate = list1[0].date < list2[0].date ? list1[0].date : list2[0].date;
 		DateOnly endDate = list1[^1].date > list2[^1].date ? list1[^1].date : list2[^1].date;
 
-		List<DatePrice> result = new List<DatePrice>();
+		List<DatePriceOHLC> result = new List<DatePriceOHLC>();
 
 		for (DateOnly date = startDate; date <= endDate; date = date.AddDays(1))
 		{
@@ -59,7 +59,7 @@ public class DatePrice
 				closePrice.amount += list2.Find(x => x.date == date)!.closePrice.amount;
 			}
 
-			result.Add(new DatePrice(date, openPrice, highPrice, lowPrice, closePrice));
+			result.Add(new DatePriceOHLC(date, openPrice, highPrice, lowPrice, closePrice));
 		}
 
 

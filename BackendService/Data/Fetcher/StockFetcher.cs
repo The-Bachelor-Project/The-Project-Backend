@@ -29,27 +29,36 @@ public class StockFetcher : IStockFetcher
 				{
 					reader.Close();
 					StockHistory fromYahoo = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, startDate.AddDays(-7), endDate, interval);
+					fromYahoo.dividends = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetDividends(ticker, exchange, startDate.AddDays(-7), endDate);
 					SaveStockHistory(fromYahoo, true, true);
+					SaveDividends(fromYahoo.dividends, ticker, exchange);
 					return fromYahoo;
 				}
 				if (startDate < startTrackingDate)
 				{
 					StockHistory fromYahooBefore = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, startDate.AddDays(-7), startTrackingDate.AddDays(-1), interval);
+					fromYahooBefore.dividends = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetDividends(ticker, exchange, startDate.AddDays(-7), startTrackingDate.AddDays(-1));
 					SaveStockHistory(fromYahooBefore, true, false);
+					SaveDividends(fromYahooBefore.dividends, ticker, exchange);
 				}
 				if (endDate > endTrackingDate)
 				{
 					StockHistory fromYahooAfter = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, endTrackingDate.AddDays(1), endDate, interval);
+					fromYahooAfter.dividends = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetDividends(ticker, exchange, endTrackingDate.AddDays(1), endDate);
 					SaveStockHistory(fromYahooAfter, false, true);
+					SaveDividends(fromYahooAfter.dividends, ticker, exchange);
 				}
 			}
 			reader.Close();
-			return await new Data.Fetcher.DatabaseFetcher.StockFetcher().GetHistory(ticker, exchange, startDate, endDate, interval);
+			StockHistory stockHistoryReturn = await new Data.Fetcher.DatabaseFetcher.StockFetcher().GetHistory(ticker, exchange, startDate, endDate, interval);
+			stockHistoryReturn.dividends = await new Data.Fetcher.DatabaseFetcher.StockFetcher().GetDividends(ticker, exchange, startDate, endDate);
+			return stockHistoryReturn;
 		}
 	}
 
 	public async Task<Data.StockProfile> GetProfile(string ticker, string exchange)
 	{
+		//TODO: Add rate and yield for dividends, to profile on database
 		try
 		{
 			// Get the stock profile from the database
@@ -149,5 +158,21 @@ public class StockFetcher : IStockFetcher
 			command.Parameters.AddWithValue("@end_tracking_date", Tools.TimeConverter.dateOnlyToString(history.history.Last().date));
 			command.ExecuteNonQuery();
 		}
+	}
+
+	private void SaveDividends(List<Data.Dividend> dividends, String ticker, String exchange)
+	{
+		if (dividends.Count == 0)
+			return;
+		String insertIntoDividendsQuery = "EXEC BulkJsonStockDividends @StockDividendsBulk, @Ticker, @Exchange";
+		dynamic jsonDividends = JsonConvert.SerializeObject(dividends);
+		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlCommand command = new SqlCommand();
+
+		command = new SqlCommand(insertIntoDividendsQuery, connection);
+		command.Parameters.AddWithValue("@StockDividendsBulk", jsonDividends);
+		command.Parameters.AddWithValue("@Ticker", ticker);
+		command.Parameters.AddWithValue("@Exchange", exchange);
+		command.ExecuteNonQuery();
 	}
 }

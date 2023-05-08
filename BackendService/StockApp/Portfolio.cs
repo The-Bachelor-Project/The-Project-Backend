@@ -128,7 +128,7 @@ public class Portfolio
 		UpdateStockPositions();
 		UpdateStockTransactions();
 
-		List<Data.DatePrice> valueHistory = new List<Data.DatePrice>();
+		List<Data.DatePriceOHLC> valueHistory = new List<Data.DatePriceOHLC>();
 		List<Data.Position> dataPositions = new List<Data.Position>();
 
 		foreach (StockPosition position in stockPositions)
@@ -144,7 +144,7 @@ public class Portfolio
 				}
 				else
 				{
-					valueHistory = Data.DatePrice.AddLists(valueHistory, dataPosition.valueHistory);
+					valueHistory = Data.DatePriceOHLC.AddLists(valueHistory, dataPosition.valueHistory);
 				}
 			}
 		}

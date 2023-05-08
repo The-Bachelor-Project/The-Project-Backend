@@ -17,7 +17,7 @@ public class StockPosition
 	public async Task<Data.Position> GetValueHistory(string currency, DateOnly startData, DateOnly endDate)
 	{
 		UpdateStockTransactions(startData, endDate);
-		List<Data.DatePrice> valueHistory = new List<Data.DatePrice>();
+		List<Data.DatePriceOHLC> valueHistory = new List<Data.DatePriceOHLC>();
 
 		Data.StockHistory stockHistory = await new Data.Fetcher.StockFetcher().GetHistory(stock.ticker, stock.exchange, startData, endDate, "daily");
 		decimal currentlyOwned = 0;
@@ -40,7 +40,7 @@ public class StockPosition
 			return new Data.Position(stock.ticker, stock.exchange, valueHistory);
 		}
 
-		Data.DatePrice currencyStockPrice = stockHistory.history.First();
+		Data.DatePriceOHLC currencyStockPrice = stockHistory.history.First();
 		DateOnly currentDate = startData;
 
 		int transactionIndex = 0;
@@ -72,7 +72,7 @@ public class StockPosition
 			}
 
 
-			valueHistory.Add(new Data.DatePrice(currentDate,
+			valueHistory.Add(new Data.DatePriceOHLC(currentDate,
 				new Data.Money(currencyStockPrice.openPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
 				new Data.Money(currencyStockPrice.highPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
 				new Data.Money(currencyStockPrice.lowPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),

@@ -52,7 +52,7 @@ public class StockFetcher : IStockFetcher
 				DateOnly date = DateOnly.Parse(dataSplit[0]);
 				if (date >= startDate && date <= endDate && dataSplit[1] != "null")
 				{
-					Data.DatePrice dataPoint = new Data.DatePrice(
+					Data.DatePriceOHLC dataPoint = new Data.DatePriceOHLC(
 						DateOnly.Parse(dataSplit[0]),
 						new Data.Money(Decimal.Parse(dataSplit[1]), currency),
 						new Data.Money(Decimal.Parse(dataSplit[2]), currency),
@@ -62,8 +62,8 @@ public class StockFetcher : IStockFetcher
 					result.history.Add(dataPoint);
 				}
 			}
-			await new Tools.PriceHistoryConverter().Convert(result.history, "USD");
-			foreach (Data.DatePrice datePrice in result.history)
+			await new Tools.PriceHistoryConverter().ConvertStockPrice(result.history, "USD");
+			foreach (Data.DatePriceOHLC datePrice in result.history)
 			{
 				if (datePrice.highPrice.currency != "USD")
 				{
@@ -97,6 +97,8 @@ public class StockFetcher : IStockFetcher
 			return result;
 		}
 	}
+
+
 
 	public async Task<Data.StockProfile> GetProfile(string ticker, string exchange)
 	{
@@ -179,5 +181,59 @@ public class StockFetcher : IStockFetcher
 			}
 		}
 		return resultStocks;
+	}
+
+	internal async Task<List<Dividend>> GetDividends(string ticker, string exchange, DateOnly startDate, DateOnly endDate)
+	{
+		System.Console.WriteLine("Getting dividends for " + ticker + " " + exchange);
+		List<Data.Dividend> dividends = new List<Data.Dividend>();
+
+		SqlConnection connection = new Data.Database.Connection().Create();
+		String getCurrencyQuery = "SELECT currency FROM Exchanges WHERE symbol = @symbol";
+		SqlCommand command = new SqlCommand(getCurrencyQuery, connection);
+		command.Parameters.AddWithValue("@symbol", exchange);
+		using (SqlDataReader reader = command.ExecuteReader())
+		{
+			if (!reader.Read())
+			{
+				reader.Close();
+				throw new Exception("Exchange not found");
+			}
+			String currency = reader["currency"].ToString()!;
+			reader.Close();
+
+			int startTime = Tools.TimeConverter.dateOnlyToUnix(startDate);
+			int endTime = Tools.TimeConverter.dateOnlyToUnix(endDate);
+			String tickerExt = YfTranslator.GetYfSymbol(ticker, exchange);
+
+			HttpClient client = new HttpClient();
+			String url = "https://query1.finance.yahoo.com/v7/finance/download/" + tickerExt + "?interval=1d&period1=" + startTime + "&period2=" + endTime + "&events=div";
+			System.Console.WriteLine(url);
+			HttpResponseMessage dividendsResponse = client.GetAsync(url).Result;
+			if (dividendsResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+			{
+				throw new Exception("Stock not found");
+			}
+			String stockDividendCSV = await dividendsResponse.Content.ReadAsStringAsync();
+			String[] stockDividendLines = stockDividendCSV.Split("\n");
+			String currencySymbol = Data.Database.Exchange.GetCurrency(exchange);
+			List<String> dataList = stockDividendLines.ToList();
+			dataList.RemoveAt(0);
+			foreach (String data in dataList)
+			{
+				String[] dataSplit = data.Split(",");
+				DateOnly date = DateOnly.Parse(dataSplit[0]);
+				if (date >= startDate && date <= endDate && dataSplit[1] != "null")
+				{
+					Data.Dividend dataPoint = new Data.Dividend(
+						DateOnly.Parse(dataSplit[0]),
+						new Data.Money(Decimal.Parse(dataSplit[1]), currency)
+					);
+					dividends.Add(dataPoint);
+				}
+			}
+			await new Tools.PriceHistoryConverter().ConvertStockDividends(dividends, "USD");
+		}
+		return dividends;
 	}
 }
