@@ -20,7 +20,6 @@ public class StockPosition
 		List<Data.DatePriceOHLC> valueHistory = new List<Data.DatePriceOHLC>();
 		List<Data.Dividend> dividendHistory = new List<Data.Dividend>();
 
-		Data.StockHistory stockHistory = await new Data.Fetcher.StockFetcher().GetHistory(stock.ticker, stock.exchange, startDate.AddYears(-1), endDate, "daily");
 		decimal currentlyOwned = 0;
 		System.Console.WriteLine("Stock ffd   " + stock.ticker + "    " + stockTransactions.Count);
 
@@ -40,8 +39,12 @@ public class StockPosition
 			currentlyOwned = stockTransactions.First().amountOwned!.Value - stockTransactions.First().amountAdjusted!.Value;
 		}
 		*/
-		Data.DatePriceOHLC currencyStockPrice = stockHistory.history.First();
+
 		DateOnly currentDate = Tools.TimeConverter.UnixTimeStampToDateOnly(stockTransactions.First().timestamp!.Value);
+		currentDate = currentDate < startDate ? currentDate : startDate;
+		Data.StockHistory stockHistory = await new Data.Fetcher.StockFetcher().GetHistory(stock.ticker, stock.exchange, currentDate, endDate, "daily");
+		Data.DatePriceOHLC currentStockPrice = stockHistory.history.First();
+
 		int dividendIndex = 0;
 		Data.Dividend? dividend = null;
 		if (stockHistory.dividends.Count != 0)
@@ -73,7 +76,7 @@ public class StockPosition
 			{
 				if (stockHistory.history[stockIndex].date == currentDate)
 				{
-					currencyStockPrice = stockHistory.history[stockIndex];
+					currentStockPrice = stockHistory.history[stockIndex];
 					stockIndex++;
 				}
 			}
@@ -90,10 +93,10 @@ public class StockPosition
 			if (currentDate >= startDate)
 			{
 				valueHistory.Add(new Data.DatePriceOHLC(currentDate,
-					new Data.Money(currencyStockPrice.openPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
-					new Data.Money(currencyStockPrice.highPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
-					new Data.Money(currencyStockPrice.lowPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
-					new Data.Money(currencyStockPrice.closePrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY)));
+					new Data.Money(currentStockPrice.openPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
+					new Data.Money(currentStockPrice.highPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
+					new Data.Money(currentStockPrice.lowPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
+					new Data.Money(currentStockPrice.closePrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY)));
 			}
 			currentDate = currentDate.AddDays(1);
 		}

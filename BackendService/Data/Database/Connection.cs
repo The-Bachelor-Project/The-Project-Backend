@@ -4,8 +4,12 @@ namespace Data.Database;
 
 public class Connection
 {
+	static int connectionCount = 0;
+
 	public SqlConnection Create()
 	{
+		connectionCount++;
+		System.Console.WriteLine("Connection count: " + connectionCount);
 		SqlConnectionStringBuilder builder = buildConnectionString();
 		String connectionString = builder.ConnectionString;
 		SqlConnection connection = new SqlConnection(connectionString);
