@@ -23,24 +23,22 @@ public class StockPosition
 		decimal currentlyOwned = 0;
 		System.Console.WriteLine("Stock ffd   " + stock.ticker + "    " + stockTransactions.Count);
 
-		if (stockTransactions.Count > 0)
-		{
-			if (Tools.TimeConverter.UnixTimeStampToDateOnly(stockTransactions.First().timestamp!.Value) < startData)
-			{
-				currentlyOwned = stockTransactions.First().amountOwned!.Value;
-			}
-			/* Should still work with out this code since it will always result in currentlyOwned = 0, which was already the case
-			else
-			{
-				currentlyOwned = stockTransactions.First().amountOwned!.Value - stockTransactions.First().amountAdjusted!.Value;
-			}
-			*/
 
-		}
-		else
+		if (stockTransactions.Count == 0)
 		{
 			return new Data.Position(stock.ticker, stock.exchange, valueHistory);
 		}
+
+		if (Tools.TimeConverter.UnixTimeStampToDateOnly(stockTransactions.First().timestamp!.Value) < startData)
+		{
+			currentlyOwned = stockTransactions.First().amountOwned!.Value;
+		}
+		/* Should still work with out this code since it will always result in currentlyOwned = 0, which was already the case
+		else
+		{
+			currentlyOwned = stockTransactions.First().amountOwned!.Value - stockTransactions.First().amountAdjusted!.Value;
+		}
+		*/
 
 		Data.DatePriceOHLC currencyStockPrice = stockHistory.history.First();
 		DateOnly currentDate = startData;
