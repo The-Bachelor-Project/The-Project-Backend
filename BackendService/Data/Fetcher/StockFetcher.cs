@@ -58,7 +58,6 @@ public class StockFetcher : IStockFetcher
 
 	public async Task<Data.StockProfile> GetProfile(string ticker, string exchange)
 	{
-		//TODO: Add rate and yield for dividends, to profile on database
 		try
 		{
 			// Get the stock profile from the database
@@ -129,7 +128,6 @@ public class StockFetcher : IStockFetcher
 		System.Console.WriteLine(history.history.Count);
 		if (history.history.Count == 0)
 			return;
-		//TODO FIXME StockPricesBulk is now broken
 		String insertIntoStockPricesQuery = "EXEC BulkJsonStockPrices @StockPricesBulk, @Ticker, @Exchange";
 		dynamic jsonStockPrices = JsonConvert.SerializeObject(history.history);
 		SqlConnection connection = new Data.Database.Connection().Create();

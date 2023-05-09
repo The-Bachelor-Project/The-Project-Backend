@@ -5,7 +5,7 @@ class SetupTokens
 	public static StockApp.TokenSet Call(String uid, int familyID)
 	{
 		int refreshExpirationUnix = Authentication.Expiration.GenerateRefresh((24 * 7));
-		int accessExpirationUnix = Authentication.Expiration.GenerateAccess(30);
+		int accessExpirationUnix = Authentication.Expiration.GenerateAccess(60 * 10);
 		String refreshToken = Tools.RandomString.Generate(128);
 		String accessToken = Tools.RandomString.Generate(128);
 		String createTokenRecord = "INSERT INTO Tokens VALUES (@user_id, @refresh_token, @refresh_expiration, @access_token, @access_expiration, @family)";

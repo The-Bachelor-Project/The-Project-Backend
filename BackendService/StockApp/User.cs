@@ -150,23 +150,17 @@ public class User
 
 		List<Data.DatePriceOHLC> valueHistory = new List<Data.DatePriceOHLC>();
 		List<Data.Portfolio> dataPortfolios = new List<Data.Portfolio>();
-
+		List<Data.Dividend> dividendHistory = new List<Data.Dividend>();
 		foreach (Portfolio portfolio in portfolios)
 		{
 			Data.Portfolio dataPortfolio = await portfolio.GetValueHistory(currency, startData, endDate);
+			System.Console.WriteLine("COUNT USER: " + dataPortfolio.dividendHistory.Count);
 			dataPortfolios.Add(dataPortfolio);
-
-			if (valueHistory.Count == 0)
-			{
-				valueHistory = dataPortfolio.valueHistory;
-			}
-			else
-			{
-				valueHistory = Data.DatePriceOHLC.AddLists(valueHistory, dataPortfolio.valueHistory);
-			}
+			valueHistory = Data.DatePriceOHLC.AddLists(valueHistory, dataPortfolio.valueHistory);
+			dividendHistory.AddRange(dataPortfolio.dividendHistory);
 		}
 
-		return new Data.UserAssetsValueHistory(valueHistory, dataPortfolios);
+		return new Data.UserAssetsValueHistory(valueHistory, dataPortfolios, dividendHistory);
 	}
 
 	public List<Data.StockTransaction> GetAllStockTransactions()

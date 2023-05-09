@@ -14,22 +14,23 @@ public class StockPosition
 
 	public List<StockTransaction> stockTransactions { get; set; } = new List<StockTransaction>();
 
-	public async Task<Data.Position> GetValueHistory(string currency, DateOnly startData, DateOnly endDate)
+	public async Task<Data.Position> GetValueHistory(string currency, DateOnly startDate, DateOnly endDate)
 	{
-		UpdateStockTransactions(startData, endDate);
+		UpdateStockTransactions(startDate.AddYears(-1), endDate);
 		List<Data.DatePriceOHLC> valueHistory = new List<Data.DatePriceOHLC>();
+		List<Data.Dividend> dividendHistory = new List<Data.Dividend>();
 
-		Data.StockHistory stockHistory = await new Data.Fetcher.StockFetcher().GetHistory(stock.ticker, stock.exchange, startData, endDate, "daily");
+		Data.StockHistory stockHistory = await new Data.Fetcher.StockFetcher().GetHistory(stock.ticker, stock.exchange, startDate.AddYears(-1), endDate, "daily");
 		decimal currentlyOwned = 0;
 		System.Console.WriteLine("Stock ffd   " + stock.ticker + "    " + stockTransactions.Count);
 
-
 		if (stockTransactions.Count == 0)
 		{
-			return new Data.Position(stock.ticker, stock.exchange, valueHistory);
+			return new Data.Position(stock.ticker, stock.exchange, valueHistory, dividendHistory);
 		}
 
-		if (Tools.TimeConverter.UnixTimeStampToDateOnly(stockTransactions.First().timestamp!.Value) < startData)
+
+		if (Tools.TimeConverter.UnixTimeStampToDateOnly(stockTransactions.First().timestamp!.Value) < startDate)
 		{
 			currentlyOwned = stockTransactions.First().amountOwned!.Value;
 		}
@@ -39,12 +40,14 @@ public class StockPosition
 			currentlyOwned = stockTransactions.First().amountOwned!.Value - stockTransactions.First().amountAdjusted!.Value;
 		}
 		*/
-
 		Data.DatePriceOHLC currencyStockPrice = stockHistory.history.First();
-		DateOnly currentDate = startData;
+		DateOnly currentDate = Tools.TimeConverter.UnixTimeStampToDateOnly(stockTransactions.First().timestamp!.Value);
 
+		int dividendIndex = stockHistory.dividends.FindIndex(divi => divi.date >= currentDate);
+		Data.Dividend dividend = stockHistory.dividends[dividendIndex];
 		int transactionIndex = 0;
 		int stockIndex = 0;
+
 
 		while (currentDate <= endDate)
 		{
@@ -70,18 +73,28 @@ public class StockPosition
 					stockIndex++;
 				}
 			}
+			if (dividendIndex < stockHistory.dividends.Count)
+			{
+				if (currentDate == stockHistory.dividends[dividendIndex].date)
+				{
+					dividend = stockHistory.dividends[dividendIndex];
+					dividendIndex++;
 
-
-			valueHistory.Add(new Data.DatePriceOHLC(currentDate,
-				new Data.Money(currencyStockPrice.openPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
-				new Data.Money(currencyStockPrice.highPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
-				new Data.Money(currencyStockPrice.lowPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
-				new Data.Money(currencyStockPrice.closePrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY)));
-
+					dividendHistory.Add(new Data.Dividend(currentDate, new Data.Money(dividend.payout.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY)));
+				}
+			}
+			if (currentDate >= startDate)
+			{
+				valueHistory.Add(new Data.DatePriceOHLC(currentDate,
+					new Data.Money(currencyStockPrice.openPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
+					new Data.Money(currencyStockPrice.highPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
+					new Data.Money(currencyStockPrice.lowPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
+					new Data.Money(currencyStockPrice.closePrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY)));
+			}
 			currentDate = currentDate.AddDays(1);
 		}
 
-		return new Data.Position(stock.ticker, stock.exchange, valueHistory);
+		return new Data.Position(stock.ticker, stock.exchange, valueHistory, dividendHistory);
 	}
 
 	public StockPosition UpdateStockTransactions(DateOnly startDate, DateOnly endDate)

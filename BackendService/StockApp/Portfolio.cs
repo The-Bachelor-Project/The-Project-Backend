@@ -130,6 +130,7 @@ public class Portfolio
 
 		List<Data.DatePriceOHLC> valueHistory = new List<Data.DatePriceOHLC>();
 		List<Data.Position> dataPositions = new List<Data.Position>();
+		List<Data.Dividend> dividendHistory = new List<Data.Dividend>();
 
 		foreach (StockPosition position in stockPositions)
 		{
@@ -137,18 +138,11 @@ public class Portfolio
 			if (dataPosition.valueHistory.Count > 0)
 			{
 				dataPositions.Add(dataPosition);
-
-				if (valueHistory.Count == 0)
-				{
-					valueHistory = dataPosition.valueHistory;
-				}
-				else
-				{
-					valueHistory = Data.DatePriceOHLC.AddLists(valueHistory, dataPosition.valueHistory);
-				}
+				valueHistory = Data.DatePriceOHLC.AddLists(valueHistory, dataPosition.valueHistory);
+				dividendHistory.AddRange(dataPosition.dividends);
 			}
 		}
-
-		return new Data.Portfolio("[NAME]"/* TODO Get name */, currency, valueHistory, dataPositions);
+		System.Console.WriteLine("RETURNED: " + dividendHistory.Count);
+		return new Data.Portfolio("[NAME]"/* TODO Get name */, currency, valueHistory, dataPositions, dividendHistory);
 	}
 }
