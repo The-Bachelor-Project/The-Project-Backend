@@ -1,5 +1,5 @@
 namespace API.v1;
-class PostStockTransactionsBody
+public class PostStockTransactionsBody
 {
 	public Data.StockTransaction transaction { get; }
 	public string accessToken { get; }

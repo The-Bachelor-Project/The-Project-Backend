@@ -2,28 +2,28 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.v1;
 
-class GetSearchResults
+public class GetSearchResults
 {
 	public static void Setup(WebApplication app)
 	{
-		app.MapGet("/v1/search-results", ([FromQuery] string query, bool stocks, string accessToken) =>
+		app.MapGet("/v1/search-results", ([FromQuery] string query, bool stocks) =>
 		{
-			return Results.Ok(Endpoint(query, stocks, accessToken));
+			return Results.Ok(Endpoint(query, stocks));
 		});
 	}
 
-	public static GetSearchResultsResponse Endpoint(string query, bool stocks, string accessToken)
+	public static GetSearchResultsResponse Endpoint(string query, bool stocks)
 	{
-		GetSearchResultsResponse Results = new GetSearchResultsResponse("success");
+		GetSearchResultsResponse results = new GetSearchResultsResponse("success");
 		if (stocks)
 		{
-			Results.stocks = new Data.Fetcher.StockProfile().Search(query).Result;
+			results.stocks = new Data.Fetcher.StockFetcher().Search(query).Result;
 		}
-		return Results;
+		return results;
 	}
 
 }
-class GetSearchResultsResponse
+public class GetSearchResultsResponse
 {
 	public GetSearchResultsResponse(string response)
 	{

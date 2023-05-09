@@ -6,44 +6,29 @@ public class StockHistory
 {
 	public StockHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, String interval)
 	{
-		this.Ticker = ticker;
-		this.Exchange = exchange;
-		this.StartDate = startDate;
-		this.EndDate = endDate;
-		this.Interval = interval;
-		this.History = new StockHistoryData[] { };
+		this.ticker = ticker;
+		this.exchange = exchange;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.interval = interval;
+		this.history = new List<Data.DatePriceOHLC>();
+		this.dividends = new List<Data.Dividend>();
 	}
 
 	public StockHistory(string ticker, string exchange, String interval)
 	{
-		this.Ticker = ticker;
-		this.Exchange = exchange;
-		this.Interval = interval;
-		this.History = new StockHistoryData[] { };
+		this.ticker = ticker;
+		this.exchange = exchange;
+		this.interval = interval;
+		this.history = new List<Data.DatePriceOHLC>();
+		this.dividends = new List<Data.Dividend>();
 	}
 
-	public String Ticker { get; set; }
-	public String Exchange { get; set; }
-	public DateOnly? StartDate { get; set; }
-	public DateOnly? EndDate { get; set; }
-	public String Interval { get; set; }
-	public StockHistoryData[] History { get; set; }
-}
-
-public class StockHistoryData
-{
-	public StockHistoryData(DateOnly date, decimal openPrice, decimal highPrice, decimal lowPrice, decimal closePrice)
-	{
-		this.Date = date;
-		this.OpenPrice = openPrice;
-		this.HighPrice = highPrice;
-		this.LowPrice = lowPrice;
-		this.ClosePrice = closePrice;
-	}
-
-	public DateOnly Date { get; set; }
-	public Decimal OpenPrice { get; set; }
-	public Decimal HighPrice { get; set; }
-	public Decimal LowPrice { get; set; }
-	public Decimal ClosePrice { get; set; }
+	public String ticker { get; set; }
+	public String exchange { get; set; }
+	public DateOnly? startDate { get; set; }
+	public DateOnly? endDate { get; set; }
+	public String interval { get; set; }
+	public List<Data.DatePriceOHLC> history { get; set; }
+	public List<Data.Dividend> dividends { get; set; }
 }

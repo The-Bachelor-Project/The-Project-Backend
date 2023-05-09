@@ -6,21 +6,27 @@ class GetTransactions
 {
 	public static void Setup(WebApplication app)
 	{
-		app.MapGet("/v1/transactions", ([FromQuery] string accessToken) =>
+		app.MapGet("/v1/transactions", (HttpContext context) =>
 		{
+			String? accessToken = context.Items["AccessToken"] as String;
+			if (accessToken is null)
+			{
+				context.Response.StatusCode = 401;
+				return Results.Ok(new GetPortfoliosResponse("error", new List<StockApp.Portfolio> { }));
+			}
 			return Results.Ok(Endpoint(accessToken));
 		});
 	}
 
-	public static GetTransactionsResponse Endpoint(string accessToken)
+	public static GetTransactionsResponse Endpoint(String accessToken)
 	{
-		BusinessLogic.User user = new BusinessLogic.TokenSet(accessToken).GetUser();
+		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
 		user.UpdatePortfolios();
-		foreach (BusinessLogic.Portfolio portfolio in user.Portfolios)
+		foreach (StockApp.Portfolio portfolio in user.portfolios)
 		{
 			portfolio.UpdateStockTransactions();
 		}
 
-		return new GetTransactionsResponse("success", user.Portfolios);
+		return new GetTransactionsResponse("success", user.portfolios);
 	}
 }

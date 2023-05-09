@@ -1,6 +1,6 @@
 namespace API.v1;
 
-class PostStockTransactionsResponse
+public class PostStockTransactionsResponse
 {
 	public string response { get; }
 	public string id { get; }

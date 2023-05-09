@@ -1,0 +1,70 @@
+namespace BackendService.tests;
+
+using Data;
+
+[TestClass]
+public class YFStockHistoryFetcherTest
+{
+	[TestMethod]
+	public async Task YFNasdaqHistoryFetcherTest()
+	{
+		StockHistory result = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory("goog", "nasdaq", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), "daily");
+		Assert.IsTrue(result != null, "Stock history is null");
+		Assert.IsTrue(result.history.Count > 0, "Stock history is empty");
+		Assert.IsTrue(result.history[0].date < result.history[5].date, "Stock history is not sorted correctly");
+	}
+
+	[TestMethod]
+	public async Task YFNyseHistoryFetcherTest()
+	{
+		StockHistory result = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory("vici", "nyse", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), "daily");
+		Assert.IsTrue(result != null, "Stock history is null");
+		Assert.IsTrue(result.history.Count > 0, "Stock history is empty");
+		Assert.IsTrue(result.history[0].date < result.history[5].date, "Stock history is not sorted correctly");
+	}
+
+	[TestMethod]
+	public async Task YFCphFetcherTest()
+	{
+		StockHistory result = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory("novo-b", "cph", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), "daily");
+		Assert.IsTrue(result != null, "Stock history is null");
+		Assert.IsTrue(result.history.Count > 0, "Stock history is empty");
+		Assert.IsTrue(result.history[0].date < result.history[5].date, "Stock history is not sorted correctly");
+	}
+
+	[TestMethod]
+	public async Task YFStoHistoryFetcherTest()
+	{
+		StockHistory result = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory("VESTUM", "STO", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), "daily");
+		Assert.IsTrue(result != null, "Stock history is null");
+		Assert.IsTrue(result.history.Count > 0, "Stock history is empty");
+		Assert.IsTrue(result.history[0].date < result.history[5].date, "Stock history is not sorted correctly");
+	}
+
+	[TestMethod]
+	public async Task YFTseHistoryFetcherTest()
+	{
+		StockHistory result = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory("SIA", "TSE", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), "daily");
+		Assert.IsTrue(result != null, "Stock history is null");
+		Assert.IsTrue(result.history.Count > 0, "Stock history is empty");
+		Assert.IsTrue(result.history[0].date < result.history[5].date, "Stock history is not sorted correctly");
+	}
+
+	[TestMethod]
+	public async Task YFLonHistoryFetcherTest()
+	{
+		StockHistory result = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory("SHEL", "LON", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), "daily");
+		Assert.IsTrue(result != null, "Stock history is null");
+		Assert.IsTrue(result.history.Count > 0, "Stock history is empty");
+		Assert.IsTrue(result.history[0].date < result.history[5].date, "Stock history is not sorted correctly");
+	}
+
+	[TestMethod]
+	public async Task YFHelHistoryFetcherTest()
+	{
+		StockHistory result = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory("CGCBV", "HEL", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), "daily");
+		Assert.IsTrue(result != null);
+		Assert.IsTrue(result.history.Count > 0);
+		Assert.IsTrue(result.history[0].date < result.history[5].date);
+	}
+}

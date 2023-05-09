@@ -1,12 +1,12 @@
 namespace API.v1;
-class GetPortfoliosResponse
+public class GetPortfoliosResponse
 {
-	public GetPortfoliosResponse(string response, List<BusinessLogic.Portfolio> portfolios)
+	public GetPortfoliosResponse(string response, List<StockApp.Portfolio> portfolios)
 	{
 		this.response = response;
 		this.portfolios = portfolios;
 	}
 
 	public String response { get; set; }
-	public List<BusinessLogic.Portfolio> portfolios { get; set; }
+	public List<StockApp.Portfolio> portfolios { get; set; }
 }

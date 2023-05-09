@@ -2,30 +2,34 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.v1;
 
-class GetPortfolios
+public class GetPortfolios
 {
 	public static void Setup(WebApplication app)
 	{
-		app.MapGet("/v1/portfolios", ([FromQuery] string? id, string accessToken) =>
+		app.MapGet("/v1/portfolios", (HttpContext context) =>
 		{
-			if (id is null || id == "")
-				return Results.Ok(Endpoint(accessToken));
-			else
-				return Results.Ok(Endpoint(id, accessToken));
+			String? accessToken = context.Items["AccessToken"] as String;
+			if (accessToken is null)
+			{
+				context.Response.StatusCode = 401;
+				return Results.Ok(new GetPortfoliosResponse("error", new List<StockApp.Portfolio> { }));
+			}
+
+			return Results.Ok(Endpoint(accessToken));
 		});
 	}
 
 	public static GetPortfoliosResponse Endpoint(string id, string accessToken)
 	{
-		BusinessLogic.User user = new BusinessLogic.TokenSet(accessToken).GetUser();
-		BusinessLogic.Portfolio portfolio = user.GetPortfolio(id);
-		return new GetPortfoliosResponse("success", new List<BusinessLogic.Portfolio> { portfolio });
+		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
+		StockApp.Portfolio portfolio = user.GetPortfolio(id);
+		return new GetPortfoliosResponse("success", new List<StockApp.Portfolio> { portfolio });
 	}
 
 	public static GetPortfoliosResponse Endpoint(string accessToken)
 	{
-		BusinessLogic.User user = new BusinessLogic.TokenSet(accessToken).GetUser();
-		List<BusinessLogic.Portfolio> portfolios = user.UpdatePortfolios().Portfolios;
+		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
+		List<StockApp.Portfolio> portfolios = user.UpdatePortfolios().portfolios;
 		return new GetPortfoliosResponse("success", portfolios);
 	}
 }

@@ -3,8 +3,8 @@ namespace API.v1;
 class GetTransactionsResponse
 {
 	public string response { get; }
-	public List<BusinessLogic.Portfolio> portfolios { get; }
-	public GetTransactionsResponse(string response, List<BusinessLogic.Portfolio> portfolios)
+	public List<StockApp.Portfolio> portfolios { get; }
+	public GetTransactionsResponse(string response, List<StockApp.Portfolio> portfolios)
 	{
 		this.response = response;
 		this.portfolios = portfolios;

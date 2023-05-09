@@ -1,6 +1,6 @@
 namespace API.v1;
 
-class GetCurrencyHistoriesResponse
+public class GetCurrencyHistoriesResponse
 {
 	public GetCurrencyHistoriesResponse(string response, Data.CurrencyHistory history)
 	{
