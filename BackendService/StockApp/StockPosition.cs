@@ -42,9 +42,13 @@ public class StockPosition
 		*/
 		Data.DatePriceOHLC currencyStockPrice = stockHistory.history.First();
 		DateOnly currentDate = Tools.TimeConverter.UnixTimeStampToDateOnly(stockTransactions.First().timestamp!.Value);
-
-		int dividendIndex = stockHistory.dividends.FindIndex(divi => divi.date >= currentDate);
-		Data.Dividend dividend = stockHistory.dividends[dividendIndex];
+		int dividendIndex = 0;
+		Data.Dividend? dividend = null;
+		if (stockHistory.dividends.Count != 0)
+		{
+			dividendIndex = stockHistory.dividends.FindIndex(divi => divi.date >= currentDate);
+			dividend = stockHistory.dividends[dividendIndex];
+		}
 		int transactionIndex = 0;
 		int stockIndex = 0;
 
@@ -73,7 +77,7 @@ public class StockPosition
 					stockIndex++;
 				}
 			}
-			if (dividendIndex < stockHistory.dividends.Count)
+			if (dividendIndex < stockHistory.dividends.Count && dividend != null)
 			{
 				if (currentDate == stockHistory.dividends[dividendIndex].date)
 				{
