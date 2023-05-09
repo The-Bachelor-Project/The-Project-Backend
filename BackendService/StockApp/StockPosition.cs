@@ -29,10 +29,12 @@ public class StockPosition
 			{
 				currentlyOwned = stockTransactions.First().amountOwned!.Value;
 			}
+			/* Should still work with out this code since it will always result in currentlyOwned = 0, which was already the case
 			else
 			{
 				currentlyOwned = stockTransactions.First().amountOwned!.Value - stockTransactions.First().amountAdjusted!.Value;
 			}
+			*/
 
 		}
 		else
