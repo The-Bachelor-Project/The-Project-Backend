@@ -34,6 +34,7 @@ class Application
 		GetCurrencyHistories.Setup(app);
 		GetTransactions.Setup(app);
 		GetValueHistory.Setup(app);
+		PutUsers.Setup(app);
 
 
 

@@ -83,6 +83,49 @@ public class User
 		}
 	}
 
+	public User ChangeEmail(String oldEmail, String newEmail)
+	{
+		SqlConnection connection = new Data.Database.Connection().Create();
+		String query = "UPDATE Accounts SET email = @new_email WHERE user_id = @user_id AND email = @old_email";
+		SqlCommand command = new SqlCommand(query, connection);
+		command.Parameters.AddWithValue("@user_id", id);
+		command.Parameters.AddWithValue("@old_email", oldEmail);
+		command.Parameters.AddWithValue("@new_email", newEmail);
+		try
+		{
+			command.ExecuteNonQuery();
+			this.email = email;
+			return this;
+		}
+		catch (Exception e)
+		{
+			System.Console.WriteLine(e);
+			throw new Exception();
+		}
+	}
+
+	public User ChangePassword(String oldPassword, String newPassword, String email)
+	{
+		SqlConnection connection = new Data.Database.Connection().Create();
+		oldPassword = Tools.Password.Hash(oldPassword);
+		String query = "UPDATE Accounts SET password = @new_password WHERE user_id = @user_id AND email = @email AND password = @old_password";
+		SqlCommand command = new SqlCommand(query, connection);
+		command.Parameters.AddWithValue("@user_id", id);
+		command.Parameters.AddWithValue("@old_password", oldPassword);
+		command.Parameters.AddWithValue("@new_password", Tools.Password.Hash(newPassword));
+		command.Parameters.AddWithValue("@email", email);
+		try
+		{
+			command.ExecuteNonQuery();
+			this.password = newPassword;
+			return this;
+		}
+		catch (Exception)
+		{
+			throw new Exception();
+		}
+	}
+
 	public void Delete()
 	{
 		throw new NotImplementedException();
