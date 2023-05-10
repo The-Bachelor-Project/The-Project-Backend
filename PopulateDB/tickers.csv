@@ -1,4 +1,5 @@
-ticker,yfExchange,convertedExchangePYPL,BA,
+ticker,yfExchange,convertedExchange
+PYPL,BA,
 GARO,BA,
 IFF,BA,
 YELP,BA,
