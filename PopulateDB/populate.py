@@ -1,4 +1,10 @@
 import pandas as pd
+import requests
+import json
+import asyncio
+import aiohttp
+from tqdm import tqdm
+import time
 
 def get_exchanges():
 	df = pd.read_csv('tickers.csv')
@@ -8,13 +14,13 @@ def get_exchanges():
 
 
 def convertExchanges():
-	DICTIONARY_CONVERT = {
+	DICTIONARY_CONVERT = { # MISSING 19 EXCHANGES
 		'BA':'BCBA',
 		'VI':'VIE',
 		'AX':'ASX',
 		'BR':'EBR',
 		'SA':'BVMF',
-		'SW':'SWX-VTX', #CAN BE BOTH SWX OR VTX - CHECK BOTH
+		'SW':'SWX',
 		'SS':'SHA',
 		'SZ':'SHE',
 		'F':'FRA',
@@ -32,8 +38,8 @@ def convertExchanges():
 		'NS':'NSE',
 		'IC':'ICE',
 		'T':'TYO',
-		'KQ':'KRX-KORSDAQ', #CAN BE BOTH KRX OR KORSDAQ - CHECK BOTH
-		'KS':'KRX-KORSDAQ', #CAN BE BOTH KRX OR KORSDAQ - CHECK BOTH
+		'KQ':'KORSDAQ',
+		'KS':'KRX', 
 		'RG':'RSE',
 		'MX':'BMV',
 		'AS':'AMS',
@@ -45,7 +51,7 @@ def convertExchanges():
 		'BK':'BKK',
 		'IS':'IST',
 		'TW':'TPE',
-		'TWO':'TPE'
+		'TWO':'TPO'
 	}
 	df = pd.read_csv('tickers.csv')
 	for i, row in df.iterrows():
@@ -53,14 +59,42 @@ def convertExchanges():
 			df.at[i, 'convertedExchange'] = DICTIONARY_CONVERT[row['yfExchange']]
 	df.to_csv('tickers_converted.csv', index=False)
 
-def populate_db():
-	url = 'http://localhost:5000'
-	# df = pd.read_csv('tickers.csv')
-	# ticker_list = df['ticker'].tolist()
-	# exchange_list = df['convertedExchange'].tolist()
-	
+async def populate_db():
+	url_quote = 'https://query1.finance.yahoo.com/v6/finance/quote?symbols={tic_exc}'
+	url_summary = 'https://query1.finance.yahoo.com/v11/finance/quoteSummary/{tic_exc}?modules=assetProfile'
+	df = pd.read_csv('tickers_converted.csv')
+	print(len(df))
+	i = 0 # COUNTER, UPDATE TO RESUME
+	for i in tqdm(range(len(df))):
+		time.sleep(1)
+		ticker = df.at[i,'ticker']
+		exchange = df.at[i,'yfExchange']
+		tic_exc = ''
+		try:
+			if (pd.isna(exchange)):
+				tic_exc = ticker
+			else:
+				tic_exc = ticker + '.' + exchange
+			async with aiohttp.ClientSession() as session:
+				async with session.get(url_quote.format(tic_exc=tic_exc)) as response:
+					response_json = await response.json()
+					quote_data = response_json['quoteResponse']
+			async with aiohttp.ClientSession() as session:
+				async with session.get(url_summary.format(tic_exc=tic_exc)) as response:
+					response_json = await response.json()
+					summary_data = response_json['quoteSummary']
+			final_json_data = {'quote':quote_data, 'summary':summary_data}
+			tic_exc = tic_exc.replace('.', '_')
+			with open(f'profiles_json/{tic_exc}.json', 'w') as f:
+				json.dump(final_json_data, f)
+		
+		except Exception as e:
+			print("------------------")
+			print(e)
+			print('Error with stock: ' + exchange + ':' + ticker)
+                        
 
 if __name__ == '__main__':
 	# get_exchanges()
 	# convertExchanges()
-	populate_db()
+	asyncio.run(populate_db())
