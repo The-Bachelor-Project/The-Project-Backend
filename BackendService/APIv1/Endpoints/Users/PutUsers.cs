@@ -5,7 +5,7 @@ public class PutUsers
 {
 	public static void Setup(WebApplication app)
 	{
-		app.MapPut("/v1/users/email", (HttpContext context, ChangeEmailBody body) =>
+		app.MapPut("/v1/users/email", (HttpContext context, PutEmailBody body) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
 			if (accessToken is null)
@@ -16,7 +16,7 @@ public class PutUsers
 			return Results.Ok(EndpointEmail(accessToken, body));
 		});
 
-		app.MapPut("/v1/users/password", (HttpContext context, ChangePasswordBody body) =>
+		app.MapPut("/v1/users/password", (HttpContext context, PutPasswordBody body) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
 			if (accessToken is null)
@@ -28,7 +28,7 @@ public class PutUsers
 		});
 	}
 
-	private static PutUserResponse EndpointPass(string accessToken, ChangePasswordBody body)
+	private static PutUserResponse EndpointPass(string accessToken, PutPasswordBody body)
 	{
 		if (body.oldPassword is null || body.newPassword is null || body.email is null)
 		{
@@ -46,7 +46,7 @@ public class PutUsers
 		}
 	}
 
-	public static PutUserResponse EndpointEmail(String accessToken, ChangeEmailBody body)
+	public static PutUserResponse EndpointEmail(String accessToken, PutEmailBody body)
 	{
 		if (body.oldEmail is null || body.newEmail is null)
 		{

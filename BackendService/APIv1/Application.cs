@@ -36,8 +36,6 @@ class Application
 		GetValueHistory.Setup(app);
 		PutUsers.Setup(app);
 
-
-
 		app.Run();
 	}
 }

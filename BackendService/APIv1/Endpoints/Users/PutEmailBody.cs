@@ -1,8 +1,8 @@
 namespace API.v1;
 
-public class ChangeEmailBody
+public class PutEmailBody
 {
-	public ChangeEmailBody(String oldEmail, String newEmail)
+	public PutEmailBody(String oldEmail, String newEmail)
 	{
 		this.oldEmail = oldEmail;
 		this.newEmail = newEmail;

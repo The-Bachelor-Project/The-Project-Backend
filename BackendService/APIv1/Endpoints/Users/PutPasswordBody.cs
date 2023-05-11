@@ -1,6 +1,6 @@
-public class ChangePasswordBody
+public class PutPasswordBody
 {
-	public ChangePasswordBody(String oldPassword, String newPassword, String email)
+	public PutPasswordBody(String oldPassword, String newPassword, String email)
 	{
 		this.oldPassword = oldPassword;
 		this.newPassword = newPassword;
