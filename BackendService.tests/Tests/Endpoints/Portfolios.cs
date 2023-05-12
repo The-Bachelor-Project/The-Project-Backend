@@ -51,4 +51,34 @@ public class PortfoliosTest
 		Assert.IsTrue(response.portfolios[3].currency == currencies[3], "portfolio currency should be " + currencies[3] + " but was " + response.portfolios[3].currency);
 		Assert.IsTrue(response.portfolios[1].balance == balances[1], "balance of portfolio should be " + balances[1] + " but was " + response.portfolios[1].balance);
 	}
+
+	[TestMethod, Priority(0)]
+	public void EndpointPutPortfolioName()
+	{
+		String newName = "new name of portfolio";
+		PutPortfoliosBody body = new PutPortfoliosBody(newName, Assembly.portfolioIds[0]);
+		PutPortfoliosResponse response = PutPortfolios.EndpointName(Assembly.accessToken, body);
+		Assert.IsTrue(response.response == "success", "response should be \"success\" but was " + response.response);
+		Assert.IsTrue(Assembly.user!.GetPortfolio(Assembly.portfolioIds[0]).name == newName, "name of portfolio should be " + newName + " but was " + Assembly.user.GetPortfolio(Assembly.portfolioIds[0]).name);
+	}
+
+	[TestMethod, Priority(0)]
+	public void EndpointPutPortfolioCorrectCurrency()
+	{
+		String newCurrency = "DKK";
+		PutPortfoliosBody body = new PutPortfoliosBody(newCurrency, Assembly.portfolioIds[0]);
+		PutPortfoliosResponse response = PutPortfolios.EndpointCurrency(Assembly.accessToken, body);
+		Assert.IsTrue(response.response == "success", "response should be \"success\" but was " + response.response);
+		Assert.IsTrue(Assembly.user!.GetPortfolio(Assembly.portfolioIds[0]).currency == newCurrency, "currency of portfolio should be " + newCurrency + " but was " + Assembly.user.GetPortfolio(Assembly.portfolioIds[0]).currency);
+	}
+
+	[TestMethod, Priority(0)]
+	public void EndpointPutPortfolioWrongCurrency()
+	{
+		String newCurrency = "not real";
+		PutPortfoliosBody body = new PutPortfoliosBody(newCurrency, Assembly.portfolioIds[0]);
+		PutPortfoliosResponse response = PutPortfolios.EndpointCurrency(Assembly.accessToken, body);
+		Assert.IsTrue(response.response == "error", "response should be \"error\" but was " + response.response);
+		Assert.IsFalse(Assembly.user!.GetPortfolio(Assembly.portfolioIds[0]).currency == newCurrency, "currency of portfolio should be DKK but was " + Assembly.user.GetPortfolio(Assembly.portfolioIds[0]).currency);
+	}
 }

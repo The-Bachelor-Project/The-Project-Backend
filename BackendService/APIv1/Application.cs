@@ -35,6 +35,7 @@ class Application
 		GetTransactions.Setup(app);
 		GetValueHistory.Setup(app);
 		PutUsers.Setup(app);
+		PutPortfolios.Setup(app);
 
 		app.Run();
 	}

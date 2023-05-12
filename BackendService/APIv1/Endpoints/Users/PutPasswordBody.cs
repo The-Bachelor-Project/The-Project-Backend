@@ -1,3 +1,5 @@
+namespace API.v1;
+
 public class PutPasswordBody
 {
 	public PutPasswordBody(String oldPassword, String newPassword, String email)

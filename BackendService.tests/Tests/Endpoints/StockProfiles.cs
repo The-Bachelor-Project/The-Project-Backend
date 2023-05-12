@@ -3,7 +3,7 @@ namespace BackendService.tests;
 [TestClass]
 public class StockProfileTest
 {
-	[TestMethod, Priority(1)]
+	[TestMethod, Priority(2)]
 	public async Task EndpointGetStockProfile()
 	{
 		String ticker = "SIA";

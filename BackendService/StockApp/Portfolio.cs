@@ -145,4 +145,56 @@ public class Portfolio
 		System.Console.WriteLine("RETURNED: " + dividendHistory.Count);
 		return new Data.Portfolio("[NAME]"/* TODO Get name */, currency, valueHistory, dataPositions, dividendHistory);
 	}
+
+	public Portfolio ChangeName(string newName)
+	{
+		SqlConnection connection = new Data.Database.Connection().Create();
+		String query = "UPDATE Portfolios SET name = @name WHERE uid = @uid";
+		SqlCommand command = new SqlCommand(query, connection);
+		command.Parameters.AddWithValue("@name", newName);
+		command.Parameters.AddWithValue("@uid", id);
+		try
+		{
+			command.ExecuteNonQuery();
+			this.name = newName;
+			return this;
+		}
+		catch (Exception e)
+		{
+			System.Console.WriteLine(e);
+			throw new Exception();
+		}
+	}
+
+	public Portfolio ChangeCurrency(String newCurrency)
+	{
+		SqlConnection connection = new Data.Database.Connection().Create();
+		String getCurrencyQuery = "SELECT * FROM Currencies WHERE code = @currency";
+		SqlCommand command = new SqlCommand(getCurrencyQuery, connection);
+		command.Parameters.AddWithValue("@currency", newCurrency);
+		using (SqlDataReader reader = command.ExecuteReader())
+		{
+			if (!reader.Read())
+			{
+				reader.Close();
+				throw new Exception();
+			}
+			reader.Close();
+		}
+		String updateCurrency = "UPDATE Portfolios SET currency = @currency WHERE uid = @uid";
+		command = new SqlCommand(updateCurrency, connection);
+		command.Parameters.AddWithValue("@currency", newCurrency);
+		command.Parameters.AddWithValue("@uid", id);
+		try
+		{
+			command.ExecuteNonQuery();
+			this.currency = newCurrency;
+			return this;
+		}
+		catch (Exception e)
+		{
+			System.Console.WriteLine(e);
+			throw new Exception();
+		}
+	}
 }

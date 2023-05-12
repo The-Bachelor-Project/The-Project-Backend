@@ -28,7 +28,7 @@ public class PutUsers
 		});
 	}
 
-	private static PutUserResponse EndpointPass(string accessToken, PutPasswordBody body)
+	public static PutUserResponse EndpointPass(string accessToken, PutPasswordBody body)
 	{
 		if (body.oldPassword is null || body.newPassword is null || body.email is null)
 		{

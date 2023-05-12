@@ -3,11 +3,11 @@ namespace BackendService.tests;
 [TestClass]
 public class StockHistoriesTest
 {
-	[TestMethod, Priority(1)]
+	[TestMethod, Priority(2)]
 	public async Task EndpointGetStockHistories()
 	{
-		String ticker = "AAPL";
-		String exchange = "NASDAQ";
+		String ticker = "SIA";
+		String exchange = "TSE";
 		API.v1.GetStockHistoriesResponse response = await API.v1.GetStockHistories.Endpoint(ticker, exchange, "2021-01-01", "2022-01-01", "daily");
 		Assert.IsTrue(response.response == "success", "response should be \"success\" but was " + response.response);
 		Assert.IsTrue(response.history.ticker == ticker, "ticker should be " + ticker + " but was " + response.history.ticker);
