@@ -1,0 +1,148 @@
+{
+	"quote": {
+		"result": [
+			{
+				"language": "en-US",
+				"region": "US",
+				"quoteType": "EQUITY",
+				"typeDisp": "Equity",
+				"quoteSourceName": "Delayed Quote",
+				"triggerable": false,
+				"customPriceAlertConfidence": "LOW",
+				"currency": "EUR",
+				"marketState": "REGULAR",
+				"regularMarketChangePercent": -13.636367,
+				"regularMarketPrice": 0.95,
+				"exchange": "FRA",
+				"shortName": "AWILCO DRILLING PLC(SNDR)",
+				"longName": "Awilco Drilling PLC",
+				"messageBoardId": "finmb_84006438",
+				"exchangeTimezoneName": "Europe/Berlin",
+				"exchangeTimezoneShortName": "CEST",
+				"gmtOffSetMilliseconds": 7200000,
+				"market": "dr_market",
+				"esgPopulated": false,
+				"regularMarketChange": -0.15000004,
+				"regularMarketTime": 1683883064,
+				"regularMarketDayHigh": 1.09,
+				"regularMarketDayRange": "0.95 - 1.09",
+				"regularMarketDayLow": 0.95,
+				"regularMarketVolume": 19,
+				"regularMarketPreviousClose": 1.1,
+				"bid": 0.95,
+				"ask": 1.29,
+				"fullExchangeName": "Frankfurt",
+				"financialCurrency": "USD",
+				"regularMarketOpen": 1.09,
+				"averageDailyVolume3Month": 56,
+				"averageDailyVolume10Day": 61,
+				"fiftyTwoWeekLowChange": 0.0,
+				"fiftyTwoWeekLowChangePercent": 0.0,
+				"fiftyTwoWeekRange": "0.95 - 43.3",
+				"fiftyTwoWeekHighChange": -42.35,
+				"fiftyTwoWeekHighChangePercent": -0.97806,
+				"fiftyTwoWeekLow": 0.95,
+				"fiftyTwoWeekHigh": 43.3,
+				"trailingAnnualDividendRate": 0.0,
+				"trailingAnnualDividendYield": 0.0,
+				"epsTrailingTwelveMonths": -169.01,
+				"sharesOutstanding": 4468700,
+				"bookValue": -1.407,
+				"fiftyDayAverage": 2.6988,
+				"fiftyDayAverageChange": -1.7488,
+				"fiftyDayAverageChangePercent": -0.6479917,
+				"twoHundredDayAverage": 14.708802,
+				"twoHundredDayAverageChange": -13.758802,
+				"twoHundredDayAverageChangePercent": -0.9354128,
+				"marketCap": 4245265,
+				"priceToBook": -0.67519546,
+				"sourceInterval": 15,
+				"exchangeDataDelayedBy": 15,
+				"tradeable": false,
+				"cryptoTradeable": false,
+				"firstTradeDateMilliseconds": 1393916400000,
+				"priceHint": 4,
+				"symbol": "0AI1.F"
+			}
+		],
+		"error": null
+	},
+	"summary": {
+		"result": [
+			{
+				"assetProfile": {
+					"address1": "2 Kingshill Park",
+					"address2": "Venture Drive Arnhall Business Park",
+					"city": "Westhill",
+					"zip": "AB32 6FL",
+					"country": "United Kingdom",
+					"phone": "44 12 2473 7900",
+					"fax": "44 12 2473 7905",
+					"website": "https://www.awilcodrilling.com",
+					"industry": "Oil & Gas Drilling",
+					"industryDisp": "Oil & Gas Drilling",
+					"sector": "Energy",
+					"longBusinessSummary": "Awilco Drilling PLC provides drilling services to oil and gas companies in the United Kingdom and Norway. It owns and operates two semi-submersible drilling rigs, as well as owns offshore drilling rigs for offshore drilling operations. The company was incorporated in 2009 and is based in Westhill, the United Kingdom.",
+					"fullTimeEmployees": 12,
+					"companyOfficers": [
+						{
+							"maxAge": 1,
+							"name": "Mr. Eric D. Jacobs",
+							"title": "Interim Chief Exec. Officer",
+							"fiscalYear": 2021,
+							"totalPay": {
+								"raw": 234352,
+								"fmt": "234.35k",
+								"longFmt": "234,352"
+							},
+							"exercisedValue": {
+								"raw": 0,
+								"fmt": null,
+								"longFmt": "0"
+							},
+							"unexercisedValue": {
+								"raw": 0,
+								"fmt": null,
+								"longFmt": "0"
+							}
+						},
+						{
+							"maxAge": 1,
+							"name": "Mr. Roddy  Smith",
+							"title": "MD of UK & Chief Commercial Officer",
+							"fiscalYear": 2010,
+							"exercisedValue": {
+								"raw": 0,
+								"fmt": null,
+								"longFmt": "0"
+							},
+							"unexercisedValue": {
+								"raw": 0,
+								"fmt": null,
+								"longFmt": "0"
+							}
+						},
+						{
+							"maxAge": 1,
+							"name": "Cathrine  Haavind",
+							"title": "IR Mang.",
+							"exercisedValue": {
+								"raw": 0,
+								"fmt": null,
+								"longFmt": "0"
+							},
+							"unexercisedValue": {
+								"raw": 0,
+								"fmt": null,
+								"longFmt": "0"
+							}
+						}
+					],
+					"compensationAsOfEpochDate": 1640908800,
+					"maxAge": 86400
+				}
+			}
+		],
+		"error": null
+	}
+}

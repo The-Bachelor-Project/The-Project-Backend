@@ -64,8 +64,8 @@ async def populate_db():
 	url_summary = 'https://query1.finance.yahoo.com/v11/finance/quoteSummary/{tic_exc}?modules=assetProfile'
 	df = pd.read_csv('tickers_converted.csv')
 	print(len(df))
-	i = 1968 # COUNTER, UPDATE TO RESUME
-	for i in tqdm(range(len(df))):
+	counter = 1968 # COUNTER, UPDATE TO RESUME
+	for i in tqdm(range(counter,len(df))):
 		time.sleep(1)
 		ticker = df.at[i,'ticker']
 		exchange = df.at[i,'yfExchange']
