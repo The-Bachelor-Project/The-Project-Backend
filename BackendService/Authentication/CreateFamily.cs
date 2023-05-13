@@ -8,7 +8,7 @@ class CreateFamily
 	{
 		int unixLastUsed = Tools.TimeConverter.dateTimeToUnix(DateTime.Now);
 		String createTokenFamily = "INSERT INTO TokenFamily(last_used) VALUES (@last_used)";
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		SqlCommand command = new SqlCommand(createTokenFamily, connection);
 		command.Parameters.AddWithValue("@last_used", unixLastUsed);
 		try
@@ -27,7 +27,7 @@ class CreateFamily
 	private static int GetFamilyID()
 	{
 		String getFamilyID = "SELECT TOP 1 id FROM TokenFamily ORDER BY id DESC";
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		SqlCommand command = new SqlCommand(getFamilyID, connection);
 		using (SqlDataReader reader = command.ExecuteReader())
 		{

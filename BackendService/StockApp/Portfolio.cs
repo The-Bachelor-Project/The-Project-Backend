@@ -41,7 +41,7 @@ public class Portfolio
 
 	public Portfolio AddToDb()
 	{
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		id = Tools.RandomString.Generate(32);
 		String query = "INSERT INTO Portfolios (uid, name, owner, currency, balance) VALUES (@uid, @name, @owner, @currency, @balance)";
 		SqlCommand command = new SqlCommand(query, connection);
@@ -57,7 +57,7 @@ public class Portfolio
 
 	public User GetOwner()
 	{
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "SELECT owner FROM Portfolios WHERE uid = @uid";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@uid", id);
@@ -79,7 +79,7 @@ public class Portfolio
 
 	public Portfolio UpdateStockTransactions()
 	{
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "SELECT * FROM StockTransactions WHERE portfolio = @portfolio";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@portfolio", id);
@@ -106,7 +106,7 @@ public class Portfolio
 
 	public Portfolio UpdateStockPositions()
 	{
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "SELECT DISTINCT ticker, exchange FROM StockTransactions WHERE portfolio = @portfolio";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@portfolio", id);
@@ -148,7 +148,7 @@ public class Portfolio
 
 	public Portfolio ChangeName(string newName)
 	{
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "UPDATE Portfolios SET name = @name WHERE uid = @uid";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@name", newName);
@@ -168,7 +168,7 @@ public class Portfolio
 
 	public Portfolio ChangeCurrency(String newCurrency)
 	{
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String getCurrencyQuery = "SELECT * FROM Currencies WHERE code = @currency";
 		SqlCommand command = new SqlCommand(getCurrencyQuery, connection);
 		command.Parameters.AddWithValue("@currency", newCurrency);

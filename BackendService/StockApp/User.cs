@@ -24,7 +24,7 @@ public class User
 
 	public User SignUp()
 	{
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String getEmailQuery = "SELECT email FROM Accounts WHERE email = @email";
 		SqlCommand command = new SqlCommand(getEmailQuery, connection);
 		command.Parameters.AddWithValue("@email", email);
@@ -57,7 +57,7 @@ public class User
 	public User SignIn()
 	{
 		System.Console.WriteLine("SignIn with email: " + email);
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "SELECT * FROM Accounts WHERE email = @email";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@email", email);
@@ -85,7 +85,7 @@ public class User
 
 	public User ChangeEmail(String oldEmail, String newEmail)
 	{
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "UPDATE Accounts SET email = @new_email WHERE user_id = @user_id AND email = @old_email";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@user_id", id);
@@ -106,7 +106,7 @@ public class User
 
 	public User ChangePassword(String oldPassword, String newPassword, String email)
 	{
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		oldPassword = Tools.Password.Hash(oldPassword);
 		String query = "UPDATE Accounts SET password = @new_password WHERE user_id = @user_id AND email = @email AND password = @old_password";
 		SqlCommand command = new SqlCommand(query, connection);
@@ -133,7 +133,7 @@ public class User
 
 	public User UpdatePortfolios()
 	{
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "SELECT * FROM Portfolios WHERE owner = @owner";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@owner", id);
@@ -160,7 +160,7 @@ public class User
 
 	public Portfolio GetPortfolio(string id)
 	{
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "SELECT * FROM Portfolios WHERE owner = @owner AND uid = @uid";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@owner", this.id);

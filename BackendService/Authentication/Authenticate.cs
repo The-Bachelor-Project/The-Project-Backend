@@ -6,7 +6,7 @@ public class Authenticate
 {
 	public static bool AccessToken(string accessToken)
 	{
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "SELECT dbo.CheckIfAccessIsValid(@access_token, @UnixNow) AS IsValid";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@access_token", accessToken);
@@ -38,7 +38,7 @@ public class Authenticate
 	public static ValidFunctionResponse RefreshToken(String refreshToken)
 	{
 		String checkIfValidQuery = "SELECT * FROM CheckIfRefreshIsValid(@RefreshToken, @UnixNow) AS IsValid";
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		SqlCommand command = new SqlCommand(checkIfValidQuery, connection);
 		command.Parameters.AddWithValue("@RefreshToken", refreshToken);
 		command.Parameters.AddWithValue("@UnixNow", Tools.TimeConverter.dateTimeToUnix(DateTime.Now));
@@ -81,7 +81,7 @@ public class Authenticate
 	private static void InvalidateFamily(int familyID)
 	{
 		String invalidateFamilyQuery = "UPDATE TokenFamily SET valid = 0 WHERE id = @family_id";
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		SqlCommand command = new SqlCommand(invalidateFamilyQuery, connection);
 		command.Parameters.AddWithValue("@family_id", familyID);
 		try

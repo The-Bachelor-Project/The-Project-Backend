@@ -39,7 +39,7 @@ public class Assembly
 	{
 		foreach (String id in portfolioIds)
 		{
-			SqlConnection connection = new Data.Database.Connection().Create();
+			SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 			String query = "DELETE FROM Portfolios WHERE uid = @id";
 			SqlCommand command = new SqlCommand(query, connection);
 			command.Parameters.AddWithValue("@id", id);
@@ -57,7 +57,7 @@ public class Assembly
 
 	private static void DeleteUser()
 	{
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "DELETE FROM Accounts WHERE email = @email";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@email", email);

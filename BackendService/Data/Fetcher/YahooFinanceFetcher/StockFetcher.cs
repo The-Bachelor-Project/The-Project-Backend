@@ -10,7 +10,7 @@ public class StockFetcher : IStockFetcher
 	{
 		System.Console.WriteLine("Fetching stock history for " + ticker + " on " + exchange + " from " + startDate + " to " + endDate);
 
-		SqlConnection connection = new Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String getCurrencyQuery = "SELECT currency FROM Exchanges WHERE symbol = @symbol";
 		SqlCommand command = new SqlCommand(getCurrencyQuery, connection);
 		command.Parameters.AddWithValue("@symbol", exchange);
@@ -179,7 +179,7 @@ public class StockFetcher : IStockFetcher
 				}
 				else
 				{
-					SqlConnection connection = new Data.Database.Connection().Create();
+					SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 					String sqlQuery = "INSERT INTO MissingExchanges (exchange, disp, stock) VALUES (@exchange, @disp, @stock)";
 					SqlCommand command = new SqlCommand(sqlQuery, connection);
 					command.Parameters.AddWithValue("@exchange", "" + res.exch);
@@ -198,7 +198,7 @@ public class StockFetcher : IStockFetcher
 		System.Console.WriteLine("Getting dividends for " + ticker + " " + exchange);
 		List<Data.Dividend> dividends = new List<Data.Dividend>();
 
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String getCurrencyQuery = "SELECT currency FROM Exchanges WHERE symbol = @symbol";
 		SqlCommand command = new SqlCommand(getCurrencyQuery, connection);
 		command.Parameters.AddWithValue("@symbol", exchange);

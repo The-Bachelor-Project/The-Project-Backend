@@ -107,7 +107,7 @@ public class StockPosition
 	public StockPosition UpdateStockTransactions(DateOnly startDate, DateOnly endDate)
 	{
 		System.Console.WriteLine("UpdateStockTransactions: " + startDate + " " + endDate + " " + stock.ticker + " " + stock.exchange + " " + portfolio.id);
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "SELECT * FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp <= @endDate";
 		//String query = "SELECT * FROM(SELECT TOP 1 * FROM StockTransactions	WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp < @startDate ORDER BY timestamp DESC) AS first_row UNION ALL SELECT * FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp >= @startDate AND timestamp <= @endDate ORDER BY timestamp DESC";
 		SqlCommand command = new SqlCommand(query, connection);

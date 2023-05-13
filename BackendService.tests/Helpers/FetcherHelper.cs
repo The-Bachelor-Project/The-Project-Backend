@@ -5,7 +5,7 @@ public class FetcherHelper
 {
 	public static Boolean ResetHistory(String ticker, String exchange, int isStock)
 	{
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "EXEC ResetIt @ticker, @exchange, @isStock";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@ticker", ticker);
@@ -24,7 +24,7 @@ public class FetcherHelper
 
 	public static Boolean DeleteStockProfile(String ticker, String exchange)
 	{
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "DELETE FROM Stocks WHERE ticker = @ticker AND exchange = @exchange";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@ticker", ticker);

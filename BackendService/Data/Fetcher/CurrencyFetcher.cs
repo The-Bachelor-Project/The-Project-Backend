@@ -10,7 +10,7 @@ public class CurrencyFetcher : ICurrencyFetcher
 
 	public async Task<Data.CurrencyHistory> GetHistory(string currency, DateOnly startDate, DateOnly endDate)
 	{
-		SqlConnection connection = (new Database.Connection()).Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String getTrackingDateQuery = "SELECT start_tracking_date, end_tracking_date FROM Currencies WHERE code = @currency";
 		SqlCommand command = new SqlCommand(getTrackingDateQuery, connection);
 		command.Parameters.AddWithValue("@currency", currency);
@@ -59,7 +59,7 @@ public class CurrencyFetcher : ICurrencyFetcher
 		if (history.history.Count == 0)
 			return;
 		String insertIntoCurrencyRatesQuery = "EXEC BulkJsonCurrencyRates @CurrencyRatesBulk, @Code";
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		SqlCommand command = new SqlCommand(insertIntoCurrencyRatesQuery, connection);
 		command.Parameters.AddWithValue("@CurrencyRatesBulk", JsonConvert.SerializeObject(history.history));
 		command.Parameters.AddWithValue("@Code", history.currency);

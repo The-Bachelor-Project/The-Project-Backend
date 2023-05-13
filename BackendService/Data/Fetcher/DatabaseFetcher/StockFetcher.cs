@@ -11,7 +11,7 @@ public class StockFetcher : IStockFetcher
 		System.Console.WriteLine("Getting stock history from database for " + ticker + " " + exchange + " " + startDate + " " + endDate + " " + interval);
 		StockHistory result = new StockHistory(ticker, exchange, "daily");
 
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String getStockHistoryQuery = "SELECT * FROM GetStockPrices(@ticker, @exchange, 'daily', @start_date, @end_date)";
 		SqlCommand command = new SqlCommand(getStockHistoryQuery, connection);
 		command.Parameters.AddWithValue("@ticker", ticker);
@@ -45,7 +45,7 @@ public class StockFetcher : IStockFetcher
 		profile.exchange = exchange;
 
 
-		SqlConnection connection = (new Data.Database.Connection()).Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "SELECT * FROM Stocks WHERE ticker = @ticker AND exchange = @exchange";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@ticker", ticker);
@@ -91,7 +91,7 @@ public class StockFetcher : IStockFetcher
 			termTrimmed += " " + matchedAuthors[i].Value.ToLower();
 		}
 
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String sqlQuery = "SELECT TOP 100 * FROM Stocks WHERE tags LIKE @tags";
 		SqlCommand command = new SqlCommand(sqlQuery, connection);
 		command.Parameters.AddWithValue("@tags", "%" + query + "%");
@@ -110,7 +110,7 @@ public class StockFetcher : IStockFetcher
 	{
 		System.Console.WriteLine("Getting dividends from database for " + ticker + " " + exchange + " " + startDate + " " + endDate);
 		List<Dividend> dividends = new List<Dividend>();
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String getDividendsQuery = "SELECT * FROM StockDividends WHERE ticker = @ticker AND exchange = @exchange AND date >= @start_date AND date <= @end_date";
 		SqlCommand command = new SqlCommand(getDividendsQuery, connection);
 		command.Parameters.AddWithValue("@ticker", ticker);

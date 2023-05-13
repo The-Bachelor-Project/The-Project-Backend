@@ -7,7 +7,7 @@ class Exchange
 	public static String GetCurrency(String exchange)
 	{
 		String getCurrencyQuery = "SELECT currency FROM Exchanges WHERE symbol = @symbol";
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		SqlCommand command = new SqlCommand(getCurrencyQuery, connection);
 		command.Parameters.AddWithValue("@symbol", exchange);
 		using (SqlDataReader reader = command.ExecuteReader())

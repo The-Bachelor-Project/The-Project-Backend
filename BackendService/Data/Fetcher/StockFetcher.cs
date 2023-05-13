@@ -8,7 +8,7 @@ public class StockFetcher : IStockFetcher
 {
 	public async Task<StockHistory> GetHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, string interval)
 	{
-		SqlConnection connection = (new Database.Connection()).Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String getTrackingDateQuery = "SELECT start_tracking_date, end_tracking_date FROM Stocks WHERE ticker = @ticker AND exchange = @exchange";
 		SqlCommand command = new SqlCommand(getTrackingDateQuery, connection);
 		command.Parameters.AddWithValue("@ticker", ticker);
@@ -88,7 +88,7 @@ public class StockFetcher : IStockFetcher
 	private void SaveProfile(Data.StockProfile profile)
 	{
 		String tags = GenerateTags(profile);
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "INSERT INTO Stocks (ticker, exchange, company_name, short_name, long_name, address, city, state, zip, financial_currency, shares_outstanding, industry, sector, website, country, trailing_annual_dividend_rate, trailing_annual_dividend_yield, tags) VALUES (@ticker, @exchange, @name, @short_name, @long_name, @address, @city, @state, @zip, @financial_currency, @shares_outstanding, @industry, @sector, @website, @country, @trailing_annual_dividend_rate, @trailing_annual_dividend_yield, @tags)";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@ticker", profile.ticker);
@@ -130,7 +130,7 @@ public class StockFetcher : IStockFetcher
 			return;
 		String insertIntoStockPricesQuery = "EXEC BulkJsonStockPrices @StockPricesBulk, @Ticker, @Exchange";
 		dynamic jsonStockPrices = JsonConvert.SerializeObject(history.history);
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		SqlCommand command = new SqlCommand();
 
 		command = new SqlCommand(insertIntoStockPricesQuery, connection);
@@ -166,7 +166,7 @@ public class StockFetcher : IStockFetcher
 			return;
 		String insertIntoDividendsQuery = "EXEC BulkJsonStockDividends @StockDividendsBulk, @Ticker, @Exchange";
 		dynamic jsonDividends = JsonConvert.SerializeObject(dividends);
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		SqlCommand command = new SqlCommand();
 
 		command = new SqlCommand(insertIntoDividendsQuery, connection);

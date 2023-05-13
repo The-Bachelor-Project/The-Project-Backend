@@ -53,7 +53,7 @@ public class TokenSet
 
 	public User GetUser()
 	{
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "SELECT user_id FROM Tokens WHERE access_token = @access_token";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@access_token", accessToken);

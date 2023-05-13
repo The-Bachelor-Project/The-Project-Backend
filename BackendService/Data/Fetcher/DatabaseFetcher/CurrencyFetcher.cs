@@ -11,7 +11,7 @@ public class CurrencyFetcher : ICurrencyFetcher
 	public Task<Data.CurrencyHistory> GetHistory(string currency, DateOnly startDate, DateOnly endDate)
 	{
 		System.Console.WriteLine(currency);
-		SqlConnection connection = new Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String getCurrencyHistoryQuery = "SELECT * FROM GetCurrencyRates(@currency, @interval, @start_date, @end_date)";
 		SqlCommand command = new SqlCommand(getCurrencyHistoryQuery, connection);
 		command.Parameters.AddWithValue("@currency", currency);

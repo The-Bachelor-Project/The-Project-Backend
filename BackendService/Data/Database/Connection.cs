@@ -4,12 +4,18 @@ namespace Data.Database;
 
 public class Connection
 {
-	static int connectionCount = 0;
+	private static SqlConnection? connection;
 
-	public SqlConnection Create()
+	public static SqlConnection GetSqlConnection()
 	{
-		connectionCount++;
-		System.Console.WriteLine("Connection count: " + connectionCount);
+		if (connection is null)
+		{
+			Connection.connection = Connection.Create();
+		}
+		return connection;
+	}
+	public static SqlConnection Create()
+	{
 		SqlConnectionStringBuilder builder = buildConnectionString();
 		String connectionString = builder.ConnectionString;
 		SqlConnection connection = new SqlConnection(connectionString);
@@ -17,7 +23,7 @@ public class Connection
 		return connection;
 	}
 
-	private SqlConnectionStringBuilder buildConnectionString()
+	private static SqlConnectionStringBuilder buildConnectionString()
 	{
 		SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
 		builder.DataSource = "stock-app-db-server.database.windows.net";
