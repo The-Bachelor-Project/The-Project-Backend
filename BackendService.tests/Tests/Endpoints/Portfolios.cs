@@ -57,7 +57,7 @@ public class PortfoliosTest
 	{
 		String newName = "new name of portfolio";
 		PutPortfoliosBody body = new PutPortfoliosBody(newName, Assembly.portfolioIds[0]);
-		PutPortfoliosResponse response = PutPortfolios.EndpointName(Assembly.accessToken, body);
+		PutPortfoliosResponse response = PutPortfolios.Endpoint(Assembly.accessToken, body);
 		Assert.IsTrue(response.response == "success", "response should be \"success\" but was " + response.response);
 		Assert.IsTrue(Assembly.user!.GetPortfolio(Assembly.portfolioIds[0]).name == newName, "name of portfolio should be " + newName + " but was " + Assembly.user.GetPortfolio(Assembly.portfolioIds[0]).name);
 	}
