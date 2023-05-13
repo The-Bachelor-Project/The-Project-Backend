@@ -36,6 +36,7 @@ class Application
 		GetValueHistory.Setup(app);
 		PutUsers.Setup(app);
 		PutPortfolios.Setup(app);
+		PutStockTransactions.Setup(app);
 
 		app.Run();
 	}

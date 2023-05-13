@@ -29,7 +29,7 @@ public class StockTransaction
 			throw new CouldNotGetStockException();
 		}
 
-		String getAmountOwned = "SELECT TOP 1 amount_owned FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp < @timestamp ORDER BY timestamp DESC";
+		String getAmountOwned = "SELECT TOP 1 amount_owned FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp <= @timestamp ORDER BY timestamp,id DESC";
 
 		SqlCommand command3 = new SqlCommand(getAmountOwned, connection);
 		command3.Parameters.AddWithValue("@portfolio", portfolioId);
@@ -61,9 +61,10 @@ public class StockTransaction
 
 
 
-		String updateStockTransactions = "UPDATE StockTransactions SET amount_owned = amount_owned + @amount_adjusted WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp > @timestamp";
+		String updateStockTransactions = "UPDATE StockTransactions SET amount_owned = amount_owned + @amount_adjusted WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp > @timestamp OR (timestamp = @timestamp AND id > @id)";
 		SqlCommand command2 = new SqlCommand(updateStockTransactions, connection);
 		command2.Parameters.AddWithValue("@portfolio", portfolioId);
+		command2.Parameters.AddWithValue("@id", id);
 		command2.Parameters.AddWithValue("@ticker", ticker);
 		command2.Parameters.AddWithValue("@exchange", exchange);
 		command2.Parameters.AddWithValue("@amount_adjusted", amountAdjusted);
@@ -72,11 +73,28 @@ public class StockTransaction
 
 
 
-		return this; //TODO Update Id before returning, maybe by making a function on the database
+		return this;
 	}
 
 	public Portfolio GetPortfolio()
 	{
 		return new Portfolio(portfolioId!);
+	}
+
+	public Task DeleteFromDb()
+	{
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
+		String deleteQuery = "DELETE FROM StockTransactions WHERE id = @id";
+		SqlCommand command = new SqlCommand(deleteQuery, connection);
+		command.Parameters.AddWithValue("@id", id);
+		try
+		{
+			command.ExecuteNonQuery();
+		}
+		catch (Exception)
+		{
+			throw new Exception();
+		}
+		return Task.CompletedTask;
 	}
 }

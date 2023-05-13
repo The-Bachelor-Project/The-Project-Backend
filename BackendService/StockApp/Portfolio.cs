@@ -197,4 +197,32 @@ public class Portfolio
 			throw new Exception();
 		}
 	}
+
+	public StockTransaction GetStockTransaction(string id)
+	{
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
+		String query = "SELECT * FROM StockTransactions WHERE id = @id";
+		SqlCommand command = new SqlCommand(query, connection);
+		command.Parameters.AddWithValue("@id", id);
+		using (SqlDataReader reader = command.ExecuteReader())
+		{
+			if (reader.Read())
+			{
+				StockTransaction stockTransaction = new StockTransaction();
+				stockTransaction.id = reader["id"].ToString();
+				stockTransaction.portfolioId = reader["portfolio"].ToString();
+				stockTransaction.ticker = reader["ticker"].ToString();
+				stockTransaction.exchange = reader["exchange"].ToString();
+				stockTransaction.amount = Convert.ToDecimal(reader["amount"]);
+				stockTransaction.amountAdjusted = Convert.ToDecimal(reader["amount_adjusted"]);
+				stockTransaction.amountOwned = Convert.ToDecimal(reader["amount_owned"]);
+				stockTransaction.timestamp = Convert.ToInt32(reader["timestamp"]);
+				stockTransaction.price = new Money(Convert.ToDecimal(reader["price_amount"]), reader["price_currency"].ToString()!);
+				reader.Close();
+				return stockTransaction;
+			}
+			reader.Close();
+			throw new Exception();
+		}
+	}
 }

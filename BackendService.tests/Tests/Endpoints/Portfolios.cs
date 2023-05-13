@@ -56,7 +56,7 @@ public class PortfoliosTest
 	public void EndpointPutPortfolioName()
 	{
 		String newName = "new name of portfolio";
-		PutPortfoliosBody body = new PutPortfoliosBody(newName, Assembly.portfolioIds[0]);
+		PutPortfoliosBody body = new PutPortfoliosBody("", newName, Assembly.portfolioIds[0]);
 		PutPortfoliosResponse response = PutPortfolios.Endpoint(Assembly.accessToken, body);
 		Assert.IsTrue(response.response == "success", "response should be \"success\" but was " + response.response);
 		Assert.IsTrue(Assembly.user!.GetPortfolio(Assembly.portfolioIds[0]).name == newName, "name of portfolio should be " + newName + " but was " + Assembly.user.GetPortfolio(Assembly.portfolioIds[0]).name);
@@ -66,8 +66,8 @@ public class PortfoliosTest
 	public void EndpointPutPortfolioCorrectCurrency()
 	{
 		String newCurrency = "DKK";
-		PutPortfoliosBody body = new PutPortfoliosBody(newCurrency, Assembly.portfolioIds[0]);
-		PutPortfoliosResponse response = PutPortfolios.EndpointCurrency(Assembly.accessToken, body);
+		PutPortfoliosBody body = new PutPortfoliosBody(newCurrency, "", Assembly.portfolioIds[0]);
+		PutPortfoliosResponse response = PutPortfolios.Endpoint(Assembly.accessToken, body);
 		Assert.IsTrue(response.response == "success", "response should be \"success\" but was " + response.response);
 		Assert.IsTrue(Assembly.user!.GetPortfolio(Assembly.portfolioIds[0]).currency == newCurrency, "currency of portfolio should be " + newCurrency + " but was " + Assembly.user.GetPortfolio(Assembly.portfolioIds[0]).currency);
 	}
@@ -76,8 +76,8 @@ public class PortfoliosTest
 	public void EndpointPutPortfolioWrongCurrency()
 	{
 		String newCurrency = "not real";
-		PutPortfoliosBody body = new PutPortfoliosBody(newCurrency, Assembly.portfolioIds[0]);
-		PutPortfoliosResponse response = PutPortfolios.EndpointCurrency(Assembly.accessToken, body);
+		PutPortfoliosBody body = new PutPortfoliosBody(newCurrency, "", Assembly.portfolioIds[0]);
+		PutPortfoliosResponse response = PutPortfolios.Endpoint(Assembly.accessToken, body);
 		Assert.IsTrue(response.response == "error", "response should be \"error\" but was " + response.response);
 		Assert.IsFalse(Assembly.user!.GetPortfolio(Assembly.portfolioIds[0]).currency == newCurrency, "currency of portfolio should be DKK but was " + Assembly.user.GetPortfolio(Assembly.portfolioIds[0]).currency);
 	}
