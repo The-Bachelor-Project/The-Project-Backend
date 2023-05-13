@@ -37,6 +37,7 @@ class Application
 		PutUsers.Setup(app);
 		PutPortfolios.Setup(app);
 		PutStockTransactions.Setup(app);
+		DeleteStockTransactions.Setup(app);
 
 		app.Run();
 	}
