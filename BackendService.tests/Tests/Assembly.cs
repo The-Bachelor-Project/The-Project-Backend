@@ -11,12 +11,14 @@ public class Assembly
 	public static String[] portfolioIds = new String[4];
 	public static String email = "";
 	public static String password = "";
+	public static String stockTransactionId = "";
 
 	[AssemblyInitialize]
 	public static void Initialize(TestContext context)
 	{
 		SignInHelper.Reset();
 		SetupUser();
+
 	}
 
 	private static void SetupUser()

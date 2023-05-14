@@ -200,6 +200,7 @@ public class Portfolio
 
 	public StockTransaction GetStockTransaction(string id)
 	{
+		System.Console.WriteLine("ID: " + id);
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "SELECT * FROM StockTransactions WHERE id = @id";
 		SqlCommand command = new SqlCommand(query, connection);

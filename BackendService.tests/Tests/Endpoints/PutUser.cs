@@ -6,7 +6,7 @@ public class PutUserTest
 	[TestMethod, Priority(0)]
 	public void EndpointChangeEmail()
 	{
-		String newEmail = "234143132434231sdfhdfsjsdfhhjsdsdhjsfdgadfsgdfsg@gmail.com";
+		String newEmail = Tools.RandomString.Generate(10) + "@test.com";
 		API.v1.PutEmailBody body = new API.v1.PutEmailBody(Assembly.email, newEmail);
 		API.v1.PutUserResponse response = API.v1.PutUsers.EndpointEmail(Assembly.accessToken, body);
 		Assert.IsTrue(response.response == "success", "response should be \"success\" but was " + response.response);
