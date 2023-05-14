@@ -217,7 +217,7 @@ public class User
 			portfolio.UpdateStockTransactions();
 			foreach (StockTransaction transaction in portfolio.stockTransactions)
 			{
-				transactions.Add(new Data.StockTransaction(transaction.portfolioId!, transaction.ticker!, transaction.exchange!, transaction.amount ?? 0, transaction.timestamp ?? 0, new Data.Money(transaction.price!.amount, transaction.price.currency)));
+				transactions.Add(new Data.StockTransaction(transaction.id!.Value, transaction.portfolioId!, transaction.ticker!, transaction.exchange!, transaction.amount ?? 0, transaction.timestamp ?? 0, new Data.Money(transaction.price!.amount, transaction.price.currency)));
 			}
 		}
 

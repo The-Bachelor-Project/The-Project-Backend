@@ -89,7 +89,7 @@ public class Portfolio
 			while (reader.Read())
 			{
 				stockTransactions.Add(new StockTransaction());
-				stockTransactions.Last().id = reader["id"].ToString();
+				stockTransactions.Last().id = int.Parse(reader["id"].ToString()!);
 				stockTransactions.Last().portfolioId = id;
 				stockTransactions.Last().ticker = reader["ticker"].ToString();
 				stockTransactions.Last().exchange = reader["exchange"].ToString();
@@ -209,7 +209,7 @@ public class Portfolio
 			if (reader.Read())
 			{
 				StockTransaction stockTransaction = new StockTransaction();
-				stockTransaction.id = reader["id"].ToString();
+				stockTransaction.id = int.Parse(reader["id"].ToString()!);
 				stockTransaction.portfolioId = reader["portfolio"].ToString();
 				stockTransaction.ticker = reader["ticker"].ToString();
 				stockTransaction.exchange = reader["exchange"].ToString();

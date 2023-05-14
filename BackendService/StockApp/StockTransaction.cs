@@ -4,7 +4,7 @@ namespace StockApp;
 
 public class StockTransaction
 {
-	public String? id { get; set; }
+	public int? id { get; set; }
 	public String? portfolioId { get; set; }
 	public String? ticker { get; set; }
 	public String? exchange { get; set; }
@@ -57,7 +57,7 @@ public class StockTransaction
 		command.Parameters.AddWithValue("@timestamp", timestamp);
 		command.Parameters.AddWithValue("@price_amount", price!.amount);
 		command.Parameters.AddWithValue("@price_currency", price.currency);
-		id = (command.ExecuteScalar()).ToString();
+		id = int.Parse((command.ExecuteScalar()).ToString()!);
 
 
 

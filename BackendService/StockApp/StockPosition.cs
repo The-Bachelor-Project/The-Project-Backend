@@ -129,7 +129,7 @@ public class StockPosition
 
 				StockTransaction newStockTransaction = new StockTransaction();
 
-				newStockTransaction.id = reader["id"].ToString();
+				newStockTransaction.id = int.Parse(reader["id"].ToString()!);
 				newStockTransaction.portfolioId = portfolio.id;
 				newStockTransaction.ticker = reader["ticker"].ToString();
 				newStockTransaction.exchange = reader["exchange"].ToString();

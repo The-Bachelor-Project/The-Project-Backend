@@ -28,8 +28,9 @@ public class DeleteStockTransactions
 			await stockTransaction.DeleteFromDb();
 			return new DeleteStockTransactionsResponse("success");
 		}
-		catch (System.Exception)
+		catch (System.Exception e)
 		{
+			System.Console.WriteLine(e);
 			return new DeleteStockTransactionsResponse("error");
 		}
 	}

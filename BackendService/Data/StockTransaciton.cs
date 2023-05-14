@@ -2,8 +2,9 @@ namespace Data;
 
 public class StockTransaction //TODO Delete this file, use the one on BusinessLogic instead
 {
-	public StockTransaction(string portfolio, string ticker, string exchange, decimal amount, int timestamp, Money price)
+	public StockTransaction(int id, string portfolio, string ticker, string exchange, decimal amount, int timestamp, Money price)
 	{
+		this.id = id;
 		this.portfolio = portfolio;
 		this.ticker = ticker;
 		this.exchange = exchange;
@@ -12,6 +13,7 @@ public class StockTransaction //TODO Delete this file, use the one on BusinessLo
 		this.price = price;
 	}
 
+	public int id { get; set; }
 	public String portfolio { get; set; }
 	public String ticker { get; set; }
 	public String exchange { get; set; }
