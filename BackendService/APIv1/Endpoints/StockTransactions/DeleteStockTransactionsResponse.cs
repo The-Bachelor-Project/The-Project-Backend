@@ -2,7 +2,7 @@ namespace API.v1;
 
 public class DeleteStockTransactionsResponse
 {
-	private string response;
+	public string response;
 
 	public DeleteStockTransactionsResponse(string response)
 	{
