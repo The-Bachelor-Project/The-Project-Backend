@@ -11,7 +11,7 @@ public class Assembly
 	public static String[] portfolioIds = new String[4];
 	public static String email = "";
 	public static String password = "";
-	public static String stockTransactionId = "";
+	public static int stockTransactionId = 0;
 
 	[AssemblyInitialize]
 	public static void Initialize(TestContext context)

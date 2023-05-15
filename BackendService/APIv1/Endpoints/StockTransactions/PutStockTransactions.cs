@@ -11,7 +11,7 @@ public class PutStockTransactions
 			if (accessToken is null)
 			{
 				context.Response.StatusCode = 401;
-				return Results.Ok(new PutStockTransactionsResponse("error", ""));
+				return Results.Ok(new PutStockTransactionsResponse("error", 0));
 			}
 			return Results.Ok(Endpoint(accessToken, body));
 		});
@@ -19,9 +19,9 @@ public class PutStockTransactions
 
 	public async static Task<PutStockTransactionsResponse> Endpoint(string accessToken, PutStockTransactionsBody body)
 	{
-		if (body.id is null || body.portfolio is null)
+		if (body.id is 0 || body.portfolio is null)
 		{
-			return new PutStockTransactionsResponse("error", "");
+			return new PutStockTransactionsResponse("error", 0);
 		}
 		try
 		{
@@ -54,12 +54,12 @@ public class PutStockTransactions
 
 			await stockTransaction.AddToDb();
 
-			return new PutStockTransactionsResponse("success", stockTransaction.id!);
+			return new PutStockTransactionsResponse("success", (int)stockTransaction.id!);
 		}
 		catch (System.Exception e)
 		{
 			System.Console.WriteLine(e);
-			return new PutStockTransactionsResponse("error", "");
+			return new PutStockTransactionsResponse("error", 0);
 		}
 	}
 }

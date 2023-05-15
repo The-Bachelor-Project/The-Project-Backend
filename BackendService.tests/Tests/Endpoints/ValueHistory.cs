@@ -3,6 +3,7 @@ namespace BackendService.tests;
 [TestClass]
 public class ValueHistoryTest
 {
+	//FIXME: This test fails due to max amount of connections
 	[TestMethod, Priority(1)]
 	public async Task EndpointGetValueHistory()
 	{

@@ -198,7 +198,7 @@ public class Portfolio
 		}
 	}
 
-	public StockTransaction GetStockTransaction(string id)
+	public StockTransaction GetStockTransaction(int id)
 	{
 		System.Console.WriteLine("ID: " + id);
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();

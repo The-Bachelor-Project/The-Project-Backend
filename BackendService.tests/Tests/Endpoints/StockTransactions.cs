@@ -22,12 +22,12 @@ public class StockTransactionTest
 	public async Task EndpointPostStockTransaction()
 	{
 		int unix = 1651055363;
-		Data.StockTransaction transaction = new Data.StockTransaction(Assembly.portfolioIds[0], ticker, exchange, stockAmount, unix, new Data.Money(priceAmount, currency));
+		Data.StockTransaction transaction = new Data.StockTransaction(Assembly.stockTransactionId, Assembly.portfolioIds[0], ticker, exchange, stockAmount, unix, new Data.Money(priceAmount, currency));
 		API.v1.PostStockTransactionsBody body = new API.v1.PostStockTransactionsBody(transaction, Assembly.accessToken);
 		API.v1.PostStockTransactionsResponse response = await API.v1.PostStockTransactions.EndpointAsync(body, Assembly.accessToken);
 		Assembly.stockTransactionId = response.id;
 		Assert.IsTrue(response.response == "success", "response should be \"success\" but was " + response.response);
-		Assert.IsTrue(response.id != null, "id should not be null");
+		Assert.IsTrue(response.id != 0, "id should not be 0");
 	}
 
 	[TestMethod, Priority(1)]

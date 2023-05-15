@@ -34,8 +34,8 @@ public class PostStockTransactions
 		System.Console.WriteLine("StockTransaction id: " + StockTransaction.id);
 		if (StockTransaction.id != null)
 		{
-			return new PostStockTransactionsResponse("success", StockTransaction.id.ToString()!);
+			return new PostStockTransactionsResponse("success", (int)StockTransaction.id);
 		}
-		return new PostStockTransactionsResponse("error", "");
+		return new PostStockTransactionsResponse("error", 0);
 	}
 }

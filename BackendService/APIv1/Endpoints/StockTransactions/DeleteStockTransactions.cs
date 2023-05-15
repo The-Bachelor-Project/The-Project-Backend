@@ -6,7 +6,7 @@ public class DeleteStockTransactions
 {
 	public static void Setup(WebApplication app)
 	{
-		app.MapDelete("/v1/stock-transactions", (HttpContext context, [FromQuery] String portfolio, String id) =>
+		app.MapDelete("/v1/stock-transactions", (HttpContext context, [FromQuery] String portfolio, int id) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
 			if (accessToken is null)
@@ -18,7 +18,7 @@ public class DeleteStockTransactions
 		});
 	}
 
-	public async static Task<DeleteStockTransactionsResponse> Endpoint(String accessToken, String portfolioID, String transactionID)
+	public async static Task<DeleteStockTransactionsResponse> Endpoint(String accessToken, String portfolioID, int transactionID)
 	{
 		try
 		{
