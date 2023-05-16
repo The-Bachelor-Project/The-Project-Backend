@@ -64,7 +64,7 @@ async def populate_db():
 	url_summary = 'https://query1.finance.yahoo.com/v11/finance/quoteSummary/{tic_exc}?modules=assetProfile'
 	df = pd.read_csv('tickers_converted.csv')
 	print(len(df))
-	counter = 54403 # COUNTER, UPDATE TO RESUME
+	counter = (54403+2413+6257) # COUNTER, UPDATE TO RESUME
 	for i in tqdm(range(counter,len(df))):
 		time.sleep(1)
 		ticker = df.at[i,'ticker']
@@ -91,7 +91,7 @@ async def populate_db():
 		except Exception as e:
 			print("------------------")
 			print(e)
-			print('Error with stock: ' + exchange + ':' + ticker)
+			# print('Error with stock: ' + exchange + ':' + str(ticker))
                         
 
 if __name__ == '__main__':
