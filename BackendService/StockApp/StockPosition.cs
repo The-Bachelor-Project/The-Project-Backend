@@ -107,47 +107,43 @@ public class StockPosition
 	public StockPosition UpdateStockTransactions(DateOnly startDate, DateOnly endDate)
 	{
 		System.Console.WriteLine("UpdateStockTransactions: " + startDate + " " + endDate + " " + stock.ticker + " " + stock.exchange + " " + portfolio.id);
-		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "SELECT * FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp <= @endDate";
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@portfolio", portfolio.id);
+		parameters.Add("@ticker", stock.ticker);
+		parameters.Add("@exchange", stock.exchange);
+		parameters.Add("@startDate", Tools.TimeConverter.dateOnlyToUnix(startDate));
+		parameters.Add("@endDate", Tools.TimeConverter.dateOnlyToUnix(endDate));
+		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(query, parameters);
 		//String query = "SELECT * FROM(SELECT TOP 1 * FROM StockTransactions	WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp < @startDate ORDER BY timestamp DESC) AS first_row UNION ALL SELECT * FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp >= @startDate AND timestamp <= @endDate ORDER BY timestamp DESC";
-		SqlCommand command = new SqlCommand(query, connection);
-		command.Parameters.AddWithValue("@portfolio", portfolio.id);
-		command.Parameters.AddWithValue("@ticker", stock.ticker);
-		command.Parameters.AddWithValue("@exchange", stock.exchange);
-		command.Parameters.AddWithValue("@startDate", Tools.TimeConverter.dateOnlyToUnix(startDate));
-		command.Parameters.AddWithValue("@endDate", Tools.TimeConverter.dateOnlyToUnix(endDate));
 
-		using (SqlDataReader reader = command.ExecuteReader())
+		stockTransactions = new List<StockTransaction>();
+
+		int startTimeStamp = Tools.TimeConverter.dateOnlyToUnix(startDate);
+
+		foreach (Dictionary<String, object> row in data)
 		{
-			stockTransactions = new List<StockTransaction>();
+			System.Console.WriteLine("StockTransactions: " + "    " + row["ticker"].ToString() + "   " + Tools.TimeConverter.UnixTimeStampToDateOnly(Convert.ToInt32(row["timestamp"])));
 
-			int startTimeStamp = Tools.TimeConverter.dateOnlyToUnix(startDate);
+			StockTransaction newStockTransaction = new StockTransaction();
 
-			while (reader.Read())
+			newStockTransaction.id = int.Parse(row["id"].ToString()!);
+			newStockTransaction.portfolioId = portfolio.id;
+			newStockTransaction.ticker = row["ticker"].ToString();
+			newStockTransaction.exchange = row["exchange"].ToString();
+			newStockTransaction.amount = Convert.ToDecimal(row["amount"]);
+			newStockTransaction.amountAdjusted = Convert.ToDecimal(row["amount_adjusted"]);
+			newStockTransaction.amountOwned = Convert.ToDecimal(row["amount_owned"]);
+			newStockTransaction.timestamp = Convert.ToInt32(row["timestamp"]);
+			newStockTransaction.price = new Money(Convert.ToDecimal(row["price_amount"]), row["price_currency"].ToString()!);
+
+			if (newStockTransaction.timestamp < startTimeStamp && stockTransactions.Count == 1)
 			{
-				System.Console.WriteLine("StockTransactions: " + "    " + reader["ticker"].ToString() + "   " + Tools.TimeConverter.UnixTimeStampToDateOnly(Convert.ToInt32(reader["timestamp"])));
-
-				StockTransaction newStockTransaction = new StockTransaction();
-
-				newStockTransaction.id = int.Parse(reader["id"].ToString()!);
-				newStockTransaction.portfolioId = portfolio.id;
-				newStockTransaction.ticker = reader["ticker"].ToString();
-				newStockTransaction.exchange = reader["exchange"].ToString();
-				newStockTransaction.amount = Convert.ToDecimal(reader["amount"]);
-				newStockTransaction.amountAdjusted = Convert.ToDecimal(reader["amount_adjusted"]);
-				newStockTransaction.amountOwned = Convert.ToDecimal(reader["amount_owned"]);
-				newStockTransaction.timestamp = Convert.ToInt32(reader["timestamp"]);
-				newStockTransaction.price = new Money(Convert.ToDecimal(reader["price_amount"]), reader["price_currency"].ToString()!);
-
-				if (newStockTransaction.timestamp < startTimeStamp && stockTransactions.Count == 1)
-				{
-					stockTransactions = new List<StockTransaction>();
-				}
-				stockTransactions.Add(newStockTransaction);
+				stockTransactions = new List<StockTransaction>();
 			}
-			reader.Close();
-
-			return this;
+			stockTransactions.Add(newStockTransaction);
 		}
+
+		return this;
 	}
 }

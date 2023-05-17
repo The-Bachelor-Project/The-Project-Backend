@@ -7,18 +7,15 @@ class Exchange
 	public static String GetCurrency(String exchange)
 	{
 		String getCurrencyQuery = "SELECT currency FROM Exchanges WHERE symbol = @symbol";
-		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
-		SqlCommand command = new SqlCommand(getCurrencyQuery, connection);
-		command.Parameters.AddWithValue("@symbol", exchange);
-		using (SqlDataReader reader = command.ExecuteReader())
+
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@symbol", exchange);
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(getCurrencyQuery, parameters);
+		String currency = "";
+		if (data != null)
 		{
-			String currency = "";
-			if (reader.Read())
-			{
-				currency = reader["currency"].ToString()!;
-			}
-			reader.Close();
-			return currency;
+			currency = data["currency"].ToString()!;
 		}
+		return currency;
 	}
 }

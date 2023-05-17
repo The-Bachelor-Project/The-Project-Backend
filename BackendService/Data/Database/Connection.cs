@@ -8,7 +8,7 @@ public class Connection
 
 	public static SqlConnection GetSqlConnection()
 	{
-		return Create();
+		//return Create();
 		if (connection is null)
 		{
 			Connection.connection = Connection.Create();

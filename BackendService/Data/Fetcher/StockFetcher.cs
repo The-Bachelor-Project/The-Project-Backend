@@ -8,52 +8,47 @@ public class StockFetcher : IStockFetcher
 {
 	public async Task<StockHistory> GetHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, string interval)
 	{
-		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String getTrackingDateQuery = "SELECT start_tracking_date, end_tracking_date FROM Stocks WHERE ticker = @ticker AND exchange = @exchange";
-		SqlCommand command = new SqlCommand(getTrackingDateQuery, connection);
-		command.Parameters.AddWithValue("@ticker", ticker);
-		command.Parameters.AddWithValue("@exchange", exchange);
-		using (SqlDataReader reader = command.ExecuteReader())
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@ticker", ticker);
+		parameters.Add("@exchange", exchange);
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(getTrackingDateQuery, parameters);
+
+		if (data != null)
 		{
-			if (reader.Read())
+			DateOnly startTrackingDate;
+			DateOnly endTrackingDate;
+			try
 			{
-				DateOnly startTrackingDate;
-				DateOnly endTrackingDate;
-				try
-				{
-					startTrackingDate = DateOnly.FromDateTime((DateTime)reader["start_tracking_date"]);
-					endTrackingDate = DateOnly.FromDateTime((DateTime)reader["end_tracking_date"]);
-					reader.Close();
-				}
-				catch (Exception)
-				{
-					reader.Close();
-					StockHistory fromYahoo = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, startDate.AddDays(-7), endDate, interval);
-					fromYahoo.dividends = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetDividends(ticker, exchange, startDate.AddDays(-7), endDate);
-					SaveStockHistory(fromYahoo, true, true);
-					SaveDividends(fromYahoo.dividends, ticker, exchange);
-					return fromYahoo;
-				}
-				if (startDate < startTrackingDate)
-				{
-					StockHistory fromYahooBefore = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, startDate.AddDays(-7), startTrackingDate.AddDays(-1), interval);
-					fromYahooBefore.dividends = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetDividends(ticker, exchange, startDate.AddDays(-7), startTrackingDate.AddDays(-1));
-					SaveStockHistory(fromYahooBefore, true, false);
-					SaveDividends(fromYahooBefore.dividends, ticker, exchange);
-				}
-				if (endDate > endTrackingDate)
-				{
-					StockHistory fromYahooAfter = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, endTrackingDate.AddDays(1), endDate, interval);
-					fromYahooAfter.dividends = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetDividends(ticker, exchange, endTrackingDate.AddDays(1), endDate);
-					SaveStockHistory(fromYahooAfter, false, true);
-					SaveDividends(fromYahooAfter.dividends, ticker, exchange);
-				}
+				startTrackingDate = DateOnly.FromDateTime((DateTime)data["start_tracking_date"]);
+				endTrackingDate = DateOnly.FromDateTime((DateTime)data["end_tracking_date"]);
 			}
-			reader.Close();
-			StockHistory stockHistoryReturn = await new Data.Fetcher.DatabaseFetcher.StockFetcher().GetHistory(ticker, exchange, startDate, endDate, interval);
-			stockHistoryReturn.dividends = await new Data.Fetcher.DatabaseFetcher.StockFetcher().GetDividends(ticker, exchange, startDate, endDate);
-			return stockHistoryReturn;
+			catch (Exception)
+			{
+				StockHistory fromYahoo = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, startDate.AddDays(-7), endDate, interval);
+				fromYahoo.dividends = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetDividends(ticker, exchange, startDate.AddDays(-7), endDate);
+				SaveStockHistory(fromYahoo, true, true);
+				SaveDividends(fromYahoo.dividends, ticker, exchange);
+				return fromYahoo;
+			}
+			if (startDate < startTrackingDate)
+			{
+				StockHistory fromYahooBefore = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, startDate.AddDays(-7), startTrackingDate.AddDays(-1), interval);
+				fromYahooBefore.dividends = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetDividends(ticker, exchange, startDate.AddDays(-7), startTrackingDate.AddDays(-1));
+				SaveStockHistory(fromYahooBefore, true, false);
+				SaveDividends(fromYahooBefore.dividends, ticker, exchange);
+			}
+			if (endDate > endTrackingDate)
+			{
+				StockHistory fromYahooAfter = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, endTrackingDate.AddDays(1), endDate, interval);
+				fromYahooAfter.dividends = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetDividends(ticker, exchange, endTrackingDate.AddDays(1), endDate);
+				SaveStockHistory(fromYahooAfter, false, true);
+				SaveDividends(fromYahooAfter.dividends, ticker, exchange);
+			}
 		}
+		StockHistory stockHistoryReturn = await new Data.Fetcher.DatabaseFetcher.StockFetcher().GetHistory(ticker, exchange, startDate, endDate, interval);
+		stockHistoryReturn.dividends = await new Data.Fetcher.DatabaseFetcher.StockFetcher().GetDividends(ticker, exchange, startDate, endDate);
+		return stockHistoryReturn;
 	}
 
 	public async Task<Data.StockProfile> GetProfile(string ticker, string exchange)

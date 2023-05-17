@@ -27,30 +27,12 @@ class CreateFamily
 	private static int GetFamilyID()
 	{
 		String getFamilyID = "SELECT TOP 1 id FROM TokenFamily ORDER BY id DESC";
-		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
-		SqlCommand command = new SqlCommand(getFamilyID, connection);
-		using (SqlDataReader reader = command.ExecuteReader())
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(getFamilyID);
+		if (data != null)
 		{
-			if (reader.Read())
-			{
-				try
-				{
-					int familyId = int.Parse(reader["id"].ToString()!);
-					reader.Close();
-					return familyId;
-				}
-				catch (Exception e)
-				{
-					reader.Close();
-					System.Console.WriteLine(e);
-					return -2;
-				}
-			}
-			else
-			{
-				reader.Close();
-				return -3;
-			}
+			int familyId = int.Parse(data["id"].ToString()!);
+			return familyId;
 		}
+		return -3;
 	}
 }

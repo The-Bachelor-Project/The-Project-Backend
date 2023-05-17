@@ -30,22 +30,20 @@ public class StockTransaction
 		}
 
 		String getAmountOwned = "SELECT TOP 1 amount_owned FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp <= @timestamp ORDER BY timestamp,id DESC";
-
-		SqlCommand command3 = new SqlCommand(getAmountOwned, connection);
-		command3.Parameters.AddWithValue("@portfolio", portfolioId);
-		command3.Parameters.AddWithValue("@ticker", ticker);
-		command3.Parameters.AddWithValue("@exchange", exchange);
-		command3.Parameters.AddWithValue("@timestamp", timestamp);
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@portfolio", portfolioId);
+		parameters.Add("@ticker", ticker);
+		parameters.Add("@exchange", exchange);
+		parameters.Add("@timestamp", timestamp);
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(getAmountOwned, parameters);
 
 		decimal amountOwned = 0;
-		decimal amountAdjusted = 0;
-
-		using (SqlDataReader reader = command3.ExecuteReader())
+		decimal amountAdjusted = amount!.Value;
+		if (data != null)
 		{
-			amountOwned = reader.Read() ? reader.GetDecimal(0) : 0;
-			amountAdjusted = amount!.Value; //TODO: Should be adjusted in the future
-			reader.Close();
+			amountOwned = Convert.ToDecimal(data["amount_owned"]);
 		}
+
 		String insertStockTransaction = "INSERT INTO StockTransactions(portfolio, ticker, exchange, amount, amount_adjusted, amount_owned, timestamp, price_amount, price_currency) OUTPUT INSERTED.id VALUES (@portfolio, @ticker, @exchange, @amount, @amount_adjusted, @amount_owned, @timestamp, @price_amount, @price_currency)";
 		SqlCommand command = new SqlCommand(insertStockTransaction, connection);
 		command.Parameters.AddWithValue("@portfolio", portfolioId);

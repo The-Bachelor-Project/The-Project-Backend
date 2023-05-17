@@ -11,30 +11,28 @@ public class CurrencyFetcher : ICurrencyFetcher
 	public Task<Data.CurrencyHistory> GetHistory(string currency, DateOnly startDate, DateOnly endDate)
 	{
 		System.Console.WriteLine(currency);
-		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String getCurrencyHistoryQuery = "SELECT * FROM GetCurrencyRates(@currency, @interval, @start_date, @end_date)";
-		SqlCommand command = new SqlCommand(getCurrencyHistoryQuery, connection);
-		command.Parameters.AddWithValue("@currency", currency);
-		command.Parameters.AddWithValue("@start_date", Tools.TimeConverter.dateOnlyToString(startDate));
-		command.Parameters.AddWithValue("@end_date", Tools.TimeConverter.dateOnlyToString(endDate));
-		command.Parameters.AddWithValue("@interval", "daily");
-		using (SqlDataReader reader = command.ExecuteReader())
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@currency", currency);
+		parameters.Add("@start_date", Tools.TimeConverter.dateOnlyToString(startDate));
+		parameters.Add("@end_date", Tools.TimeConverter.dateOnlyToString(endDate));
+		parameters.Add("@interval", "daily");
+		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(getCurrencyHistoryQuery, parameters);
+
+		Data.CurrencyHistory result = new Data.CurrencyHistory(currency, startDate, endDate, "daily");
+
+		foreach (Dictionary<String, object> row in data)
 		{
-			Data.CurrencyHistory result = new Data.CurrencyHistory(currency, startDate, endDate, "daily");
-			while (reader.Read())
-			{
-				result.history.Add(new Data.DatePriceOHLC(
-					DateOnly.FromDateTime(DateTime.Parse(reader["end_date"].ToString()!)),
-					new Data.Money(Decimal.Parse("" + reader["open_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
-					new Data.Money(Decimal.Parse("" + reader["high_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
-					new Data.Money(Decimal.Parse("" + reader["low_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
-					new Data.Money(Decimal.Parse("" + reader["close_price"].ToString()), Data.Money.DEFAULT_CURRENCY)
-				));
-			}
-			result.startDate = result.history.First().date;
-			result.endDate = result.history.Last().date;
-			reader.Close();
-			return Task.FromResult(result);
+			result.history.Add(new Data.DatePriceOHLC(
+				DateOnly.FromDateTime(DateTime.Parse(row["end_date"].ToString()!)),
+				new Data.Money(Decimal.Parse("" + row["open_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
+				new Data.Money(Decimal.Parse("" + row["high_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
+				new Data.Money(Decimal.Parse("" + row["low_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
+				new Data.Money(Decimal.Parse("" + row["close_price"].ToString()), Data.Money.DEFAULT_CURRENCY)
+			));
 		}
+		result.startDate = result.history.First().date;
+		result.endDate = result.history.Last().date;
+		return Task.FromResult(result);
 	}
 }

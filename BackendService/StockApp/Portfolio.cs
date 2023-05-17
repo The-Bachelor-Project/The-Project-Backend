@@ -57,70 +57,61 @@ public class Portfolio
 
 	public User GetOwner()
 	{
-		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "SELECT owner FROM Portfolios WHERE uid = @uid";
-		SqlCommand command = new SqlCommand(query, connection);
-		command.Parameters.AddWithValue("@uid", id);
-		using (SqlDataReader reader = command.ExecuteReader())
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@uid", id);
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(query, parameters);
+
+		if (data != null)
 		{
-			if (reader.Read())
-			{
-				String userId = reader["owner"].ToString()!;
-				User user = new User(userId);
-				reader.Close();
-				return user;
-			}
-			reader.Close();
-			throw new Exception();
+			String userId = data["owner"].ToString()!;
+			User user = new User(userId);
+			return user;
 		}
+		throw new Exception();
 
 	}
 
 
 	public Portfolio UpdateStockTransactions()
 	{
-		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "SELECT * FROM StockTransactions WHERE portfolio = @portfolio";
-		SqlCommand command = new SqlCommand(query, connection);
-		command.Parameters.AddWithValue("@portfolio", id);
-		using (SqlDataReader reader = command.ExecuteReader())
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@portfolio", id);
+		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(query, parameters);
+
+
+		stockTransactions = new List<StockTransaction>();
+		foreach (Dictionary<String, object> row in data)
 		{
-			stockTransactions = new List<StockTransaction>();
-			while (reader.Read())
-			{
-				stockTransactions.Add(new StockTransaction());
-				stockTransactions.Last().id = int.Parse(reader["id"].ToString()!);
-				stockTransactions.Last().portfolioId = id;
-				stockTransactions.Last().ticker = reader["ticker"].ToString();
-				stockTransactions.Last().exchange = reader["exchange"].ToString();
-				stockTransactions.Last().amount = Convert.ToDecimal(reader["amount"]);
-				stockTransactions.Last().amountAdjusted = Convert.ToDecimal(reader["amount_adjusted"]);
-				stockTransactions.Last().amountOwned = Convert.ToDecimal(reader["amount_owned"]);
-				stockTransactions.Last().timestamp = Convert.ToInt32(reader["timestamp"]);
-				stockTransactions.Last().price = new Money(Convert.ToDecimal(reader["price_amount"]), reader["price_currency"].ToString()!);
-			}
-			reader.Close();
-			return this;
+			stockTransactions.Add(new StockTransaction());
+			stockTransactions.Last().id = int.Parse(row["id"].ToString()!);
+			stockTransactions.Last().portfolioId = id;
+			stockTransactions.Last().ticker = row["ticker"].ToString();
+			stockTransactions.Last().exchange = row["exchange"].ToString();
+			stockTransactions.Last().amount = Convert.ToDecimal(row["amount"]);
+			stockTransactions.Last().amountAdjusted = Convert.ToDecimal(row["amount_adjusted"]);
+			stockTransactions.Last().amountOwned = Convert.ToDecimal(row["amount_owned"]);
+			stockTransactions.Last().timestamp = Convert.ToInt32(row["timestamp"]);
+			stockTransactions.Last().price = new Money(Convert.ToDecimal(row["price_amount"]), row["price_currency"].ToString()!);
 		}
+		return this;
 	}
 
 	public Portfolio UpdateStockPositions()
 	{
-		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "SELECT DISTINCT ticker, exchange FROM StockTransactions WHERE portfolio = @portfolio";
-		SqlCommand command = new SqlCommand(query, connection);
-		command.Parameters.AddWithValue("@portfolio", id);
-		using (SqlDataReader reader = command.ExecuteReader())
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@portfolio", id);
+		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(query, parameters);
+
+		stockPositions = new List<StockPosition>();
+		foreach (Dictionary<String, object> row in data)
 		{
-			stockPositions = new List<StockPosition>();
-			while (reader.Read())
-			{
-				stockPositions.Add(new StockPosition(this, new Stock(reader["ticker"].ToString()!, reader["exchange"].ToString()!)));
-				System.Console.WriteLine(stockPositions.Last().stock.ticker + " " + stockPositions.Last().stock.exchange);
-			}
-			reader.Close();
-			return this;
+			stockPositions.Add(new StockPosition(this, new Stock(row["ticker"].ToString()!, row["exchange"].ToString()!)));
+			System.Console.WriteLine(stockPositions.Last().stock.ticker + " " + stockPositions.Last().stock.exchange);
 		}
+		return this;
 	}
 
 	public async Task<Data.Portfolio> GetValueHistory(string currency, DateOnly startData, DateOnly endDate)
@@ -168,21 +159,20 @@ public class Portfolio
 
 	public Portfolio ChangeCurrency(String newCurrency)
 	{
-		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String getCurrencyQuery = "SELECT * FROM Currencies WHERE code = @currency";
-		SqlCommand command = new SqlCommand(getCurrencyQuery, connection);
-		command.Parameters.AddWithValue("@currency", newCurrency);
-		using (SqlDataReader reader = command.ExecuteReader())
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@currency", newCurrency);
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(getCurrencyQuery, parameters);
+
+
+		if (data == null)
 		{
-			if (!reader.Read())
-			{
-				reader.Close();
-				throw new Exception();
-			}
-			reader.Close();
+			throw new Exception();
 		}
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
+
 		String updateCurrency = "UPDATE Portfolios SET currency = @currency WHERE uid = @uid";
-		command = new SqlCommand(updateCurrency, connection);
+		SqlCommand command = new SqlCommand(updateCurrency, connection);
 		command.Parameters.AddWithValue("@currency", newCurrency);
 		command.Parameters.AddWithValue("@uid", id);
 		try
@@ -201,29 +191,25 @@ public class Portfolio
 	public StockTransaction GetStockTransaction(int id)
 	{
 		System.Console.WriteLine("ID: " + id);
-		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "SELECT * FROM StockTransactions WHERE id = @id";
-		SqlCommand command = new SqlCommand(query, connection);
-		command.Parameters.AddWithValue("@id", id);
-		using (SqlDataReader reader = command.ExecuteReader())
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@id", id);
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(query, parameters);
+
+		if (data != null)
 		{
-			if (reader.Read())
-			{
-				StockTransaction stockTransaction = new StockTransaction();
-				stockTransaction.id = int.Parse(reader["id"].ToString()!);
-				stockTransaction.portfolioId = reader["portfolio"].ToString();
-				stockTransaction.ticker = reader["ticker"].ToString();
-				stockTransaction.exchange = reader["exchange"].ToString();
-				stockTransaction.amount = Convert.ToDecimal(reader["amount"]);
-				stockTransaction.amountAdjusted = Convert.ToDecimal(reader["amount_adjusted"]);
-				stockTransaction.amountOwned = Convert.ToDecimal(reader["amount_owned"]);
-				stockTransaction.timestamp = Convert.ToInt32(reader["timestamp"]);
-				stockTransaction.price = new Money(Convert.ToDecimal(reader["price_amount"]), reader["price_currency"].ToString()!);
-				reader.Close();
-				return stockTransaction;
-			}
-			reader.Close();
-			throw new Exception();
+			StockTransaction stockTransaction = new StockTransaction();
+			stockTransaction.id = int.Parse(data["id"].ToString()!);
+			stockTransaction.portfolioId = data["portfolio"].ToString();
+			stockTransaction.ticker = data["ticker"].ToString();
+			stockTransaction.exchange = data["exchange"].ToString();
+			stockTransaction.amount = Convert.ToDecimal(data["amount"]);
+			stockTransaction.amountAdjusted = Convert.ToDecimal(data["amount_adjusted"]);
+			stockTransaction.amountOwned = Convert.ToDecimal(data["amount_owned"]);
+			stockTransaction.timestamp = Convert.ToInt32(data["timestamp"]);
+			stockTransaction.price = new Money(Convert.ToDecimal(data["price_amount"]), data["price_currency"].ToString()!);
+			return stockTransaction;
 		}
+		throw new Exception();
 	}
 }

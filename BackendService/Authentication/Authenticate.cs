@@ -6,70 +6,49 @@ public class Authenticate
 {
 	public static bool AccessToken(string accessToken)
 	{
-		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "SELECT dbo.CheckIfAccessIsValid(@access_token, @UnixNow) AS IsValid";
-		SqlCommand command = new SqlCommand(query, connection);
-		command.Parameters.AddWithValue("@access_token", accessToken);
-		command.Parameters.AddWithValue("@UnixNow", Tools.TimeConverter.dateTimeToUnix(DateTime.Now));
-		using (SqlDataReader reader = command.ExecuteReader())
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@access_token", accessToken);
+		parameters.Add("@UnixNow", Tools.TimeConverter.dateTimeToUnix(DateTime.Now));
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(query, parameters);
+		if (data != null)
 		{
-			if (reader.Read())
+			Boolean isValid = Boolean.Parse(data["IsValid"].ToString()!);
+			if (isValid)
 			{
-				Boolean isValid = Boolean.Parse(reader["IsValid"].ToString()!);
-				reader.Close();
-				if (isValid)
-				{
-					return true;
-				}
-				else
-				{
-					return false;
-				}
-			}
-			else
-			{
-				reader.Close();
-				return false;
+				return true;
 			}
 		}
-
+		return false;
 	}
 
 	public static ValidFunctionResponse RefreshToken(String refreshToken)
 	{
 		String checkIfValidQuery = "SELECT * FROM CheckIfRefreshIsValid(@RefreshToken, @UnixNow) AS IsValid";
-		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
-		SqlCommand command = new SqlCommand(checkIfValidQuery, connection);
-		command.Parameters.AddWithValue("@RefreshToken", refreshToken);
-		command.Parameters.AddWithValue("@UnixNow", Tools.TimeConverter.dateTimeToUnix(DateTime.Now));
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@RefreshToken", refreshToken);
+		parameters.Add("@UnixNow", Tools.TimeConverter.dateTimeToUnix(DateTime.Now));
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(checkIfValidQuery, parameters);
 		System.Console.WriteLine("RefreshToken: " + refreshToken);
 		System.Console.WriteLine("UnixNow: " + Tools.TimeConverter.dateTimeToUnix(DateTime.Now));
 		try
 		{
-			using (SqlDataReader reader = command.ExecuteReader())
+			if (data != null)
 			{
-				if (reader.Read())
+				int isValid = int.Parse(data["IsValid"].ToString()!);
+				int familyID = int.Parse(data["FamilyId"].ToString()!);
+				String userID = data["UserID"].ToString()!;
+				if (isValid == 1)
 				{
-					int isValid = int.Parse(reader["IsValid"].ToString()!);
-					int familyID = int.Parse(reader["FamilyId"].ToString()!);
-					String userID = reader["UserID"].ToString()!;
-					reader.Close();
-					if (isValid == 1)
-					{
-						return new ValidFunctionResponse(isValid, familyID, userID);
-					}
-					else
-					{
-						InvalidateFamily(familyID);
-						return new ValidFunctionResponse(0, 0, "");
-					}
+					return new ValidFunctionResponse(isValid, familyID, userID);
 				}
 				else
 				{
-					reader.Close();
-					return new ValidFunctionResponse(-1, 0, "");
+					InvalidateFamily(familyID);
+					return new ValidFunctionResponse(0, 0, "");
 				}
 			}
+			return new ValidFunctionResponse(-1, 0, "");
 		}
 		catch (Exception e)
 		{
