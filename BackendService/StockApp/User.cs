@@ -45,10 +45,11 @@ public class User
 			catch (Exception e)
 			{
 				System.Console.WriteLine(e);
+				throw new DatabaseException("Failed to create user");
 			}
 			return this;
 		}
-		throw new UserAlreadyExist();
+		throw new UserAlreadyExist("User already with email: " + email + " already exist");
 	}
 
 	public User SignIn()
@@ -71,11 +72,10 @@ public class User
 			{
 				throw new WrongPasswordException("The password is incorrect");
 			}
-
 			id = userID;
 			return this;
 		}
-		throw new UserDoesNotExistException("No user with the email \"" + email + "\" was found");
+		throw new UserDoesNotExistException("No user with the email: " + email + " was found, please sign up instead");
 	}
 
 	public User ChangeEmail(String oldEmail, String newEmail)

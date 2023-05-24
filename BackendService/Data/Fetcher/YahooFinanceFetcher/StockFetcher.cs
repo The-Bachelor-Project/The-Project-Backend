@@ -111,15 +111,16 @@ public class StockFetcher : IStockFetcher
 		HttpResponseMessage quoteRes = await client.GetAsync("https://query1.finance.yahoo.com/v6/finance/quote?symbols=" + tickerExt);
 		String quoteJson = await quoteRes.Content.ReadAsStringAsync();
 		dynamic quote = JObject.Parse(quoteJson);
+		System.Console.WriteLine(quote);
 
 		result.ticker = ticker;
 		result.exchange = exchange;
 		try
 		{
 			result.displayName = quote.quoteResponse.result[0].displayName ??
-								  quote.quoteResponse.result[0].shortName ??
-								  quote.quoteResponse.result[0].longName ??
-								  throw new Exception("Stock does not have a name");
+			quote.quoteResponse.result[0].shortName ??
+			quote.quoteResponse.result[0].longName ??
+			throw new Exception("Stock does not have a name");
 		}
 		catch (System.Exception e)
 		{

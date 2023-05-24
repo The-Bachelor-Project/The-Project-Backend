@@ -19,7 +19,7 @@ class CreateFamily
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e);
-			return -1;
+			throw new DatabaseException("Failed to create token family");
 		}
 		int familyID = GetFamilyID();
 		return familyID;

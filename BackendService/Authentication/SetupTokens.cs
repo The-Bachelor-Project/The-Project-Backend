@@ -28,18 +28,13 @@ class SetupTokens
 			}
 			else
 			{
-				//FIXME: Error not being handled
-				StockApp.TokenSet tokenSet = new StockApp.TokenSet("error", "");
-				return tokenSet;
+				throw new DatabaseException("Failed to update valid token");
 			}
-
 		}
 		catch (Exception e)
 		{
-			//FIXME: Error not being handled
 			System.Console.WriteLine(e);
-			StockApp.TokenSet tokenSet = new StockApp.TokenSet("error", "");
-			return tokenSet;
+			throw new DatabaseException(e.Message);
 		}
 	}
 
