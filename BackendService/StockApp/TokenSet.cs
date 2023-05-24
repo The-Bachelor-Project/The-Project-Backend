@@ -33,18 +33,18 @@ public class TokenSet
 	{
 		TokenSet newTokenSet = new TokenSet();
 
-		int familyID = Authentication.CreateFamily.Call();
+		int familyID = Authentication.CreateFamily.Call(uid);
 
-		TokenSet tokenSet = Authentication.SetupTokens.Call(uid, familyID);
+		TokenSet tokenSet = Authentication.SetupTokens.Call(familyID);
 		newTokenSet.refreshToken = tokenSet.refreshToken;
 		newTokenSet.accessToken = tokenSet.accessToken;
 
 		return newTokenSet;
 	}
 
-	public TokenSet Refresh()
+	public TokenSet Refresh(int familyID)
 	{
-		StockApp.TokenSet tokenSet = Authentication.RefreshTokens.All(refreshToken!);
+		StockApp.TokenSet tokenSet = Authentication.RefreshTokens.All(refreshToken!, familyID);
 		refreshToken = tokenSet.refreshToken;
 		accessToken = tokenSet.accessToken;
 

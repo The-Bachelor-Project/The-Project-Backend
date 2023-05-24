@@ -9,10 +9,10 @@ class Application
 		builder.Services.AddCors(options =>
 		{
 			options.AddPolicy(name: allowCORS,
-							  policy =>
-							  {
-								  policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
-							  });
+							policy =>
+							{
+								policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
+							});
 		});
 		builder.Services.AddControllers();
 		builder.Services.AddTransient<Authentication.Middleware>();

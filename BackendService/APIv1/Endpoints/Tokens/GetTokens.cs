@@ -15,13 +15,19 @@ public class GetTokens
 				context.Response.StatusCode = 401;
 				return Results.Ok(new GetPortfoliosResponse("error", new List<StockApp.Portfolio> { }));
 			}
-			return Results.Ok(Endpoint(refreshToken));
+			int? familyID = (int?)context.Items["FamilyID"];
+			if (familyID == null)
+			{
+				context.Response.StatusCode = 401;
+				return Results.Ok(new GetPortfoliosResponse("error", new List<StockApp.Portfolio> { }));
+			}
+			return Results.Ok(Endpoint(refreshToken, familyID.Value));
 		});
 	}
 
-	public static TokensResponse Endpoint(string refreshToken)
+	public static TokensResponse Endpoint(string refreshToken, int familyID)
 	{
-		TokenSet newTokenSet = new TokenSet().SetRefreshToken(refreshToken).Refresh();
+		TokenSet newTokenSet = new TokenSet().SetRefreshToken(refreshToken).Refresh(familyID);
 		return new TokensResponse("success", newTokenSet);
 	}
 }

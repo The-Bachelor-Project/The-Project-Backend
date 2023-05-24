@@ -4,13 +4,14 @@ namespace Authentication;
 
 class CreateFamily
 {
-	public static int Call()
+	public static int Call(String uid)
 	{
 		int unixLastUsed = Tools.TimeConverter.dateTimeToUnix(DateTime.Now);
-		String createTokenFamily = "INSERT INTO TokenFamily(last_used) VALUES (@last_used)";
+		String createTokenFamily = "INSERT INTO TokenFamily(user_id, last_used) VALUES (@user_id, @last_used)";
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		SqlCommand command = new SqlCommand(createTokenFamily, connection);
 		command.Parameters.AddWithValue("@last_used", unixLastUsed);
+		command.Parameters.AddWithValue("@user_id", uid);
 		try
 		{
 			command.ExecuteNonQuery();
@@ -33,6 +34,6 @@ class CreateFamily
 			int familyId = int.Parse(data["id"].ToString()!);
 			return familyId;
 		}
-		return -3;
+		return -1;
 	}
 }

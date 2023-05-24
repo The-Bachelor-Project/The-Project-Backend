@@ -3,7 +3,7 @@ public class Middleware : IMiddleware
 {
 	public async Task InvokeAsync(HttpContext context, RequestDelegate next)
 	{
-		if (context.Request.Path == "/v1/tokens" && context.Request.Method == "POST" || (context.Request.Path == "/v1/users" && context.Request.Method == "POST"))
+		if ((context.Request.Path == "/v1/tokens" && context.Request.Method == "POST") || ((context.Request.Path == "/v1/users" && context.Request.Method == "POST")))
 		{
 			await next(context);
 			return;
@@ -14,15 +14,23 @@ public class Middleware : IMiddleware
 			String? refreshToken = context.Request.Headers["Authorization"];
 			if (refreshToken != null)
 			{
-				if (Authentication.Authenticate.RefreshToken(refreshToken).isValid == 0)
+				RefreshAuthenticationResponse response = Authentication.Authenticate.RefreshToken(refreshToken);
+				if (response.error == "Invalid")
 				{
 					context.Response.StatusCode = 401;
-					await context.Response.WriteAsync("Refresh token is invalid.");
+					await context.Response.WriteAsync("Refresh token is invalid");
+					return;
+				}
+				else if (response.error == "Expired")
+				{
+					context.Response.StatusCode = 403;
+					await context.Response.WriteAsync("Refresh token is expired");
 					return;
 				}
 				else
 				{
 					context.Items["RefreshToken"] = refreshToken;
+					context.Items["FamilyID"] = response.familyID;
 					await next(context);
 					return;
 				}
@@ -30,7 +38,7 @@ public class Middleware : IMiddleware
 			else
 			{
 				context.Response.StatusCode = 401;
-				await context.Response.WriteAsync("No refresh token provided for authentication.");
+				await context.Response.WriteAsync("No token was provided");
 				return;
 			}
 		}
@@ -38,20 +46,31 @@ public class Middleware : IMiddleware
 		String? accessToken = context.Request.Headers["Authorization"];
 		if (accessToken != null)
 		{
-			if (!Authentication.Authenticate.AccessToken(accessToken))
+			String isValid = Authentication.Authenticate.AccessToken(accessToken);
+			if (isValid == "Invalid")
 			{
 				context.Response.StatusCode = 401;
-				await context.Response.WriteAsync("Access token is invalid.");
+				await context.Response.WriteAsync("Access token is invalid");
+				return;
+			}
+			else if (isValid == "Expired")
+			{
+				context.Response.StatusCode = 403;
+				await context.Response.WriteAsync("Access token has expired");
+				return;
+			}
+			else
+			{
+				context.Items["AccessToken"] = accessToken;
+				await next(context);
 				return;
 			}
 		}
 		else
 		{
 			context.Response.StatusCode = 401;
-			await context.Response.WriteAsync("No access token provided for authentication.");
+			await context.Response.WriteAsync("No token was provided");
 			return;
 		}
-		context.Items["AccessToken"] = accessToken;
-		await next(context);
 	}
 }

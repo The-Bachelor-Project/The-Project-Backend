@@ -4,27 +4,46 @@ namespace Authentication;
 
 public class Authenticate
 {
-	public static bool AccessToken(string accessToken)
+	public static String AccessToken(string accessToken)
 	{
-		String query = "SELECT dbo.CheckIfAccessIsValid(@access_token, @UnixNow) AS IsValid";
+		String query = "SELECT * FROM CheckIfAccessIsValid(@access_token, @UnixNow)";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@access_token", accessToken);
 		parameters.Add("@UnixNow", Tools.TimeConverter.dateTimeToUnix(DateTime.Now));
 		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(query, parameters);
+
 		if (data != null)
 		{
-			Boolean isValid = Boolean.Parse(data["IsValid"].ToString()!);
-			if (isValid)
+			String isValid = data["is_valid"].ToString()!;
+			int familyID = int.Parse(data["family_id"].ToString()!);
+			if (isValid == "Valid")
 			{
-				return true;
+				return "Valid";
+			}
+			else if (isValid == "Expired")
+			{
+				return "Expired";
+			}
+			else if (isValid == "Invalid")
+			{
+				InvalidateFamily(familyID);
+				return "Invalid";
+			}
+			else
+			{
+				// If gets here, family does not exists, so token not valid, but can not invalidate family
+				return "Invalid";
 			}
 		}
-		return false;
+		else
+		{
+			return "Invalid";
+		}
 	}
 
-	public static ValidFunctionResponse RefreshToken(String refreshToken)
+	public static RefreshAuthenticationResponse RefreshToken(String refreshToken)
 	{
-		String checkIfValidQuery = "SELECT * FROM CheckIfRefreshIsValid(@RefreshToken, @UnixNow) AS IsValid";
+		String checkIfValidQuery = "SELECT * FROM CheckIfRefreshIsValid(@RefreshToken, @UnixNow)";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@RefreshToken", refreshToken);
 		parameters.Add("@UnixNow", Tools.TimeConverter.dateTimeToUnix(DateTime.Now));
@@ -35,31 +54,44 @@ public class Authenticate
 		{
 			if (data != null)
 			{
-				int isValid = int.Parse(data["IsValid"].ToString()!);
-				int familyID = int.Parse(data["FamilyId"].ToString()!);
-				String userID = data["UserID"].ToString()!;
-				if (isValid == 1)
+				int familyID = int.Parse(data["family_id"].ToString()!);
+				String isValid = data["is_valid"].ToString()!;
+				RefreshAuthenticationResponse response = new RefreshAuthenticationResponse(familyID);
+				if (isValid == "Valid")
 				{
-					return new ValidFunctionResponse(isValid, familyID, userID);
+					return response;
+				}
+				else if (isValid == "Expired")
+				{
+					response.error = "Expired";
+					return response;
 				}
 				else
 				{
 					InvalidateFamily(familyID);
-					return new ValidFunctionResponse(0, 0, "");
+					response.error = "Invalid";
+					return response;
 				}
 			}
-			return new ValidFunctionResponse(-1, 0, "");
+			else
+			{
+				RefreshAuthenticationResponse response = new RefreshAuthenticationResponse(0);
+				response.error = "Invalid";
+				return response;
+			}
 		}
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e);
-			return new ValidFunctionResponse(-1, 0, "");
+			RefreshAuthenticationResponse response = new RefreshAuthenticationResponse(0);
+			response.error = "Error";
+			return response;
 		}
 	}
 
 	private static void InvalidateFamily(int familyID)
 	{
-		String invalidateFamilyQuery = "UPDATE TokenFamily SET valid = 0 WHERE id = @family_id";
+		String invalidateFamilyQuery = "DELETE FROM TokenFamily WHERE id = @family_id";
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		SqlCommand command = new SqlCommand(invalidateFamilyQuery, connection);
 		command.Parameters.AddWithValue("@family_id", familyID);
@@ -71,5 +103,16 @@ public class Authenticate
 		{
 			System.Console.WriteLine(e);
 		}
+	}
+}
+
+public class RefreshAuthenticationResponse
+{
+	public int familyID { get; set; }
+	public String? error { get; set; }
+
+	public RefreshAuthenticationResponse(int familyID)
+	{
+		this.familyID = familyID;
 	}
 }
