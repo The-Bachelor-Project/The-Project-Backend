@@ -7,4 +7,5 @@ public class PutUserResponse
 		this.response = response;
 	}
 	public String response { get; set; }
+	public String? error { get; set; }
 }

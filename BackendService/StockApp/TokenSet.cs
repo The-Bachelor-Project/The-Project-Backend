@@ -54,9 +54,9 @@ public class TokenSet
 	public User GetUser()
 	{
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
-		String query = "SELECT user_id FROM Tokens WHERE access_token = @access_token";
+		String query = "SELECT user_id FROM TokenFamily WHERE valid_token = @access_token";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
-		parameters.Add("@access_token", accessToken);
+		parameters.Add("@access_token", accessToken!);
 		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(query, parameters);
 
 		if (data != null)

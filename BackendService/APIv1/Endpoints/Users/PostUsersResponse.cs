@@ -10,4 +10,5 @@ public class PostUsersResponse
 
 	public String response { get; set; }
 	public String uid { get; set; }
+	public String? error { get; set; }
 }
