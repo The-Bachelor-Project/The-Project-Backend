@@ -11,7 +11,6 @@ namespace StockApp.EndpointHandler
 		{
 			user.UpdatePortfolios();
 			return await user.GetValueHistory(currency, startDate, endDate);
-			throw new NotImplementedException();
 		}
 	}
 }

@@ -34,6 +34,6 @@ class CreateFamily
 			int familyId = int.Parse(data["id"].ToString()!);
 			return familyId;
 		}
-		return -1;
+		throw new DatabaseException("Failed to get family id");
 	}
 }

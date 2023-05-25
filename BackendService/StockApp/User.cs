@@ -95,7 +95,7 @@ public class User
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e);
-			throw new Exception();
+			throw new DatabaseException("Could not update user email");
 		}
 	}
 
@@ -115,9 +115,10 @@ public class User
 			this.password = newPassword;
 			return this;
 		}
-		catch (Exception)
+		catch (Exception e)
 		{
-			throw new Exception();
+			System.Console.WriteLine(e);
+			throw new DatabaseException("Could not update user password");
 		}
 	}
 
@@ -133,7 +134,6 @@ public class User
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@owner", id);
 		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(query, parameters);
-
 		portfolios = new List<Portfolio>();
 		foreach (Dictionary<String, object> row in data)
 		{
@@ -172,7 +172,7 @@ public class User
 			);
 			return portfolio;
 		}
-		throw new Exception("Portfolio not found");
+		throw new CouldNotGetPortfolioException("Portfolio with id " + id + " not found");
 
 	}
 

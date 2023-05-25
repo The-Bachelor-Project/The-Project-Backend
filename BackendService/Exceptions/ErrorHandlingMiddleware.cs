@@ -6,6 +6,11 @@ public class ErrorHandlingMiddlware : IMiddleware
 		{
 			await next(context);
 		}
+		catch (UnauthorizedAccess e)
+		{
+			context.Response.StatusCode = 401;
+			await context.Response.WriteAsync(e.Message);
+		}
 		catch (WrongPasswordException e)
 		{
 			context.Response.StatusCode = 401;
@@ -49,6 +54,26 @@ public class ErrorHandlingMiddlware : IMiddleware
 		catch (StockProfileException e)
 		{
 			context.Response.StatusCode = 500;
+			await context.Response.WriteAsync(e.Message);
+		}
+		catch (UpdatePortfolioException e)
+		{
+			context.Response.StatusCode = 409;
+			await context.Response.WriteAsync(e.Message);
+		}
+		catch (CouldNotGetOwnerException e)
+		{
+			context.Response.StatusCode = 404;
+			await context.Response.WriteAsync(e.Message);
+		}
+		catch (CouldNotGetStockTransactionException e)
+		{
+			context.Response.StatusCode = 404;
+			await context.Response.WriteAsync(e.Message);
+		}
+		catch (CouldNotGetPortfolioException e)
+		{
+			context.Response.StatusCode = 404;
 			await context.Response.WriteAsync(e.Message);
 		}
 		catch (Exception e)

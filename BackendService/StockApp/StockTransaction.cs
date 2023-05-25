@@ -55,9 +55,15 @@ public class StockTransaction
 		command.Parameters.AddWithValue("@timestamp", timestamp);
 		command.Parameters.AddWithValue("@price_amount", price!.amount);
 		command.Parameters.AddWithValue("@price_currency", price.currency);
-		id = int.Parse((command.ExecuteScalar()).ToString()!);
-
-
+		try
+		{
+			id = int.Parse((command.ExecuteScalar()).ToString()!);
+		}
+		catch (Exception e)
+		{
+			System.Console.WriteLine(e);
+			throw new DatabaseException("Could not insert stock transaction into database");
+		}
 
 		String updateStockTransactions = "UPDATE StockTransactions SET amount_owned = amount_owned + @amount_adjusted WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp > @timestamp OR (timestamp = @timestamp AND id > @id)";
 		SqlCommand command2 = new SqlCommand(updateStockTransactions, connection);
@@ -67,10 +73,15 @@ public class StockTransaction
 		command2.Parameters.AddWithValue("@exchange", exchange);
 		command2.Parameters.AddWithValue("@amount_adjusted", amountAdjusted);
 		command2.Parameters.AddWithValue("@timestamp", timestamp);
-		command2.ExecuteNonQuery();
-
-
-
+		try
+		{
+			command2.ExecuteNonQuery();
+		}
+		catch (System.Exception e)
+		{
+			System.Console.WriteLine(e);
+			throw new DatabaseException("Could not update stock transactions in database");
+		}
 		return this;
 	}
 
@@ -89,9 +100,10 @@ public class StockTransaction
 		{
 			command.ExecuteNonQuery();
 		}
-		catch (Exception)
+		catch (Exception e)
 		{
-			throw new Exception();
+			System.Console.WriteLine(e);
+			throw new DatabaseException("Could not delete stock transaction from database with id " + id);
 		}
 		return Task.CompletedTask;
 	}

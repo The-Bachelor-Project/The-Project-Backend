@@ -31,10 +31,15 @@ class SetupTokens
 				throw new DatabaseException("Failed to update valid token");
 			}
 		}
-		catch (Exception e)
+		catch (DatabaseException e)
 		{
 			System.Console.WriteLine(e);
 			throw new DatabaseException(e.Message);
+		}
+		catch (Exception e)
+		{
+			System.Console.WriteLine(e);
+			throw new DatabaseException("Failed to create token record in database");
 		}
 	}
 

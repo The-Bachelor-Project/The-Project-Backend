@@ -50,7 +50,16 @@ public class Portfolio
 		command.Parameters.AddWithValue("@owner", owner);
 		command.Parameters.AddWithValue("@currency", currency);
 		command.Parameters.AddWithValue("@balance", balance);
-		command.ExecuteNonQuery();
+		try
+		{
+			command.ExecuteNonQuery();
+		}
+		catch (System.Exception e)
+		{
+			System.Console.WriteLine(e);
+			throw new DatabaseException("Failed to create portfolio");
+		}
+
 
 		return this;
 	}
@@ -68,7 +77,7 @@ public class Portfolio
 			User user = new User(userId);
 			return user;
 		}
-		throw new Exception();
+		throw new CouldNotGetOwnerException("No portfolio with uid " + id + " was found");
 
 	}
 
@@ -79,7 +88,6 @@ public class Portfolio
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@portfolio", id);
 		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(query, parameters);
-
 
 		stockTransactions = new List<StockTransaction>();
 		foreach (Dictionary<String, object> row in data)
@@ -153,7 +161,7 @@ public class Portfolio
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e);
-			throw new Exception();
+			throw new UpdatePortfolioException("Could not change name of portfolio with id " + id);
 		}
 	}
 
@@ -184,7 +192,7 @@ public class Portfolio
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e);
-			throw new Exception();
+			throw new UpdatePortfolioException("Could not change currency of portfolio with id " + id);
 		}
 	}
 
@@ -210,6 +218,6 @@ public class Portfolio
 			stockTransaction.price = new Money(Convert.ToDecimal(data["price_amount"]), data["price_currency"].ToString()!);
 			return stockTransaction;
 		}
-		throw new Exception();
+		throw new CouldNotGetStockTransactionException("Could not get stock transaction with id " + id);
 	}
 }
