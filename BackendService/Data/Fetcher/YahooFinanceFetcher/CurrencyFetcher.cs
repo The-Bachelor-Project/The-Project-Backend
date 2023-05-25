@@ -59,8 +59,9 @@ public class CurrencyFetcher : ICurrencyFetcher
 						result.history.Add(temp);
 					}
 				}
-				catch (Exception)
+				catch (Exception e)
 				{
+					System.Console.WriteLine(e);
 					continue;
 				}
 			}
@@ -83,8 +84,9 @@ public class CurrencyFetcher : ICurrencyFetcher
 						result.history.Add(new Data.DatePriceOHLC(DateOnly.Parse(data[0]), new Data.Money(Decimal.Parse(data[1]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[2]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[3]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[4]), Data.Money.DEFAULT_CURRENCY)));
 					}
 				}
-				catch (Exception)
+				catch (Exception e)
 				{
+					System.Console.WriteLine(e);
 					continue;
 				}
 

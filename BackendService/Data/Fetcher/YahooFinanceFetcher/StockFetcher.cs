@@ -64,8 +64,9 @@ public class StockFetcher : IStockFetcher
 					);
 					result.history.Add(dataPoint);
 				}
-				catch (Exception)
+				catch (Exception e)
 				{
+					System.Console.WriteLine(e);
 					continue;
 				}
 
@@ -124,12 +125,21 @@ public class StockFetcher : IStockFetcher
 		HttpResponseMessage quoteSummaryRes = await client.GetAsync("https://query1.finance.yahoo.com/v11/finance/quoteSummary/" + tickerExt + "?modules=assetProfile");
 		String quoteSummaryJson = await quoteSummaryRes.Content.ReadAsStringAsync();
 		dynamic quoteSummary = JObject.Parse(quoteSummaryJson);
+		if (quoteSummary.StatusCode == System.Net.HttpStatusCode.NotFound)
+		{
+			throw new CouldNotGetStockException("Could not get stock profile for " + ticker + ":" + exchange + ", using quoteSummary on Yahoo Finance");
+		}
 
 
 		HttpResponseMessage quoteRes = await client.GetAsync("https://query1.finance.yahoo.com/v6/finance/quote?symbols=" + tickerExt);
 		String quoteJson = await quoteRes.Content.ReadAsStringAsync();
 		dynamic quote = JObject.Parse(quoteJson);
 		System.Console.WriteLine(quote);
+		if (quoteSummary.StatusCode == System.Net.HttpStatusCode.NotFound)
+		{
+			throw new CouldNotGetStockException("Could not get stock profile for " + ticker + ":" + exchange + ", using quote on Yahoo Finance");
+		}
+
 
 		result.ticker = ticker;
 		result.exchange = exchange;
@@ -143,9 +153,8 @@ public class StockFetcher : IStockFetcher
 		catch (System.Exception e)
 		{
 			System.Console.WriteLine(e);
+			throw new CouldNotGetStockException("Stock " + ticker + ":" + exchange + " could not be gotten from Yahoo Finance. Please check if ticker and exchange are correct.");
 		}
-
-
 		result.shortName = quote.quoteResponse.result[0].shortName ?? "";
 		result.longName = quote.quoteResponse.result[0].longName ?? "";
 		result.sharesOutstanding = quote?.quoteResponse?.result?[0]?.sharesOutstanding ?? 0;
@@ -235,7 +244,7 @@ public class StockFetcher : IStockFetcher
 		HttpResponseMessage dividendsResponse = client.GetAsync(url).Result;
 		if (dividendsResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
 		{
-			throw new CouldNotGetStockException("The stock " + ticker + ":" + exchange + " was not found");
+			throw new CouldNotGetStockException("The stock " + ticker + ":" + exchange + " was not found on Yahoo Finance");
 		}
 		String stockDividendCSV = await dividendsResponse.Content.ReadAsStringAsync();
 		String[] stockDividendLines = stockDividendCSV.Split("\n");

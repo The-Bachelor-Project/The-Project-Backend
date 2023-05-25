@@ -108,7 +108,17 @@ public class StockFetcher : IStockFetcher
 		command.Parameters.AddWithValue("@trailing_annual_dividend_rate", profile.trailingAnnualDividendRate);
 		command.Parameters.AddWithValue("@trailing_annual_dividend_yield", profile.trailingAnnualDividendYield);
 		command.Parameters.AddWithValue("@tags", tags);
-		command.ExecuteNonQuery();
+		try
+		{
+			command.ExecuteNonQuery();
+		}
+		catch (Exception e)
+		{
+			System.Console.WriteLine(e.Message);
+			throw new DatabaseException("Could not save stock profile of stock " + profile.exchange + ":" + profile.ticker + " to database");
+		}
+
+
 	}
 
 	public String GenerateTags(Data.StockProfile stockProfile)

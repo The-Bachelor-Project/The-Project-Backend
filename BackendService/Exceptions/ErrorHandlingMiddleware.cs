@@ -46,6 +46,11 @@ public class ErrorHandlingMiddlware : IMiddleware
 			context.Response.StatusCode = 500;
 			await context.Response.WriteAsync(e.Message);
 		}
+		catch (StockProfileException e)
+		{
+			context.Response.StatusCode = 500;
+			await context.Response.WriteAsync(e.Message);
+		}
 		catch (Exception e)
 		{
 			context.Response.StatusCode = 500;
