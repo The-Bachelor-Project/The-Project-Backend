@@ -16,10 +16,12 @@ class Application
 		});
 		builder.Services.AddControllers();
 		builder.Services.AddTransient<Authentication.Middleware>();
+		builder.Services.AddTransient<ErrorHandlingMiddlware>();
 		WebApplication app = builder.Build();
 		app.UseCors(allowCORS);
 
 		app.UseMiddleware<Authentication.Middleware>();
+		app.UseMiddleware<ErrorHandlingMiddlware>();
 		PostUsers.Setup(app); // This is where the endpoints are setup
 		GetUsers.Setup(app);
 		GetStockProfiles.Setup(app);
