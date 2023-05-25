@@ -10,5 +10,4 @@ public class PostPortfoliosResponse
 
 	public String response { get; set; }
 	public String id { get; set; }
-	public String? error { get; set; }
 }

@@ -18,20 +18,31 @@ public class StockFetcher : IStockFetcher
 		parameters.Add("@start_date", Tools.TimeConverter.dateOnlyToString(startDate));
 		parameters.Add("@end_date", Tools.TimeConverter.dateOnlyToString(endDate));
 		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(getStockHistoryQuery, parameters);
+		if (data.Count == 0)
+		{
+			throw new DatabaseException("No stock history data found for " + ticker + ":" + exchange);
+		}
 
 		foreach (Dictionary<String, object> row in data)
 		{
-			result.history.Add(new Data.DatePriceOHLC(
-				DateOnly.FromDateTime((DateTime)row["end_date"]),
-				new Money(Decimal.Parse("" + row["open_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
-				new Money(Decimal.Parse("" + row["high_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
-				new Money(Decimal.Parse("" + row["low_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
-				new Money(Decimal.Parse("" + row["close_price"].ToString()), Data.Money.DEFAULT_CURRENCY)
-			));
+			try
+			{
+				result.history.Add(new Data.DatePriceOHLC(
+					DateOnly.FromDateTime((DateTime)row["end_date"]),
+					new Money(Decimal.Parse("" + row["open_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
+					new Money(Decimal.Parse("" + row["high_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
+					new Money(Decimal.Parse("" + row["low_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
+					new Money(Decimal.Parse("" + row["close_price"].ToString()), Data.Money.DEFAULT_CURRENCY)
+				));
+			}
+			catch (System.Exception e)
+			{
+				System.Console.WriteLine(e);
+				continue;
+			}
 		}
 		result.startDate = result.history.First().date;
 		result.endDate = result.history.Last().date;
-
 		return Task.FromResult(result);
 	}
 
@@ -105,13 +116,21 @@ public class StockFetcher : IStockFetcher
 		parameters.Add("@start_date", Tools.TimeConverter.dateOnlyToString(startDate));
 		parameters.Add("@end_date", Tools.TimeConverter.dateOnlyToString(endDate));
 		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(getDividendsQuery, parameters);
-
 		foreach (Dictionary<String, object> row in data)
 		{
-			dividends.Add(new Dividend(
-				DateOnly.FromDateTime((DateTime)row["date"]),
-				new Money(Decimal.Parse("" + row["payout"].ToString()), Data.Money.DEFAULT_CURRENCY)
-			));
+			try
+			{
+				dividends.Add(new Dividend(
+					DateOnly.FromDateTime((DateTime)row["date"]),
+					new Money(Decimal.Parse("" + row["payout"].ToString()), Data.Money.DEFAULT_CURRENCY)
+				));
+			}
+			catch (System.Exception e)
+			{
+				System.Console.WriteLine(e);
+				continue;
+			}
+
 		}
 		return Task.FromResult(dividends);
 	}

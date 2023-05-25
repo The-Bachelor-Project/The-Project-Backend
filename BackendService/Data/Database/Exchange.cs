@@ -15,7 +15,11 @@ class Exchange
 		if (data != null)
 		{
 			currency = data["currency"].ToString()!;
+			return currency;
 		}
-		return currency;
+		else
+		{
+			throw new CurrencyLookupException("Currency of exchange " + exchange + " not found");
+		}
 	}
 }

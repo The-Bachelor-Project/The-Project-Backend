@@ -12,5 +12,4 @@ public class TokensResponse
 
 	public string response { get; }
 	public TokenSet tokenSet { get; set; }
-	public String? error { get; set; }
 }

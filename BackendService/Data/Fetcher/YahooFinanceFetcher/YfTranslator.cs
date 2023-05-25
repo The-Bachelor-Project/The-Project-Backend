@@ -54,8 +54,16 @@ public class YfTranslator
 
 	public static String GetYfSymbol(String ticker, String exchange)
 	{
-		String? stockExtension;
-		stockSymbolExtension.TryGetValue(exchange.ToUpper(), out stockExtension);
-		return ticker + stockExtension!.ToLower();
+		try
+		{
+			String? stockExtension;
+			stockSymbolExtension.TryGetValue(exchange.ToUpper(), out stockExtension);
+			return ticker + stockExtension!.ToLower();
+		}
+		catch (Exception)
+		{
+			throw new CouldNotGetStockException("Could not convert exchange of " + exchange + ":" + ticker + " to Yahoo Finance symbol.");
+		}
+
 	}
 }

@@ -55,7 +55,16 @@ public class CurrencyFetcher : ICurrencyFetcher
 		SqlCommand command = new SqlCommand(insertIntoCurrencyRatesQuery, connection);
 		command.Parameters.AddWithValue("@CurrencyRatesBulk", JsonConvert.SerializeObject(history.history));
 		command.Parameters.AddWithValue("@Code", history.currency);
-		command.ExecuteNonQuery();
+		try
+		{
+			command.ExecuteNonQuery();
+
+		}
+		catch (Exception e)
+		{
+			System.Console.WriteLine(e);
+			throw new DatabaseException("There was a problem when adding currency rates to the database");
+		}
 
 		if (updateStartTrackingDate)
 		{
@@ -63,7 +72,15 @@ public class CurrencyFetcher : ICurrencyFetcher
 			command = new SqlCommand(updateStartTrackingDateQuery, connection);
 			command.Parameters.AddWithValue("@code", history.currency);
 			command.Parameters.AddWithValue("@start_tracking_date", Tools.TimeConverter.dateOnlyToString(history.history.First().date));
-			command.ExecuteNonQuery();
+			try
+			{
+				command.ExecuteNonQuery();
+			}
+			catch (Exception e)
+			{
+				System.Console.WriteLine(e);
+				throw new DatabaseException("There was a problem when updating the start tracking date of the currency");
+			}
 		}
 		if (updateEndTrackingDate)
 		{
@@ -71,7 +88,15 @@ public class CurrencyFetcher : ICurrencyFetcher
 			command = new SqlCommand(updateEndTrackingDateQuery, connection);
 			command.Parameters.AddWithValue("@code", history.currency);
 			command.Parameters.AddWithValue("@end_tracking_date", Tools.TimeConverter.dateOnlyToString(history.history.Last().date));
-			command.ExecuteNonQuery();
+			try
+			{
+				command.ExecuteNonQuery();
+			}
+			catch (Exception e)
+			{
+				System.Console.WriteLine(e);
+				throw new DatabaseException("There was a problem when updating the end tracking date of the currency");
+			}
 		}
 	}
 }

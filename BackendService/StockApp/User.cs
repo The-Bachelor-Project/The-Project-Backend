@@ -49,7 +49,7 @@ public class User
 			}
 			return this;
 		}
-		throw new UserAlreadyExist("User already with email: " + email + " already exist");
+		throw new UserAlreadyExist("User with email: " + email + " already exist");
 	}
 
 	public User SignIn()

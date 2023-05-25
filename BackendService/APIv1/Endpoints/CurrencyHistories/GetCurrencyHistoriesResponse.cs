@@ -10,5 +10,4 @@ public class GetCurrencyHistoriesResponse
 
 	public String response { get; set; }
 	public Data.CurrencyHistory history { get; set; }
-	public String? error { get; set; }
 }

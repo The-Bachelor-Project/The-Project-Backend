@@ -8,6 +8,10 @@ public class StockFetcher : IStockFetcher
 {
 	public async Task<StockHistory> GetHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, string interval)
 	{
+		if (startDate > endDate)
+		{
+			throw new InvalidUserInput("Start date cannot be after end date");
+		}
 		String getTrackingDateQuery = "SELECT start_tracking_date, end_tracking_date FROM Stocks WHERE ticker = @ticker AND exchange = @exchange";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@ticker", ticker);
@@ -132,7 +136,15 @@ public class StockFetcher : IStockFetcher
 		command.Parameters.AddWithValue("@StockPricesBulk", jsonStockPrices);
 		command.Parameters.AddWithValue("@Ticker", history.ticker);
 		command.Parameters.AddWithValue("@Exchange", history.exchange);
-		command.ExecuteNonQuery();
+		try
+		{
+			command.ExecuteNonQuery();
+		}
+		catch (System.Exception e)
+		{
+			System.Console.WriteLine(e.Message);
+			throw new DatabaseException("Could not save stock history of " + history.exchange + ":" + history.ticker + " to database");
+		}
 
 
 		if (updateStartTrackingDate)
@@ -142,7 +154,15 @@ public class StockFetcher : IStockFetcher
 			command.Parameters.AddWithValue("@ticker", history.ticker);
 			command.Parameters.AddWithValue("@exchange", history.exchange);
 			command.Parameters.AddWithValue("@start_tracking_date", Tools.TimeConverter.dateOnlyToString(history.history.First().date));
-			command.ExecuteNonQuery();
+			try
+			{
+				command.ExecuteNonQuery();
+			}
+			catch (System.Exception e)
+			{
+				System.Console.WriteLine(e.Message);
+				throw new DatabaseException("Could not update start tracking date of " + history.exchange + ":" + history.ticker + " in database");
+			}
 		}
 		if (updateEndTrackingDate)
 		{
@@ -151,7 +171,16 @@ public class StockFetcher : IStockFetcher
 			command.Parameters.AddWithValue("@ticker", history.ticker);
 			command.Parameters.AddWithValue("@exchange", history.exchange);
 			command.Parameters.AddWithValue("@end_tracking_date", Tools.TimeConverter.dateOnlyToString(history.history.Last().date));
-			command.ExecuteNonQuery();
+			try
+			{
+				command.ExecuteNonQuery();
+			}
+			catch (System.Exception e)
+			{
+				System.Console.WriteLine(e.Message);
+				throw new DatabaseException("Could not update end tracking date of " + history.exchange + ":" + history.ticker + " in database");
+
+			}
 		}
 	}
 
@@ -168,6 +197,14 @@ public class StockFetcher : IStockFetcher
 		command.Parameters.AddWithValue("@StockDividendsBulk", jsonDividends);
 		command.Parameters.AddWithValue("@Ticker", ticker);
 		command.Parameters.AddWithValue("@Exchange", exchange);
-		command.ExecuteNonQuery();
+		try
+		{
+			command.ExecuteNonQuery();
+		}
+		catch (System.Exception e)
+		{
+			System.Console.WriteLine(e.Message);
+			throw new DatabaseException("Could not save dividends of " + exchange + ":" + ticker + " to database");
+		}
 	}
 }

@@ -18,7 +18,7 @@ public class StockFetcher : IStockFetcher
 
 		if (data == null)
 		{
-			throw new Exception("Exchange not found");
+			throw new InvalidUserInput("Exchange not found");
 		}
 		String currency = data["currency"].ToString()!;
 
@@ -35,10 +35,14 @@ public class StockFetcher : IStockFetcher
 		{
 			return new StockHistory(ticker, exchange, "daily");
 		}
+
 		String stockHistoryCsv = await stockHistoryRes.Content.ReadAsStringAsync();
 		String[] dataLines = stockHistoryCsv.Replace("\r", "").Split("\n");
+		if (dataLines.Count() == 1)
+		{
+			return new StockHistory(ticker, exchange, "daily");
+		}
 		String currencySymbol = Data.Database.Exchange.GetCurrency(exchange);
-
 		StockHistory result = new StockHistory(ticker, exchange, startDate, endDate, "daily");
 		List<string> dataList = dataLines.ToList();
 		dataList.RemoveAt(0);
@@ -49,52 +53,66 @@ public class StockFetcher : IStockFetcher
 			DateOnly date = DateOnly.Parse(dataSplit[0]);
 			if (date >= startDate && date <= endDate && dataSplit[1] != "null")
 			{
-				Data.DatePriceOHLC dataPoint = new Data.DatePriceOHLC(
+				try
+				{
+					Data.DatePriceOHLC dataPoint = new Data.DatePriceOHLC(
 					DateOnly.Parse(dataSplit[0]),
 					new Data.Money(Decimal.Parse(dataSplit[1]), currency),
 					new Data.Money(Decimal.Parse(dataSplit[2]), currency),
 					new Data.Money(Decimal.Parse(dataSplit[3]), currency),
 					new Data.Money(Decimal.Parse(dataSplit[4]), currency)
-				);
-				result.history.Add(dataPoint);
+					);
+					result.history.Add(dataPoint);
+				}
+				catch (Exception)
+				{
+					continue;
+				}
+
 			}
 		}
 		await new Tools.PriceHistoryConverter().ConvertStockPrice(result.history, "USD");
 		foreach (Data.DatePriceOHLC datePrice in result.history)
 		{
-			if (datePrice.highPrice.currency != "USD")
+			try
 			{
-				if (result.history.Count == 1)
+				if (datePrice.highPrice.currency != "USD")
 				{
-					result.history.Clear();
-					break;
-				}
+					if (result.history.Count == 1)
+					{
+						result.history.Clear();
+						break;
+					}
 
-				int indexOfWrongPrice = result.history.IndexOf(datePrice);
-				if (indexOfWrongPrice - 1 > 0)
-				{
-					datePrice.highPrice.amount = result.history[indexOfWrongPrice - 1].highPrice.amount;
-					datePrice.lowPrice.amount = result.history[indexOfWrongPrice - 1].lowPrice.amount;
-					datePrice.openPrice.amount = result.history[indexOfWrongPrice - 1].openPrice.amount;
-					datePrice.closePrice.amount = result.history[indexOfWrongPrice - 1].closePrice.amount;
+					int indexOfWrongPrice = result.history.IndexOf(datePrice);
+					if (indexOfWrongPrice - 1 > 0)
+					{
+						datePrice.highPrice.amount = result.history[indexOfWrongPrice - 1].highPrice.amount;
+						datePrice.lowPrice.amount = result.history[indexOfWrongPrice - 1].lowPrice.amount;
+						datePrice.openPrice.amount = result.history[indexOfWrongPrice - 1].openPrice.amount;
+						datePrice.closePrice.amount = result.history[indexOfWrongPrice - 1].closePrice.amount;
+					}
+					else if (indexOfWrongPrice + 1 < result.history.Count - 1)
+					{
+						datePrice.highPrice.amount = result.history[indexOfWrongPrice + 1].highPrice.amount;
+						datePrice.lowPrice.amount = result.history[indexOfWrongPrice + 1].lowPrice.amount;
+						datePrice.openPrice.amount = result.history[indexOfWrongPrice + 1].openPrice.amount;
+						datePrice.closePrice.amount = result.history[indexOfWrongPrice + 1].closePrice.amount;
+					}
+					datePrice.closePrice.currency = "USD";
+					datePrice.highPrice.currency = "USD";
+					datePrice.lowPrice.currency = "USD";
+					datePrice.openPrice.currency = "USD";
 				}
-				else if (indexOfWrongPrice + 1 < result.history.Count - 1)
-				{
-					datePrice.highPrice.amount = result.history[indexOfWrongPrice + 1].highPrice.amount;
-					datePrice.lowPrice.amount = result.history[indexOfWrongPrice + 1].lowPrice.amount;
-					datePrice.openPrice.amount = result.history[indexOfWrongPrice + 1].openPrice.amount;
-					datePrice.closePrice.amount = result.history[indexOfWrongPrice + 1].closePrice.amount;
-				}
-				datePrice.closePrice.currency = "USD";
-				datePrice.highPrice.currency = "USD";
-				datePrice.lowPrice.currency = "USD";
-				datePrice.openPrice.currency = "USD";
+			}
+			catch (Exception e)
+			{
+				System.Console.WriteLine(e);
+				continue;
 			}
 		}
 		return result;
 	}
-
-
 
 	public async Task<Data.StockProfile> GetProfile(string ticker, string exchange)
 	{
@@ -203,7 +221,7 @@ public class StockFetcher : IStockFetcher
 
 		if (data == null)
 		{
-			throw new Exception("Exchange not found");
+			throw new InvalidUserInput("Exchange of " + ticker + ":" + exchange + " was not found");
 		}
 		String currency = data["currency"].ToString()!;
 
@@ -217,25 +235,38 @@ public class StockFetcher : IStockFetcher
 		HttpResponseMessage dividendsResponse = client.GetAsync(url).Result;
 		if (dividendsResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
 		{
-			throw new Exception("Stock not found");
+			throw new CouldNotGetStockException("The stock " + ticker + ":" + exchange + " was not found");
 		}
 		String stockDividendCSV = await dividendsResponse.Content.ReadAsStringAsync();
 		String[] stockDividendLines = stockDividendCSV.Split("\n");
+		if (stockDividendLines.Length == 1)
+		{
+			return dividends;
+		}
 		String currencySymbol = Data.Database.Exchange.GetCurrency(exchange);
 		List<String> dataList = stockDividendLines.ToList();
 		dataList.RemoveAt(0);
 		foreach (String dataP in dataList)
 		{
-			String[] dataSplit = dataP.Split(",");
-			DateOnly date = DateOnly.Parse(dataSplit[0]);
-			if (date >= startDate && date <= endDate && dataSplit[1] != "null")
+			try
 			{
-				Data.Dividend dataPoint = new Data.Dividend(
-					DateOnly.Parse(dataSplit[0]),
-					new Data.Money(Decimal.Parse(dataSplit[1]), currency)
-				);
-				dividends.Add(dataPoint);
+				String[] dataSplit = dataP.Split(",");
+				DateOnly date = DateOnly.Parse(dataSplit[0]);
+				if (date >= startDate && date <= endDate && dataSplit[1] != "null")
+				{
+					Data.Dividend dataPoint = new Data.Dividend(
+						DateOnly.Parse(dataSplit[0]),
+						new Data.Money(Decimal.Parse(dataSplit[1]), currency)
+					);
+					dividends.Add(dataPoint);
+				}
 			}
+			catch (Exception e)
+			{
+				System.Console.WriteLine(e);
+				continue;
+			}
+
 		}
 		await new Tools.PriceHistoryConverter().ConvertStockDividends(dividends, "USD");
 		return dividends;

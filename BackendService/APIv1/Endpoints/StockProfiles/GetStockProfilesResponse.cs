@@ -9,5 +9,4 @@ public class GetStockProfilesResponse
 	}
 	public String response { get; set; }
 	public Data.StockProfile? stock { get; set; }
-	public String? error { get; set; }
 }

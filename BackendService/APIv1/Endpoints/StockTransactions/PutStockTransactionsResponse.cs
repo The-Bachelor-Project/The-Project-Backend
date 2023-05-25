@@ -4,7 +4,6 @@ public class PutStockTransactionsResponse
 {
 	public string response;
 	public int id;
-	public String? error { get; set; }
 
 	public PutStockTransactionsResponse(string response, int id)
 	{

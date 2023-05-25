@@ -10,5 +10,4 @@ public class GetStockHistoriesResponse
 
 	public String response { get; set; }
 	public Data.StockHistory history { get; set; }
-	public String? error { get; set; }
 }

@@ -20,16 +20,27 @@ public class CurrencyFetcher : ICurrencyFetcher
 		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(getCurrencyHistoryQuery, parameters);
 
 		Data.CurrencyHistory result = new Data.CurrencyHistory(currency, startDate, endDate, "daily");
+		if (data.Count == 0)
+			return Task.FromResult(result);
 
 		foreach (Dictionary<String, object> row in data)
 		{
-			result.history.Add(new Data.DatePriceOHLC(
-				DateOnly.FromDateTime(DateTime.Parse(row["end_date"].ToString()!)),
-				new Data.Money(Decimal.Parse("" + row["open_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
-				new Data.Money(Decimal.Parse("" + row["high_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
-				new Data.Money(Decimal.Parse("" + row["low_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
-				new Data.Money(Decimal.Parse("" + row["close_price"].ToString()), Data.Money.DEFAULT_CURRENCY)
-			));
+			try
+			{
+				result.history.Add(new Data.DatePriceOHLC(
+					DateOnly.FromDateTime(DateTime.Parse(row["end_date"].ToString()!)),
+					new Data.Money(Decimal.Parse("" + row["open_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
+					new Data.Money(Decimal.Parse("" + row["high_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
+					new Data.Money(Decimal.Parse("" + row["low_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
+					new Data.Money(Decimal.Parse("" + row["close_price"].ToString()), Data.Money.DEFAULT_CURRENCY)
+				));
+			}
+			catch (Exception e)
+			{
+				System.Console.WriteLine(e);
+				continue;
+			}
+
 		}
 		result.startDate = result.history.First().date;
 		result.endDate = result.history.Last().date;

@@ -10,5 +10,4 @@ public class GetSearchResultsResponse
 
 	public String response { get; set; }
 	public Data.StockProfile[] stocks { get; set; }
-	public String? error { get; set; }
 }

@@ -4,9 +4,16 @@ class TimeConverter
 {
 	public static int dateOnlyToUnix(DateOnly dateOnly)
 	{
-		DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-		TimeSpan diff = dateOnly.ToDateTime(new TimeOnly(12, 0)).ToUniversalTime() - origin;
-		return int.Parse(Math.Floor(diff.TotalSeconds).ToString());
+		try
+		{
+			DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+			TimeSpan diff = dateOnly.ToDateTime(new TimeOnly(12, 0)).ToUniversalTime() - origin;
+			return int.Parse(Math.Floor(diff.TotalSeconds).ToString());
+		}
+		catch (System.Exception)
+		{
+			throw new InvalidUserInput("The date " + dateOnly.ToString() + " is not valid");
+		}
 	}
 	public static DateTime UnixTimeStampToDateTime(int unix)
 	{
