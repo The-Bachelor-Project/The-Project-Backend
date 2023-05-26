@@ -1,7 +1,7 @@
 namespace Authentication;
 
 
-class Expiration
+public class Expiration
 {
 	public static int GenerateRefresh(int expirationInHours)
 	{
