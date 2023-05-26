@@ -18,7 +18,7 @@ public class StockFetcher : IStockFetcher
 
 		if (data == null)
 		{
-			throw new InvalidUserInput("Exchange not found");
+			throw new StatusCodeException(400, "Exchange not found");
 		}
 		String currency = data["currency"].ToString()!;
 
@@ -127,7 +127,7 @@ public class StockFetcher : IStockFetcher
 		dynamic quoteSummary = JObject.Parse(quoteSummaryJson);
 		if (quoteSummary.StatusCode == System.Net.HttpStatusCode.NotFound)
 		{
-			throw new CouldNotGetStockException("Could not get stock profile for " + ticker + ":" + exchange + ", using quoteSummary on Yahoo Finance");
+			throw new StatusCodeException(500, "Could not get stock profile for " + exchange + ":" + ticker + ", using quoteSummary on Yahoo Finance");
 		}
 
 
@@ -137,7 +137,7 @@ public class StockFetcher : IStockFetcher
 		System.Console.WriteLine(quote);
 		if (quoteSummary.StatusCode == System.Net.HttpStatusCode.NotFound)
 		{
-			throw new CouldNotGetStockException("Could not get stock profile for " + ticker + ":" + exchange + ", using quote on Yahoo Finance");
+			throw new StatusCodeException(500, "Could not get stock profile for " + exchange + ":" + ticker + ", using quote on Yahoo Finance");
 		}
 
 
@@ -148,12 +148,12 @@ public class StockFetcher : IStockFetcher
 			result.displayName = quote.quoteResponse.result[0].displayName ??
 			quote.quoteResponse.result[0].shortName ??
 			quote.quoteResponse.result[0].longName ??
-			throw new Exception("Stock does not have a name");
+			throw new StatusCodeException(500, "Stock does not have a name");
 		}
 		catch (System.Exception e)
 		{
 			System.Console.WriteLine(e);
-			throw new CouldNotGetStockException("Stock " + ticker + ":" + exchange + " could not be gotten from Yahoo Finance. Please check if ticker and exchange are correct.");
+			throw new StatusCodeException(404, "Stock " + exchange + ":" + ticker + " could not be gotten from Yahoo Finance. Please check if ticker and exchange are correct.");
 		}
 		result.shortName = quote.quoteResponse.result[0].shortName ?? "";
 		result.longName = quote.quoteResponse.result[0].longName ?? "";
@@ -230,7 +230,7 @@ public class StockFetcher : IStockFetcher
 
 		if (data == null)
 		{
-			throw new InvalidUserInput("Exchange of " + ticker + ":" + exchange + " was not found");
+			throw new StatusCodeException(400, "Exchange of " + exchange + ":" + ticker + " was not found");
 		}
 		String currency = data["currency"].ToString()!;
 
@@ -244,7 +244,7 @@ public class StockFetcher : IStockFetcher
 		HttpResponseMessage dividendsResponse = client.GetAsync(url).Result;
 		if (dividendsResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
 		{
-			throw new CouldNotGetStockException("The stock " + ticker + ":" + exchange + " was not found on Yahoo Finance");
+			throw new StatusCodeException(404, "The stock " + exchange + ":" + ticker + " was not found on Yahoo Finance");
 		}
 		String stockDividendCSV = await dividendsResponse.Content.ReadAsStringAsync();
 		String[] stockDividendLines = stockDividendCSV.Split("\n");

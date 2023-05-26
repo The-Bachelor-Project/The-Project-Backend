@@ -63,7 +63,7 @@ public class CurrencyFetcher : ICurrencyFetcher
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e);
-			throw new DatabaseException("There was a problem when adding currency rates to the database");
+			throw new StatusCodeException(500, "There was a problem when adding currency rates to the database");
 		}
 
 		if (updateStartTrackingDate)
@@ -79,7 +79,7 @@ public class CurrencyFetcher : ICurrencyFetcher
 			catch (Exception e)
 			{
 				System.Console.WriteLine(e);
-				throw new DatabaseException("There was a problem when updating the start tracking date of the currency");
+				throw new StatusCodeException(500, "There was a problem when updating the start tracking date of the currency");
 			}
 		}
 		if (updateEndTrackingDate)
@@ -95,7 +95,7 @@ public class CurrencyFetcher : ICurrencyFetcher
 			catch (Exception e)
 			{
 				System.Console.WriteLine(e);
-				throw new DatabaseException("There was a problem when updating the end tracking date of the currency");
+				throw new StatusCodeException(500, "There was a problem when updating the end tracking date of the currency");
 			}
 		}
 	}

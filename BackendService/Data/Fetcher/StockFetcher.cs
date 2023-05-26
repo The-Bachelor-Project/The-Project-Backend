@@ -10,7 +10,7 @@ public class StockFetcher : IStockFetcher
 	{
 		if (startDate > endDate)
 		{
-			throw new InvalidUserInput("Start date cannot be after end date");
+			throw new StatusCodeException(400, "Start date cannot be after end date");
 		}
 		String getTrackingDateQuery = "SELECT start_tracking_date, end_tracking_date FROM Stocks WHERE ticker = @ticker AND exchange = @exchange";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
@@ -65,7 +65,7 @@ public class StockFetcher : IStockFetcher
 			System.Console.WriteLine("Got stock profile from database");
 			return profile;
 		}
-		catch (CouldNotGetStockException)
+		catch (StatusCodeException)
 		{
 			// If the stock profile is not in the database, get it from the API
 			YahooFinanceFetcher.StockFetcher api = new YahooFinanceFetcher.StockFetcher();
@@ -115,7 +115,7 @@ public class StockFetcher : IStockFetcher
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e.Message);
-			throw new DatabaseException("Could not save stock profile of stock " + profile.exchange + ":" + profile.ticker + " to database");
+			throw new StatusCodeException(500, "Could not save stock profile of stock " + profile.exchange + ":" + profile.ticker + " to database");
 		}
 
 
@@ -153,7 +153,7 @@ public class StockFetcher : IStockFetcher
 		catch (System.Exception e)
 		{
 			System.Console.WriteLine(e.Message);
-			throw new DatabaseException("Could not save stock history of " + history.exchange + ":" + history.ticker + " to database");
+			throw new StatusCodeException(500, "Could not save stock history of " + history.exchange + ":" + history.ticker + " to database");
 		}
 
 
@@ -171,7 +171,7 @@ public class StockFetcher : IStockFetcher
 			catch (System.Exception e)
 			{
 				System.Console.WriteLine(e.Message);
-				throw new DatabaseException("Could not update start tracking date of " + history.exchange + ":" + history.ticker + " in database");
+				throw new StatusCodeException(500, "Could not update start tracking date of " + history.exchange + ":" + history.ticker + " in database");
 			}
 		}
 		if (updateEndTrackingDate)
@@ -188,7 +188,7 @@ public class StockFetcher : IStockFetcher
 			catch (System.Exception e)
 			{
 				System.Console.WriteLine(e.Message);
-				throw new DatabaseException("Could not update end tracking date of " + history.exchange + ":" + history.ticker + " in database");
+				throw new StatusCodeException(500, "Could not update end tracking date of " + history.exchange + ":" + history.ticker + " in database");
 
 			}
 		}
@@ -214,7 +214,7 @@ public class StockFetcher : IStockFetcher
 		catch (System.Exception e)
 		{
 			System.Console.WriteLine(e.Message);
-			throw new DatabaseException("Could not save dividends of " + exchange + ":" + ticker + " to database");
+			throw new StatusCodeException(500, "Could not save dividends of " + exchange + ":" + ticker + " to database");
 		}
 	}
 }

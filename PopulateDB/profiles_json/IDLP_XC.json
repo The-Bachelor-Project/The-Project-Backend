@@ -1,1 +1,26 @@
-{"quote": {"result": [{"language": "en-US", "region": "US", "quoteType": "NONE", "triggerable": false, "customPriceAlertConfidence": "NONE", "esgPopulated": false, "tradeable": false, "cryptoTradeable": false, "financialCurrency": "EUR", "symbol": "IDLP.XC"}], "error": null}, "summary": {"result": null, "error": {"code": "Not Found", "description": "Quote not found for ticker symbol: IDLP.XC"}}}
+{
+	"quote": {
+		"result": [
+			{
+				"language": "en-US",
+				"region": "US",
+				"quoteType": "NONE",
+				"triggerable": false,
+				"customPriceAlertConfidence": "NONE",
+				"esgPopulated": false,
+				"tradeable": false,
+				"cryptoTradeable": false,
+				"financialCurrency": "EUR",
+				"symbol": "IDLP.XC"
+			}
+		],
+		"error": null
+	},
+	"summary": {
+		"result": null,
+		"error": {
+			"code": "Not Found",
+			"description": "Quote not found for ticker symbol: IDLP.XC"
+		}
+	}
+}

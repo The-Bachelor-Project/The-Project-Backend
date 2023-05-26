@@ -102,7 +102,7 @@ public class Authenticate
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e);
-			throw new DatabaseException("Could not invalidate family with id " + familyID);
+			throw new StatusCodeException(500, "Could not invalidate family");
 		}
 	}
 }

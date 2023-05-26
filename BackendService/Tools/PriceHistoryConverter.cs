@@ -15,7 +15,7 @@ public class PriceHistoryConverter
 		newCurrency = newCurrency.ToUpper();
 		if (newCurrency != "USD")
 		{
-			throw new InvalidUserInput("Only USD is supported at the moment");
+			throw new StatusCodeException(400, "Only USD is supported at the moment");
 		}
 		if (priceHistory.First().closePrice.currency.ToUpper() == "USD")
 		{
@@ -27,7 +27,7 @@ public class PriceHistoryConverter
 		Data.CurrencyHistory currencyHistory = await new Data.Fetcher.CurrencyFetcher().GetHistory(priceHistory.First().closePrice.currency, startDate, endDate);
 		if (currencyHistory.history.Count == 0)
 		{
-			throw new CurrencyHistoryException("Currency exchange rate list of " + priceHistory.First().closePrice.currency + " is empty");
+			throw new StatusCodeException(500, "Currency exchange rate list of " + priceHistory.First().closePrice.currency + " is empty");
 		}
 		Dictionary<DateOnly, Data.DatePriceOHLC> priceDictionary = priceHistory.ToDictionary(x => x.date, x => x);
 		Dictionary<DateOnly, Data.DatePriceOHLC> currencyDictionary = currencyHistory.history.ToDictionary(x => x.date, x => x);
@@ -61,7 +61,7 @@ public class PriceHistoryConverter
 		newCurrency = newCurrency.ToUpper();
 		if (newCurrency != "USD")
 		{
-			throw new InvalidUserInput("Only USD is supported at the moment");
+			throw new StatusCodeException(400, "Only USD is supported at the moment");
 		}
 		if (dividends.First().payout.currency.ToUpper() == "USD")
 		{
@@ -73,7 +73,7 @@ public class PriceHistoryConverter
 		Data.CurrencyHistory currencyHistory = await new Data.Fetcher.CurrencyFetcher().GetHistory(dividends.First().payout.currency, startDate, endDate);
 		if (currencyHistory.history.Count == 0)
 		{
-			throw new CurrencyHistoryException("Currency exchange rate list of " + newCurrency + " is empty");
+			throw new StatusCodeException(500, "Currency exchange rate list of " + newCurrency + " is empty");
 		}
 
 		Dictionary<DateOnly, Data.Dividend> dividendDictionary = dividends.ToDictionary(x => x.date, x => x);

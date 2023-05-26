@@ -64,6 +64,6 @@ public class TokenSet
 			User user = new User(data["user_id"].ToString()!);
 			return user;
 		}
-		throw new UnauthorizedAccess("User not found");
+		throw new StatusCodeException(401, "User not found");
 	}
 }

@@ -19,7 +19,7 @@ class CreateFamily
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e);
-			throw new DatabaseException("Failed to create token family");
+			throw new StatusCodeException(500, "Failed to create token family");
 		}
 		int familyID = GetFamilyID();
 		return familyID;
@@ -34,6 +34,6 @@ class CreateFamily
 			int familyId = int.Parse(data["id"].ToString()!);
 			return familyId;
 		}
-		throw new DatabaseException("Failed to get family id");
+		throw new StatusCodeException(500, "Failed to get family id");
 	}
 }

@@ -19,7 +19,7 @@ class Exchange
 		}
 		else
 		{
-			throw new CurrencyLookupException("Currency of exchange " + exchange + " not found");
+			throw new StatusCodeException(404, "Currency of exchange " + exchange + " not found");
 		}
 	}
 }

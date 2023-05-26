@@ -45,11 +45,11 @@ public class User
 			catch (Exception e)
 			{
 				System.Console.WriteLine(e);
-				throw new DatabaseException("Failed to create user");
+				throw new StatusCodeException(500, "Failed to create user");
 			}
 			return this;
 		}
-		throw new UserAlreadyExist("User with email: " + email + " already exist");
+		throw new StatusCodeException(409, "User with email: " + email + " already exist");
 	}
 
 	public User SignIn()
@@ -70,12 +70,12 @@ public class User
 
 			if (dbPassword != Tools.Password.Hash(password!))
 			{
-				throw new WrongPasswordException("The password is incorrect");
+				throw new StatusCodeException(401, "The password is incorrect");
 			}
 			id = userID;
 			return this;
 		}
-		throw new UserDoesNotExistException("No user with the email: " + email + " was found, please sign up instead");
+		throw new StatusCodeException(404, "No user with the email: " + email + " was found");
 	}
 
 	public User ChangeEmail(String oldEmail, String newEmail)
@@ -95,7 +95,7 @@ public class User
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e);
-			throw new DatabaseException("Could not update user email");
+			throw new StatusCodeException(409, "Could not update user email");
 		}
 	}
 
@@ -118,7 +118,7 @@ public class User
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e);
-			throw new DatabaseException("Could not update user password");
+			throw new StatusCodeException(409, "Could not update user password");
 		}
 	}
 
@@ -172,7 +172,7 @@ public class User
 			);
 			return portfolio;
 		}
-		throw new CouldNotGetPortfolioException("Portfolio with id " + id + " not found");
+		throw new StatusCodeException(404, "Portfolio with id " + id + " not found");
 
 	}
 

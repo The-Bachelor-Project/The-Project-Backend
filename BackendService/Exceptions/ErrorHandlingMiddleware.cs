@@ -6,74 +6,9 @@ public class ErrorHandlingMiddlware : IMiddleware
 		{
 			await next(context);
 		}
-		catch (UnauthorizedAccess e)
+		catch (StatusCodeException e)
 		{
-			context.Response.StatusCode = 401;
-			await context.Response.WriteAsync(e.Message);
-		}
-		catch (WrongPasswordException e)
-		{
-			context.Response.StatusCode = 401;
-			await context.Response.WriteAsync(e.Message);
-		}
-		catch (UserDoesNotExistException e)
-		{
-			context.Response.StatusCode = 404;
-			await context.Response.WriteAsync(e.Message);
-		}
-		catch (DatabaseException e)
-		{
-			context.Response.StatusCode = 500;
-			await context.Response.WriteAsync(e.Message);
-		}
-		catch (UserAlreadyExist e)
-		{
-			context.Response.StatusCode = 409;
-			await context.Response.WriteAsync(e.Message);
-		}
-		catch (InvalidUserInput e)
-		{
-			context.Response.StatusCode = 400;
-			await context.Response.WriteAsync(e.Message);
-		}
-		catch (CouldNotGetStockException e)
-		{
-			context.Response.StatusCode = 404;
-			await context.Response.WriteAsync(e.Message);
-		}
-		catch (CurrencyLookupException e)
-		{
-			context.Response.StatusCode = 404;
-			await context.Response.WriteAsync(e.Message);
-		}
-		catch (CurrencyHistoryException e)
-		{
-			context.Response.StatusCode = 500;
-			await context.Response.WriteAsync(e.Message);
-		}
-		catch (StockProfileException e)
-		{
-			context.Response.StatusCode = 500;
-			await context.Response.WriteAsync(e.Message);
-		}
-		catch (UpdatePortfolioException e)
-		{
-			context.Response.StatusCode = 409;
-			await context.Response.WriteAsync(e.Message);
-		}
-		catch (CouldNotGetOwnerException e)
-		{
-			context.Response.StatusCode = 404;
-			await context.Response.WriteAsync(e.Message);
-		}
-		catch (CouldNotGetStockTransactionException e)
-		{
-			context.Response.StatusCode = 404;
-			await context.Response.WriteAsync(e.Message);
-		}
-		catch (CouldNotGetPortfolioException e)
-		{
-			context.Response.StatusCode = 404;
+			context.Response.StatusCode = e.StatusCode;
 			await context.Response.WriteAsync(e.Message);
 		}
 		catch (Exception e)

@@ -26,7 +26,7 @@ public class StockTransaction
 		}
 		catch (Exception)
 		{
-			throw new CouldNotGetStockException();
+			throw new StatusCodeException(404, "Could not find stock " + exchange + ":" + ticker);
 		}
 
 		String getAmountOwned = "SELECT TOP 1 amount_owned FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp <= @timestamp ORDER BY timestamp,id DESC";
@@ -62,7 +62,7 @@ public class StockTransaction
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e);
-			throw new DatabaseException("Could not insert stock transaction into database");
+			throw new StatusCodeException(500, "Could not insert stock transaction into database");
 		}
 
 		String updateStockTransactions = "UPDATE StockTransactions SET amount_owned = amount_owned + @amount_adjusted WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp > @timestamp OR (timestamp = @timestamp AND id > @id)";
@@ -80,7 +80,7 @@ public class StockTransaction
 		catch (System.Exception e)
 		{
 			System.Console.WriteLine(e);
-			throw new DatabaseException("Could not update stock transactions in database");
+			throw new StatusCodeException(409, "Could not update stock transactions in database");
 		}
 		return this;
 	}
@@ -103,7 +103,7 @@ public class StockTransaction
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e);
-			throw new DatabaseException("Could not delete stock transaction from database with id " + id);
+			throw new StatusCodeException(500, "Could not delete stock transaction from database with id " + id);
 		}
 		return Task.CompletedTask;
 	}

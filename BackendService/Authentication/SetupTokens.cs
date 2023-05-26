@@ -20,26 +20,21 @@ class SetupTokens
 		try
 		{
 			command.ExecuteNonQuery();
-			Boolean successfulUpdate = UpdateValidToken(accessToken, familyID);
-			if (successfulUpdate)
-			{
-				StockApp.TokenSet tokenSet = new StockApp.TokenSet(refreshToken, accessToken);
-				return tokenSet;
-			}
-			else
-			{
-				throw new DatabaseException("Failed to update valid token");
-			}
-		}
-		catch (DatabaseException e)
-		{
-			System.Console.WriteLine(e);
-			throw new DatabaseException(e.Message);
 		}
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e);
-			throw new DatabaseException("Failed to create token record in database");
+			throw new StatusCodeException(500, "Failed to create token record");
+		}
+		Boolean successfulUpdate = UpdateValidToken(accessToken, familyID);
+		if (successfulUpdate)
+		{
+			StockApp.TokenSet tokenSet = new StockApp.TokenSet(refreshToken, accessToken);
+			return tokenSet;
+		}
+		else
+		{
+			throw new StatusCodeException(500, "Failed to update valid token");
 		}
 	}
 

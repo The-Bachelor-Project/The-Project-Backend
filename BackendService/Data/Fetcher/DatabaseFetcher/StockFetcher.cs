@@ -20,7 +20,7 @@ public class StockFetcher : IStockFetcher
 		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(getStockHistoryQuery, parameters);
 		if (data.Count == 0)
 		{
-			throw new DatabaseException("No stock history data found for " + ticker + ":" + exchange + " from database. Please check if exchange and ticker are correct.");
+			throw new StatusCodeException(404, "No stock history data found for " + exchange + ":" + ticker + " from database. Please check if exchange and ticker are correct.");
 		}
 
 		foreach (Dictionary<String, object> row in data)
@@ -78,7 +78,7 @@ public class StockFetcher : IStockFetcher
 		}
 		else
 		{
-			throw new CouldNotGetStockException();
+			throw new StatusCodeException(0);
 		}
 	}
 

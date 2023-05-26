@@ -1,1 +1,109 @@
-{"quote": {"result": [{"language": "en-US", "region": "US", "quoteType": "EQUITY", "typeDisp": "Equity", "quoteSourceName": "Delayed Quote", "triggerable": false, "customPriceAlertConfidence": "LOW", "currency": "EUR", "regularMarketChangePercent": -1.9319938, "regularMarketPrice": 6.345, "trailingAnnualDividendRate": 0.0, "trailingPE": 45.321426, "trailingAnnualDividendYield": 0.0, "epsTrailingTwelveMonths": 0.14, "sharesOutstanding": 139168992, "bookValue": 3.007, "fiftyDayAverage": 6.5538, "fiftyDayAverageChange": -0.20880032, "fiftyDayAverageChangePercent": -0.031859428, "twoHundredDayAverage": 7.8514, "twoHundredDayAverageChange": -1.5064001, "twoHundredDayAverageChangePercent": -0.1918639, "marketCap": 883027200, "priceToBook": 2.1100764, "sourceInterval": 15, "exchangeDataDelayedBy": 15, "tradeable": false, "cryptoTradeable": false, "firstTradeDateMilliseconds": 1626847200000, "priceHint": 2, "marketState": "REGULAR", "exchange": "FRA", "shortName": "GRNVLT EN.REN.", "longName": "Greenvolt - Energias Renov\u00e1veis, S.A.", "messageBoardId": "finmb_711844771", "exchangeTimezoneName": "Europe/Berlin", "exchangeTimezoneShortName": "CEST", "gmtOffSetMilliseconds": 7200000, "market": "dr_market", "esgPopulated": false, "regularMarketChange": -0.125, "regularMarketTime": 1683872571, "regularMarketDayHigh": 6.345, "regularMarketDayRange": "6.345 - 6.345", "regularMarketDayLow": 6.345, "regularMarketVolume": 350, "regularMarketPreviousClose": 6.47, "bid": 6.37, "ask": 6.56, "fullExchangeName": "Frankfurt", "financialCurrency": "EUR", "regularMarketOpen": 6.345, "averageDailyVolume3Month": 46, "averageDailyVolume10Day": 38, "fiftyTwoWeekLowChange": 0.4499998, "fiftyTwoWeekLowChangePercent": 0.07633585, "fiftyTwoWeekRange": "5.895 - 10.76", "fiftyTwoWeekHighChange": -4.4150004, "fiftyTwoWeekHighChangePercent": -0.41031602, "fiftyTwoWeekLow": 5.895, "fiftyTwoWeekHigh": 10.76, "symbol": "000.F"}], "error": null}, "summary": {"result": [{"assetProfile": {"address1": "Rua Manuel Pinto de Azevedo 818", "city": "Porto", "zip": "4100-320", "country": "Portugal", "phone": "351 22 834 6502", "website": "https://www.greenvolt.pt", "industry": "Utilities\u2014Renewable", "industryDisp": "Utilities\u2014Renewable", "sector": "Utilities", "longBusinessSummary": "Greenvolt - Energias Renov\u00e1veis, S.A. operates in the renewable energy sector in Portugal, the United Kingdom, and internationally. The company operates through Residual Biomass; Development of Wind and Solar Utility-Scale; and Distributed Generation segments. It is involved in operation and development of biomass plants, as well as development of wind and solar photovoltaic plants in the European markets. The company was formerly known as Bioel\u00e9trica da Foz, S.A. and changed its name to Greenvolt - Energias Renov\u00e1veis, S.A. Greenvolt - Energias Renov\u00e1veis, S.A. was incorporated in 2002 and is headquartered in Porto, Portugal.", "fullTimeEmployees": 477, "companyOfficers": [{"maxAge": 1, "name": "Joao Manuel Manso Neto", "title": "Chief Exec. Officer", "exercisedValue": {"raw": 0, "fmt": null, "longFmt": "0"}, "unexercisedValue": {"raw": 0, "fmt": null, "longFmt": "0"}}], "maxAge": 86400}}], "error": null}}
+{
+	"quote": {
+		"result": [
+			{
+				"language": "en-US",
+				"region": "US",
+				"quoteType": "EQUITY",
+				"typeDisp": "Equity",
+				"quoteSourceName": "Delayed Quote",
+				"triggerable": false,
+				"customPriceAlertConfidence": "LOW",
+				"currency": "EUR",
+				"regularMarketChangePercent": -1.9319938,
+				"regularMarketPrice": 6.345,
+				"trailingAnnualDividendRate": 0.0,
+				"trailingPE": 45.321426,
+				"trailingAnnualDividendYield": 0.0,
+				"epsTrailingTwelveMonths": 0.14,
+				"sharesOutstanding": 139168992,
+				"bookValue": 3.007,
+				"fiftyDayAverage": 6.5538,
+				"fiftyDayAverageChange": -0.20880032,
+				"fiftyDayAverageChangePercent": -0.031859428,
+				"twoHundredDayAverage": 7.8514,
+				"twoHundredDayAverageChange": -1.5064001,
+				"twoHundredDayAverageChangePercent": -0.1918639,
+				"marketCap": 883027200,
+				"priceToBook": 2.1100764,
+				"sourceInterval": 15,
+				"exchangeDataDelayedBy": 15,
+				"tradeable": false,
+				"cryptoTradeable": false,
+				"firstTradeDateMilliseconds": 1626847200000,
+				"priceHint": 2,
+				"marketState": "REGULAR",
+				"exchange": "FRA",
+				"shortName": "GRNVLT EN.REN.",
+				"longName": "Greenvolt - Energias Renov\u00e1veis, S.A.",
+				"messageBoardId": "finmb_711844771",
+				"exchangeTimezoneName": "Europe/Berlin",
+				"exchangeTimezoneShortName": "CEST",
+				"gmtOffSetMilliseconds": 7200000,
+				"market": "dr_market",
+				"esgPopulated": false,
+				"regularMarketChange": -0.125,
+				"regularMarketTime": 1683872571,
+				"regularMarketDayHigh": 6.345,
+				"regularMarketDayRange": "6.345 - 6.345",
+				"regularMarketDayLow": 6.345,
+				"regularMarketVolume": 350,
+				"regularMarketPreviousClose": 6.47,
+				"bid": 6.37,
+				"ask": 6.56,
+				"fullExchangeName": "Frankfurt",
+				"financialCurrency": "EUR",
+				"regularMarketOpen": 6.345,
+				"averageDailyVolume3Month": 46,
+				"averageDailyVolume10Day": 38,
+				"fiftyTwoWeekLowChange": 0.4499998,
+				"fiftyTwoWeekLowChangePercent": 0.07633585,
+				"fiftyTwoWeekRange": "5.895 - 10.76",
+				"fiftyTwoWeekHighChange": -4.4150004,
+				"fiftyTwoWeekHighChangePercent": -0.41031602,
+				"fiftyTwoWeekLow": 5.895,
+				"fiftyTwoWeekHigh": 10.76,
+				"symbol": "000.F"
+			}
+		],
+		"error": null
+	},
+	"summary": {
+		"result": [
+			{
+				"assetProfile": {
+					"address1": "Rua Manuel Pinto de Azevedo 818",
+					"city": "Porto",
+					"zip": "4100-320",
+					"country": "Portugal",
+					"phone": "351 22 834 6502",
+					"website": "https://www.greenvolt.pt",
+					"industry": "Utilities\u2014Renewable",
+					"industryDisp": "Utilities\u2014Renewable",
+					"sector": "Utilities",
+					"longBusinessSummary": "Greenvolt - Energias Renov\u00e1veis, S.A. operates in the renewable energy sector in Portugal, the United Kingdom, and internationally. The company operates through Residual Biomass; Development of Wind and Solar Utility-Scale; and Distributed Generation segments. It is involved in operation and development of biomass plants, as well as development of wind and solar photovoltaic plants in the European markets. The company was formerly known as Bioel\u00e9trica da Foz, S.A. and changed its name to Greenvolt - Energias Renov\u00e1veis, S.A. Greenvolt - Energias Renov\u00e1veis, S.A. was incorporated in 2002 and is headquartered in Porto, Portugal.",
+					"fullTimeEmployees": 477,
+					"companyOfficers": [
+						{
+							"maxAge": 1,
+							"name": "Joao Manuel Manso Neto",
+							"title": "Chief Exec. Officer",
+							"exercisedValue": {
+								"raw": 0,
+								"fmt": null,
+								"longFmt": "0"
+							},
+							"unexercisedValue": {
+								"raw": 0,
+								"fmt": null,
+								"longFmt": "0"
+							}
+						}
+					],
+					"maxAge": 86400
+				}
+			}
+		],
+		"error": null
+	}
+}

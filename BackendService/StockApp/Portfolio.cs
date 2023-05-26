@@ -57,7 +57,7 @@ public class Portfolio
 		catch (System.Exception e)
 		{
 			System.Console.WriteLine(e);
-			throw new DatabaseException("Failed to create portfolio");
+			throw new StatusCodeException(500, "Failed to create portfolio");
 		}
 
 
@@ -77,7 +77,7 @@ public class Portfolio
 			User user = new User(userId);
 			return user;
 		}
-		throw new CouldNotGetOwnerException("No portfolio with uid " + id + " was found");
+		throw new StatusCodeException(404, "No portfolio with uid " + id + " was found");
 
 	}
 
@@ -161,7 +161,7 @@ public class Portfolio
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e);
-			throw new UpdatePortfolioException("Could not change name of portfolio with id " + id);
+			throw new StatusCodeException(409, "Could not change name of portfolio with id " + id);
 		}
 	}
 
@@ -192,7 +192,7 @@ public class Portfolio
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e);
-			throw new UpdatePortfolioException("Could not change currency of portfolio with id " + id);
+			throw new StatusCodeException(409, "Could not change currency of portfolio with id " + id);
 		}
 	}
 
@@ -218,6 +218,6 @@ public class Portfolio
 			stockTransaction.price = new Money(Convert.ToDecimal(data["price_amount"]), data["price_currency"].ToString()!);
 			return stockTransaction;
 		}
-		throw new CouldNotGetStockTransactionException("Could not get stock transaction with id " + id);
+		throw new StatusCodeException(500, "Could not get stock transaction with id " + id);
 	}
 }

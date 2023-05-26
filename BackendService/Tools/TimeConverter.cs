@@ -12,7 +12,7 @@ class TimeConverter
 		}
 		catch (System.Exception)
 		{
-			throw new InvalidUserInput("The date " + dateOnly.ToString() + " is not valid");
+			throw new StatusCodeException(400, "The date " + dateOnly.ToString() + " is not valid");
 		}
 	}
 	public static DateTime UnixTimeStampToDateTime(int unix)
