@@ -32,35 +32,26 @@ public class PutUsers
 	{
 		if (body.oldPassword is null || body.newPassword is null || body.email is null)
 		{
-			return new PutUserResponse("error");
+			throw new StatusCodeException(400, "Missing required fields");
 		}
-		try
-		{
-			User user = new TokenSet(accessToken).GetUser();
-			user.ChangePassword(body.oldPassword, body.newPassword, body.email!);
-			return new PutUserResponse("success");
-		}
-		catch (System.Exception)
-		{
-			return new PutUserResponse("error");
-		}
+		User user = new TokenSet(accessToken).GetUser();
+		user.ChangePassword(body.oldPassword, body.newPassword, body.email!);
+		return new PutUserResponse("success");
+
 	}
 
 	public static PutUserResponse EndpointEmail(String accessToken, PutEmailBody body)
 	{
 		if (body.oldEmail is null || body.newEmail is null)
 		{
-			return new PutUserResponse("error");
+			throw new StatusCodeException(400, "Missing required fields");
 		}
-		try
+		if (!Tools.ValidEmail.Check(body.newEmail))
 		{
-			User user = new TokenSet(accessToken).GetUser();
-			user.ChangeEmail(body.oldEmail, body.newEmail);
-			return new PutUserResponse("success");
+			throw new StatusCodeException(400, "Invalid email");
 		}
-		catch (Exception)
-		{
-			return new PutUserResponse("error");
-		}
+		User user = new TokenSet(accessToken).GetUser();
+		user.ChangeEmail(body.oldEmail, body.newEmail);
+		return new PutUserResponse("success");
 	}
 }

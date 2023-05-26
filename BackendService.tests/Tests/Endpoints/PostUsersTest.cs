@@ -10,7 +10,8 @@ public class PostUsersTest
 	public static void Cleanup()
 	{
 		StockApp.User user = new StockApp.User(email, password);
-		UserHelper.Delete(user);
+		UserTestObject userTestObject = new UserTestObject(user, "", "");
+		UserHelper.Delete(userTestObject);
 	}
 
 	[TestMethod]
@@ -28,5 +29,13 @@ public class PostUsersTest
 		PostUsersBody body = new PostUsersBody(email, password);
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostUsers.Endpoint(body));
 		Assert.IsTrue(exception.StatusCode == 409, "StatusCode should be 409 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
+	public void PostUserTest_InvalidEmail()
+	{
+		PostUsersBody body = new PostUsersBody(Tools.RandomString.Generate(20), password);
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostUsers.Endpoint(body));
+		Assert.IsTrue(exception.StatusCode == 400, "StatusCode should be 400 but was " + exception.StatusCode);
 	}
 }

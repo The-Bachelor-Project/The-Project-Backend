@@ -103,8 +103,17 @@ public class User
 	{
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		oldPassword = Tools.Password.Hash(oldPassword);
-		String query = "UPDATE Accounts SET password = @new_password WHERE user_id = @user_id AND email = @email AND password = @old_password";
-		SqlCommand command = new SqlCommand(query, connection);
+		String getOldPasswordQuery = "SELECT password FROM Accounts WHERE password = @password AND email = @email";
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@password", oldPassword);
+		parameters.Add("@email", email);
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(getOldPasswordQuery, parameters);
+		if (data == null)
+		{
+			throw new StatusCodeException(401, "The password is incorrect");
+		}
+		String updatePasswordQuery = "UPDATE Accounts SET password = @new_password WHERE user_id = @user_id AND email = @email AND password = @old_password";
+		SqlCommand command = new SqlCommand(updatePasswordQuery, connection);
 		command.Parameters.AddWithValue("@user_id", id);
 		command.Parameters.AddWithValue("@old_password", oldPassword);
 		command.Parameters.AddWithValue("@new_password", Tools.Password.Hash(newPassword));

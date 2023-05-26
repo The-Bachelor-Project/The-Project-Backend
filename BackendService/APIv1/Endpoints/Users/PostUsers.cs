@@ -14,7 +14,10 @@ public class PostUsers
 
 	public static PostUsersResponse Endpoint(PostUsersBody body)
 	{
-
+		if (!Tools.ValidEmail.Check(body.email))
+		{
+			throw new StatusCodeException(400, "Invalid email");
+		}
 		User newUser = new User(body.email, body.password).SignUp();
 		return new PostUsersResponse("success", newUser.id!);
 
