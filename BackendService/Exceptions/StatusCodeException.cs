@@ -1,4 +1,4 @@
-class StatusCodeException : Exception
+public class StatusCodeException : Exception
 {
 	public int StatusCode { get; set; }
 	public StatusCodeException(int statusCode) : base()
