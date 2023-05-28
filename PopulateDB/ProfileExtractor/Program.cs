@@ -89,14 +89,17 @@ class Program
 		List<Dictionary<string, dynamic>> profiles = new List<Dictionary<string, dynamic>>();
 		Dictionary<string, int> missingExchanges = new Dictionary<string, int>();
 
+		Dictionary<string, Dictionary<string, string>> stocks = new Dictionary<string, Dictionary<string, string>>();
+
 		int totalCounter = 0;
 		int missingCounter = 0;
 		int iDunnoCounter = 0;
+		int duplicateCounter = 0;
 
 		// Process each JSON file
 		for (int i = 0; i < jsonFiles.Length; i++)
 		{
-			System.Console.WriteLine("Processing file " + (i + 1) + " of " + jsonFiles.Length + " ( " + jsonFiles[i] + " )");
+			//System.Console.WriteLine("Processing file " + (i + 1) + " of " + jsonFiles.Length + " ( " + jsonFiles[i] + " )");
 			Dictionary<string, dynamic> profile = new Dictionary<string, dynamic>();
 			string filePath = jsonFiles[i];
 			// Read the JSON file
@@ -106,6 +109,7 @@ class Program
 			//System.Console.WriteLine(jsonObject["quote"]["result"][0].ToString());
 			try
 			{
+
 
 				if (exchanges.ContainsKey(jsonObject["quote"]["result"][0]["exchange"].ToString()))
 				{
@@ -230,6 +234,22 @@ class Program
 					// Save the extracted value to the array
 					//extractedValues[i] = extractedValue;
 
+					if (!stocks.ContainsKey(profile["exchange"]))
+					{
+						stocks.Add(profile["exchange"], new Dictionary<string, string>());
+					}
+
+					if (!stocks[profile["exchange"]].ContainsKey(profile["ticker"]))
+					{
+						stocks[profile["exchange"]].Add(profile["ticker"], profile["displayName"]);
+					}
+					else
+					{
+						System.Console.WriteLine("Duplicate: " + profile["exchange"] + " : " + profile["ticker"] + " : " + profile["displayName"] + " : " + jsonFiles[i]);
+						duplicateCounter++;
+						throw new Exception("Duplicate");
+					}
+
 					profiles.Add(profile);
 				}
 				else
@@ -247,7 +267,7 @@ class Program
 					//System.Console.WriteLine(jsonObject["quote"]["result"][0]["exchange"].ToString() + " : " + jsonObject["quote"]["result"][0]["fullExchangeName"].ToString() + " : " + jsonObject["quote"]["result"][0]["symbol"].ToString());
 				}
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				iDunnoCounter++;
 			}
@@ -261,18 +281,18 @@ class Program
 
 			//Console.WriteLine("Extraction completed. Results saved to " + outputPath);
 		}
-		foreach (Dictionary<string, dynamic> profile in profiles)
-		{
-			printDict(profile);
-		}
+		//foreach (Dictionary<string, dynamic> profile in profiles)
+		//{
+		//	printDict(profile);
+		//}
 
-		missingExchanges = missingExchanges.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+		//missingExchanges = missingExchanges.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+		//printDictInt(missingExchanges);
 
-
-		printDictInt(missingExchanges);
 		System.Console.WriteLine("\nTotal: " + totalCounter);
 		System.Console.WriteLine("Missing: " + missingCounter);
-		System.Console.WriteLine("I dunno: " + iDunnoCounter);
+		System.Console.WriteLine("I dunno: " + (iDunnoCounter - duplicateCounter));
+		System.Console.WriteLine("Duplicates: " + duplicateCounter);
 	}
 
 	//function that prints all key value pairs in a dictionary
