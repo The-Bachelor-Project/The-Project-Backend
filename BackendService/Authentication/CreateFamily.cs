@@ -2,38 +2,26 @@ using System.Data.SqlClient;
 
 namespace Authentication;
 
-class CreateFamily
+public class CreateFamily
 {
 	public static int Call(String uid)
 	{
-		int unixLastUsed = Tools.TimeConverter.dateTimeToUnix(DateTime.Now);
-		String createTokenFamily = "INSERT INTO TokenFamily(user_id, last_used) VALUES (@user_id, @last_used)";
+		int unixLastUsed = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
+		String createTokenFamily = "INSERT INTO TokenFamily(user_id, last_used) OUTPUT INSERTED.id VALUES (@user_id, @last_used)";
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		SqlCommand command = new SqlCommand(createTokenFamily, connection);
 		command.Parameters.AddWithValue("@last_used", unixLastUsed);
 		command.Parameters.AddWithValue("@user_id", uid);
 		try
 		{
+			int familyID = (int)command.ExecuteScalar();
 			command.ExecuteNonQuery();
+			return familyID;
 		}
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e);
-			throw new StatusCodeException(500, "Failed to create token family");
+			throw new StatusCodeException(404, "Token family was not found");
 		}
-		int familyID = GetFamilyID();
-		return familyID;
-	}
-
-	private static int GetFamilyID()
-	{
-		String getFamilyID = "SELECT TOP 1 id FROM TokenFamily ORDER BY id DESC";
-		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(getFamilyID);
-		if (data != null)
-		{
-			int familyId = int.Parse(data["id"].ToString()!);
-			return familyId;
-		}
-		throw new StatusCodeException(500, "Failed to get family id");
 	}
 }

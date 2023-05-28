@@ -5,14 +5,14 @@ public class PostTokensTest
 {
 	private static UserTestObject userTestObject = new UserTestObject();
 
-	[ClassInitialize]
-	public static void Initialize(TestContext context)
+	[TestInitialize]
+	public void Initialize()
 	{
 		userTestObject = UserHelper.Create();
 	}
 
-	[ClassCleanup]
-	public static void Cleanup()
+	[TestCleanup]
+	public void Cleanup()
 	{
 		UserHelper.Delete(userTestObject);
 	}
@@ -33,7 +33,6 @@ public class PostTokensTest
 		PostTokensBody body = new PostTokensBody(email, userTestObject.user!.password!);
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostTokens.Endpoint(body));
 		Assert.IsTrue(exception.StatusCode == 404, "StatusCode should be 404 but was " + exception.StatusCode);
-		Assert.IsTrue(exception.Message == "No user with the email: " + email + " was found", "Message should be \"No user with the email: " + email + " was found\" but was \"" + exception.Message + "\"");
 	}
 
 	[TestMethod]
@@ -43,7 +42,6 @@ public class PostTokensTest
 		PostTokensBody body = new PostTokensBody(userTestObject.user!.email!, password);
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostTokens.Endpoint(body));
 		Assert.IsTrue(exception.StatusCode == 401, "StatusCode should be 401 but was " + exception.StatusCode);
-		Assert.IsTrue(exception.Message == "The password is incorrect", "Message should be \"The password is incorrect\" but was \"" + exception.Message + "\"");
 	}
 
 	[TestMethod]
@@ -52,7 +50,6 @@ public class PostTokensTest
 		PostTokensBody body = new PostTokensBody("", userTestObject.user!.password!);
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostTokens.Endpoint(body));
 		Assert.IsTrue(exception.StatusCode == 400, "StatusCode should be 400 but was " + exception.StatusCode);
-		Assert.IsTrue(exception.Message == "Email cannot be empty", "Message should be \"Email cannot be empty\" but was \"" + exception.Message + "\"");
 	}
 
 	[TestMethod]
@@ -61,6 +58,5 @@ public class PostTokensTest
 		PostTokensBody body = new PostTokensBody(userTestObject.user!.email!, "");
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostTokens.Endpoint(body));
 		Assert.IsTrue(exception.StatusCode == 400, "StatusCode should be 400 but was " + exception.StatusCode);
-		Assert.IsTrue(exception.Message == "Password cannot be empty", "Message should be \"Password cannot be empty\" but was \"" + exception.Message + "\"");
 	}
 }

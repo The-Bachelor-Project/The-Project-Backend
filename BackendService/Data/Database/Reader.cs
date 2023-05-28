@@ -2,7 +2,7 @@ using System.Data.SqlClient;
 
 namespace Data.Database;
 
-class Reader
+public class Reader
 {
 	private static bool blocking = false;
 

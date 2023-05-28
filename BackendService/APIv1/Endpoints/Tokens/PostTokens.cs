@@ -1,7 +1,4 @@
 using StockApp;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace API.v1;
 
@@ -27,6 +24,5 @@ public class PostTokens
 		}
 		TokenSet newTokenSet = TokenSet.Create(new User(body.email, body.password).SignIn().id!);
 		return newTokenSet;
-
 	}
 }

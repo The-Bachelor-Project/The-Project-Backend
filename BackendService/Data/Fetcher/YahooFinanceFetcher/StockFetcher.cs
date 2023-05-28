@@ -22,8 +22,8 @@ public class StockFetcher : IStockFetcher
 		}
 		String currency = data["currency"].ToString()!;
 
-		int startTime = Tools.TimeConverter.dateOnlyToUnix(startDate);
-		int endTime = Tools.TimeConverter.dateOnlyToUnix(endDate);
+		int startTime = Tools.TimeConverter.DateOnlyToUnix(startDate);
+		int endTime = Tools.TimeConverter.DateOnlyToUnix(endDate);
 		String tickerExt = YfTranslator.GetYfSymbol(ticker, exchange);
 
 		HttpClient client = new HttpClient();
@@ -234,8 +234,8 @@ public class StockFetcher : IStockFetcher
 		}
 		String currency = data["currency"].ToString()!;
 
-		int startTime = Tools.TimeConverter.dateOnlyToUnix(startDate);
-		int endTime = Tools.TimeConverter.dateOnlyToUnix(endDate);
+		int startTime = Tools.TimeConverter.DateOnlyToUnix(startDate);
+		int endTime = Tools.TimeConverter.DateOnlyToUnix(endDate);
 		String tickerExt = YfTranslator.GetYfSymbol(ticker, exchange);
 
 		HttpClient client = new HttpClient();

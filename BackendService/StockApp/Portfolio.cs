@@ -41,6 +41,10 @@ public class Portfolio
 
 	public Portfolio AddToDb()
 	{
+		if (!(Tools.ValidCurrency.Check(currency!)))
+		{
+			throw new StatusCodeException(400, "Currency " + currency + " is not supported");
+		}
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		id = Tools.RandomString.Generate(32);
 		String query = "INSERT INTO Portfolios (uid, name, owner, currency, balance) VALUES (@uid, @name, @owner, @currency, @balance)";
@@ -167,15 +171,9 @@ public class Portfolio
 
 	public Portfolio ChangeCurrency(String newCurrency)
 	{
-		String getCurrencyQuery = "SELECT * FROM Currencies WHERE code = @currency";
-		Dictionary<String, object> parameters = new Dictionary<string, object>();
-		parameters.Add("@currency", newCurrency);
-		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(getCurrencyQuery, parameters);
-
-
-		if (data == null)
+		if (!(Tools.ValidCurrency.Check(newCurrency)))
 		{
-			throw new Exception();
+			throw new StatusCodeException(400, "Currency" + currency + " is not supported");
 		}
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 

@@ -6,14 +6,14 @@ public class AuthenticateTest
 {
 	private static UserTestObject userTestObject = new UserTestObject();
 
-	[ClassInitialize]
-	public static void Initialize(TestContext context)
+	[TestInitialize]
+	public void Initialize()
 	{
 		userTestObject = UserHelper.Create();
 	}
 
-	[ClassCleanup]
-	public static void Cleanup()
+	[TestCleanup]
+	public void Cleanup()
 	{
 		UserHelper.Delete(userTestObject);
 	}
@@ -22,7 +22,7 @@ public class AuthenticateTest
 	public void AuthenticateTest_SuccessfulAccessToken()
 	{
 		String valid = Authentication.Authenticate.AccessToken(userTestObject.accessToken!);
-		Assert.IsTrue(valid == "Valid", "valid should be \"Valid\" but was \"" + valid + "\"");
+		Assert.IsTrue(valid == "Valid", "access token should be \"Valid\" but was \"" + valid + "\"");
 	}
 
 	[TestMethod]

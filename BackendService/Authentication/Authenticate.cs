@@ -9,7 +9,7 @@ public class Authenticate
 		String query = "SELECT * FROM CheckIfAccessIsValid(@access_token, @UnixNow)";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@access_token", accessToken);
-		parameters.Add("@UnixNow", Tools.TimeConverter.dateTimeToUnix(DateTime.Now));
+		parameters.Add("@UnixNow", Tools.TimeConverter.DateTimeToUnix(DateTime.Now));
 		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(query, parameters);
 
 		if (data != null)
@@ -31,12 +31,12 @@ public class Authenticate
 			}
 			else
 			{
-				// If gets here, family does not exists, so token not valid, but can not invalidate family
 				return "Invalid";
 			}
 		}
 		else
 		{
+			// If gets here, family does not exists, so token not valid, but can not invalidate family
 			return "Invalid";
 		}
 	}
@@ -46,10 +46,10 @@ public class Authenticate
 		String checkIfValidQuery = "SELECT * FROM CheckIfRefreshIsValid(@RefreshToken, @UnixNow)";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@RefreshToken", refreshToken);
-		parameters.Add("@UnixNow", Tools.TimeConverter.dateTimeToUnix(DateTime.Now));
+		parameters.Add("@UnixNow", Tools.TimeConverter.DateTimeToUnix(DateTime.Now));
 		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(checkIfValidQuery, parameters);
 		System.Console.WriteLine("RefreshToken: " + refreshToken);
-		System.Console.WriteLine("UnixNow: " + Tools.TimeConverter.dateTimeToUnix(DateTime.Now));
+		System.Console.WriteLine("UnixNow: " + Tools.TimeConverter.DateTimeToUnix(DateTime.Now));
 		try
 		{
 			if (data != null)

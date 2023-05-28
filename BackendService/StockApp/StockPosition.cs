@@ -112,14 +112,14 @@ public class StockPosition
 		parameters.Add("@portfolio", portfolio.id);
 		parameters.Add("@ticker", stock.ticker);
 		parameters.Add("@exchange", stock.exchange);
-		parameters.Add("@startDate", Tools.TimeConverter.dateOnlyToUnix(startDate));
-		parameters.Add("@endDate", Tools.TimeConverter.dateOnlyToUnix(endDate));
+		parameters.Add("@startDate", Tools.TimeConverter.DateOnlyToUnix(startDate));
+		parameters.Add("@endDate", Tools.TimeConverter.DateOnlyToUnix(endDate));
 		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(query, parameters);
 		//String query = "SELECT * FROM(SELECT TOP 1 * FROM StockTransactions	WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp < @startDate ORDER BY timestamp DESC) AS first_row UNION ALL SELECT * FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp >= @startDate AND timestamp <= @endDate ORDER BY timestamp DESC";
 
 		stockTransactions = new List<StockTransaction>();
 
-		int startTimeStamp = Tools.TimeConverter.dateOnlyToUnix(startDate);
+		int startTimeStamp = Tools.TimeConverter.DateOnlyToUnix(startDate);
 
 		foreach (Dictionary<String, object> row in data)
 		{

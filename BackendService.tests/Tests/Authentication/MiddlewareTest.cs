@@ -7,14 +7,14 @@ public class MiddlewareTest
 {
 	private static UserTestObject userTestObject = new UserTestObject();
 
-	[ClassInitialize]
-	public static void Initialize(TestContext context)
+	[TestInitialize]
+	public void Initialize()
 	{
 		userTestObject = UserHelper.Create();
 	}
 
-	[ClassCleanup]
-	public static void Cleanup()
+	[TestCleanup]
+	public void Cleanup()
 	{
 		UserHelper.Delete(userTestObject);
 	}
@@ -66,22 +66,6 @@ public class MiddlewareTest
 	}
 
 	[TestMethod]
-	public async Task MiddlewareTest_InvalidAccessTokenAndCommonPath()
-	{
-		DefaultHttpContext context = new DefaultHttpContext();
-		context.Request.Path = "/v1/portfolios";
-		context.Request.Method = "GET";
-		context.Request.Headers["Authorization"] = "InvalidAccessToken";
-		RequestDelegate next = (HttpContext context) =>
-		{
-			return Task.CompletedTask;
-		};
-		Authentication.Middleware middleware = new Authentication.Middleware();
-		await middleware.InvokeAsync(context, next);
-		Assert.AreEqual(StatusCodes.Status401Unauthorized, context.Response.StatusCode);
-	}
-
-	[TestMethod]
 	public async Task MiddlewareTest_EmptyAccessTokenAndCommonPath()
 	{
 		DefaultHttpContext context = new DefaultHttpContext();
@@ -113,23 +97,6 @@ public class MiddlewareTest
 	}
 
 	[TestMethod]
-	public async Task MiddlewareTest_InvalidRefreshTokenAndRefreshTokenPath()
-	{
-		DefaultHttpContext context = new DefaultHttpContext();
-		context.Request.Path = "/v1/tokens";
-		context.Request.Method = "GET";
-		context.Request.Headers["Authorization"] = "InvalidRefreshToken";
-		RequestDelegate next = (HttpContext context) =>
-		{
-			return Task.CompletedTask;
-		};
-		Authentication.Middleware middleware = new Authentication.Middleware();
-		await middleware.InvokeAsync(context, next);
-		Assert.AreEqual(StatusCodes.Status401Unauthorized, context.Response.StatusCode);
-	}
-
-	// These two always need to be last in this file, because they make the tokens expired
-	[TestMethod]
 	public async Task MiddlewareTest_ExpiredAccessTokenAndCommonPath()
 	{
 		TokenHelper.MakeTokensExpired(userTestObject.accessToken!, userTestObject.refreshToken!);
@@ -160,5 +127,40 @@ public class MiddlewareTest
 		Authentication.Middleware middleware = new Authentication.Middleware();
 		await middleware.InvokeAsync(context, next);
 		Assert.AreEqual(StatusCodes.Status403Forbidden, context.Response.StatusCode);
+	}
+
+	[TestMethod]
+	public async Task MiddlewareTest_InvalidAccessTokenAndCommonPath()
+	{
+		TokenHelper.CreateTokens(userTestObject.user!, (int)userTestObject.familyID!);
+		DefaultHttpContext context = new DefaultHttpContext();
+		context.Request.Path = "/v1/portfolios";
+		context.Request.Method = "GET";
+		context.Request.Headers["Authorization"] = userTestObject.accessToken;
+		RequestDelegate next = (HttpContext context) =>
+		{
+			return Task.CompletedTask;
+		};
+		Authentication.Middleware middleware = new Authentication.Middleware();
+		await middleware.InvokeAsync(context, next);
+		Assert.AreEqual(StatusCodes.Status401Unauthorized, context.Response.StatusCode);
+		Assert.IsTrue(TokenHelper.InvalidatedFamilyCorrectly((int)userTestObject.familyID!));
+	}
+	[TestMethod]
+	public async Task MiddlwareTest_InvalidRefreshTokenAndRefreshPath()
+	{
+		TokenHelper.CreateTokens(userTestObject.user!, (int)userTestObject.familyID!);
+		DefaultHttpContext context = new DefaultHttpContext();
+		context.Request.Path = "/v1/tokens";
+		context.Request.Method = "GET";
+		context.Request.Headers["Authorization"] = userTestObject.refreshToken;
+		RequestDelegate next = (HttpContext context) =>
+		{
+			return Task.CompletedTask;
+		};
+		Authentication.Middleware middleware = new Authentication.Middleware();
+		await middleware.InvokeAsync(context, next);
+		Assert.AreEqual(StatusCodes.Status401Unauthorized, context.Response.StatusCode);
+		Assert.IsTrue(TokenHelper.InvalidatedFamilyCorrectly((int)userTestObject.familyID!));
 	}
 }

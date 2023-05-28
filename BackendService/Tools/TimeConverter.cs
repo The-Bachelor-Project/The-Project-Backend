@@ -1,8 +1,8 @@
 namespace Tools;
 
-class TimeConverter
+public class TimeConverter
 {
-	public static int dateOnlyToUnix(DateOnly dateOnly)
+	public static int DateOnlyToUnix(DateOnly dateOnly)
 	{
 		try
 		{
@@ -26,7 +26,7 @@ class TimeConverter
 		return DateOnly.FromDateTime(UnixTimeStampToDateTime(unix));
 	}
 
-	public static int dateTimeToUnix(DateTime dateTime)
+	public static int DateTimeToUnix(DateTime dateTime)
 	{
 		DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 		TimeSpan diff = dateTime.ToUniversalTime() - origin;

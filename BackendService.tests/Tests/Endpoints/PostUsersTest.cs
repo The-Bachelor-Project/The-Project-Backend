@@ -6,11 +6,11 @@ public class PostUsersTest
 	private static String email = Tools.RandomString.Generate(10) + "@test.com";
 	private static String password = Tools.RandomString.Generate(10);
 
-	[ClassCleanup]
-	public static void Cleanup()
+	[TestCleanup]
+	public void Cleanup()
 	{
 		StockApp.User user = new StockApp.User(email, password);
-		UserTestObject userTestObject = new UserTestObject(user, "", "");
+		UserTestObject userTestObject = new UserTestObject(user, "", "", -1);
 		UserHelper.Delete(userTestObject);
 	}
 
@@ -27,6 +27,7 @@ public class PostUsersTest
 	public void PostUserTest_UserAlreadyExistsTest()
 	{
 		PostUsersBody body = new PostUsersBody(email, password);
+		PostUsers.Endpoint(body);
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostUsers.Endpoint(body));
 		Assert.IsTrue(exception.StatusCode == 409, "StatusCode should be 409 but was " + exception.StatusCode);
 	}

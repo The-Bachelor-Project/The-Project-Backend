@@ -1,6 +1,6 @@
 using System.Data.SqlClient;
 namespace Authentication;
-class SetupTokens
+public class SetupTokens
 {
 	public static StockApp.TokenSet Call(int familyID)
 	{
@@ -40,9 +40,9 @@ class SetupTokens
 
 	private static Boolean UpdateValidToken(String accessToken, int familyID)
 	{
-		String updateValidRefreshQuery = "UPDATE TokenFamily SET valid_token = @accessToken WHERE id = @familyID";
+		String updateValidTokenQuery = "UPDATE TokenFamily SET valid_token = @accessToken WHERE id = @familyID";
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
-		SqlCommand command = new SqlCommand(updateValidRefreshQuery, connection);
+		SqlCommand command = new SqlCommand(updateValidTokenQuery, connection);
 		command.Parameters.AddWithValue("@accessToken", accessToken);
 		command.Parameters.AddWithValue("@familyID", familyID);
 		try

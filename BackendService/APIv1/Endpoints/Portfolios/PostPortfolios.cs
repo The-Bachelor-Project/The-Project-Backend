@@ -19,6 +19,14 @@ public class PostPortfolios
 	{
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
 		System.Console.WriteLine("User: " + user.id);
+		if (body.portfolio.name is null)
+		{
+			throw new StatusCodeException(400, "Missing name of portfolio");
+		}
+		if (body.portfolio.currency is null || body.portfolio.currency == "")
+		{
+			throw new StatusCodeException(400, "Missing currency of portfolio");
+		}
 		StockApp.Portfolio portfolio = new StockApp.Portfolio(body.portfolio.name, user.id!, body.portfolio.currency, body.portfolio.balance, body.portfolio.trackBalance);
 		portfolio.AddToDb();
 		if (portfolio.id != null)

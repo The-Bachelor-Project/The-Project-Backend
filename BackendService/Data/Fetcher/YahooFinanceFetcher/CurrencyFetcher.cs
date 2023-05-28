@@ -10,8 +10,8 @@ public class CurrencyFetcher : ICurrencyFetcher
 
 	public async Task<Data.CurrencyHistory> GetHistory(string currency, DateOnly startDate, DateOnly endDate)
 	{
-		int startTime = Tools.TimeConverter.dateOnlyToUnix(startDate);
-		int endTime = Tools.TimeConverter.dateOnlyToUnix(endDate);
+		int startTime = Tools.TimeConverter.DateOnlyToUnix(startDate);
+		int endTime = Tools.TimeConverter.DateOnlyToUnix(endDate);
 
 		HttpClient client = new HttpClient();
 		Boolean isGBX = false;

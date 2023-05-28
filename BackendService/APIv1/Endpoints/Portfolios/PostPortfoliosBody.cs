@@ -3,12 +3,10 @@ namespace API.v1;
 public class PostPortfoliosBody
 {
 	public PortfolioBody portfolio { get; }
-	public string accessToken { get; }
 
-	public PostPortfoliosBody(PortfolioBody portfolio, string accessToken)
+	public PostPortfoliosBody(PortfolioBody portfolio)
 	{
 		this.portfolio = portfolio;
-		this.accessToken = accessToken;
 	}
 }
 

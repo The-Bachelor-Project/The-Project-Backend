@@ -24,23 +24,17 @@ public class PutPortfolios
 		{
 			return new PutPortfoliosResponse("error");
 		}
-		try
+		User user = new TokenSet(accessToken).GetUser();
+		Portfolio portfolio = user.GetPortfolio(body.id);
+		if (body.newCurrency != "")
 		{
-			User user = new TokenSet(accessToken).GetUser();
-			Portfolio portfolio = user.GetPortfolio(body.id);
-			if (body.newCurrency != "")
-			{
-				portfolio.ChangeCurrency(body.newCurrency);
-			}
-			if (body.newName != "")
-			{
-				portfolio.ChangeName(body.newName);
-			}
-			return new PutPortfoliosResponse("success");
+			portfolio.ChangeCurrency(body.newCurrency);
 		}
-		catch (System.Exception)
+		if (body.newName != "")
 		{
-			return new PutPortfoliosResponse("error");
+			portfolio.ChangeName(body.newName);
 		}
+		return new PutPortfoliosResponse("success");
+
 	}
 }
