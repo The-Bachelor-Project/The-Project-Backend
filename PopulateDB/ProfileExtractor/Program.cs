@@ -172,7 +172,6 @@ class Program
 					}
 
 
-
 					profile.Add("ticker", "");
 					try
 					{
@@ -330,7 +329,7 @@ class Program
 					command.Parameters.AddWithValue("@state", profile["state"]);
 					command.Parameters.AddWithValue("@zip", profile["zip"]);
 					command.Parameters.AddWithValue("@financial_currency", profile["financialCurrency"]);
-					command.Parameters.AddWithValue("@shares_outstanding", int.Parse(profile["sharesOutstanding"]));
+					command.Parameters.AddWithValue("@shares_outstanding", profile["sharesOutstanding"]);
 					command.Parameters.AddWithValue("@industry", profile["industry"]);
 					command.Parameters.AddWithValue("@sector", profile["sector"]);
 					command.Parameters.AddWithValue("@website", profile["website"]);
@@ -340,6 +339,7 @@ class Program
 					{
 						command.ExecuteNonQuery();
 						System.Console.WriteLine("Inserted: " + profile["exchange"] + " : " + profile["ticker"] + " : " + profile["displayName"] + " : " + jsonFiles[i]);
+
 						profilesAdded++;
 					}
 					catch (Exception e)
@@ -366,8 +366,9 @@ class Program
 					//System.Console.WriteLine(jsonObject["quote"]["result"][0]["exchange"].ToString() + " : " + jsonObject["quote"]["result"][0]["fullExchangeName"].ToString() + " : " + jsonObject["quote"]["result"][0]["symbol"].ToString());
 				}
 			}
-			catch (Exception)
+			catch (Exception e)
 			{
+				System.Console.WriteLine(e);
 				iDunnoCounter++;
 			}
 
