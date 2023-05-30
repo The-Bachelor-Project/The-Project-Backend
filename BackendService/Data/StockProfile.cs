@@ -22,11 +22,13 @@ public class StockProfile
 	int trackingDate;
 
 	public StockProfile() { }
-	public StockProfile(string? ticker, string? exchange, string? name, string? country)
+	public StockProfile(string? ticker, string? exchange, string? name, string? shortName, string? longName, string? country)
 	{
 		this.ticker = ticker;
 		this.exchange = exchange;
 		this.displayName = name;
+		this.shortName = shortName;
+		this.longName = longName;
 		this.country = country;
 	}
 }

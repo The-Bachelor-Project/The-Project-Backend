@@ -100,7 +100,7 @@ public class StockFetcher : IStockFetcher
 
 		foreach (Dictionary<String, object> row in data)
 		{
-			results = results.Append(new Data.StockProfile((String)row["ticker"], (String)row["exchange"], (String)row["company_name"], (String)row["country"])).ToArray();
+			results = results.Append(new Data.StockProfile((String)row["ticker"], (String)row["exchange"], (String)row["company_name"], (String)row["short_name"], (String)row["long_name"], (String)row["country"])).ToArray();
 		}
 		return Task.FromResult(results);
 	}
