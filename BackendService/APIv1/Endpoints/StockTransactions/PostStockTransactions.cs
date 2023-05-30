@@ -20,21 +20,50 @@ public class PostStockTransactions
 
 	public static async Task<PostStockTransactionsResponse> EndpointAsync(PostStockTransactionsBody body, String accessToken)
 	{
+		if (body.transaction.portfolioId is null || body.transaction.portfolioId == "")
+		{
+			throw new StatusCodeException(400, "Missing portfolio id");
+		}
+		if (body.transaction.ticker is null || body.transaction.ticker == "")
+		{
+			throw new StatusCodeException(400, "Missing ticker");
+		}
+		if (body.transaction.exchange is null || body.transaction.exchange == "")
+		{
+			throw new StatusCodeException(400, "Missing exchange");
+		}
+		if (body.transaction.amount is null || body.transaction.amount == 0)
+		{
+			throw new StatusCodeException(400, "Missing amount. Can not be 0");
+		}
+		if (body.transaction.timestamp is null || body.transaction.timestamp == 0)
+		{
+			throw new StatusCodeException(400, "Missing timestamp");
+		}
+		if (body.transaction.price!.currency is null || body.transaction.price!.currency == "")
+		{
+			throw new StatusCodeException(400, "Missing currency of price");
+		}
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
 		System.Console.WriteLine("User: " + user.id);
-		StockApp.User owner = new StockApp.Portfolio(body.transaction.portfolio).GetOwner();
-		StockApp.StockTransaction StockTransaction = new StockApp.StockTransaction();
-		StockTransaction.portfolioId = body.transaction.portfolio;
-		StockTransaction.ticker = body.transaction.ticker;
-		StockTransaction.exchange = body.transaction.exchange;
-		StockTransaction.amount = body.transaction.amount;
-		StockTransaction.timestamp = body.transaction.timestamp;
-		StockTransaction.price = new StockApp.Money(body.transaction.price.amount, body.transaction.price.currency);
-		await StockTransaction.AddToDb();
-		System.Console.WriteLine("StockTransaction id: " + StockTransaction.id);
-		if (StockTransaction.id != null)
+		StockApp.User owner = new StockApp.Portfolio(body.transaction.portfolioId).GetOwner();
+		if (user.id != owner.id)
 		{
-			return new PostStockTransactionsResponse("success", (int)StockTransaction.id);
+			throw new StatusCodeException(403, "User is not owner of portfolio");
+		}
+
+		StockApp.StockTransaction stockTransaction = new StockApp.StockTransaction();
+		stockTransaction.portfolioId = body.transaction.portfolioId;
+		stockTransaction.ticker = body.transaction.ticker;
+		stockTransaction.exchange = body.transaction.exchange;
+		stockTransaction.amount = body.transaction.amount;
+		stockTransaction.timestamp = body.transaction.timestamp;
+		stockTransaction.price = new StockApp.Money(body.transaction.price.amount, body.transaction.price.currency);
+		await stockTransaction.AddToDb();
+		System.Console.WriteLine("StockTransaction id: " + stockTransaction.id);
+		if (stockTransaction.id != null)
+		{
+			return new PostStockTransactionsResponse("success", (int)stockTransaction.id);
 		}
 		return new PostStockTransactionsResponse("error", 0);
 	}

@@ -23,12 +23,12 @@ public class GetPortfoliosTest
 	[TestMethod]
 	public void GetPortfoliosTest_SinglePortfolioTest()
 	{
-		StockApp.Portfolio portfolio = PortfolioHelper.CreatePortfolioHelper(userTestObject);
+		StockApp.Portfolio portfolio = PortfolioHelper.Create(userTestObject);
 		GetPortfoliosResponse response = GetPortfolios.Endpoint(portfolio.id!, userTestObject.accessToken!);
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.portfolios.Count == 1, "There should be 1 portfolio but there were " + response.portfolios.Count);
 		Assert.IsTrue(response.portfolios[0].currency == "EUR", "Currency should be EUR but was " + response.portfolios[0].currency);
-		PortfolioHelper.DeletePortfolioHelper(portfolio, userTestObject);
+		PortfolioHelper.Delete(portfolio, userTestObject);
 	}
 
 	[TestMethod]
@@ -37,7 +37,7 @@ public class GetPortfoliosTest
 		List<StockApp.Portfolio> portfolios = new List<StockApp.Portfolio>();
 		for (int i = 0; i < 10; i++)
 		{
-			portfolios.Add(PortfolioHelper.CreatePortfolioHelper(userTestObject));
+			portfolios.Add(PortfolioHelper.Create(userTestObject));
 		}
 		GetPortfoliosResponse response = GetPortfolios.Endpoint(userTestObject.accessToken!);
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
@@ -50,7 +50,7 @@ public class GetPortfoliosTest
 
 		foreach (StockApp.Portfolio portfolio in portfolios)
 		{
-			PortfolioHelper.DeletePortfolioHelper(portfolio, userTestObject);
+			PortfolioHelper.Delete(portfolio, userTestObject);
 		}
 	}
 
@@ -70,7 +70,7 @@ public class GetPortfoliosTest
 	}
 
 	[TestMethod]
-	public void GetPortfoliosTest_InvalidPortfolioID()
+	public void GetPortfoliosTest_InvalidPortfolioIDOrOwner()
 	{
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => GetPortfolios.Endpoint("", userTestObject.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 404, "Status code should be 404 but was " + exception.StatusCode);

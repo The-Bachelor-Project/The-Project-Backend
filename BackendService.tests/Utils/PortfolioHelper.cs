@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 
 public class PortfolioHelper
 {
-	public static StockApp.Portfolio CreatePortfolioHelper(UserTestObject userTestObject)
+	public static StockApp.Portfolio Create(UserTestObject userTestObject)
 	{
 		StockApp.Portfolio portfolio = new StockApp.Portfolio("TEST", userTestObject.user!.id!, "EUR", 0, false);
 		try
@@ -17,7 +17,7 @@ public class PortfolioHelper
 		return portfolio;
 	}
 
-	public static void DeletePortfolioHelper(StockApp.Portfolio portfolio, UserTestObject userTestObject)
+	public static void Delete(StockApp.Portfolio portfolio, UserTestObject userTestObject)
 	{
 		String deletePortfolioQuery = "DELETE FROM Portfolios WHERE uid = @uid";
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
@@ -33,7 +33,7 @@ public class PortfolioHelper
 		}
 	}
 
-	public static StockApp.Portfolio GetPortfolio(String id)
+	public static StockApp.Portfolio Get(String id)
 	{
 		String getPortfolioQuery = "SELECT * FROM Portfolios WHERE uid = @uid";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
