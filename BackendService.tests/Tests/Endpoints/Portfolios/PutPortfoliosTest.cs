@@ -69,6 +69,6 @@ public class PutPortfoliosTest
 		PutPortfoliosBody body = new PutPortfoliosBody(portfolio.id!, "USD", "New Name Test");
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PutPortfolios.Endpoint("invalid", body));
 		Assert.IsTrue(exception.StatusCode == 401, "Status code should be 401 but was " + exception.StatusCode);
-		PortfolioHelper.Delete(portfolio, userTestObject);
+		PortfolioHelper.Delete(userTestObject);
 	}
 }

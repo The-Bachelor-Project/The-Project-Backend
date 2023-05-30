@@ -25,7 +25,7 @@ public class PostStockTransactionsTest
 	[TestCleanup]
 	public void Cleanup()
 	{
-		PortfolioHelper.Delete(portfolio, userTestObject);
+		PortfolioHelper.Delete(userTestObject);
 		UserHelper.Delete(userTestObject);
 	}
 

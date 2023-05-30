@@ -28,7 +28,7 @@ public class GetPortfoliosTest
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.portfolios.Count == 1, "There should be 1 portfolio but there were " + response.portfolios.Count);
 		Assert.IsTrue(response.portfolios[0].currency == "EUR", "Currency should be EUR but was " + response.portfolios[0].currency);
-		PortfolioHelper.Delete(portfolio, userTestObject);
+		PortfolioHelper.Delete(userTestObject);
 	}
 
 	[TestMethod]
@@ -50,7 +50,7 @@ public class GetPortfoliosTest
 
 		foreach (StockApp.Portfolio portfolio in portfolios)
 		{
-			PortfolioHelper.Delete(portfolio, userTestObject);
+			PortfolioHelper.Delete(userTestObject);
 		}
 	}
 

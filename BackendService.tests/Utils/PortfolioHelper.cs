@@ -17,7 +17,7 @@ public class PortfolioHelper
 		return portfolio;
 	}
 
-	public static void Delete(StockApp.Portfolio portfolio, UserTestObject userTestObject)
+	public static void Delete(UserTestObject userTestObject)
 	{
 		String deletePortfolioQuery = "DELETE FROM Portfolios WHERE uid = @uid";
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
