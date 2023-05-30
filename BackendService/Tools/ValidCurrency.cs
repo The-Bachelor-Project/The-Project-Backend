@@ -12,6 +12,6 @@ public class ValidCurrency
 		{
 			return true;
 		}
-		throw new StatusCodeException(400, "Currency " + currency + " is not supported");
+		return false;
 	}
 }

@@ -20,18 +20,10 @@ public class DeleteStockTransactions
 
 	public async static Task<DeleteStockTransactionsResponse> Endpoint(String accessToken, String portfolioID, int transactionID)
 	{
-		try
-		{
-			User user = new TokenSet(accessToken).GetUser();
-			Portfolio portfolio = user.GetPortfolio(portfolioID);
-			StockTransaction stockTransaction = portfolio.GetStockTransaction(transactionID);
-			await stockTransaction.DeleteFromDb();
-			return new DeleteStockTransactionsResponse("success");
-		}
-		catch (System.Exception e)
-		{
-			System.Console.WriteLine(e);
-			return new DeleteStockTransactionsResponse("error");
-		}
+		User user = new TokenSet(accessToken).GetUser();
+		Portfolio portfolio = user.GetPortfolio(portfolioID);
+		StockTransaction stockTransaction = portfolio.GetStockTransaction(transactionID);
+		await stockTransaction.DeleteFromDb();
+		return new DeleteStockTransactionsResponse("success");
 	}
 }

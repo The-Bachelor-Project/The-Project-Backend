@@ -21,45 +21,50 @@ public class PutStockTransactions
 	{
 		if (body.id is 0 || body.portfolio is null)
 		{
-			return new PutStockTransactionsResponse("error", 0);
+			throw new StatusCodeException(400, "Missing stockTransaction id or portfolio id");
 		}
-		try
+		User user = new TokenSet(accessToken).GetUser();
+		Portfolio portfolio = user.GetPortfolio(body.portfolio);
+		if (portfolio.GetOwner().id != user.id)
 		{
-			User user = new TokenSet(accessToken).GetUser();
-			Portfolio portfolio = user.GetPortfolio(body.portfolio);
-			StockTransaction stockTransaction = portfolio.GetStockTransaction(body.id);
-			await stockTransaction.DeleteFromDb();
-			if (body.newAmount != 0)
-			{
-				stockTransaction.amount = body.newAmount;
-			}
-
-			if (body.newPrice != 0 && body.newCurrency != "")
-			{
-				stockTransaction.price = new Money(body.newPrice, body.newCurrency);
-			}
-			else if (body.newPrice != 0)
-			{
-				stockTransaction.price = new Money(body.newPrice, stockTransaction.price!.currency);
-			}
-			else if (body.newCurrency != "")
-			{
-				stockTransaction.price = new Money(stockTransaction.price!.amount, body.newCurrency);
-			}
-
-			if (body.newTimestamp != 0)
-			{
-				stockTransaction.timestamp = body.newTimestamp;
-			}
-
-			await stockTransaction.AddToDb();
-
-			return new PutStockTransactionsResponse("success", (int)stockTransaction.id!);
+			throw new StatusCodeException(403, "Invalid portfolio owner");
 		}
-		catch (System.Exception e)
+		if (body.newPrice < 0)
 		{
-			System.Console.WriteLine(e);
-			return new PutStockTransactionsResponse("error", 0);
+			throw new StatusCodeException(400, "Invalid price");
 		}
+		if (body.newCurrency != "" && !(Tools.ValidCurrency.Check(body.newCurrency)))
+		{
+			throw new StatusCodeException(400, "Invalid currency " + body.newCurrency);
+		}
+		StockTransaction stockTransaction = portfolio.GetStockTransaction(body.id);
+		await stockTransaction.DeleteFromDb();
+		if (body.newAmount != 0)
+		{
+			stockTransaction.amount = body.newAmount;
+		}
+
+		if (body.newPrice != 0 && body.newCurrency != "")
+		{
+			stockTransaction.price = new Money(body.newPrice, body.newCurrency);
+		}
+		else if (body.newPrice != 0)
+		{
+			stockTransaction.price = new Money(body.newPrice, stockTransaction.price!.currency);
+		}
+		else if (body.newCurrency != "")
+		{
+			stockTransaction.price = new Money(stockTransaction.price!.amount, body.newCurrency);
+		}
+
+		if (body.newTimestamp != 0)
+		{
+			stockTransaction.timestamp = body.newTimestamp;
+		}
+
+		await stockTransaction.AddToDb();
+
+		return new PutStockTransactionsResponse("success", (int)stockTransaction.id!);
+
 	}
 }

@@ -30,10 +30,10 @@ public class PostStockTransactionsTest
 	}
 
 	[TestMethod]
-	public void PostStockTransactionsTest_PostSuccessfullyTest()
+	public async Task PostStockTransactionsTest_PostSuccessfullyTest()
 	{
 		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(successfulStockTransaction);
-		PostStockTransactionsResponse response = PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!).Result;
+		PostStockTransactionsResponse response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.id != 0, "Response id should not be 0");
 
@@ -49,13 +49,14 @@ public class PostStockTransactionsTest
 		stockTransactionData.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		stockTransactionData.price = new StockApp.Money(100, "USD");
 		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData);
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!).GetAwaiter().GetResult());
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
 	}
 
 	[TestMethod]
 	public void PostStockTransactionsTest_MissingElementsTestTest()
 	{
+		// Missing portfolio id
 		StockApp.StockTransaction stockTransactionData = new StockApp.StockTransaction();
 		stockTransactionData.portfolioId = portfolio.id;
 		stockTransactionData.amount = 1;
@@ -63,9 +64,10 @@ public class PostStockTransactionsTest
 		stockTransactionData.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		stockTransactionData.price = new StockApp.Money(100, "USD");
 		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData);
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!).GetAwaiter().GetResult());
 		Assert.IsTrue(exception.StatusCode == 400, "Status code for missing portfolio id should be 400 but was " + exception.StatusCode);
 
+		// Missing exchange
 		stockTransactionData = new StockApp.StockTransaction();
 		stockTransactionData.portfolioId = portfolio.id;
 		stockTransactionData.amount = 1;
@@ -73,9 +75,10 @@ public class PostStockTransactionsTest
 		stockTransactionData.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		stockTransactionData.price = new StockApp.Money(100, "USD");
 		postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData);
-		exception = Assert.ThrowsException<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		exception = Assert.ThrowsException<StatusCodeException>(() => PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!).GetAwaiter().GetResult());
 		Assert.IsTrue(exception.StatusCode == 400, "Status code for missing exchange should be 400 but was " + exception.StatusCode);
 
+		// Missing ticker
 		stockTransactionData = new StockApp.StockTransaction();
 		stockTransactionData.portfolioId = portfolio.id;
 		stockTransactionData.amount = 1;
@@ -83,9 +86,10 @@ public class PostStockTransactionsTest
 		stockTransactionData.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		stockTransactionData.price = new StockApp.Money(100, "USD");
 		postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData);
-		exception = Assert.ThrowsException<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		exception = Assert.ThrowsException<StatusCodeException>(() => PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!).GetAwaiter().GetResult());
 		Assert.IsTrue(exception.StatusCode == 400, "Status code for missing ticker should be 400 but was " + exception.StatusCode);
 
+		// Missing timestamp
 		stockTransactionData = new StockApp.StockTransaction();
 		stockTransactionData.portfolioId = portfolio.id;
 		stockTransactionData.amount = 1;
@@ -93,18 +97,20 @@ public class PostStockTransactionsTest
 		stockTransactionData.ticker = "AAPL";
 		stockTransactionData.price = new StockApp.Money(100, "USD");
 		postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData);
-		exception = Assert.ThrowsException<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		exception = Assert.ThrowsException<StatusCodeException>(() => PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!).GetAwaiter().GetResult());
 		Assert.IsTrue(exception.StatusCode == 400, "Status code for missing timestamp should be 400 but was " + exception.StatusCode);
 
+		// Missing amount
 		stockTransactionData = new StockApp.StockTransaction();
 		stockTransactionData.portfolioId = portfolio.id;
 		stockTransactionData.exchange = "NASDAQ";
 		stockTransactionData.ticker = "AAPL";
 		stockTransactionData.price = new StockApp.Money(100, "USD");
 		postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData);
-		exception = Assert.ThrowsException<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		exception = Assert.ThrowsException<StatusCodeException>(() => PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!).GetAwaiter().GetResult());
 		Assert.IsTrue(exception.StatusCode == 400, "Status code for missing amount should be 400 but was " + exception.StatusCode);
 
+		// Missing price currency
 		stockTransactionData = new StockApp.StockTransaction();
 		stockTransactionData.portfolioId = portfolio.id;
 		stockTransactionData.amount = 1;
@@ -112,7 +118,7 @@ public class PostStockTransactionsTest
 		stockTransactionData.ticker = "AAPL";
 		stockTransactionData.price = new StockApp.Money(100, null!);
 		postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData);
-		exception = Assert.ThrowsException<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		exception = Assert.ThrowsException<StatusCodeException>(() => PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!).GetAwaiter().GetResult());
 		Assert.IsTrue(exception.StatusCode == 400, "Status code for missing price currency should be 400 but was " + exception.StatusCode);
 	}
 
@@ -120,7 +126,7 @@ public class PostStockTransactionsTest
 	public void PostStockTransactionsTest_InvalidAccessTokenTest()
 	{
 		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(successfulStockTransaction);
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, "invalidToken"));
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostStockTransactions.EndpointAsync(postStockTransactionsBody, "invalid").GetAwaiter().GetResult());
 		Assert.IsTrue(exception.StatusCode == 401, "Status code should be 401 but was " + exception.StatusCode);
 	}
 
@@ -129,7 +135,7 @@ public class PostStockTransactionsTest
 	{
 		UserTestObject invalidUser = UserHelper.Create();
 		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(successfulStockTransaction);
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, invalidUser.accessToken!));
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostStockTransactions.EndpointAsync(postStockTransactionsBody, invalidUser.accessToken!).GetAwaiter().GetResult());
 		Assert.IsTrue(exception.StatusCode == 403, "Status code should be 403 but was " + exception.StatusCode);
 		UserHelper.Delete(invalidUser);
 	}
@@ -145,7 +151,7 @@ public class PostStockTransactionsTest
 		stockTransactionData.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		stockTransactionData.price = new StockApp.Money(100, "invalid");
 		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData);
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!).GetAwaiter().GetResult());
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
 	}
 
@@ -160,8 +166,8 @@ public class PostStockTransactionsTest
 		stockTransactionData.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		stockTransactionData.price = new StockApp.Money(100, "USD");
 		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData);
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
-		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!).GetAwaiter().GetResult());
+		Assert.IsTrue(exception.StatusCode == 404, "Status code should be 404 but was " + exception.StatusCode);
 	}
 
 	[TestMethod]
@@ -175,8 +181,8 @@ public class PostStockTransactionsTest
 		stockTransactionData.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		stockTransactionData.price = new StockApp.Money(100, "USD");
 		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData);
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
-		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!).GetAwaiter().GetResult());
+		Assert.IsTrue(exception.StatusCode == 404, "Status code should be 404 but was " + exception.StatusCode);
 	}
 
 	[TestMethod]
@@ -190,7 +196,22 @@ public class PostStockTransactionsTest
 		stockTransactionData.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		stockTransactionData.price = new StockApp.Money(100, "USD");
 		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData);
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!).GetAwaiter().GetResult());
+		Assert.IsTrue(exception.StatusCode == 404, "Status code should be 404 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
+	public void PostStockTransactionsTest_InvalidPriceTest()
+	{
+		StockApp.StockTransaction stockTransactionData = new StockApp.StockTransaction();
+		stockTransactionData.portfolioId = portfolio.id;
+		stockTransactionData.amount = 1;
+		stockTransactionData.exchange = "NASDAQ";
+		stockTransactionData.ticker = "AAPL";
+		stockTransactionData.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
+		stockTransactionData.price = new StockApp.Money(-100, "USD");
+		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData);
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!).GetAwaiter().GetResult());
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
 	}
 

@@ -1,5 +1,3 @@
-using System.Data.SqlClient;
-
 namespace API.v1;
 
 public class PostStockTransactions
@@ -43,6 +41,10 @@ public class PostStockTransactions
 		if (body.transaction.price!.currency is null || body.transaction.price!.currency == "")
 		{
 			throw new StatusCodeException(400, "Missing currency of price");
+		}
+		if (body.transaction.price!.amount < 0)
+		{
+			throw new StatusCodeException(400, "Invalid price");
 		}
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
 		System.Console.WriteLine("User: " + user.id);

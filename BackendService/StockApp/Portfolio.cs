@@ -216,6 +216,6 @@ public class Portfolio
 			stockTransaction.price = new Money(Convert.ToDecimal(data["price_amount"]), data["price_currency"].ToString()!);
 			return stockTransaction;
 		}
-		throw new StatusCodeException(500, "Could not get stock transaction with id " + id);
+		throw new StatusCodeException(404, "Could not find stock transaction with id " + id);
 	}
 }
