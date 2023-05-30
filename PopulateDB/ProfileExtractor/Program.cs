@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlClient;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -72,9 +73,11 @@ class Program
 		{"SAP","SAP"},
 		{"RIS","RSE"},
 	};
+	static Dictionary<string, int> errors = new Dictionary<string, int>();
 
 	public static void Main()
 	{
+		SqlConnection connection = Create();
 		// Specify the folder path
 		string folderPath = "../profiles_json";
 
@@ -96,10 +99,13 @@ class Program
 		int iDunnoCounter = 0;
 		int duplicateCounter = 0;
 
+		int profilesAdded = 0;
+		int profilesFailed = 0;
+
 		// Process each JSON file
 		for (int i = 0; i < jsonFiles.Length; i++)
 		{
-			//System.Console.WriteLine("Processing file " + (i + 1) + " of " + jsonFiles.Length + " ( " + jsonFiles[i] + " )");
+			System.Console.WriteLine("Processing file " + (i + 1) + " of " + jsonFiles.Length + " ( " + jsonFiles[i] + " )");
 			Dictionary<string, dynamic> profile = new Dictionary<string, dynamic>();
 			string filePath = jsonFiles[i];
 			// Read the JSON file
@@ -119,21 +125,30 @@ class Program
 					{
 						profile["displayName"] = jsonObject["quote"]["result"][0]["displayName"].ToString();
 					}
-					catch { }
+					catch
+					{
+						AddError("displayName");
+					}
 
 					profile.Add("longName", "");
 					try
 					{
 						profile["longName"] = jsonObject["quote"]["result"][0]["longName"].ToString();
 					}
-					catch { }
+					catch
+					{
+						AddError("longName");
+					}
 
 					profile.Add("shortName", "");
 					try
 					{
 						profile["shortName"] = jsonObject["quote"]["result"][0]["shortName"].ToString();
 					}
-					catch { }
+					catch
+					{
+						AddError("shortName");
+					}
 
 
 					profile.Add("financialCurrency", "");
@@ -141,7 +156,20 @@ class Program
 					{
 						profile["financialCurrency"] = jsonObject["quote"]["result"][0]["financialCurrency"].ToString();
 					}
-					catch { }
+					catch
+					{
+						AddError("financialCurrency");
+					}
+
+					profile.Add("sharesOutstanding", "");
+					try
+					{
+						profile["sharesOutstanding"] = jsonObject["quote"]["result"][0]["sharesOutstanding"].ToString();
+					}
+					catch
+					{
+						AddError("sharesOutstanding");
+					}
 
 
 
@@ -150,58 +178,86 @@ class Program
 					{
 						profile["ticker"] = jsonObject["quote"]["result"][0]["symbol"].ToString().Split('.')[0];
 					}
-					catch { }
+					catch
+					{
+						AddError("ticker");
+					}
 
 					if (jsonObject["quote"]["result"][0]["symbol"].ToString().Split('.').Length > 2)
+					{
 						throw new Exception("Too many dots in symbol");
+						AddError("Too many dots in symbol");
+					}
+
 
 					profile.Add("exchange", "");
 					try
 					{
 						profile["exchange"] = exchanges[jsonObject["quote"]["result"][0]["exchange"].ToString()];
 					}
-					catch { }
+					catch
+					{
+						AddError("exchange");
+					}
 
 					profile.Add("address", "");
 					try
 					{
 						profile["address"] = jsonObject["summary"]["result"][0]["assetProfile"]["address1"].ToString();
 					}
-					catch { }
+					catch
+					{
+						AddError("address 1");
+					}
 
 					try
 					{
 						profile["address"] += ", " + jsonObject["summary"]["result"][0]["assetProfile"]["address2"].ToString();
 					}
-					catch { }
+					catch
+					{
+						AddError("address 2");
+					}
 
 					profile.Add("city", "");
 					try
 					{
 						profile["city"] = jsonObject["summary"]["result"][0]["assetProfile"]["city"].ToString();
 					}
-					catch { }
+					catch
+					{
+						AddError("city");
+					}
 
 					profile.Add("state", "");
 					try
 					{
 						profile["state"] = jsonObject["summary"]["result"][0]["assetProfile"]["state"].ToString();
 					}
-					catch { }
+					catch
+					{
+						AddError("state");
+					}
 
 					profile.Add("zip", "");
 					try
 					{
 						profile["zip"] = jsonObject["summary"]["result"][0]["assetProfile"]["zip"].ToString();
 					}
-					catch { }
+					catch
+					{
+						AddError("zip");
+					}
 
 					profile.Add("country", "");
 					try
 					{
 						profile["country"] = jsonObject["summary"]["result"][0]["assetProfile"]["country"].ToString();
 					}
-					catch { }
+					catch
+					{
+						AddError("country");
+					}
 
 
 
@@ -211,21 +267,30 @@ class Program
 					{
 						profile["website"] = jsonObject["summary"]["result"][0]["assetProfile"]["website"].ToString();
 					}
-					catch { }
+					catch
+					{
+						AddError("website");
+					}
 
 					profile.Add("industry", "");
 					try
 					{
 						profile["industry"] = jsonObject["summary"]["result"][0]["assetProfile"]["industry"].ToString();
 					}
-					catch { }
+					catch
+					{
+						AddError("industry");
+					}
 
 					profile.Add("sector", "");
 					try
 					{
 						profile["sector"] = jsonObject["summary"]["result"][0]["assetProfile"]["sector"].ToString();
 					}
-					catch { }
+					catch
+					{
+						AddError("sector");
+					}
 
 
 					// Extract the key value you want from the JSON data
@@ -251,6 +316,40 @@ class Program
 					}
 
 					profiles.Add(profile);
+
+					String tags = GenerateTags(profile);
+					String query = "INSERT INTO Stocks (ticker, exchange, company_name, short_name, long_name, address, city, state, zip, financial_currency, shares_outstanding, industry, sector, website, country, tags) VALUES (@ticker, @exchange, @name, @short_name, @long_name, @address, @city, @state, @zip, @financial_currency, @shares_outstanding, @industry, @sector, @website, @country, @tags)";
+					SqlCommand command = new SqlCommand(query, connection);
+					command.Parameters.AddWithValue("@ticker", profile["ticker"]);
+					command.Parameters.AddWithValue("@exchange", profile["exchange"]);
+					command.Parameters.AddWithValue("@name", profile["displayName"]);
+					command.Parameters.AddWithValue("@short_name", profile["shortName"]);
+					command.Parameters.AddWithValue("@long_name", profile["longName"]);
+					command.Parameters.AddWithValue("@address", profile["address"]);
+					command.Parameters.AddWithValue("@city", profile["city"]);
+					command.Parameters.AddWithValue("@state", profile["state"]);
+					command.Parameters.AddWithValue("@zip", profile["zip"]);
+					command.Parameters.AddWithValue("@financial_currency", profile["financialCurrency"]);
+					command.Parameters.AddWithValue("@shares_outstanding", int.Parse(profile["sharesOutstanding"]));
+					command.Parameters.AddWithValue("@industry", profile["industry"]);
+					command.Parameters.AddWithValue("@sector", profile["sector"]);
+					command.Parameters.AddWithValue("@website", profile["website"]);
+					command.Parameters.AddWithValue("@country", profile["country"]);
+					command.Parameters.AddWithValue("@tags", tags);
+					try
+					{
+						command.ExecuteNonQuery();
+						System.Console.WriteLine("Inserted: " + profile["exchange"] + " : " + profile["ticker"] + " : " + profile["displayName"] + " : " + jsonFiles[i]);
+						profilesAdded++;
+					}
+					catch (Exception e)
+					{
+						AddError("SQL");
+						System.Console.WriteLine(e.Message);
+						profilesFailed++;
+					}
+
+					System.Threading.Thread.Sleep(2);
 				}
 				else
 				{
@@ -272,6 +371,8 @@ class Program
 				iDunnoCounter++;
 			}
 
+
+
 			// Convert the string array to JSON
 			//string extractedValuesJson = JsonConvert.SerializeObject(extractedValues, Formatting.Indented);
 
@@ -281,10 +382,15 @@ class Program
 
 			//Console.WriteLine("Extraction completed. Results saved to " + outputPath);
 		}
-		//foreach (Dictionary<string, dynamic> profile in profiles)
-		//{
-		//	printDict(profile);
-		//}
+		string extractedValuesJson = JsonConvert.SerializeObject(profiles, Formatting.None);
+		//string extractedValuesJson = JsonConvert.SerializeObject(new Dictionary<string, dynamic>() { { "profiles", profiles } }, Formatting.None);
+		//String jsonString = GetJson(new Dictionary<string, dynamic>() { { "profiles", profiles } });
+		string outputPath = "result.json";
+		File.WriteAllText(outputPath, extractedValuesJson);
+
+
+
+
 
 		//missingExchanges = missingExchanges.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
 		//printDictInt(missingExchanges);
@@ -293,6 +399,10 @@ class Program
 		System.Console.WriteLine("Missing: " + missingCounter);
 		System.Console.WriteLine("I dunno: " + (iDunnoCounter - duplicateCounter));
 		System.Console.WriteLine("Duplicates: " + duplicateCounter);
+		System.Console.WriteLine("Profiles added: " + profilesAdded);
+		System.Console.WriteLine("Profiles failed: " + profilesFailed);
+
+		printDictInt(errors);
 	}
 
 	//function that prints all key value pairs in a dictionary
@@ -304,7 +414,6 @@ class Program
 		}
 		System.Console.WriteLine("\n");
 	}
-
 	public static void printDictInt(Dictionary<string, int> dict)
 	{
 		foreach (KeyValuePair<string, int> kvp in dict)
@@ -312,5 +421,44 @@ class Program
 			Console.WriteLine("{0}: {1}", kvp.Key, kvp.Value);
 		}
 		System.Console.WriteLine("\n");
+	}
+	public static SqlConnection Create()
+	{
+		SqlConnectionStringBuilder builder = buildConnectionString();
+		String connectionString = builder.ConnectionString;
+		SqlConnection connection = new SqlConnection(connectionString);
+		connection.Open();
+		return connection;
+	}
+	private static SqlConnectionStringBuilder buildConnectionString()
+	{
+		SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+		builder.DataSource = "stock-app-db-server.database.windows.net";
+		builder.UserID = "bachelor";
+		builder.Password = "Gustav.Frederik";
+		builder.InitialCatalog = "stock_app_db";
+		return builder;
+	}
+	public static String GenerateTags(Dictionary<string, dynamic> stockProfile)
+	{
+		//TODO: Make variants for NOVO-B, NOVO B, AT&T, ATT, AT T, so fourth
+		String tags = "";
+		tags += stockProfile["exchange"] + " " + stockProfile["ticker"] + ",";
+		tags += stockProfile["ticker"] + " " + stockProfile["exchange"] + ",";
+		tags += stockProfile["displayName"] + ",";
+		tags += stockProfile["shortName"] + ",";
+		tags += stockProfile["longName"] + ",";
+		return tags.ToLower();
+	}
+	public static void AddError(String error)
+	{
+		if (!errors.ContainsKey(error))
+		{
+			errors.Add(error, 1);
+		}
+		else
+		{
+			errors[error]++;
+		}
 	}
 }

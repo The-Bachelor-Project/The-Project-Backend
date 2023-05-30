@@ -78,7 +78,7 @@ public class StockFetcher : IStockFetcher
 
 	public async Task<Data.StockProfile[]> Search(string query)
 	{
-		await new YahooFinanceFetcher.StockFetcher().Search(query); //TODO in the future check if search has already been performed recently
+		//await new YahooFinanceFetcher.StockFetcher().Search(query); //TODO in the future check if search has already been performed recently
 		return await new DatabaseFetcher.StockFetcher().Search(query);
 	}
 
