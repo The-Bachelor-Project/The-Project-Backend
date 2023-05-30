@@ -21,7 +21,7 @@ public class GetStockTransactions
 	public static GetStockTransactionsResponse Endpoint(string accessToken)
 	{
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
-		List<Data.StockTransaction> stockTransactions = user.GetAllStockTransactions();
+		List<StockApp.StockTransaction> stockTransactions = user.GetAllStockTransactions();
 		return new GetStockTransactionsResponse("success", stockTransactions);
 	}
 }

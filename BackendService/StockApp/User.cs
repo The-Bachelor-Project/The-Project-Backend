@@ -204,18 +204,18 @@ public class User
 		return new Data.UserAssetsValueHistory(valueHistory, dataPortfolios, dividendHistory);
 	}
 
-	public List<Data.StockTransaction> GetAllStockTransactions()
+	public List<StockApp.StockTransaction> GetAllStockTransactions()
 	{
 		UpdatePortfolios();
 
-		List<Data.StockTransaction> transactions = new List<Data.StockTransaction>();
+		List<StockApp.StockTransaction> transactions = new List<StockApp.StockTransaction>();
 
 		foreach (Portfolio portfolio in portfolios)
 		{
 			portfolio.UpdateStockTransactions();
 			foreach (StockTransaction transaction in portfolio.stockTransactions)
 			{
-				transactions.Add(new Data.StockTransaction(transaction.id!.Value, transaction.portfolioId!, transaction.ticker!, transaction.exchange!, transaction.amount ?? 0, transaction.timestamp ?? 0, new Data.Money(transaction.price!.amount, transaction.price.currency)));
+				transactions.Add(new StockApp.StockTransaction(transaction.id!.Value, transaction.portfolioId!, transaction.ticker!, transaction.exchange!, transaction.amount ?? 0, transaction.timestamp ?? 0, new StockApp.Money(transaction.price!.amount, transaction.price.currency)));
 			}
 		}
 

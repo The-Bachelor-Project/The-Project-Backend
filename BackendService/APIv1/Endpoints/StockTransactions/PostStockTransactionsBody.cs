@@ -1,13 +1,11 @@
 namespace API.v1;
 public class PostStockTransactionsBody
 {
-	public Data.StockTransaction transaction { get; }
-	public string accessToken { get; }
+	public StockApp.StockTransaction transaction { get; }
 
 
-	public PostStockTransactionsBody(Data.StockTransaction transaction, string accessToken)
+	public PostStockTransactionsBody(StockApp.StockTransaction transaction)
 	{
 		this.transaction = transaction;
-		this.accessToken = accessToken;
 	}
 }
