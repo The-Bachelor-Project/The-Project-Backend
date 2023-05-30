@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.v1;
 
-class GetTransactions
+public class GetTransactions
 {
 	public static void Setup(WebApplication app)
 	{

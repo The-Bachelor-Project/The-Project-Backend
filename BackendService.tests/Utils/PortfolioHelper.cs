@@ -19,10 +19,10 @@ public class PortfolioHelper
 
 	public static void Delete(UserTestObject userTestObject)
 	{
-		String deletePortfolioQuery = "DELETE FROM Portfolios WHERE uid = @uid";
+		String deletePortfolioQuery = "DELETE FROM Portfolios WHERE owner = @owner";
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		SqlCommand command = new SqlCommand(deletePortfolioQuery, connection);
-		command.Parameters.AddWithValue("@uid", userTestObject.user!.id!);
+		command.Parameters.AddWithValue("@owner", userTestObject.user!.id!);
 		try
 		{
 			command.ExecuteNonQuery();

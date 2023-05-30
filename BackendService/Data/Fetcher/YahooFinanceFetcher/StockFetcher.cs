@@ -127,7 +127,7 @@ public class StockFetcher : IStockFetcher
 		dynamic quoteSummary = JObject.Parse(quoteSummaryJson);
 		if (quoteSummary.StatusCode == System.Net.HttpStatusCode.NotFound)
 		{
-			throw new StatusCodeException(500, "Could not get stock profile for " + exchange + ":" + ticker + ", using quoteSummary on Yahoo Finance");
+			throw new StatusCodeException(404, "Could not get stock profile for " + exchange + ":" + ticker + ", using quoteSummary on Yahoo Finance");
 		}
 
 
@@ -137,7 +137,7 @@ public class StockFetcher : IStockFetcher
 		System.Console.WriteLine(quote);
 		if (quoteSummary.StatusCode == System.Net.HttpStatusCode.NotFound)
 		{
-			throw new StatusCodeException(500, "Could not get stock profile for " + exchange + ":" + ticker + ", using quote on Yahoo Finance");
+			throw new StatusCodeException(404, "Could not get stock profile for " + exchange + ":" + ticker + ", using quote on Yahoo Finance");
 		}
 
 
@@ -153,7 +153,7 @@ public class StockFetcher : IStockFetcher
 		catch (System.Exception e)
 		{
 			System.Console.WriteLine(e);
-			throw new StatusCodeException(404, "Stock " + exchange + ":" + ticker + " could not be gotten from Yahoo Finance. Please check if ticker and exchange are correct.");
+			throw new StatusCodeException(500, "Stock " + exchange + ":" + ticker + " could not be gotten from Yahoo Finance. Please check if ticker and exchange are correct.");
 		}
 		result.shortName = quote.quoteResponse.result[0].shortName ?? "";
 		result.longName = quote.quoteResponse.result[0].longName ?? "";

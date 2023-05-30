@@ -1,6 +1,6 @@
 namespace API.v1;
 
-class GetTransactionsResponse
+public class GetTransactionsResponse
 {
 	public string response { get; }
 	public List<StockApp.Portfolio> portfolios { get; }

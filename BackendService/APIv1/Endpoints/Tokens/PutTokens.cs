@@ -1,13 +1,12 @@
 using StockApp;
-using Microsoft.AspNetCore.Mvc;
 
 namespace API.v1;
 
-public class GetTokens
+public class PutTokens
 {
 	public static void Setup(WebApplication app)
 	{
-		app.MapGet("/v1/tokens", (HttpContext context) =>
+		app.MapPut("/v1/tokens", (HttpContext context) =>
 		{
 			String? refreshToken = context.Items["RefreshToken"] as String;
 			if (refreshToken is null)
@@ -21,13 +20,13 @@ public class GetTokens
 				context.Response.StatusCode = 401;
 				return Results.Ok(new GetPortfoliosResponse("error", new List<StockApp.Portfolio> { }));
 			}
-			return Results.Ok(Endpoint(refreshToken, familyID.Value));
+			return Results.Ok(Endpoint(refreshToken));
 		});
 	}
 
-	public static TokensResponse Endpoint(string refreshToken, int familyID)
+	public static TokensResponse Endpoint(string refreshToken)
 	{
-		TokenSet newTokenSet = new TokenSet().SetRefreshToken(refreshToken).Refresh(familyID);
+		TokenSet newTokenSet = new TokenSet().SetRefreshToken(refreshToken).Refresh();
 		return new TokensResponse("success", newTokenSet);
 	}
 }

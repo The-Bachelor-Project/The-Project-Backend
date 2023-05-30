@@ -20,7 +20,7 @@ public class MiddlewareTest
 	}
 
 	[TestMethod]
-	public async Task MiddlewareTest_IgnoredPathSignIn()
+	public async Task MiddlewareTest_IgnoredPathSignInTest()
 	{
 		DefaultHttpContext context = new DefaultHttpContext();
 		context.Request.Path = "/v1/tokens";
@@ -35,7 +35,7 @@ public class MiddlewareTest
 	}
 
 	[TestMethod]
-	public async Task MiddlewareTest_IgnoredPathSignUp()
+	public async Task MiddlewareTest_IgnoredPathSignUpTest()
 	{
 		DefaultHttpContext context = new DefaultHttpContext();
 		context.Request.Path = "/v1/users";
@@ -50,7 +50,7 @@ public class MiddlewareTest
 	}
 
 	[TestMethod]
-	public async Task MiddlewareTest_ValidAccessTokenAndCommonPathSuccess()
+	public async Task MiddlewareTest_ValidAccessTokenAndCommonPathSuccessTest()
 	{
 		DefaultHttpContext context = new DefaultHttpContext();
 		context.Request.Path = "/v1/portfolios";
@@ -66,7 +66,7 @@ public class MiddlewareTest
 	}
 
 	[TestMethod]
-	public async Task MiddlewareTest_EmptyAccessTokenAndCommonPath()
+	public async Task MiddlewareTest_EmptyAccessTokenAndCommonPathTest()
 	{
 		DefaultHttpContext context = new DefaultHttpContext();
 		context.Request.Path = "/v1/portfolios";
@@ -81,11 +81,11 @@ public class MiddlewareTest
 	}
 
 	[TestMethod]
-	public async Task MiddlewareTest_ValidRefreshTokenAndRefreshTokenPath()
+	public async Task MiddlewareTest_ValidRefreshTokenAndRefreshTokenPathTest()
 	{
 		DefaultHttpContext context = new DefaultHttpContext();
 		context.Request.Path = "/v1/tokens";
-		context.Request.Method = "GET";
+		context.Request.Method = "PUT";
 		context.Request.Headers["Authorization"] = userTestObject.refreshToken;
 		RequestDelegate next = (HttpContext context) =>
 		{
@@ -97,7 +97,7 @@ public class MiddlewareTest
 	}
 
 	[TestMethod]
-	public async Task MiddlewareTest_ExpiredAccessTokenAndCommonPath()
+	public async Task MiddlewareTest_ExpiredAccessTokenAndCommonPathTest()
 	{
 		TokenHelper.MakeTokensExpired(userTestObject.accessToken!, userTestObject.refreshToken!);
 		DefaultHttpContext context = new DefaultHttpContext();
@@ -113,12 +113,12 @@ public class MiddlewareTest
 		Assert.AreEqual(StatusCodes.Status403Forbidden, context.Response.StatusCode);
 	}
 	[TestMethod]
-	public async Task MiddlewareTest_ExpiredRefreshTokenAndTokenRefreshPath()
+	public async Task MiddlewareTest_ExpiredRefreshTokenAndTokenRefreshPathTest()
 	{
 		TokenHelper.MakeTokensExpired(userTestObject.accessToken!, userTestObject.refreshToken!);
 		DefaultHttpContext context = new DefaultHttpContext();
 		context.Request.Path = "/v1/tokens";
-		context.Request.Method = "GET";
+		context.Request.Method = "PUT";
 		context.Request.Headers["Authorization"] = userTestObject.refreshToken;
 		RequestDelegate next = (HttpContext context) =>
 		{
@@ -130,7 +130,7 @@ public class MiddlewareTest
 	}
 
 	[TestMethod]
-	public async Task MiddlewareTest_InvalidAccessTokenAndCommonPath()
+	public async Task MiddlewareTest_InvalidAccessTokenAndCommonPathTest()
 	{
 		TokenHelper.CreateTokens(userTestObject.user!, (int)userTestObject.familyID!);
 		DefaultHttpContext context = new DefaultHttpContext();
@@ -147,12 +147,12 @@ public class MiddlewareTest
 		Assert.IsTrue(TokenHelper.InvalidatedFamilyCorrectly((int)userTestObject.familyID!));
 	}
 	[TestMethod]
-	public async Task MiddlwareTest_InvalidRefreshTokenAndRefreshPath()
+	public async Task MiddlwareTest_InvalidRefreshTokenAndRefreshPathTest()
 	{
 		TokenHelper.CreateTokens(userTestObject.user!, (int)userTestObject.familyID!);
 		DefaultHttpContext context = new DefaultHttpContext();
 		context.Request.Path = "/v1/tokens";
-		context.Request.Method = "GET";
+		context.Request.Method = "PUT";
 		context.Request.Headers["Authorization"] = userTestObject.refreshToken;
 		RequestDelegate next = (HttpContext context) =>
 		{

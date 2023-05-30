@@ -9,7 +9,7 @@ public class Middleware : IMiddleware
 			return;
 		}
 
-		if (context.Request.Path == "/v1/tokens" && context.Request.Method == "GET")
+		if (context.Request.Path == "/v1/tokens" && context.Request.Method == "PUT")
 		{
 			String? refreshToken = context.Request.Headers["Authorization"];
 			if (refreshToken != null)

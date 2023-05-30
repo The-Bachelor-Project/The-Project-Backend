@@ -42,9 +42,9 @@ public class TokenSet
 		return newTokenSet;
 	}
 
-	public TokenSet Refresh(int familyID)
+	public TokenSet Refresh()
 	{
-		StockApp.TokenSet tokenSet = Authentication.RefreshTokens.All(refreshToken!, familyID);
+		StockApp.TokenSet tokenSet = Authentication.RefreshTokens.All(refreshToken!);
 		refreshToken = tokenSet.refreshToken;
 		accessToken = tokenSet.accessToken;
 

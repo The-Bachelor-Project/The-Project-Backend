@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.v1;
-class GetValueHistory
+public class GetValueHistory
 {
 	public static void Setup(WebApplication app)
 	{

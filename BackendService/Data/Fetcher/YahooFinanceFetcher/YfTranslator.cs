@@ -62,7 +62,7 @@ public class YfTranslator
 		}
 		catch (Exception)
 		{
-			throw new StatusCodeException(500, "Could not convert exchange of " + exchange + ":" + ticker + " to Yahoo Finance symbol.");
+			throw new StatusCodeException(404, "Could not convert exchange of " + exchange + ":" + ticker + " to Yahoo Finance symbol.");
 		}
 
 	}
