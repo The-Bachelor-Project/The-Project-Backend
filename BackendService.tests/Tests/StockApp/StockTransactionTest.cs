@@ -143,7 +143,7 @@ public class StockTransactionTest
 		stockTransaction.portfolioId = portfolio.id!;
 		stockTransaction.ticker = "AAPL";
 		stockTransaction.exchange = "NASDAQ";
-		stockTransaction.price = new Money(100, null);
+		stockTransaction.price = new Money(100, null!);
 		stockTransaction.amount = 10;
 		stockTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockTransaction.AddToDb());

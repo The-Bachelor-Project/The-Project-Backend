@@ -41,6 +41,10 @@ public class Portfolio
 
 	public Portfolio AddToDb()
 	{
+		if (name == null || owner == null || currency == null)
+		{
+			throw new StatusCodeException(400, "Missing required fields");
+		}
 		if (!(Tools.ValidCurrency.Check(currency!)))
 		{
 			throw new StatusCodeException(400, "Currency " + currency + " is not supported");
@@ -70,6 +74,10 @@ public class Portfolio
 
 	public User GetOwner()
 	{
+		if (id == null)
+		{
+			throw new StatusCodeException(400, "Missing required fields");
+		}
 		String query = "SELECT owner FROM Portfolios WHERE uid = @uid";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@uid", id);
@@ -88,6 +96,10 @@ public class Portfolio
 
 	public Portfolio UpdateStockTransactions()
 	{
+		if (id == null)
+		{
+			throw new StatusCodeException(400, "Missing required fields");
+		}
 		String query = "SELECT * FROM StockTransactions WHERE portfolio = @portfolio";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@portfolio", id);
@@ -112,6 +124,10 @@ public class Portfolio
 
 	public Portfolio UpdateStockPositions()
 	{
+		if (id == null)
+		{
+			throw new StatusCodeException(400, "Missing required fields");
+		}
 		String query = "SELECT DISTINCT ticker, exchange FROM StockTransactions WHERE portfolio = @portfolio";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@portfolio", id);
@@ -126,8 +142,21 @@ public class Portfolio
 		return this;
 	}
 
-	public async Task<Data.Portfolio> GetValueHistory(string currency, DateOnly startData, DateOnly endDate)
+	public async Task<Data.Portfolio> GetValueHistory(string currency, DateOnly startDate, DateOnly endDate)
 	{
+		if (id == null || currency == null || startDate == null || endDate == null)
+		{
+			throw new StatusCodeException(400, "Missing required fields");
+		}
+		if (!(Tools.ValidCurrency.Check(currency)))
+		{
+			throw new StatusCodeException(400, "Currency" + currency + " is not supported");
+		}
+		if (startDate > endDate)
+		{
+			throw new StatusCodeException(400, "Start date must be before end date");
+		}
+
 		UpdateStockPositions();
 		UpdateStockTransactions();
 
@@ -137,7 +166,7 @@ public class Portfolio
 
 		foreach (StockPosition position in stockPositions)
 		{
-			Data.Position dataPosition = await position.GetValueHistory(currency, startData, endDate);
+			Data.Position dataPosition = await position.GetValueHistory(currency, startDate, endDate);
 			if (dataPosition.valueHistory.Count > 0)
 			{
 				dataPositions.Add(dataPosition);
@@ -151,6 +180,10 @@ public class Portfolio
 
 	public Portfolio ChangeName(string newName)
 	{
+		if (id == null || newName == null)
+		{
+			throw new StatusCodeException(400, "Missing required fields");
+		}
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "UPDATE Portfolios SET name = @name WHERE uid = @uid";
 		SqlCommand command = new SqlCommand(query, connection);
@@ -171,6 +204,10 @@ public class Portfolio
 
 	public Portfolio ChangeCurrency(String newCurrency)
 	{
+		if (id == null || newCurrency == null)
+		{
+			throw new StatusCodeException(400, "Missing required fields");
+		}
 		if (!(Tools.ValidCurrency.Check(newCurrency)))
 		{
 			throw new StatusCodeException(400, "Currency" + currency + " is not supported");
@@ -194,12 +231,17 @@ public class Portfolio
 		}
 	}
 
-	public StockTransaction GetStockTransaction(int id)
+	public StockTransaction GetStockTransaction(int transactionID)
 	{
-		System.Console.WriteLine("ID: " + id);
-		String query = "SELECT * FROM StockTransactions WHERE id = @id";
+		if (id == null)
+		{
+			throw new StatusCodeException(400, "Missing required fields");
+		}
+		System.Console.WriteLine("ID: " + transactionID);
+		String query = "SELECT * FROM StockTransactions WHERE id = @id AND portfolio = @portfolio";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
-		parameters.Add("@id", id);
+		parameters.Add("@id", transactionID);
+		parameters.Add("@portfolio", id!);
 		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(query, parameters);
 
 		if (data != null)
@@ -216,6 +258,6 @@ public class Portfolio
 			stockTransaction.price = new Money(Convert.ToDecimal(data["price_amount"]), data["price_currency"].ToString()!);
 			return stockTransaction;
 		}
-		throw new StatusCodeException(404, "Could not find stock transaction with id " + id);
+		throw new StatusCodeException(404, "Could not find stock transaction with id " + transactionID);
 	}
 }

@@ -28,7 +28,7 @@ public class UserTest
 	}
 
 	[TestMethod]
-	public void UserTest_SuccessfulSignUpTest()
+	public void UserTest_SingUp_SuccessfulTest()
 	{
 		String email = Tools.RandomString.Generate(200) + "@test.com";
 		String password = Tools.RandomString.Generate(10);
@@ -67,7 +67,25 @@ public class UserTest
 	}
 
 	[TestMethod]
-	public void UserTest_SuccessfulSignInTest()
+	public void UserTest_SignUp_EmailNullTest()
+	{
+		String password = Tools.RandomString.Generate(10);
+		StockApp.User user = new StockApp.User(null!, password);
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.SignUp());
+		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
+	public void UserTest_SignUp_PasswordNullTest()
+	{
+		String email = Tools.RandomString.Generate(200) + "@test.com";
+		StockApp.User user = new StockApp.User(email, null!);
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.SignUp());
+		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
+	public void UserTest_SignIn_SuccessfulTest()
 	{
 		StockApp.User user = userTestObject.user!;
 		try
@@ -98,11 +116,26 @@ public class UserTest
 		user.password = Tools.RandomString.Generate(10);
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.SignIn());
 		Assert.IsTrue(exception.StatusCode == 401, "status code should be 401 but was " + exception.StatusCode);
-
 	}
 
 	[TestMethod]
-	public void UserTest_SuccessfulChangeEmailTest()
+	public void UserTest_SignIn_EmailNullTest()
+	{
+		StockApp.User user = new StockApp.User(null!, Tools.RandomString.Generate(10));
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.SignIn());
+		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
+	public void UserTest_SignIn_PasswordNullTest()
+	{
+		StockApp.User user = new StockApp.User(Tools.RandomString.Generate(200) + "@test.com", null!);
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.SignIn());
+		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
+	public void UserTest_ChangeEmail_SuccessfulTest()
 	{
 		StockApp.User user = userTestObject.user!;
 		String newEmail = Tools.RandomString.Generate(200) + "@test.com";
@@ -138,7 +171,23 @@ public class UserTest
 	}
 
 	[TestMethod]
-	public void UserTest_SuccessfulChangePasswordTest()
+	public void UserTest_ChangeEmail_NewEmailNullTest()
+	{
+		StockApp.User user = userTestObject.user!;
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.ChangeEmail(user.email!, null!));
+		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
+	public void UserTest_ChangeEmail_OldEmailNullTest()
+	{
+		StockApp.User user = userTestObject.user!;
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.ChangeEmail(null!, Tools.RandomString.Generate(200) + "@test.com"));
+		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
+	public void UserTest_ChangePassword_SuccessfulTest()
 	{
 		StockApp.User user = userTestObject.user!;
 		String newPassword = Tools.RandomString.Generate(10);
@@ -162,6 +211,22 @@ public class UserTest
 		String randomPassword = Tools.RandomString.Generate(10);
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.ChangePassword(randomPassword, newPassword, user.email!));
 		Assert.IsTrue(exception.StatusCode == 401, "status code should be 401 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
+	public void UserTest_ChangePassword_NewPasswordNullTest()
+	{
+		StockApp.User user = userTestObject.user!;
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.ChangePassword(user.password!, null!, user.email!));
+		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
+	public void UserTest_ChangePassword_OldPasswordNullTest()
+	{
+		StockApp.User user = userTestObject.user!;
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.ChangePassword(null!, Tools.RandomString.Generate(10), user.email!));
+		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
 	}
 
 	[TestMethod]
@@ -231,6 +296,15 @@ public class UserTest
 	}
 
 	[TestMethod]
+	public void UserTest_UpdatePortfolios_UserIDNullTest()
+	{
+		StockApp.User user = userTestObject.user!;
+		user.id = null;
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.UpdatePortfolios());
+		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
 	public void UserTest_GetPortfolio_SuccessfulTest()
 	{
 		StockApp.Portfolio portfolio = PortfolioHelper.Create(userTestObject);
@@ -246,5 +320,22 @@ public class UserTest
 		StockApp.Portfolio gottenPortfolio = user.GetPortfolio(portfolio.id!);
 		Assert.IsTrue(gottenPortfolio.id == portfolio.id, "portfolio id should be " + portfolio.id + " but was " + gottenPortfolio.id);
 		PortfolioHelper.Delete(userTestObject);
+	}
+
+	[TestMethod]
+	public void UserTest_GetPortfolio_PortfolioIDNullTest()
+	{
+		StockApp.Portfolio portfolio = PortfolioHelper.Create(userTestObject);
+		StockApp.User user = userTestObject.user!;
+		try
+		{
+			user.UpdatePortfolios();
+		}
+		catch (Exception e)
+		{
+			Assert.Fail("Exception thrown, portfolios not gotten: " + e.Message);
+		}
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.GetPortfolio(null!));
+		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
 	}
 }

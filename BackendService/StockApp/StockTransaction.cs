@@ -34,7 +34,7 @@ public class StockTransaction
 	public async Task<StockTransaction> AddToDb() //FIXME at some point also ORDER by index as well as timestamp to avoid some issues with calculating amount_owned 
 	{
 
-		if (ticker == null || exchange == null || amount == null || timestamp == null || price.amount == null || portfolioId == null || price.currency == null)
+		if (ticker == null || exchange == null || amount == null || timestamp == null || portfolioId == null || price!.currency == null)
 		{
 			throw new StatusCodeException(400, "Missing required fields");
 		}

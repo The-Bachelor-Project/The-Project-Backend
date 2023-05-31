@@ -24,6 +24,10 @@ public class User
 
 	public User SignUp()
 	{
+		if (email == null || password == null)
+		{
+			throw new StatusCodeException(400, "Fields are missing");
+		}
 		String getEmailQuery = "SELECT email FROM Accounts WHERE email = @email";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@email", email);
@@ -54,6 +58,10 @@ public class User
 
 	public User SignIn()
 	{
+		if (email == null || password == null)
+		{
+			throw new StatusCodeException(400, "Fields are missing");
+		}
 		System.Console.WriteLine("SignIn with email: " + email);
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "SELECT * FROM Accounts WHERE email = @email";
@@ -80,6 +88,10 @@ public class User
 
 	public User ChangeEmail(String oldEmail, String newEmail)
 	{
+		if (oldEmail == null || newEmail == null)
+		{
+			throw new StatusCodeException(400, "Fields are missing");
+		}
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "UPDATE Accounts SET email = @new_email WHERE user_id = @user_id AND email = @old_email";
 		SqlCommand command = new SqlCommand(query, connection);
@@ -101,6 +113,10 @@ public class User
 
 	public User ChangePassword(String oldPassword, String newPassword, String email)
 	{
+		if (oldPassword == null || newPassword == null || email == null)
+		{
+			throw new StatusCodeException(400, "Fields are missing");
+		}
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		oldPassword = Tools.Password.Hash(oldPassword);
 		String getOldPasswordQuery = "SELECT password FROM Accounts WHERE password = @password AND email = @email";
@@ -138,6 +154,10 @@ public class User
 
 	public User UpdatePortfolios()
 	{
+		if (id == null)
+		{
+			throw new StatusCodeException(400, "Fields are missing");
+		}
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "SELECT * FROM Portfolios WHERE owner = @owner";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
@@ -165,6 +185,10 @@ public class User
 
 	public Portfolio GetPortfolio(string id)
 	{
+		if (id == null)
+		{
+			throw new StatusCodeException(400, "Fields are missing");
+		}
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "SELECT * FROM Portfolios WHERE owner = @owner AND uid = @uid";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();

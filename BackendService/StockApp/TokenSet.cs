@@ -23,6 +23,11 @@ public class TokenSet
 
 	public TokenSet SetRefreshToken(String refreshToken)
 	{
+		if (refreshToken == null)
+		{
+			throw new StatusCodeException(400, "Refresh token cannot be null");
+		}
+
 		this.refreshToken = refreshToken;
 		return this;
 	}
@@ -31,6 +36,10 @@ public class TokenSet
 
 	public static TokenSet Create(String uid)
 	{
+		if (uid == null)
+		{
+			throw new StatusCodeException(400, "User id cannot be null");
+		}
 		TokenSet newTokenSet = new TokenSet();
 
 		int familyID = Authentication.CreateFamily.Call(uid);
@@ -44,6 +53,10 @@ public class TokenSet
 
 	public TokenSet Refresh()
 	{
+		if (refreshToken == null)
+		{
+			throw new StatusCodeException(400, "Tokens cannot be null");
+		}
 		StockApp.TokenSet tokenSet = Authentication.RefreshTokens.All(refreshToken!);
 		refreshToken = tokenSet.refreshToken;
 		accessToken = tokenSet.accessToken;
@@ -53,6 +66,10 @@ public class TokenSet
 
 	public User GetUser()
 	{
+		if (accessToken == null)
+		{
+			throw new StatusCodeException(400, "Access token cannot be null");
+		}
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "SELECT user_id FROM TokenFamily WHERE valid_token = @access_token";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
