@@ -217,7 +217,7 @@ public class StockFetcher : IStockFetcher
 		return resultStocks;
 	}
 
-	internal async Task<List<Dividend>> GetDividends(string ticker, string exchange, DateOnly startDate, DateOnly endDate)
+	public async Task<List<Dividend>> GetDividends(string ticker, string exchange, DateOnly startDate, DateOnly endDate)
 	{
 		System.Console.WriteLine("Getting dividends for " + ticker + " " + exchange);
 		List<Data.Dividend> dividends = new List<Data.Dividend>();

@@ -8,6 +8,10 @@ public class StockFetcher : IStockFetcher
 {
 	public async Task<StockHistory> GetHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, string interval)
 	{
+		if (ticker == null || exchange == null || interval == null)
+		{
+			throw new StatusCodeException(400, "Required fields are missing");
+		}
 		if (startDate > endDate)
 		{
 			throw new StatusCodeException(400, "Start date cannot be after end date");
@@ -57,6 +61,10 @@ public class StockFetcher : IStockFetcher
 
 	public async Task<Data.StockProfile> GetProfile(string ticker, string exchange)
 	{
+		if (ticker == null || exchange == null)
+		{
+			throw new StatusCodeException(400, "Required fields are missing");
+		}
 		try
 		{
 			// Get the stock profile from the database
@@ -78,6 +86,10 @@ public class StockFetcher : IStockFetcher
 
 	public async Task<Data.StockProfile[]> Search(string query)
 	{
+		if (query == null || query == "")
+		{
+			throw new StatusCodeException(400, "Required fields are missing");
+		}
 		//await new YahooFinanceFetcher.StockFetcher().Search(query); //TODO in the future check if search has already been performed recently
 		return await new DatabaseFetcher.StockFetcher().Search(query);
 	}
