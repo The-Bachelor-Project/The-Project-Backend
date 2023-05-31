@@ -90,6 +90,7 @@ class Program
 
 		List<Dictionary<string, dynamic>> profiles = new List<Dictionary<string, dynamic>>();
 		Dictionary<string, int> missingExchanges = new Dictionary<string, int>();
+		Dictionary<string, dynamic> yahooCode = new Dictionary<string, dynamic>();
 
 		Dictionary<string, Dictionary<string, string>> stocks = new Dictionary<string, Dictionary<string, string>>();
 
@@ -192,6 +193,8 @@ class Program
 					try
 					{
 						profile["exchange"] = exchanges[jsonObject["quote"]["result"][0]["exchange"].ToString()];
+						System.Console.WriteLine(jsonFiles[i]);
+						yahooCode.TryAdd(exchanges[jsonObject["quote"]["result"][0]["exchange"].ToString()], jsonFiles[i].Split("_")[2].Split(".")[0]);
 					}
 					catch
 					{
@@ -336,7 +339,7 @@ class Program
 					command.Parameters.AddWithValue("@tags", tags);
 					try
 					{
-						command.ExecuteNonQuery();
+						//command.ExecuteNonQuery();
 						System.Console.WriteLine("Inserted: " + profile["exchange"] + " : " + profile["ticker"] + " : " + profile["displayName"] + " : " + jsonFiles[i]);
 
 						profilesAdded++;
@@ -403,6 +406,10 @@ class Program
 		System.Console.WriteLine("Profiles failed: " + profilesFailed);
 
 		printDictInt(errors);
+		System.Console.WriteLine("\n");
+
+		yahooCode = yahooCode.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+		printDict(yahooCode);
 	}
 
 	//function that prints all key value pairs in a dictionary
@@ -410,7 +417,7 @@ class Program
 	{
 		foreach (KeyValuePair<string, dynamic> kvp in dict)
 		{
-			Console.WriteLine("{0}: {1}", kvp.Key, kvp.Value);
+			Console.WriteLine("{\"" + kvp.Key + "\", \"." + kvp.Value + "\"},");
 		}
 		System.Console.WriteLine("\n");
 	}
