@@ -32,7 +32,7 @@ public class StockTransactionHelper
 		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(getTransactionQuery, parameters);
 		if (data == null)
 		{
-			Assert.Fail("Failed to get stockTransaction from database");
+			throw new StatusCodeException(404, "StockTransaction with id " + id + " not found");
 		}
 		StockApp.StockTransaction stockTransaction = new StockApp.StockTransaction();
 		stockTransaction.id = (int)data["id"];

@@ -33,7 +33,11 @@ public class StockTransaction
 
 	public async Task<StockTransaction> AddToDb() //FIXME at some point also ORDER by index as well as timestamp to avoid some issues with calculating amount_owned 
 	{
-		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
+
+		if (ticker == null || exchange == null || amount == null || timestamp == null || price.amount == null || portfolioId == null || price.currency == null)
+		{
+			throw new StatusCodeException(400, "Missing required fields");
+		}
 
 		try
 		{
@@ -48,6 +52,7 @@ public class StockTransaction
 			throw new StatusCodeException(400, "Invalid currency " + price!.currency);
 		}
 
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String getAmountOwned = "SELECT TOP 1 amount_owned FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp <= @timestamp ORDER BY timestamp DESC, id DESC";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@portfolio", portfolioId);
@@ -106,12 +111,34 @@ public class StockTransaction
 
 	public Portfolio GetPortfolio()
 	{
+		if (portfolioId == null)
+		{
+			throw new StatusCodeException(400, "Missing required fields");
+		}
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
+		String checkIfPortfolioExistsQuery = "SELECT * FROM Portfolios WHERE uid = @id";
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@id", portfolioId);
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(checkIfPortfolioExistsQuery, parameters);
+		if (data == null)
+		{
+			throw new StatusCodeException(404, "Could not find portfolio with id " + portfolioId);
+		}
 		return new Portfolio(portfolioId!);
 	}
 
 	public Task DeleteFromDb()
 	{
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
+		String checkIfTransactionExistsQuery = "SELECT * FROM StockTransactions WHERE id = @id";
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@id", id);
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(checkIfTransactionExistsQuery, parameters);
+		if (data == null)
+		{
+			throw new StatusCodeException(404, "Could not find stock transaction with id " + id);
+		}
+
 		String deleteQuery = "DELETE FROM StockTransactions WHERE id = @id";
 		SqlCommand command = new SqlCommand(deleteQuery, connection);
 		command.Parameters.AddWithValue("@id", id);
