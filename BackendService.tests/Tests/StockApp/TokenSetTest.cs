@@ -5,6 +5,19 @@ using StockApp;
 [TestClass]
 public class TokenSetTest
 {
+	private UserTestObject userTestObject = null!;
+	[TestInitialize]
+	public void Initialize()
+	{
+		userTestObject = UserHelper.Create();
+	}
+
+	[TestCleanup]
+	public void Cleanup()
+	{
+		UserHelper.Delete(userTestObject);
+	}
+
 	[TestMethod]
 	public void TokenSetTest_SetRefreshTokenTest()
 	{
@@ -14,67 +27,57 @@ public class TokenSetTest
 	}
 
 	[TestMethod]
-	public void TokenSetTest_CreateTokenSet_SuccessfulTest()
+	public void TokenSetTest_Create_SuccessfulTest()
 	{
-		UserTestObject user = UserHelper.Create();
-		TokenSet tokenSet = TokenSet.Create(user.user!.id!);
+		TokenSet tokenSet = TokenSet.Create(userTestObject.user!.id!);
 		Assert.IsTrue(tokenSet.accessToken != null, "Access token was not set");
 		Assert.IsTrue(tokenSet.refreshToken != null, "Refresh token was not set");
-		UserHelper.Delete(user);
 	}
 
 	[TestMethod]
-	public void TokenSetTest_CreateTokenSet_InvalidUserIDTest()
+	public void TokenSetTest_Create_InvalidUserIDTest()
 	{
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => TokenSet.Create("invalid"));
 		Assert.IsTrue(exception.StatusCode == 404, "Status code should be 404 but was " + exception.StatusCode);
 	}
 
 	[TestMethod]
-	public void TokenSetTest_RefreshTokenSet_SuccessfulTest()
+	public void TokenSetTest_Refresh_SuccessfulTest()
 	{
-		UserTestObject user = UserHelper.Create();
-		TokenSet tokenSet = TokenSet.Create(user.user!.id!);
+		TokenSet tokenSet = TokenSet.Create(userTestObject.user!.id!);
 		String tempRefresh = tokenSet.refreshToken!;
 		String tempAccess = tokenSet.accessToken!;
 		tokenSet.Refresh();
 		Assert.IsTrue(tempRefresh != tokenSet.refreshToken, "Refresh token was not changed");
 		Assert.IsTrue(tempAccess != tokenSet.accessToken, "Access token was not changed");
-		UserHelper.Delete(user);
 	}
 
 	[TestMethod]
-	public void TokenSetTest_RefreshTokenSet_InvalidRefreshTokenTest()
+	public void TokenSetTest_Refresh_InvalidRefreshTokenTest()
 	{
-		UserTestObject user = UserHelper.Create();
-		TokenSet tokenSet = TokenSet.Create(user.user!.id!);
+		TokenSet tokenSet = TokenSet.Create(userTestObject.user!.id!);
 		tokenSet.refreshToken = "invalid";
 		String tempAccess = tokenSet.accessToken!;
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => tokenSet.Refresh());
 		Assert.IsTrue(exception.StatusCode == 401, "Status code should be 401 but was " + exception.StatusCode);
 		Assert.IsTrue(tokenSet.refreshToken == "invalid", "Refresh token was changed from \"invalid\" to " + tokenSet.refreshToken);
 		Assert.IsTrue(tempAccess == tokenSet.accessToken, "Access token was changed from " + tempAccess + " to " + tokenSet.accessToken);
-		UserHelper.Delete(user);
 	}
 
 	[TestMethod]
 	public void TokenSetTest_GetUser_SuccessfulTest()
 	{
-		UserTestObject user = UserHelper.Create();
-		TokenSet tokenSet = TokenSet.Create(user.user!.id!);
+		TokenSet tokenSet = TokenSet.Create(userTestObject.user!.id!);
 		User gottenUser = tokenSet.GetUser();
-		Assert.IsTrue(user.user.id == gottenUser.id, "User IDs do not match. Expected " + user.user.id + " but got " + gottenUser.id);
-		UserHelper.Delete(user);
+		Assert.IsTrue(userTestObject.user.id == gottenUser.id, "User IDs do not match. Expected " + userTestObject.user.id + " but got " + gottenUser.id);
 	}
 
 	[TestMethod]
 	public void TokenSetTest_GetUser_InvalidAccessTokenTest()
 	{
-		UserTestObject user = UserHelper.Create();
-		TokenSet tokenSet = TokenSet.Create(user.user!.id!);
+		TokenSet tokenSet = TokenSet.Create(userTestObject.user!.id!);
 		tokenSet.accessToken = "invalid";
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => tokenSet.GetUser());
 		Assert.IsTrue(exception.StatusCode == 401, "Status code should be 401 but was " + exception.StatusCode);
-		UserHelper.Delete(user);
 	}
 }

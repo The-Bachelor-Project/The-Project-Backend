@@ -59,13 +59,9 @@ public class PutUsersTest
 	}
 
 	[TestMethod]
-	private void PutUsersTest_WrongOldPassword()
+	public void PutUsersTest_WrongOldPassword()
 	{
 		PutPasswordBody body = new PutPasswordBody(Tools.RandomString.Generate(20), Tools.RandomString.Generate(20), userTestObject.user!.email!);
-		PutUserResponse response = PutUsers.EndpointPass(userTestObject.accessToken!, body);
-		Assert.IsTrue(response.response == "success", "response should be success but was \"" + response.response + "\"");
-		String newPassword = Tools.RandomString.Generate(20);
-		PutPasswordBody newBody = new PutPasswordBody(Tools.RandomString.Generate(20), newPassword, userTestObject.user!.email!);
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PutUsers.EndpointPass(userTestObject.accessToken!, body));
 		Assert.IsTrue(exception.StatusCode == 401, "StatusCode should be 401 but was " + exception.StatusCode);
 	}
