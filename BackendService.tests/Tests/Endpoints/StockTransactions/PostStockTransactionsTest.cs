@@ -36,7 +36,174 @@ public class PostStockTransactionsTest
 		PostStockTransactionsResponse response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.id != 0, "Response id should not be 0");
+	}
 
+	[TestMethod]
+	public async Task PostStockTransactionsTest_PostAscendingOrderTest()
+	{
+		StockApp.StockTransaction stockTransaction1 = new StockApp.StockTransaction();
+		stockTransaction1.portfolioId = portfolio.id;
+		stockTransaction1.amount = 10;
+		stockTransaction1.exchange = "NASDAQ";
+		stockTransaction1.ticker = "AAPL";
+		stockTransaction1.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-06-06"));
+		stockTransaction1.price = new StockApp.Money(100, "USD");
+		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(stockTransaction1);
+		PostStockTransactionsResponse response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		int stockTransaction1ID = response.id;
+		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
+		Assert.IsTrue(response.id != 0, "Response id should not be 0");
+		StockApp.StockTransaction gottenStockTransaction = StockTransactionHelper.Get(stockTransaction1ID);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 10, "Amount owned for first transaction should be 10 but was " + gottenStockTransaction.amountOwned);
+
+		StockApp.StockTransaction stockTransaction2 = new StockApp.StockTransaction();
+		stockTransaction2.portfolioId = portfolio.id;
+		stockTransaction2.amount = 20;
+		stockTransaction2.exchange = "NASDAQ";
+		stockTransaction2.ticker = "AAPL";
+		stockTransaction2.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-08-08"));
+		stockTransaction2.price = new StockApp.Money(100, "USD");
+		postStockTransactionsBody = new PostStockTransactionsBody(stockTransaction2);
+		response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		int stockTransaction2ID = response.id;
+		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
+		Assert.IsTrue(response.id != 0, "Response id should not be 0");
+		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction2ID);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 30, "Amount owned for the first transaction should be 30 but was " + gottenStockTransaction.amountOwned);
+		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction1ID);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 10, "Amount owned for the second transaction should be 10 but was " + gottenStockTransaction.amountOwned);
+
+
+		StockApp.StockTransaction stockTransaction3 = new StockApp.StockTransaction();
+		stockTransaction3.portfolioId = portfolio.id;
+		stockTransaction3.amount = 30;
+		stockTransaction3.exchange = "NASDAQ";
+		stockTransaction3.ticker = "AAPL";
+		stockTransaction3.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-10-10"));
+		stockTransaction3.price = new StockApp.Money(100, "USD");
+		postStockTransactionsBody = new PostStockTransactionsBody(stockTransaction3);
+		response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		int stockTransaction3ID = response.id;
+		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
+		Assert.IsTrue(response.id != 0, "Response id should not be 0");
+		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction3ID);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 60, "Amount owned for the third transaction should be 60 but was " + gottenStockTransaction.amountOwned);
+		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction2ID);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 30, "Amount owned for the second transaction should be 30 but was " + gottenStockTransaction.amountOwned);
+		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction1ID);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 10, "Amount owned for the first transaction should be 10 but was " + gottenStockTransaction.amountOwned);
+	}
+
+	[TestMethod]
+	public async Task PostStockTransactionsTest_PostDescendingOrderTest()
+	{
+		StockApp.StockTransaction stockTransaction1 = new StockApp.StockTransaction();
+		stockTransaction1.portfolioId = portfolio.id;
+		stockTransaction1.amount = 10;
+		stockTransaction1.exchange = "NASDAQ";
+		stockTransaction1.ticker = "AAPL";
+		stockTransaction1.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-10-10"));
+		stockTransaction1.price = new StockApp.Money(100, "USD");
+		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(stockTransaction1);
+		PostStockTransactionsResponse response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		int stockTransaction1ID = response.id;
+		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
+		Assert.IsTrue(response.id != 0, "Response id should not be 0");
+		StockApp.StockTransaction gottenStockTransaction = StockTransactionHelper.Get(stockTransaction1ID);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 10, "Amount owned for first transaction should be 10 but was " + gottenStockTransaction.amountOwned);
+
+		StockApp.StockTransaction stockTransaction2 = new StockApp.StockTransaction();
+		stockTransaction2.portfolioId = portfolio.id;
+		stockTransaction2.amount = 20;
+		stockTransaction2.exchange = "NASDAQ";
+		stockTransaction2.ticker = "AAPL";
+		stockTransaction2.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-08-08"));
+		stockTransaction2.price = new StockApp.Money(100, "USD");
+		postStockTransactionsBody = new PostStockTransactionsBody(stockTransaction2);
+		response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		int stockTransaction2ID = response.id;
+		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
+		Assert.IsTrue(response.id != 0, "Response id should not be 0");
+		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction2ID);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 20, "Amount owned for the first transaction should be 20 but was " + gottenStockTransaction.amountOwned);
+		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction1ID);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 30, "Amount owned for the second transaction should be 30 but was " + gottenStockTransaction.amountOwned);
+
+
+		StockApp.StockTransaction stockTransaction3 = new StockApp.StockTransaction();
+		stockTransaction3.portfolioId = portfolio.id;
+		stockTransaction3.amount = 30;
+		stockTransaction3.exchange = "NASDAQ";
+		stockTransaction3.ticker = "AAPL";
+		stockTransaction3.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-06-06"));
+		stockTransaction3.price = new StockApp.Money(100, "USD");
+		postStockTransactionsBody = new PostStockTransactionsBody(stockTransaction3);
+		response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		int stockTransaction3ID = response.id;
+		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
+		Assert.IsTrue(response.id != 0, "Response id should not be 0");
+		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction3ID);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 30, "Amount owned for the third transaction should be 30 but was " + gottenStockTransaction.amountOwned);
+		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction2ID);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 50, "Amount owned for the second transaction should be 50 but was " + gottenStockTransaction.amountOwned);
+		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction1ID);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 60, "Amount owned for the first transaction should be 60 but was " + gottenStockTransaction.amountOwned);
+	}
+
+	[TestMethod]
+	public async Task PostStockTransactionsTest_PostAscAndDescOrderTest()
+	{
+		StockApp.StockTransaction stockTransaction1 = new StockApp.StockTransaction();
+		stockTransaction1.portfolioId = portfolio.id;
+		stockTransaction1.amount = 10;
+		stockTransaction1.exchange = "NASDAQ";
+		stockTransaction1.ticker = "AAPL";
+		stockTransaction1.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-08-08"));
+		stockTransaction1.price = new StockApp.Money(100, "USD");
+		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(stockTransaction1);
+		PostStockTransactionsResponse response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		int stockTransaction1ID = response.id;
+		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
+		Assert.IsTrue(response.id != 0, "Response id should not be 0");
+		StockApp.StockTransaction gottenStockTransaction = StockTransactionHelper.Get(stockTransaction1ID);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 10, "Amount owned for first transaction should be 10 but was " + gottenStockTransaction.amountOwned);
+
+		StockApp.StockTransaction stockTransaction2 = new StockApp.StockTransaction();
+		stockTransaction2.portfolioId = portfolio.id;
+		stockTransaction2.amount = 20;
+		stockTransaction2.exchange = "NASDAQ";
+		stockTransaction2.ticker = "AAPL";
+		stockTransaction2.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-06-06"));
+		stockTransaction2.price = new StockApp.Money(100, "USD");
+		postStockTransactionsBody = new PostStockTransactionsBody(stockTransaction2);
+		response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		int stockTransaction2ID = response.id;
+		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
+		Assert.IsTrue(response.id != 0, "Response id should not be 0");
+		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction2ID);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 20, "Amount owned for the first transaction should be 20 but was " + gottenStockTransaction.amountOwned);
+		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction1ID);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 30, "Amount owned for the second transaction should be 30 but was " + gottenStockTransaction.amountOwned);
+
+
+		StockApp.StockTransaction stockTransaction3 = new StockApp.StockTransaction();
+		stockTransaction3.portfolioId = portfolio.id;
+		stockTransaction3.amount = 30;
+		stockTransaction3.exchange = "NASDAQ";
+		stockTransaction3.ticker = "AAPL";
+		stockTransaction3.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-10-10"));
+		stockTransaction3.price = new StockApp.Money(100, "USD");
+		postStockTransactionsBody = new PostStockTransactionsBody(stockTransaction3);
+		response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		int stockTransaction3ID = response.id;
+		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
+		Assert.IsTrue(response.id != 0, "Response id should not be 0");
+		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction3ID);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 60, "Amount owned for the third transaction should be 60 but was " + gottenStockTransaction.amountOwned);
+		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction2ID);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 20, "Amount owned for the second transaction should be 20 but was " + gottenStockTransaction.amountOwned);
+		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction1ID);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 30, "Amount owned for the first transaction should be 30 but was " + gottenStockTransaction.amountOwned);
 	}
 
 	[TestMethod]

@@ -97,6 +97,7 @@ public class GetTransactionsTest
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.portfolios.Count == 2, "There should be 2 portfolios but there were " + response.portfolios.Count);
 		Assert.IsTrue(response.portfolios[0].stockTransactions.Count == 1, "There should be 1 transaction but there were " + response.portfolios[0].stockTransactions.Count);
+		Assert.IsTrue(response.portfolios[1].stockTransactions.Count == 1, "There should be 1 transaction but there were " + response.portfolios[1].stockTransactions.Count);
 	}
 
 	[TestMethod]

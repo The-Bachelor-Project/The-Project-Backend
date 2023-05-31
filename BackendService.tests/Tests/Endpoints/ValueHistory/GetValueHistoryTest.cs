@@ -204,7 +204,7 @@ public class GetValueHistoryTest
 		await transaction3.AddToDb();
 		GetValueHistoryResponse response = await GetValueHistory.EndpointAsync("2020-01-01", "2021-01-01", userTestObject.accessToken!);
 		Assert.IsTrue(response.valueHistory.portfolios.Count == 3, "There should be two portfolios in the response, but there was " + response.valueHistory.portfolios.Count);
-		for (int i = 0; i < response.valueHistory.portfolios[1].positions.Count; i++)
+		for (int i = 0; i < response.valueHistory.portfolios[0].positions.Count; i++)
 		{
 			Assert.IsTrue(response.valueHistory.portfolios[0].positions[i].valueHistory.Count > 0, "There should be more than 0 value history entries, but there was " + response.valueHistory.portfolios[0].positions[i].valueHistory.Count);
 			Assert.IsTrue(response.valueHistory.portfolios[0].positions[i].dividends.Count > 0, "There should be more than 0 dividends, but there was " + response.valueHistory.portfolios[0].positions[i].dividends.Count);

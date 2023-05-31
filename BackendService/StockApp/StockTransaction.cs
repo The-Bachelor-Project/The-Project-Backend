@@ -48,7 +48,7 @@ public class StockTransaction
 			throw new StatusCodeException(400, "Invalid currency " + price!.currency);
 		}
 
-		String getAmountOwned = "SELECT TOP 1 amount_owned FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp <= @timestamp ORDER BY timestamp,id DESC";
+		String getAmountOwned = "SELECT TOP 1 amount_owned FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp <= @timestamp ORDER BY timestamp DESC, id DESC";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@portfolio", portfolioId);
 		parameters.Add("@ticker", ticker);
