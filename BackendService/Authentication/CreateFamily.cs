@@ -21,7 +21,7 @@ public class CreateFamily
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e);
-			throw new StatusCodeException(404, "Token family was not found");
+			throw new StatusCodeException(404, "User was not found");
 		}
 	}
 }

@@ -17,7 +17,7 @@ public class RefreshTokens
 			StockApp.TokenSet tokenSet = SetupTokens.Call(familyID);
 			return tokenSet;
 		}
-		throw new StatusCodeException(401);
+		throw new StatusCodeException(401, "Invalid refresh token");
 
 
 	}
