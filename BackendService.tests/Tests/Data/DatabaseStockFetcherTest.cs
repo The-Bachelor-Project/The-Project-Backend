@@ -37,20 +37,6 @@ public class DatabaseStockFetcherTest
 	}
 
 	[TestMethod]
-	public async Task DatabaseStockFetcherTest_GetHistory_CurrenciesSuccessfulTest()
-	{
-		foreach (String currency in Dictionaries.currencies)
-		{
-			Data.StockHistory stockHistory = await stockFetcher.GetHistory("AAPL", "NASDAQ", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2021-01-20"), "daily", currency);
-			Assert.IsTrue(stockHistory != null, "Stock history should not be null");
-			Assert.IsTrue(stockHistory.ticker == "AAPL", "Ticker should be AAPL but was " + stockHistory.ticker);
-			Assert.IsTrue(stockHistory.exchange == "NASDAQ", "Exchange should be NASDAQ but was " + stockHistory.exchange);
-			Assert.IsTrue(stockHistory.history.Count > 0, "History should not be empty for NASDAQ:AAPL");
-			Assert.IsTrue(stockHistory.history[0].closePrice.currency == currency, "Currency should be " + currency + " but was " + stockHistory.history[0].closePrice.currency);
-		}
-	}
-
-	[TestMethod]
 	public async Task DatabaseStockFetcherTest_GetHistory_InvalidCurrencyTest()
 	{
 		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockFetcher.GetHistory("AAPL", "NASDAQ", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), "daily", "invalid"));

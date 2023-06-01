@@ -8,6 +8,18 @@ public class StockFetcher : IStockFetcher
 {
 	public Task<StockHistory> GetHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, string interval, string currency)
 	{
+		if (startDate > endDate)
+		{
+			throw new StatusCodeException(400, "Start date must be before end date");
+		}
+		if (ticker == null || exchange == null || interval == null || currency == null)
+		{
+			throw new StatusCodeException(400, "Required fields missing");
+		}
+		if (!(Tools.ValidCurrency.Check(currency)))
+		{
+			throw new StatusCodeException(400, "Invalid currency");
+		}
 		System.Console.WriteLine("Getting stock history from database for " + ticker + " " + exchange + " " + startDate + " " + endDate + " " + interval);
 		StockHistory result = new StockHistory(ticker, exchange, "daily");
 

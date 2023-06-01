@@ -5,7 +5,7 @@ public class GetValueHistory
 {
 	public static void Setup(WebApplication app)
 	{
-		app.MapGet("/v1/value-history", async (HttpContext context, [FromQuery] string startDate, string endDate) =>
+		app.MapGet("/v1/value-history", async (HttpContext context, [FromQuery] string startDate, string endDate, string currency) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
 			if (accessToken is null)

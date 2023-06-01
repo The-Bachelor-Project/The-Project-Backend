@@ -40,6 +40,13 @@ public class StockFetcherTest
 	}
 
 	[TestMethod]
+	public async Task StockFetcherTest_GetHistory_InvalidCurrency()
+	{
+		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockFetcher.GetHistory("CHEMM", "CPH", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2021-01-20"), "daily", "invalid"));
+		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
 	public async Task StockFetcherTest_GetHistory_InvalidTickerTest()
 	{
 		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockFetcher.GetHistory("invalid", "NASDAQ", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), "daily", "USD"));
