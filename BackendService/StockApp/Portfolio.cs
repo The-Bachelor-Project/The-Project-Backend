@@ -260,4 +260,34 @@ public class Portfolio
 		}
 		throw new StatusCodeException(404, "Could not find stock transaction with id " + transactionID);
 	}
+
+	public Boolean Delete()
+	{
+		if (id == null)
+		{
+			throw new StatusCodeException(400, "Missing required fields");
+		}
+		String queryCheck = "SELECT * FROM Portfolios WHERE uid = @uid";
+		Dictionary<String, object> parametersCheck = new Dictionary<string, object>();
+		parametersCheck.Add("@uid", id!);
+		Dictionary<String, object>? dataCheck = Data.Database.Reader.ReadOne(queryCheck, parametersCheck);
+		if (dataCheck == null)
+		{
+			throw new StatusCodeException(404, "Could not find portfolio with id " + id);
+		}
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
+		String query = "DELETE FROM Portfolios WHERE uid = @uid";
+		SqlCommand command = new SqlCommand(query, connection);
+		command.Parameters.AddWithValue("@uid", id);
+		try
+		{
+			command.ExecuteNonQuery();
+			return true;
+		}
+		catch (Exception e)
+		{
+			System.Console.WriteLine(e);
+			throw new StatusCodeException(409, "Could not delete portfolio with id " + id);
+		}
+	}
 }

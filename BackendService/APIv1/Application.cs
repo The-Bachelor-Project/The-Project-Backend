@@ -40,7 +40,7 @@ class Application
 		PutPortfolios.Setup(app);
 		PutStockTransactions.Setup(app);
 		DeleteStockTransactions.Setup(app);
-
+		DeletePortfolios.Setup(app);
 		app.Run();
 	}
 }

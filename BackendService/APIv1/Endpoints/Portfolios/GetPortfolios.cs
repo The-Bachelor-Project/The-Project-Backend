@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace API.v1;
 
 public class GetPortfolios

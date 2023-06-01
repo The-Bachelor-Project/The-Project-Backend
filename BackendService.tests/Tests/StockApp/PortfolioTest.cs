@@ -375,4 +375,30 @@ public class PortfolioTest
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => portfolio.GetStockTransaction(1));
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
 	}
+
+	[TestMethod]
+	public void PortfolioTest_Delete_SuccessfulTest()
+	{
+		portfolio.AddToDb();
+		Boolean isDeleted = portfolio.Delete();
+		Assert.IsTrue(isDeleted, "Portfolio should be deleted but was not");
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => GetPortfolios.Endpoint(portfolio.id!, userTestObject.accessToken!));
+		Assert.IsTrue(exception.StatusCode == 404, "Status code should be 404 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
+	public void PortfolioTest_Delete_InvalidPortfolioIDTest()
+	{
+		portfolio.id = "invalid";
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => portfolio.Delete());
+		Assert.IsTrue(exception.StatusCode == 404, "Status code should be 404 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
+	public void PortfolioTest_Delete_NullPortfolioIDTest()
+	{
+		portfolio.id = null;
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => portfolio.Delete());
+		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
+	}
 }
