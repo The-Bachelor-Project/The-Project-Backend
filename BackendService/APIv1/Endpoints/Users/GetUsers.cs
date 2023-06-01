@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+
 
 namespace API.v1;
 
@@ -20,6 +20,7 @@ public class GetUsers
 
 	public static GetUsersResponse Endpoint(string accessToken)
 	{
-		return new GetUsersResponse("success", "4420");
+		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
+		return new GetUsersResponse("success", user.id!);
 	}
 }

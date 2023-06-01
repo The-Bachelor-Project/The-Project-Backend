@@ -338,4 +338,47 @@ public class UserTest
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.GetPortfolio(null!));
 		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
 	}
+
+	[TestMethod]
+	public void UserTest_Delete_SuccessfulTest()
+	{
+		StockApp.User user = userTestObject.user!;
+		user.Delete(user.email!);
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => GetUsers.Endpoint(userTestObject.accessToken!));
+		Assert.IsTrue(exception.StatusCode == 401, "status code should be 401 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
+	public void UserTest_Delete_InvalidEmailTest()
+	{
+		StockApp.User user = userTestObject.user!;
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.Delete(Tools.RandomString.Generate(10)));
+		Assert.IsTrue(exception.StatusCode == 404, "status code should be 404 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
+	public void UserTest_Delete_EmailNullTest()
+	{
+		StockApp.User user = userTestObject.user!;
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.Delete(null!));
+		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
+	public void UserTest_Delete_InvalidUserIDTest()
+	{
+		StockApp.User user = userTestObject.user!;
+		user.id = "invalid";
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.Delete(user.email!));
+		Assert.IsTrue(exception.StatusCode == 401, "status code should be 401 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
+	public void UserTest_Delete_UserIDNullTest()
+	{
+		StockApp.User user = userTestObject.user!;
+		user.id = null;
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.Delete(user.email!));
+		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
+	}
 }

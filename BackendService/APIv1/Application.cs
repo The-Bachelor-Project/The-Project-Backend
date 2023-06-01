@@ -41,6 +41,7 @@ class Application
 		PutStockTransactions.Setup(app);
 		DeleteStockTransactions.Setup(app);
 		DeletePortfolios.Setup(app);
+		DeleteUsers.Setup(app);
 		app.Run();
 	}
 }
