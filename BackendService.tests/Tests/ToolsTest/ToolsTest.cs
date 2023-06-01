@@ -45,4 +45,10 @@ public class ToolsTest
 		Boolean isValid = Tools.ValidEmail.Check(email);
 		Assert.IsFalse(isValid, email + " should be false for valid but was " + isValid);
 	}
+
+	[TestMethod]
+	public void ToolsTest_PriceHistoryConverter_ConvertStockPrice_SuccessfulTest()
+	{
+
+	}
 }

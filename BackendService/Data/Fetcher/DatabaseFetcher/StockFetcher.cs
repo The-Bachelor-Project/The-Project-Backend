@@ -6,7 +6,7 @@ namespace Data.Fetcher.DatabaseFetcher;
 
 public class StockFetcher : IStockFetcher
 {
-	public Task<StockHistory> GetHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, string interval)
+	public Task<StockHistory> GetHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, string interval, string currency)
 	{
 		System.Console.WriteLine("Getting stock history from database for " + ticker + " " + exchange + " " + startDate + " " + endDate + " " + interval);
 		StockHistory result = new StockHistory(ticker, exchange, "daily");

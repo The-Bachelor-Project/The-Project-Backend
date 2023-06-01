@@ -12,9 +12,9 @@ public class DatabaseStockFetcherTest
 	[TestMethod]
 	public async Task DatabaseStockFetcherTest_GetHistory_SuccessfulTest()
 	{
-		foreach (KeyValuePair<String, String> stock in StockDictionary.stockDictionary)
+		foreach (KeyValuePair<String, String> stock in Dictionaries.stockDictionary)
 		{
-			Data.StockHistory stockHistory = await stockFetcher.GetHistory(stock.Value, stock.Key, DateOnly.Parse("2021-01-01"), DateOnly.Parse("2021-01-20"), "daily");
+			Data.StockHistory stockHistory = await stockFetcher.GetHistory(stock.Value, stock.Key, DateOnly.Parse("2021-01-01"), DateOnly.Parse("2021-01-20"), "daily", "USD");
 			Assert.IsTrue(stockHistory != null, "Stock history should not be null");
 			Assert.IsTrue(stockHistory.ticker == stock.Value, "Ticker should be " + stock.Value + " but was " + stockHistory.ticker);
 			Assert.IsTrue(stockHistory.exchange == stock.Key, "Exchange should be " + stock.Key + " but was " + stockHistory.exchange);
@@ -25,21 +25,42 @@ public class DatabaseStockFetcherTest
 	[TestMethod]
 	public async Task DatabaseStockFetcherTest_GetHistory_InvalidTickerTest()
 	{
-		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockFetcher.GetHistory("invalid", "NASDAQ", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), "daily"));
+		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockFetcher.GetHistory("invalid", "NASDAQ", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), "daily", "USD"));
 		Assert.IsTrue(exception.StatusCode == 404, "Status code should be 404 but was " + exception.StatusCode);
 	}
 
 	[TestMethod]
 	public async Task DatabaseStockFetcherTest_GetHistory_InvalidExchangeTest()
 	{
-		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockFetcher.GetHistory("AAPL", "invalid", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), "daily"));
+		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockFetcher.GetHistory("AAPL", "invalid", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), "daily", "USD"));
 		Assert.IsTrue(exception.StatusCode == 404, "Status code should be 404 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
+	public async Task DatabaseStockFetcherTest_GetHistory_CurrenciesSuccessfulTest()
+	{
+		foreach (String currency in Dictionaries.currencies)
+		{
+			Data.StockHistory stockHistory = await stockFetcher.GetHistory("AAPL", "NASDAQ", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2021-01-20"), "daily", currency);
+			Assert.IsTrue(stockHistory != null, "Stock history should not be null");
+			Assert.IsTrue(stockHistory.ticker == "AAPL", "Ticker should be AAPL but was " + stockHistory.ticker);
+			Assert.IsTrue(stockHistory.exchange == "NASDAQ", "Exchange should be NASDAQ but was " + stockHistory.exchange);
+			Assert.IsTrue(stockHistory.history.Count > 0, "History should not be empty for NASDAQ:AAPL");
+			Assert.IsTrue(stockHistory.history[0].closePrice.currency == currency, "Currency should be " + currency + " but was " + stockHistory.history[0].closePrice.currency);
+		}
+	}
+
+	[TestMethod]
+	public async Task DatabaseStockFetcherTest_GetHistory_InvalidCurrencyTest()
+	{
+		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockFetcher.GetHistory("AAPL", "NASDAQ", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), "daily", "invalid"));
+		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
 	}
 
 	[TestMethod]
 	public async Task DatabaseStockFetcherTest_GetProfile_SuccessfulTest()
 	{
-		foreach (KeyValuePair<String, String> stock in StockDictionary.stockDictionary)
+		foreach (KeyValuePair<String, String> stock in Dictionaries.stockDictionary)
 		{
 			Data.StockProfile stockProfile = await stockFetcher.GetProfile(stock.Value, stock.Key);
 			Assert.IsTrue(stockProfile != null, "Stock profile should not be null");

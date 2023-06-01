@@ -1,6 +1,6 @@
 namespace BackendService.tests;
 
-public class StockDictionary
+public class Dictionaries
 {
 	public static Dictionary<string, string> stockDictionary = new Dictionary<string, string>()
 	{
@@ -64,5 +64,41 @@ public class StockDictionary
 		{"HAM", "VVX"},
 		{"BIT", "A2A"},
 		{"ELI", "ALTR"}
+	};
+
+	public static List<string> currencies = new List<string>
+	{
+		// Excluding USD as this is tested reguarly
+		"ARS",
+		"AUD",
+		"BRL",
+		"CAD",
+		"CHF",
+		"CLP",
+		"CNY",
+		"CZK",
+		"DKK",
+		"EUR",
+		"GBP",
+		"GBX",
+		"HKD",
+		"HUF",
+		"IDR",
+		"ILS",
+		"INR",
+		"JPY",
+		"KRW",
+		"KWD",
+		"MXN",
+		"NOK",
+		"NZD",
+		"PLN",
+		"QAR",
+		"SAR",
+		"SEK",
+		"SGD",
+		"THB",
+		"TRY",
+		"TWD"
 	};
 }

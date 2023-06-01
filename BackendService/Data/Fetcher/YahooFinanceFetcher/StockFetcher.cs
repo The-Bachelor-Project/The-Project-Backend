@@ -6,7 +6,7 @@ namespace Data.Fetcher.YahooFinanceFetcher;
 
 public class StockFetcher : IStockFetcher
 {
-	public async Task<StockHistory> GetHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, string interval)
+	public async Task<StockHistory> GetHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, string interval, string currency)
 	{
 		System.Console.WriteLine("Fetching stock history for " + ticker + " on " + exchange + " from " + startDate + " to " + endDate);
 
@@ -20,7 +20,7 @@ public class StockFetcher : IStockFetcher
 		{
 			throw new StatusCodeException(400, "Exchange not found");
 		}
-		String currency = data["currency"].ToString()!;
+		currency = data["currency"].ToString()!;
 
 		int startTime = Tools.TimeConverter.DateOnlyToUnix(startDate);
 		int endTime = Tools.TimeConverter.DateOnlyToUnix(endDate);
@@ -72,7 +72,7 @@ public class StockFetcher : IStockFetcher
 
 			}
 		}
-		await new Tools.PriceHistoryConverter().ConvertStockPrice(result.history, "USD");
+		await new Tools.PriceHistoryConverter().ConvertStockPrice(result.history, "USD", false);
 		foreach (Data.DatePriceOHLC datePrice in result.history)
 		{
 			try
@@ -277,7 +277,7 @@ public class StockFetcher : IStockFetcher
 			}
 
 		}
-		await new Tools.PriceHistoryConverter().ConvertStockDividends(dividends, "USD");
+		await new Tools.PriceHistoryConverter().ConvertStockDividends(dividends, "USD", false);
 		return dividends;
 	}
 }

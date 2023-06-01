@@ -42,7 +42,7 @@ public class StockPosition
 
 		DateOnly currentDate = Tools.TimeConverter.UnixTimeStampToDateOnly(stockTransactions.First().timestamp!.Value);
 		currentDate = currentDate < startDate ? currentDate : startDate;
-		Data.StockHistory stockHistory = await new Data.Fetcher.StockFetcher().GetHistory(stock.ticker, stock.exchange, currentDate, endDate, "daily");
+		Data.StockHistory stockHistory = await new Data.Fetcher.StockFetcher().GetHistory(stock.ticker, stock.exchange, currentDate, endDate, "daily", currency);
 		Data.DatePriceOHLC currentStockPrice = stockHistory.history.First();
 
 		int dividendIndex = 0;

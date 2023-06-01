@@ -6,11 +6,15 @@ namespace Data.Fetcher;
 
 public class StockFetcher : IStockFetcher
 {
-	public async Task<StockHistory> GetHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, string interval)
+	public async Task<StockHistory> GetHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, string interval, string currency)
 	{
-		if (ticker == null || exchange == null || interval == null)
+		if (ticker == null || exchange == null || interval == null || currency == null)
 		{
 			throw new StatusCodeException(400, "Required fields are missing");
+		}
+		if (!(Tools.ValidCurrency.Check(currency)))
+		{
+			throw new StatusCodeException(400, "Invalid currency: " + currency);
 		}
 		if (startDate > endDate)
 		{
@@ -33,7 +37,7 @@ public class StockFetcher : IStockFetcher
 			}
 			catch (Exception)
 			{
-				StockHistory fromYahoo = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, startDate.AddDays(-7), endDate, interval);
+				StockHistory fromYahoo = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, startDate.AddDays(-7), endDate, interval, currency);
 				fromYahoo.dividends = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetDividends(ticker, exchange, startDate.AddDays(-7), endDate);
 				SaveStockHistory(fromYahoo, true, true);
 				SaveDividends(fromYahoo.dividends, ticker, exchange);
@@ -41,21 +45,23 @@ public class StockFetcher : IStockFetcher
 			}
 			if (startDate < startTrackingDate)
 			{
-				StockHistory fromYahooBefore = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, startDate.AddDays(-7), startTrackingDate.AddDays(-1), interval);
+				StockHistory fromYahooBefore = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, startDate.AddDays(-7), startTrackingDate.AddDays(-1), interval, currency);
 				fromYahooBefore.dividends = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetDividends(ticker, exchange, startDate.AddDays(-7), startTrackingDate.AddDays(-1));
 				SaveStockHistory(fromYahooBefore, true, false);
 				SaveDividends(fromYahooBefore.dividends, ticker, exchange);
 			}
 			if (endDate > endTrackingDate)
 			{
-				StockHistory fromYahooAfter = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, endTrackingDate.AddDays(1), endDate, interval);
+				StockHistory fromYahooAfter = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, endTrackingDate.AddDays(1), endDate, interval, currency);
 				fromYahooAfter.dividends = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetDividends(ticker, exchange, endTrackingDate.AddDays(1), endDate);
 				SaveStockHistory(fromYahooAfter, false, true);
 				SaveDividends(fromYahooAfter.dividends, ticker, exchange);
 			}
 		}
-		StockHistory stockHistoryReturn = await new Data.Fetcher.DatabaseFetcher.StockFetcher().GetHistory(ticker, exchange, startDate, endDate, interval);
+		StockHistory stockHistoryReturn = await new Data.Fetcher.DatabaseFetcher.StockFetcher().GetHistory(ticker, exchange, startDate, endDate, interval, currency);
+		stockHistoryReturn.history = await new Tools.PriceHistoryConverter().ConvertStockPrice(stockHistoryReturn.history, currency, true);
 		stockHistoryReturn.dividends = await new Data.Fetcher.DatabaseFetcher.StockFetcher().GetDividends(ticker, exchange, startDate, endDate);
+		stockHistoryReturn.dividends = await new Tools.PriceHistoryConverter().ConvertStockDividends(stockHistoryReturn.dividends, currency, true);
 		return stockHistoryReturn;
 	}
 
