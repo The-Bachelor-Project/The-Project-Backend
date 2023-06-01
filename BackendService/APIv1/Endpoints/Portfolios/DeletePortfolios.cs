@@ -20,13 +20,7 @@ public class DeletePortfolios
 	public static DeletePortfoliosResponse Endpoint(String id, String accessToken)
 	{
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
-		if (user.GetPortfolio(id).Delete())
-		{
-			return new DeletePortfoliosResponse("success");
-		}
-		else
-		{
-			return new DeletePortfoliosResponse("error");
-		}
+		user.GetPortfolio(id).Delete();
+		return new DeletePortfoliosResponse("success");
 	}
 }

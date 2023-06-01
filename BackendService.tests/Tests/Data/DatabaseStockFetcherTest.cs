@@ -44,6 +44,35 @@ public class DatabaseStockFetcherTest
 	}
 
 	[TestMethod]
+	public async Task DatabaseStockFetcherTest_GetHistory_InvalidDateTest()
+	{
+		String ticker = Dictionaries.stockDictionary.First().Value;
+		String exchange = Dictionaries.stockDictionary.First().Key;
+		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockFetcher.GetHistory(ticker, exchange, DateOnly.Parse("2022-01-01"), DateOnly.Parse("2021-01-01"), "daily", "USD"));
+		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
+	public async Task DatabaseStockFetcherTest_GetHistory_NullValuesTest()
+	{
+		// Ticker
+		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockFetcher.GetHistory(null!, "NASDAQ", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), "daily", "USD"));
+		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
+
+		// Exchange
+		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockFetcher.GetHistory("AAPL", null!, DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), "daily", "USD"));
+		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
+
+		// Interval
+		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockFetcher.GetHistory("AAPL", "NASDAQ", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), null!, "USD"));
+		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
+
+		// Currency
+		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockFetcher.GetHistory("AAPL", "NASDAQ", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), "daily", null!));
+		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
 	public async Task DatabaseStockFetcherTest_GetProfile_SuccessfulTest()
 	{
 		foreach (KeyValuePair<String, String> stock in Dictionaries.stockDictionary)
@@ -61,6 +90,21 @@ public class DatabaseStockFetcherTest
 		Data.StockProfile[] searchResults = await stockFetcher.Search("AAPL");
 		Assert.IsTrue(searchResults != null, "Search results should not be null");
 		Assert.IsTrue(searchResults.Length > 0, "Search results should not be empty");
+	}
+
+	[TestMethod]
+	public async Task DatabaseStockFetcherTest_Search_TickerAndExhcangeTest()
+	{
+		Data.StockProfile[] searchResults = await stockFetcher.Search("CPH CHEMM");
+		Assert.IsTrue(searchResults != null, "Search results should not be null");
+		Assert.IsTrue(searchResults.Length == 1, "Search results should contain 1 result");
+	}
+
+	[TestMethod]
+	public async Task DatabaseStockFetcherTest_Search_NullQueryTest()
+	{
+		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockFetcher.Search(null!));
+		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
 	}
 
 	[TestMethod]

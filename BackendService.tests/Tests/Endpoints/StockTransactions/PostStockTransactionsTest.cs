@@ -382,4 +382,19 @@ public class PostStockTransactionsTest
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
 	}
 
+	[TestMethod]
+	public void PostStockTransactionsTest_NullCurrencyTest()
+	{
+		StockApp.StockTransaction stockTransactionData = new StockApp.StockTransaction();
+		stockTransactionData.portfolioId = portfolio.id;
+		stockTransactionData.amount = 1;
+		stockTransactionData.exchange = "NASDAQ";
+		stockTransactionData.ticker = "AAPL";
+		stockTransactionData.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
+		stockTransactionData.price = new StockApp.Money(100, null!);
+		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData);
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!).GetAwaiter().GetResult());
+		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
+	}
+
 }

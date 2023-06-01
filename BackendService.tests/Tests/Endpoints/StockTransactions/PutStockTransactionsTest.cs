@@ -263,5 +263,4 @@ public class PutStockTransactionsTest
 		exception = Assert.ThrowsException<StatusCodeException>(() => PutStockTransactions.Endpoint(userTestObject.accessToken!, body).GetAwaiter().GetResult());
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
 	}
-
 }

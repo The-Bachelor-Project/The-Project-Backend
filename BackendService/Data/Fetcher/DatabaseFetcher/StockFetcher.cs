@@ -96,6 +96,10 @@ public class StockFetcher : IStockFetcher
 
 	public Task<Data.StockProfile[]> Search(string query)
 	{
+		if (query == null)
+		{
+			throw new StatusCodeException(400, "Required fields missing");
+		}
 		Data.StockProfile[] results = new Data.StockProfile[] { };
 		Regex regex = new Regex("[A-Za-z0-9]*[A-Za-z0-9]", RegexOptions.IgnoreCase);
 		MatchCollection matchedAuthors = regex.Matches(query);

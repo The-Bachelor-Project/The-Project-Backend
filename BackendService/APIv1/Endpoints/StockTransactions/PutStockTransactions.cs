@@ -25,10 +25,6 @@ public class PutStockTransactions
 		}
 		User user = new TokenSet(accessToken).GetUser();
 		Portfolio portfolio = user.GetPortfolio(body.portfolio);
-		if (portfolio.GetOwner().id != user.id)
-		{
-			throw new StatusCodeException(403, "Invalid portfolio owner");
-		}
 		if (body.newPrice < 0)
 		{
 			throw new StatusCodeException(400, "Invalid price");

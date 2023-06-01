@@ -163,4 +163,20 @@ public class MiddlewareTest
 		Assert.AreEqual(StatusCodes.Status401Unauthorized, context.Response.StatusCode);
 		Assert.IsTrue(TokenHelper.InvalidatedFamilyCorrectly((int)userTestObject.familyID!));
 	}
+
+	[TestMethod]
+	public async Task MiddlewareTest_MissingRefreshTokenTest()
+	{
+		TokenHelper.CreateTokens(userTestObject.user!, (int)userTestObject.familyID!);
+		DefaultHttpContext context = new DefaultHttpContext();
+		context.Request.Path = "/v1/tokens";
+		context.Request.Method = "PUT";
+		RequestDelegate next = (HttpContext context) =>
+		{
+			return Task.CompletedTask;
+		};
+		Authentication.Middleware middleware = new Authentication.Middleware();
+		await middleware.InvokeAsync(context, next);
+		Assert.AreEqual(StatusCodes.Status401Unauthorized, context.Response.StatusCode);
+	}
 }

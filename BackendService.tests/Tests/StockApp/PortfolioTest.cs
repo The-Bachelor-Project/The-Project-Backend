@@ -380,8 +380,7 @@ public class PortfolioTest
 	public void PortfolioTest_Delete_SuccessfulTest()
 	{
 		portfolio.AddToDb();
-		Boolean isDeleted = portfolio.Delete();
-		Assert.IsTrue(isDeleted, "Portfolio should be deleted but was not");
+		portfolio.Delete();
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => GetPortfolios.Endpoint(portfolio.id!, userTestObject.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 404, "Status code should be 404 but was " + exception.StatusCode);
 	}

@@ -71,4 +71,12 @@ public class PutPortfoliosTest
 		Assert.IsTrue(exception.StatusCode == 401, "Status code should be 401 but was " + exception.StatusCode);
 		PortfolioHelper.Delete(userTestObject);
 	}
+
+	[TestMethod]
+	public void PutPortfoliosTest_PortfolioIDNullTest()
+	{
+		PutPortfoliosBody body = new PutPortfoliosBody("USD", "New Name Test", null!);
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PutPortfolios.Endpoint(userTestObject.accessToken!, body));
+		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
+	}
 }

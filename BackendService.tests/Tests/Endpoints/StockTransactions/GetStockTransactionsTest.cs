@@ -42,9 +42,8 @@ public class GetStockTransactionsTest
 	public void GetStockTransactionsTest_GetEmpty()
 	{
 		UserTestObject tempUser = UserHelper.Create();
-		GetStockTransactionsResponse response = GetStockTransactions.Endpoint(tempUser.accessToken!);
-		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
-		Assert.IsTrue(response.stockTransactions.Count == 0, "Response should contain 0 stockTransactions but contained " + response.stockTransactions.Count);
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => GetStockTransactions.Endpoint(tempUser.accessToken!));
+		Assert.IsTrue(exception.StatusCode == 404, "Status code should be 404 but was " + exception.StatusCode);
 		UserHelper.Delete(tempUser);
 	}
 

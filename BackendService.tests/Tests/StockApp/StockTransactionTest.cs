@@ -170,6 +170,15 @@ public class StockTransactionTest
 	}
 
 	[TestMethod]
+	public void StockTransactionTest_GetPortfolio_NullPortfolioIDTest()
+	{
+		StockTransaction stockTransaction = new StockTransaction();
+		stockTransaction.portfolioId = null;
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => stockTransaction.GetPortfolio());
+		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 404 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
 	public async Task StockTransactionTest_DeleteFromDb_SuccessfulTest()
 	{
 		StockTransaction stockTransaction = new StockTransaction();

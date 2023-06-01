@@ -147,7 +147,7 @@ public class User
 		}
 	}
 
-	public Boolean Delete(String email)
+	public void Delete(String email)
 	{
 		if (id == null || email == null)
 		{
@@ -169,14 +169,12 @@ public class User
 			throw new StatusCodeException(401, "Not authorized to delete this user");
 		}
 
-
 		query = "DELETE FROM Accounts WHERE user_id = @user_id";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@user_id", id);
 		try
 		{
 			command.ExecuteNonQuery();
-			return true;
 		}
 		catch (Exception e)
 		{
@@ -196,7 +194,7 @@ public class User
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@owner", id);
 		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(query, parameters);
-		if (data == null)
+		if (data == null || data.Count == 0)
 		{
 			throw new StatusCodeException(404, "No portfolios found");
 		}

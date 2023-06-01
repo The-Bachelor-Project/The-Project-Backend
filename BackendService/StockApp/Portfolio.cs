@@ -261,7 +261,7 @@ public class Portfolio
 		throw new StatusCodeException(404, "Could not find stock transaction with id " + transactionID);
 	}
 
-	public Boolean Delete()
+	public void Delete()
 	{
 		if (id == null)
 		{
@@ -282,7 +282,6 @@ public class Portfolio
 		try
 		{
 			command.ExecuteNonQuery();
-			return true;
 		}
 		catch (Exception e)
 		{

@@ -2,7 +2,7 @@ using System.Data.SqlClient;
 
 namespace Data.Database;
 
-class Exchange
+public class Exchange
 {
 	public static String GetCurrency(String exchange)
 	{

@@ -68,7 +68,7 @@ public class PostPortfoliosTest
 	[TestMethod]
 	public void PostPortfoliosTest_MissingNameTest()
 	{
-		PortfolioBody portfolio = new PortfolioBody(null, "USD", 0, false);
+		PortfolioBody portfolio = new PortfolioBody(null!, "USD", 0, false);
 		PostPortfoliosBody body = new PostPortfoliosBody(portfolio);
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostPortfolios.Endpoint(body, userTestObject.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);

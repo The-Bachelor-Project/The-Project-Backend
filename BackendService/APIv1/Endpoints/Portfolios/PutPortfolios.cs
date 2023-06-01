@@ -22,7 +22,7 @@ public class PutPortfolios
 	{
 		if (body.id is null)
 		{
-			return new PutPortfoliosResponse("error");
+			throw new StatusCodeException(400, "Required fields missing");
 		}
 		User user = new TokenSet(accessToken).GetUser();
 		Portfolio portfolio = user.GetPortfolio(body.id);
@@ -35,6 +35,5 @@ public class PutPortfolios
 			portfolio.ChangeName(body.newName);
 		}
 		return new PutPortfoliosResponse("success");
-
 	}
 }
