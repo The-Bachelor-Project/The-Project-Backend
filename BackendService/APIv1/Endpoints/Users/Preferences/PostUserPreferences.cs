@@ -2,7 +2,6 @@ namespace API.v1;
 
 public class PostUserPreferences
 {
-	// Make the user id part of the path, like "/v1/users/{id}/preferences"
 	public static void Setup(WebApplication app)
 	{
 		app.MapPost("/v1/users/preferences", (HttpContext context, PostUserPreferencesBody body) =>

@@ -45,6 +45,7 @@ class Application
 		PostCashTransactions.Setup(app);
 		PostUserPreferences.Setup(app);
 		GetUserPreferences.Setup(app);
+		DeleteCashTransactions.Setup(app);
 		app.Run();
 	}
 }

@@ -289,4 +289,30 @@ public class Portfolio
 			throw new StatusCodeException(409, "Could not delete portfolio with id " + id);
 		}
 	}
+
+	public CashTransaction GetCashTransaction(int cashTransactionID)
+	{
+		if (id == null)
+		{
+			throw new StatusCodeException(400, "Missing required fields");
+		}
+		String query = "SELECT * FROM CashTransactions WHERE id = @id AND portfolio = @portfolio";
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@id", cashTransactionID);
+		parameters.Add("@portfolio", id!);
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(query, parameters);
+		if (data != null)
+		{
+			CashTransaction cashTransaction = new CashTransaction();
+			cashTransaction.id = int.Parse(data["id"].ToString()!);
+			cashTransaction.portfolioId = data["portfolio"].ToString();
+			cashTransaction.timestamp = Convert.ToInt32(data["timestamp"]);
+			cashTransaction.nativeAmount = new Money(Convert.ToDecimal(data["native_amount"]), data["currency"].ToString()!);
+			cashTransaction.usdAmount = new Money(Convert.ToDecimal(data["amount"]), "USD");
+			cashTransaction.type = data["type"].ToString();
+			cashTransaction.description = data["description"].ToString();
+			return cashTransaction;
+		}
+		throw new StatusCodeException(404, "Could not find cash transaction with id " + cashTransactionID);
+	}
 }

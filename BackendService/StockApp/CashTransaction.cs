@@ -93,4 +93,40 @@ public class CashTransaction
 		}
 		return this;
 	}
+
+	public void DeleteFromDb()
+	{
+		if (id == null)
+		{
+			throw new StatusCodeException(400, "Missing required fields");
+		}
+		if (type == "Deposit" || type == "Withdrawal")
+		{
+			SqlConnection connection = Data.Database.Connection.GetSqlConnection();
+			String checkIfTransactionExistsQuery = "SELECT id FROM CashTransactions WHERE id = @id";
+			Dictionary<String, object> parameters = new Dictionary<string, object>();
+			parameters.Add("@id", id);
+			Dictionary<String, object>? data = Data.Database.Reader.ReadOne(checkIfTransactionExistsQuery, parameters);
+			if (data == null)
+			{
+				throw new StatusCodeException(404, "Cash transaction not found");
+			}
+			String deleteTransactionQuery = "DELETE FROM CashTransactions WHERE id = @id";
+			SqlCommand command = new SqlCommand(deleteTransactionQuery, connection);
+			command.Parameters.AddWithValue("@id", id);
+			try
+			{
+				command.ExecuteNonQuery();
+			}
+			catch (Exception e)
+			{
+				System.Console.WriteLine(e);
+				throw new StatusCodeException(500, "Could not delete cash transaction");
+			}
+		}
+		else
+		{
+			throw new StatusCodeException(403, "Cannot delete cash transaction of type " + type);
+		}
+	}
 }
