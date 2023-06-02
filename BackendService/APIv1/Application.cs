@@ -42,6 +42,7 @@ class Application
 		DeleteStockTransactions.Setup(app);
 		DeletePortfolios.Setup(app);
 		DeleteUsers.Setup(app);
+		PostCashTransactions.Setup(app);
 		app.Run();
 	}
 }

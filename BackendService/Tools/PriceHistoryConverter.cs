@@ -143,4 +143,58 @@ public class PriceHistoryConverter
 		dividends = newDividendHistory;
 		return dividends;
 	}
+
+	public static async Task<StockApp.Money> ConvertMoney(StockApp.Money nativeAmount, int? timestamp, String newCurrency, Boolean convertFromUSDToNewCurrency)
+	{
+		if (!(Tools.ValidCurrency.Check(newCurrency)))
+		{
+			throw new StatusCodeException(400, "Invalid currency");
+		}
+		if (nativeAmount.amount == 0)
+		{
+			return new StockApp.Money(0, "USD");
+		}
+		if (nativeAmount.currency.ToUpper() == "USD" && !convertFromUSDToNewCurrency)
+		{
+			return nativeAmount;
+		}
+		newCurrency = newCurrency.ToUpper();
+		if (convertFromUSDToNewCurrency && newCurrency == "USD")
+		{
+			return nativeAmount;
+		}
+
+		Data.CurrencyHistory currencyHistory;
+		if (convertFromUSDToNewCurrency)
+		{
+			currencyHistory = await new Data.Fetcher.CurrencyFetcher().GetHistory(newCurrency, Tools.TimeConverter.UnixTimeStampToDateOnly((int)timestamp!).AddDays(-7), Tools.TimeConverter.UnixTimeStampToDateOnly((int)timestamp!));
+		}
+		else
+		{
+			currencyHistory = await new Data.Fetcher.CurrencyFetcher().GetHistory(nativeAmount.currency, Tools.TimeConverter.UnixTimeStampToDateOnly((int)timestamp!).AddDays(-7), Tools.TimeConverter.UnixTimeStampToDateOnly((int)timestamp!));
+		}
+
+		if (currencyHistory.history.Count == 0)
+		{
+			throw new StatusCodeException(500, "Currency exchange rate list of " + newCurrency + " is empty");
+		}
+
+		// Find the most recent exchange rate, closest to the timestamp
+		DateOnly date = Tools.TimeConverter.UnixTimeStampToDateOnly((int)timestamp!);
+		for (int i = currencyHistory.history.Count - 1; i >= 0; i--)
+		{
+			if (currencyHistory.history[i].date <= date)
+			{
+				if (convertFromUSDToNewCurrency)
+				{
+					return new StockApp.Money(nativeAmount.amount * (1 / currencyHistory.history[i].closePrice.amount), newCurrency);
+				}
+				else
+				{
+					return new StockApp.Money(nativeAmount.amount * currencyHistory.history[i].closePrice.amount, newCurrency);
+				}
+			}
+		}
+		throw new StatusCodeException(500, "Currency exchange rate list of " + newCurrency + " is empty");
+	}
 }
