@@ -381,4 +381,25 @@ public class UserTest
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.Delete(otherUser.user!.email!));
 		Assert.IsTrue(exception.StatusCode == 401, "status code should be 401 but was " + exception.StatusCode);
 	}
+
+	[TestMethod]
+	public void UserTest_PostPreference_SuccessfulTest()
+	{
+		StockApp.User user = userTestObject.user!;
+		user.PostPreference("test", "test");
+		userTestObject = UserHelper.GetPreferences(userTestObject);
+		Assert.IsTrue(userTestObject.setting == "test", "setting should be test but was " + userTestObject.setting);
+		Assert.IsTrue(userTestObject.settingValue == "test", "value should be test but was " + userTestObject.settingValue);
+	}
+
+	[TestMethod]
+	public void UserTest_PostPreference_NullValuesTest()
+	{
+		StockApp.User user = userTestObject.user!;
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.PostPreference(null!, ""));
+		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
+
+		exception = Assert.ThrowsException<StatusCodeException>(() => user.PostPreference("", null!));
+		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
+	}
 }

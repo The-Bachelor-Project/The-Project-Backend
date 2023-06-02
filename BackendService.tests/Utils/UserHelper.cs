@@ -58,6 +58,22 @@ public class UserHelper
 			System.Console.WriteLine(e);
 		}
 	}
+
+	public static UserTestObject GetPreferences(UserTestObject userTestObject)
+	{
+		String getPreferencesQuery = "SELECT * FROM AccountPreferences WHERE user_id = @user_id";
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@user_id", userTestObject.user!.id!);
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(getPreferencesQuery, parameters);
+		if (data is null)
+		{
+			throw new StatusCodeException(500, "Failed to get preferences");
+		}
+		userTestObject.setting = (String)data["setting"];
+		userTestObject.settingValue = (String)data["value"];
+		return userTestObject;
+	}
 }
 
 public class UserTestObject
@@ -66,6 +82,8 @@ public class UserTestObject
 	public String? accessToken { get; set; }
 	public String? refreshToken { get; set; }
 	public int? familyID { get; set; }
+	public String? setting { get; set; }
+	public String? settingValue { get; set; }
 	public UserTestObject(User user, String accessToken, String refreshToken, int familyID)
 	{
 		this.user = user;
