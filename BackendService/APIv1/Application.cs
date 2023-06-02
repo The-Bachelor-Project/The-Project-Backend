@@ -43,6 +43,7 @@ class Application
 		DeletePortfolios.Setup(app);
 		DeleteUsers.Setup(app);
 		PostCashTransactions.Setup(app);
+		PostUserPreferences.Setup(app);
 		app.Run();
 	}
 }

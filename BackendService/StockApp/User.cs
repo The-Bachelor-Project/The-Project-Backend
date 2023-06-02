@@ -280,4 +280,28 @@ public class User
 
 		return transactions;
 	}
+
+	public int PostPreference(string setting, string value)
+	{
+		if (id == null || setting == null || value == null)
+		{
+			throw new StatusCodeException(400, "Required fields are missing");
+		}
+
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
+		String query = "INSERT INTO AccountPreferences (user_id, setting, value) OUTPUT INSERTED.id VALUES (@user_id, @setting, @value)";
+		SqlCommand command = new SqlCommand(query, connection);
+		command.Parameters.AddWithValue("@user_id", id);
+		command.Parameters.AddWithValue("@setting", setting);
+		command.Parameters.AddWithValue("@value", value);
+		try
+		{
+			return (int)command.ExecuteScalar();
+		}
+		catch (Exception e)
+		{
+			System.Console.WriteLine(e);
+			throw new StatusCodeException(500, "Could not add preference");
+		}
+	}
 }
