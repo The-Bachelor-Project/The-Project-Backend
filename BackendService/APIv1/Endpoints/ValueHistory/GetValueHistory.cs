@@ -13,13 +13,13 @@ public class GetValueHistory
 				context.Response.StatusCode = 401;
 				return Results.Ok(new GetPortfoliosResponse("error", new List<StockApp.Portfolio> { }));
 			}
-			return Results.Ok(await EndpointAsync(startDate, endDate, accessToken));
+			return Results.Ok(await EndpointAsync(startDate, endDate, currency, accessToken));
 		});
 	}
 
-	public static async Task<GetValueHistoryResponse> EndpointAsync(string startDate, string endDate, string accessToken)
+	public static async Task<GetValueHistoryResponse> EndpointAsync(string startDate, string endDate, string currency, string accessToken)
 	{
-		GetValueHistoryResponse response = new GetValueHistoryResponse(await (new StockApp.EndpointHandler.ValueHistory(accessToken)).Get("USD", DateOnly.Parse(startDate), DateOnly.Parse(endDate)));
+		GetValueHistoryResponse response = new GetValueHistoryResponse(await (new StockApp.EndpointHandler.ValueHistory(accessToken)).Get(currency, DateOnly.Parse(startDate), DateOnly.Parse(endDate)));
 		return response;
 	}
 }

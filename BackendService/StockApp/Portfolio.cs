@@ -35,6 +35,7 @@ public class Portfolio
 	public Boolean? trackBalance { get; set; }
 
 	public List<StockTransaction> stockTransactions { get; set; } = new List<StockTransaction>();
+	public List<CashTransaction> cashTransactions { get; set; } = new List<CashTransaction>();
 	public List<StockPosition> stockPositions { get; set; } = new List<StockPosition>();
 
 

@@ -87,16 +87,16 @@ public class StockPosition
 					dividend = stockHistory.dividends[dividendIndex];
 					dividendIndex++;
 
-					dividendHistory.Add(new Data.Dividend(currentDate, new Data.Money(dividend.payout.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY)));
+					dividendHistory.Add(new Data.Dividend(currentDate, new Data.Money(dividend.payout.amount * currentlyOwned, currency)));
 				}
 			}
 			if (currentDate >= startDate)
 			{
 				valueHistory.Add(new Data.DatePriceOHLC(currentDate,
-					new Data.Money(currentStockPrice.openPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
-					new Data.Money(currentStockPrice.highPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
-					new Data.Money(currentStockPrice.lowPrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY),
-					new Data.Money(currentStockPrice.closePrice!.amount * currentlyOwned, Data.Money.DEFAULT_CURRENCY)));
+					new Data.Money(currentStockPrice.openPrice!.amount * currentlyOwned, currency),
+					new Data.Money(currentStockPrice.highPrice!.amount * currentlyOwned, currency),
+					new Data.Money(currentStockPrice.lowPrice!.amount * currentlyOwned, currency),
+					new Data.Money(currentStockPrice.closePrice!.amount * currentlyOwned, currency)));
 			}
 			currentDate = currentDate.AddDays(1);
 		}
