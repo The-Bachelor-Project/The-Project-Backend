@@ -144,4 +144,12 @@ public class CashTransactionsTest
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
 	}
 
+	[TestMethod]
+	public void CashTransactionsTest_DeleteFromDb_NullIDTest()
+	{
+		StockApp.CashTransaction cashTransaction = new StockApp.CashTransaction();
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => cashTransaction.DeleteFromDb());
+		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
+	}
+
 }
