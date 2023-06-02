@@ -334,4 +334,26 @@ public class User
 		}
 		return preferences;
 	}
+
+	public void DeletePreference(string setting)
+	{
+		if (id == null || setting == null)
+		{
+			throw new StatusCodeException(400, "Required fields are missing");
+		}
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
+		String deleteQuery = "DELETE FROM AccountPreferences WHERE user_id = @user_id AND setting = @setting";
+		SqlCommand command = new SqlCommand(deleteQuery, connection);
+		command.Parameters.AddWithValue("@user_id", id);
+		command.Parameters.AddWithValue("@setting", setting);
+		try
+		{
+			command.ExecuteNonQuery();
+		}
+		catch (Exception e)
+		{
+			System.Console.WriteLine(e);
+			throw new StatusCodeException(500, "Could not delete preference");
+		}
+	}
 }

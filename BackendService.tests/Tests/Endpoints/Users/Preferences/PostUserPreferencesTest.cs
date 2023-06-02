@@ -38,6 +38,10 @@ public class PostUserPreferencesTest
 		body = new PostUserPreferencesBody("Test Setting", "");
 		exception = Assert.ThrowsException<StatusCodeException>(() => PostUserPreferences.Endpoint(body, userTestObject!.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
+
+		body = new PostUserPreferencesBody("TEST", "TEST");
+		exception = Assert.ThrowsException<StatusCodeException>(() => PostUserPreferences.Endpoint(body, ""));
+		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
 	}
 
 	[TestMethod]
@@ -50,5 +54,9 @@ public class PostUserPreferencesTest
 		body = new PostUserPreferencesBody("Test Setting", null!);
 		exception = Assert.ThrowsException<StatusCodeException>(() => PostUserPreferences.Endpoint(body, userTestObject!.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
+
+		body = new PostUserPreferencesBody("TEST", "TEST");
+		exception = Assert.ThrowsException<StatusCodeException>(() => PostUserPreferences.Endpoint(body, null!));
+		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 401 but was " + exception.StatusCode);
 	}
 }

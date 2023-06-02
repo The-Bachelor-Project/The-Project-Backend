@@ -452,4 +452,29 @@ public class UserTest
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.GetPreferences());
 		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
 	}
+
+	[TestMethod]
+	public void UserTest_DeletePreference_SuccessfulDeletionTest()
+	{
+		StockApp.User user = userTestObject.user!;
+		user.PostPreference("setting", "value");
+		userTestObject = UserHelper.GetPreferences(userTestObject);
+		Assert.IsTrue(userTestObject.setting == "setting", "setting should be setting but was " + userTestObject.setting);
+		Assert.IsTrue(userTestObject.settingValue == "value", "value should be value but was " + userTestObject.settingValue);
+		user.DeletePreference("setting");
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => userTestObject = UserHelper.GetPreferences(userTestObject));
+		Assert.IsTrue(exception.StatusCode == 500, "status code should be 500 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
+	public void UserTest_DeletePreference_NullValuesTest()
+	{
+		StockApp.User user = userTestObject.user!;
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.DeletePreference(null!));
+		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
+
+		user.id = null!;
+		exception = Assert.ThrowsException<StatusCodeException>(() => user.DeletePreference("Setting"));
+		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
+	}
 }

@@ -19,7 +19,7 @@ public class PostUserPreferences
 
 	public static PostUserPreferencesResponse Endpoint(PostUserPreferencesBody body, String accessToken)
 	{
-		if (body.setting is null || body.value is null || body.value == "" || body.setting == "")
+		if (body.setting is null || body.value is null || body.value == "" || body.setting == "" || accessToken == "" || accessToken is null)
 		{
 			throw new StatusCodeException(400, "Missing required fields");
 		}

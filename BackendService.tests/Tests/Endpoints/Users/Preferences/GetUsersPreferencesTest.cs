@@ -63,4 +63,16 @@ public class GetUsersPreferencesTest
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => GetUserPreferences.Endpoint("invalid"));
 		Assert.IsTrue(exception.StatusCode == 401, "Status code should be 401 but was " + exception.StatusCode);
 	}
+
+	[TestMethod]
+	public void GetUsersPreferencesTest_MissingAndNullAccessTokenTest()
+	{
+		// Missing
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => GetUserPreferences.Endpoint(""));
+		Assert.IsTrue(exception.StatusCode == 401, "Status code should be 401 but was " + exception.StatusCode);
+
+		// Null
+		exception = Assert.ThrowsException<StatusCodeException>(() => GetUserPreferences.Endpoint(null!));
+		Assert.IsTrue(exception.StatusCode == 401, "Status code should be 401 but was " + exception.StatusCode);
+	}
 }

@@ -18,6 +18,10 @@ public class GetUserPreferences
 
 	public static GetUserPreferencesResponse Endpoint(String accessToken)
 	{
+		if (accessToken == null || accessToken == "")
+		{
+			throw new StatusCodeException(401, "Missing access token");
+		}
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
 		Dictionary<String, String> preferences = user.GetPreferences();
 		return new GetUserPreferencesResponse("success", preferences);
