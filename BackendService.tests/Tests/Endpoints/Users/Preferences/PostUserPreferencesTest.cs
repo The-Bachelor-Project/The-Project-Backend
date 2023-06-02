@@ -29,7 +29,7 @@ public class PostUserPreferencesTest
 	}
 
 	[TestMethod]
-	public void PostUserPreferencesTest_MissingValues()
+	public void PostUserPreferencesTest_MissingValuesTest()
 	{
 		PostUserPreferencesBody body = new PostUserPreferencesBody("", "Test Value");
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostUserPreferences.Endpoint(body, userTestObject!.accessToken!));
@@ -41,7 +41,7 @@ public class PostUserPreferencesTest
 	}
 
 	[TestMethod]
-	public void PostUserPreferencesTest_NullValues()
+	public void PostUserPreferencesTest_NullValuesTest()
 	{
 		PostUserPreferencesBody body = new PostUserPreferencesBody(null!, "Test Value");
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostUserPreferences.Endpoint(body, userTestObject!.accessToken!));

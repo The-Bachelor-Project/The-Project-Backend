@@ -287,10 +287,17 @@ public class User
 		{
 			throw new StatusCodeException(400, "Required fields are missing");
 		}
-
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
-		String query = "INSERT INTO AccountPreferences (user_id, setting, value) OUTPUT INSERTED.id VALUES (@user_id, @setting, @value)";
-		SqlCommand command = new SqlCommand(query, connection);
+		String insertQuery = @" MERGE INTO AccountPreferences AS AP
+								USING (SELECT @user_id AS user_id, @setting AS setting, @value AS value) AS original
+								ON AP.user_id = original.user_id AND AP.setting = original.setting
+								WHEN MATCHED THEN
+									UPDATE SET value = original.value
+								WHEN NOT MATCHED THEN
+									INSERT (user_id, setting, value) VALUES (original.user_id, original.setting, original.value)
+								OUTPUT INSERTED.id;
+							";
+		SqlCommand command = new SqlCommand(insertQuery, connection);
 		command.Parameters.AddWithValue("@user_id", id);
 		command.Parameters.AddWithValue("@setting", setting);
 		command.Parameters.AddWithValue("@value", value);

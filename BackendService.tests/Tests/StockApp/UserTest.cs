@@ -402,4 +402,18 @@ public class UserTest
 		exception = Assert.ThrowsException<StatusCodeException>(() => user.PostPreference("", null!));
 		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
 	}
+
+	[TestMethod]
+	public void UserTest_PostPreference_UpdateExistingPreferenceTest()
+	{
+		StockApp.User user = userTestObject.user!;
+		user.PostPreference("test", "test");
+		userTestObject = UserHelper.GetPreferences(userTestObject);
+		Assert.IsTrue(userTestObject.setting == "test", "setting should be test but was " + userTestObject.setting);
+		Assert.IsTrue(userTestObject.settingValue == "test", "value should be test2 but was " + userTestObject.settingValue);
+		user.PostPreference("test", "test2");
+		userTestObject = UserHelper.GetPreferences(userTestObject);
+		Assert.IsTrue(userTestObject.setting == "test", "setting should be test but was " + userTestObject.setting);
+		Assert.IsTrue(userTestObject.settingValue == "test2", "value should be test2 but was " + userTestObject.settingValue);
+	}
 }
