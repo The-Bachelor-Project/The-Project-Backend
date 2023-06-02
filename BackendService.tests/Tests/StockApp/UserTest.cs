@@ -416,4 +416,40 @@ public class UserTest
 		Assert.IsTrue(userTestObject.setting == "test", "setting should be test but was " + userTestObject.setting);
 		Assert.IsTrue(userTestObject.settingValue == "test2", "value should be test2 but was " + userTestObject.settingValue);
 	}
+
+	[TestMethod]
+	public void UserTest_GetPreferences_SinglePreferenceTest()
+	{
+		userTestObject.user!.PostPreference("setting", "value");
+		userTestObject = UserHelper.GetPreferences(userTestObject);
+		Assert.IsTrue(userTestObject.setting == "setting", "setting should be setting but was " + userTestObject.setting);
+		Assert.IsTrue(userTestObject.settingValue == "value", "value should be value but was " + userTestObject.settingValue);
+	}
+
+	[TestMethod]
+	public void UserTest_GetPreferences_MultiplePreferencesTest()
+	{
+		userTestObject.user!.PostPreference("setting", "value");
+		userTestObject.user!.PostPreference("setting2", "value2");
+		Dictionary<string, string> preferences = userTestObject.user!.GetPreferences();
+		Assert.IsTrue(preferences.Count == 2, "preferences should have 2 entries but was " + preferences.Count);
+		Assert.IsTrue(preferences["setting"] == "value", "setting should be value but was " + preferences["setting"]);
+		Assert.IsTrue(preferences["setting2"] == "value2", "setting2 should be value2 but was " + preferences["setting2"]);
+	}
+
+	[TestMethod]
+	public void UserTest_GetPreferences_EmptyPreferencesTest()
+	{
+		Dictionary<string, string> preferences = userTestObject.user!.GetPreferences();
+		Assert.IsTrue(preferences.Count == 0, "preferences should be empty but was " + preferences.Count);
+	}
+
+	[TestMethod]
+	public void UserTest_GetPreferences_NullIDTest()
+	{
+		StockApp.User user = userTestObject.user!;
+		user.id = null;
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.GetPreferences());
+		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
+	}
 }

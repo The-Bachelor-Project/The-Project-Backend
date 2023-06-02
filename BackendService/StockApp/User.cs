@@ -311,4 +311,27 @@ public class User
 			throw new StatusCodeException(500, "Could not add preference");
 		}
 	}
+
+	public Dictionary<string, string> GetPreferences()
+	{
+		if (id == null)
+		{
+			throw new StatusCodeException(400, "Required fields are missing");
+		}
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
+		String query = "SELECT * FROM AccountPreferences WHERE user_id = @user_id";
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@user_id", id);
+		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(query, parameters);
+		if (data == null || data.Count == 0)
+		{
+			return new Dictionary<string, string>();
+		}
+		Dictionary<string, string> preferences = new Dictionary<string, string>();
+		foreach (Dictionary<String, object> row in data)
+		{
+			preferences.Add(row["setting"].ToString()!, row["value"].ToString()!);
+		}
+		return preferences;
+	}
 }
