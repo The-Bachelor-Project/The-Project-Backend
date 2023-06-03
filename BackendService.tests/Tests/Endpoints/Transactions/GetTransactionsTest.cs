@@ -28,7 +28,7 @@ public class GetTransactionsTest
 		transaction.ticker = "TSLA";
 		transaction.exchange = "NASDAQ";
 		transaction.amount = 1;
-		transaction.price = new StockApp.Money(100, "USD");
+		transaction.priceNative = new StockApp.Money(100, "USD");
 		transaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		await transaction.AddToDb();
 		GetTransactionsResponse response = GetTransactions.Endpoint(userTestObject.accessToken!);
@@ -38,8 +38,8 @@ public class GetTransactionsTest
 		Assert.IsTrue(response.portfolios[0].stockTransactions[0].ticker == "TSLA", "Ticker should be TSLA but was " + response.portfolios[0].stockTransactions[0].ticker);
 		Assert.IsTrue(response.portfolios[0].stockTransactions[0].exchange == "NASDAQ", "Exchange should be NASDAQ but was " + response.portfolios[0].stockTransactions[0].exchange);
 		Assert.IsTrue(response.portfolios[0].stockTransactions[0].amount == 1, "Amount should be 1 but was " + response.portfolios[0].stockTransactions[0].amount);
-		Assert.IsTrue(response.portfolios[0].stockTransactions[0].price!.amount == 100, "Price should be 100 but was " + response.portfolios[0].stockTransactions[0].price!.amount);
-		Assert.IsTrue(response.portfolios[0].stockTransactions[0].price!.currency == "USD", "Currency should be USD but was " + response.portfolios[0].stockTransactions[0].price!.currency);
+		Assert.IsTrue(response.portfolios[0].stockTransactions[0].priceNative!.amount == 100, "Price should be 100 but was " + response.portfolios[0].stockTransactions[0].priceNative!.amount);
+		Assert.IsTrue(response.portfolios[0].stockTransactions[0].priceNative!.currency == "USD", "Currency should be USD but was " + response.portfolios[0].stockTransactions[0].priceNative!.currency);
 		Assert.IsTrue(response.portfolios[0].stockTransactions[0].timestamp == transaction.timestamp, "Timestamp should be " + transaction.timestamp + " but was " + response.portfolios[0].stockTransactions[0].timestamp);
 	}
 
@@ -51,7 +51,7 @@ public class GetTransactionsTest
 		transaction1.ticker = "TSLA";
 		transaction1.exchange = "NASDAQ";
 		transaction1.amount = 1;
-		transaction1.price = new StockApp.Money(100, "USD");
+		transaction1.priceNative = new StockApp.Money(100, "USD");
 		transaction1.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		await transaction1.AddToDb();
 		StockApp.StockTransaction transaction2 = new StockApp.StockTransaction();
@@ -59,7 +59,7 @@ public class GetTransactionsTest
 		transaction2.ticker = "AAPL";
 		transaction2.exchange = "NASDAQ";
 		transaction2.amount = 1;
-		transaction2.price = new StockApp.Money(100, "USD");
+		transaction2.priceNative = new StockApp.Money(100, "USD");
 		transaction2.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		await transaction2.AddToDb();
 		GetTransactionsResponse response = GetTransactions.Endpoint(userTestObject.accessToken!);
@@ -69,8 +69,8 @@ public class GetTransactionsTest
 		Assert.IsTrue(response.portfolios[0].stockTransactions[0].ticker == "TSLA", "Ticker should be TSLA but was " + response.portfolios[0].stockTransactions[0].ticker);
 		Assert.IsTrue(response.portfolios[0].stockTransactions[0].exchange == "NASDAQ", "Exchange should be NASDAQ but was " + response.portfolios[0].stockTransactions[0].exchange);
 		Assert.IsTrue(response.portfolios[0].stockTransactions[0].amount == 1, "Amount should be 1 but was " + response.portfolios[0].stockTransactions[0].amount);
-		Assert.IsTrue(response.portfolios[0].stockTransactions[0].price!.amount == 100, "Price should be 100 but was " + response.portfolios[0].stockTransactions[0].price!.amount);
-		Assert.IsTrue(response.portfolios[0].stockTransactions[0].price!.currency == "USD", "Currency should be USD but was " + response.portfolios[0].stockTransactions[0].price!.currency);
+		Assert.IsTrue(response.portfolios[0].stockTransactions[0].priceNative!.amount == 100, "Price should be 100 but was " + response.portfolios[0].stockTransactions[0].priceNative!.amount);
+		Assert.IsTrue(response.portfolios[0].stockTransactions[0].priceNative!.currency == "USD", "Currency should be USD but was " + response.portfolios[0].stockTransactions[0].priceNative!.currency);
 	}
 
 	[TestMethod]
@@ -82,7 +82,7 @@ public class GetTransactionsTest
 		transaction1.ticker = "TSLA";
 		transaction1.exchange = "NASDAQ";
 		transaction1.amount = 1;
-		transaction1.price = new StockApp.Money(100, "USD");
+		transaction1.priceNative = new StockApp.Money(100, "USD");
 		transaction1.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		await transaction1.AddToDb();
 		StockApp.StockTransaction transaction2 = new StockApp.StockTransaction();
@@ -90,7 +90,7 @@ public class GetTransactionsTest
 		transaction2.ticker = "AAPL";
 		transaction2.exchange = "NASDAQ";
 		transaction2.amount = 1;
-		transaction2.price = new StockApp.Money(100, "USD");
+		transaction2.priceNative = new StockApp.Money(100, "USD");
 		transaction2.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		await transaction2.AddToDb();
 		GetTransactionsResponse response = GetTransactions.Endpoint(userTestObject.accessToken!);

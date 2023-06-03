@@ -27,7 +27,7 @@ public class StockTransactionTest
 		stockTransaction.portfolioId = portfolio.id!;
 		stockTransaction.ticker = "AAPL";
 		stockTransaction.exchange = "NASDAQ";
-		stockTransaction.price = new Money(100, "USD");
+		stockTransaction.priceNative = new Money(100, "USD");
 		stockTransaction.amount = 10;
 		stockTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		await stockTransaction.AddToDb();
@@ -42,7 +42,7 @@ public class StockTransactionTest
 		stockTransaction.portfolioId = portfolio.id!;
 		stockTransaction.ticker = "invalid";
 		stockTransaction.exchange = "NASDAQ";
-		stockTransaction.price = new Money(100, "USD");
+		stockTransaction.priceNative = new Money(100, "USD");
 		stockTransaction.amount = 10;
 		stockTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockTransaction.AddToDb());
@@ -57,7 +57,7 @@ public class StockTransactionTest
 		stockTransaction.portfolioId = portfolio.id!;
 		stockTransaction.ticker = "AAPL";
 		stockTransaction.exchange = "invalid";
-		stockTransaction.price = new Money(100, "USD");
+		stockTransaction.priceNative = new Money(100, "USD");
 		stockTransaction.amount = 10;
 		stockTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockTransaction.AddToDb());
@@ -72,7 +72,7 @@ public class StockTransactionTest
 		stockTransaction.portfolioId = portfolio.id!;
 		stockTransaction.ticker = "AAPL";
 		stockTransaction.exchange = "NASDAQ";
-		stockTransaction.price = new Money(100, "invalid");
+		stockTransaction.priceNative = new Money(100, "invalid");
 		stockTransaction.amount = 10;
 		stockTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockTransaction.AddToDb());
@@ -87,7 +87,7 @@ public class StockTransactionTest
 		StockTransaction stockTransaction = new StockTransaction();
 		stockTransaction.ticker = "AAPL";
 		stockTransaction.exchange = "NASDAQ";
-		stockTransaction.price = new Money(100, "USD");
+		stockTransaction.priceNative = new Money(100, "USD");
 		stockTransaction.amount = 10;
 		stockTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		stockTransaction.portfolioId = null;
@@ -99,7 +99,7 @@ public class StockTransactionTest
 		stockTransaction.portfolioId = portfolio.id!;
 		stockTransaction.ticker = null;
 		stockTransaction.exchange = "NASDAQ";
-		stockTransaction.price = new Money(100, "USD");
+		stockTransaction.priceNative = new Money(100, "USD");
 		stockTransaction.amount = 10;
 		stockTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockTransaction.AddToDb());
@@ -110,7 +110,7 @@ public class StockTransactionTest
 		stockTransaction.portfolioId = portfolio.id!;
 		stockTransaction.ticker = "AAPL";
 		stockTransaction.exchange = null;
-		stockTransaction.price = new Money(100, "USD");
+		stockTransaction.priceNative = new Money(100, "USD");
 		stockTransaction.amount = 10;
 		stockTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockTransaction.AddToDb());
@@ -121,7 +121,7 @@ public class StockTransactionTest
 		stockTransaction.portfolioId = portfolio.id!;
 		stockTransaction.ticker = "AAPL";
 		stockTransaction.exchange = "NASDAQ";
-		stockTransaction.price = new Money(100, "USD");
+		stockTransaction.priceNative = new Money(100, "USD");
 		stockTransaction.amount = null;
 		stockTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockTransaction.AddToDb());
@@ -132,7 +132,7 @@ public class StockTransactionTest
 		stockTransaction.portfolioId = portfolio.id!;
 		stockTransaction.ticker = "AAPL";
 		stockTransaction.exchange = "NASDAQ";
-		stockTransaction.price = new Money(100, "USD");
+		stockTransaction.priceNative = new Money(100, "USD");
 		stockTransaction.amount = 10;
 		stockTransaction.timestamp = null;
 		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockTransaction.AddToDb());
@@ -143,7 +143,7 @@ public class StockTransactionTest
 		stockTransaction.portfolioId = portfolio.id!;
 		stockTransaction.ticker = "AAPL";
 		stockTransaction.exchange = "NASDAQ";
-		stockTransaction.price = new Money(100, null!);
+		stockTransaction.priceNative = new Money(100, null!);
 		stockTransaction.amount = 10;
 		stockTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockTransaction.AddToDb());
@@ -185,7 +185,7 @@ public class StockTransactionTest
 		stockTransaction.portfolioId = portfolio.id!;
 		stockTransaction.ticker = "AAPL";
 		stockTransaction.exchange = "NASDAQ";
-		stockTransaction.price = new Money(100, "USD");
+		stockTransaction.priceNative = new Money(100, "USD");
 		stockTransaction.amount = 10;
 		stockTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		stockTransaction.portfolioId = portfolio.id;
@@ -202,7 +202,7 @@ public class StockTransactionTest
 		stockTransaction.portfolioId = portfolio.id!;
 		stockTransaction.ticker = "AAPL";
 		stockTransaction.exchange = "NASDAQ";
-		stockTransaction.price = new Money(100, "USD");
+		stockTransaction.priceNative = new Money(100, "USD");
 		stockTransaction.amount = 10;
 		stockTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		stockTransaction.id = -1;

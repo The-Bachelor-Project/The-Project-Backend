@@ -61,7 +61,7 @@ public class PutStockTransactionsTest
 			Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 			Assert.IsTrue(response.id != stockTransaction.id, "Stock transaction id should not be " + stockTransaction.id + " but was " + response.id);
 			StockApp.StockTransaction gottenTransaction = StockTransactionHelper.Get(response.id);
-			Assert.IsTrue(gottenTransaction.price!.amount == body.newPrice, "Price should be " + body.newPrice + " but was " + gottenTransaction.price!.amount);
+			Assert.IsTrue(gottenTransaction.priceNative!.amount == body.newPrice, "Price should be " + body.newPrice + " but was " + gottenTransaction.priceNative!.amount);
 			stockTransaction = gottenTransaction;
 		}
 		catch (Exception e)
@@ -84,7 +84,7 @@ public class PutStockTransactionsTest
 			Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 			Assert.IsTrue(response.id != stockTransaction.id, "Stock transaction id should not be " + stockTransaction.id + " but was " + response.id);
 			StockApp.StockTransaction gottenTransaction = StockTransactionHelper.Get(response.id);
-			Assert.IsTrue(gottenTransaction.price!.currency == body.newCurrency, "Currency should be " + body.newCurrency + " but was " + gottenTransaction.price!.currency);
+			Assert.IsTrue(gottenTransaction.priceNative!.currency == body.newCurrency, "Currency should be " + body.newCurrency + " but was " + gottenTransaction.priceNative!.currency);
 			stockTransaction = gottenTransaction;
 		}
 		catch (Exception e)
@@ -107,8 +107,8 @@ public class PutStockTransactionsTest
 			Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 			Assert.IsTrue(response.id != stockTransaction.id, "Stock transaction id should not be " + stockTransaction.id + " but was " + response.id);
 			StockApp.StockTransaction gottenTransaction = StockTransactionHelper.Get(response.id);
-			Assert.IsTrue(gottenTransaction.price!.amount == body.newPrice, "Price should be " + body.newPrice + " but was " + gottenTransaction.price!.amount);
-			Assert.IsTrue(gottenTransaction.price!.currency == body.newCurrency, "Currency should be " + body.newCurrency + " but was " + gottenTransaction.price!.currency);
+			Assert.IsTrue(gottenTransaction.priceNative!.amount == body.newPrice, "Price should be " + body.newPrice + " but was " + gottenTransaction.priceNative!.amount);
+			Assert.IsTrue(gottenTransaction.priceNative!.currency == body.newCurrency, "Currency should be " + body.newCurrency + " but was " + gottenTransaction.priceNative!.currency);
 			stockTransaction = gottenTransaction;
 		}
 		catch (Exception e)
@@ -156,8 +156,8 @@ public class PutStockTransactionsTest
 			StockApp.StockTransaction gottenTransaction = StockTransactionHelper.Get(response.id);
 			Assert.IsTrue(gottenTransaction.amount == body.newAmount, "Amount should be " + body.newAmount + " but was " + gottenTransaction.amount);
 			Assert.IsTrue(gottenTransaction.timestamp == body.newTimestamp, "Timestamp should be " + body.newTimestamp + " but was " + gottenTransaction.timestamp);
-			Assert.IsTrue(gottenTransaction.price!.amount == body.newPrice, "Price should be " + body.newPrice + " but was " + gottenTransaction.price!.amount);
-			Assert.IsTrue(gottenTransaction.price!.currency == body.newCurrency, "Currency should be " + body.newCurrency + " but was " + gottenTransaction.price!.currency);
+			Assert.IsTrue(gottenTransaction.priceNative!.amount == body.newPrice, "Price should be " + body.newPrice + " but was " + gottenTransaction.priceNative!.amount);
+			Assert.IsTrue(gottenTransaction.priceNative!.currency == body.newCurrency, "Currency should be " + body.newCurrency + " but was " + gottenTransaction.priceNative!.currency);
 			stockTransaction = gottenTransaction;
 		}
 		catch (Exception e)
@@ -174,8 +174,8 @@ public class PutStockTransactionsTest
 			stockTransaction.portfolioId!,
 			(decimal)stockTransaction.amount!,
 			(int)stockTransaction.timestamp!,
-			stockTransaction.price!.amount,
-			stockTransaction.price!.currency
+			stockTransaction.priceNative!.amount,
+			stockTransaction.priceNative!.currency
 		);
 		try
 		{
@@ -185,8 +185,8 @@ public class PutStockTransactionsTest
 			StockApp.StockTransaction gottenTransaction = StockTransactionHelper.Get(response.id);
 			Assert.IsTrue(gottenTransaction.amount == body.newAmount, "Amount should be " + body.newAmount + " but was " + gottenTransaction.amount);
 			Assert.IsTrue(gottenTransaction.timestamp == body.newTimestamp, "Timestamp should be " + body.newTimestamp + " but was " + gottenTransaction.timestamp);
-			Assert.IsTrue(gottenTransaction.price!.amount == body.newPrice, "Price should be " + body.newPrice + " but was " + gottenTransaction.price!.amount);
-			Assert.IsTrue(gottenTransaction.price!.currency == body.newCurrency, "Currency should be " + body.newCurrency + " but was " + gottenTransaction.price!.currency);
+			Assert.IsTrue(gottenTransaction.priceNative!.amount == body.newPrice, "Price should be " + body.newPrice + " but was " + gottenTransaction.priceNative!.amount);
+			Assert.IsTrue(gottenTransaction.priceNative!.currency == body.newCurrency, "Currency should be " + body.newCurrency + " but was " + gottenTransaction.priceNative!.currency);
 		}
 		catch (Exception e)
 		{
@@ -202,8 +202,8 @@ public class PutStockTransactionsTest
 			stockTransaction.portfolioId!,
 			(decimal)stockTransaction.amount!,
 			(int)stockTransaction.timestamp!,
-			stockTransaction.price!.amount,
-			stockTransaction.price!.currency
+			stockTransaction.priceNative!.amount,
+			stockTransaction.priceNative!.currency
 		);
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PutStockTransactions.Endpoint(userTestObject.accessToken!, body).GetAwaiter().GetResult());
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
@@ -217,8 +217,8 @@ public class PutStockTransactionsTest
 			null!,
 			(decimal)stockTransaction.amount!,
 			(int)stockTransaction.timestamp!,
-			stockTransaction.price!.amount,
-			stockTransaction.price!.currency
+			stockTransaction.priceNative!.amount,
+			stockTransaction.priceNative!.currency
 		);
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PutStockTransactions.Endpoint(userTestObject.accessToken!, body).GetAwaiter().GetResult());
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
@@ -233,7 +233,7 @@ public class PutStockTransactionsTest
 			stockTransaction.portfolioId!,
 			(decimal)stockTransaction.amount!,
 			(int)stockTransaction.timestamp!,
-			stockTransaction.price!.amount,
+			stockTransaction.priceNative!.amount,
 			"invalid"
 		);
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PutStockTransactions.Endpoint(userTestObject.accessToken!, body).GetAwaiter().GetResult());
@@ -245,8 +245,8 @@ public class PutStockTransactionsTest
 			stockTransaction.portfolioId! + 1,
 			(decimal)stockTransaction.amount!,
 			(int)stockTransaction.timestamp!,
-			stockTransaction.price!.amount,
-			stockTransaction.price!.currency
+			stockTransaction.priceNative!.amount,
+			stockTransaction.priceNative!.currency
 		);
 		exception = Assert.ThrowsException<StatusCodeException>(() => PutStockTransactions.Endpoint(userTestObject.accessToken!, body).GetAwaiter().GetResult());
 		Assert.IsTrue(exception.StatusCode == 404, "Status code should be 403 but was " + exception.StatusCode);
@@ -258,7 +258,7 @@ public class PutStockTransactionsTest
 			(decimal)stockTransaction.amount!,
 			(int)stockTransaction.timestamp!,
 			-1,
-			stockTransaction.price!.currency
+			stockTransaction.priceNative!.currency
 		);
 		exception = Assert.ThrowsException<StatusCodeException>(() => PutStockTransactions.Endpoint(userTestObject.accessToken!, body).GetAwaiter().GetResult());
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);

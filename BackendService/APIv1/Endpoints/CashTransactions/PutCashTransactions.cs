@@ -24,29 +24,30 @@ public class PutCashTransactions
 		}
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
 		StockApp.Portfolio portfolio = user.GetPortfolio(body.portfolio);
-		StockApp.CashTransaction cashTransaction = portfolio.GetCashTransaction(body.id);
-		cashTransaction.DeleteFromDb();
+		StockApp.CashTransaction oldCashTransaction = portfolio.GetCashTransaction(body.id);
+		StockApp.CashTransaction newCashTransaction = oldCashTransaction;
 		if (body.newDescription != "")
 		{
-			cashTransaction.description = body.newDescription;
+			newCashTransaction.description = body.newDescription;
 		}
 		if (body.newNativeCurrency != "" && body.newNativeAmount != 0)
 		{
-			cashTransaction.nativeAmount = new StockApp.Money(body.newNativeAmount, body.newNativeCurrency);
+			newCashTransaction.nativeAmount = new StockApp.Money(body.newNativeAmount, body.newNativeCurrency);
 		}
 		else if (body.newNativeCurrency != "")
 		{
-			cashTransaction.nativeAmount = new StockApp.Money(cashTransaction.nativeAmount!.amount, body.newNativeCurrency);
+			newCashTransaction.nativeAmount = new StockApp.Money(newCashTransaction.nativeAmount!.amount, body.newNativeCurrency);
 		}
 		else if (body.newNativeAmount != 0)
 		{
-			cashTransaction.nativeAmount = new StockApp.Money(body.newNativeAmount, cashTransaction.nativeAmount!.currency);
+			newCashTransaction.nativeAmount = new StockApp.Money(body.newNativeAmount, newCashTransaction.nativeAmount!.currency);
 		}
 		if (body.newTimestamp != 0)
 		{
-			cashTransaction.timestamp = body.newTimestamp;
+			newCashTransaction.timestamp = body.newTimestamp;
 		}
-		await cashTransaction.AddToDb();
-		return new PutCashTransactionsResponse("success", (int)cashTransaction.id!);
+		await newCashTransaction.AddToDb();
+		oldCashTransaction.DeleteFromDb();
+		return new PutCashTransactionsResponse("success", (int)newCashTransaction.id!);
 	}
 }

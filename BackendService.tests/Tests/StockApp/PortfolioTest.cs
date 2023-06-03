@@ -125,7 +125,7 @@ public class PortfolioTest
 		stockTransaction.ticker = "TSLA";
 		stockTransaction.exchange = "NASDAQ";
 		stockTransaction.amount = 10;
-		stockTransaction.price = new Money(100, "USD");
+		stockTransaction.priceNative = new Money(100, "USD");
 		stockTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		await stockTransaction.AddToDb();
 		portfolio.UpdateStockTransactions();
@@ -143,7 +143,7 @@ public class PortfolioTest
 		stockTransaction.ticker = "TSLA";
 		stockTransaction.exchange = "NASDAQ";
 		stockTransaction.amount = 10;
-		stockTransaction.price = new Money(100, "USD");
+		stockTransaction.priceNative = new Money(100, "USD");
 		stockTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		await stockTransaction.AddToDb();
 		int tempID = (int)stockTransaction.id!;
@@ -179,7 +179,7 @@ public class PortfolioTest
 		stockTransaction.ticker = "TSLA";
 		stockTransaction.exchange = "NASDAQ";
 		stockTransaction.amount = 10;
-		stockTransaction.price = new Money(100, "USD");
+		stockTransaction.priceNative = new Money(100, "USD");
 		stockTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		await stockTransaction.AddToDb();
 		portfolio.UpdateStockPositions();
@@ -196,7 +196,7 @@ public class PortfolioTest
 		stockTransaction1.ticker = "TSLA";
 		stockTransaction1.exchange = "NASDAQ";
 		stockTransaction1.amount = 10;
-		stockTransaction1.price = new Money(100, "USD");
+		stockTransaction1.priceNative = new Money(100, "USD");
 		stockTransaction1.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		await stockTransaction1.AddToDb();
 		StockTransaction stockTransaction2 = new StockTransaction();
@@ -204,7 +204,7 @@ public class PortfolioTest
 		stockTransaction2.ticker = "CHEMM";
 		stockTransaction2.exchange = "CPH";
 		stockTransaction2.amount = 10;
-		stockTransaction2.price = new Money(100, "DKK");
+		stockTransaction2.priceNative = new Money(100, "DKK");
 		stockTransaction2.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		await stockTransaction2.AddToDb();
 		portfolio.UpdateStockPositions();
@@ -359,7 +359,7 @@ public class PortfolioTest
 		stockTransaction.portfolioId = portfolio.id!;
 		stockTransaction.ticker = "AAPL";
 		stockTransaction.exchange = "NASDAQ";
-		stockTransaction.price = new Money(100, "USD");
+		stockTransaction.priceNative = new Money(100, "USD");
 		stockTransaction.amount = 10;
 		stockTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		await stockTransaction.AddToDb();

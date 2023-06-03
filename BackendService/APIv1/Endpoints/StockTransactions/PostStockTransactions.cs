@@ -38,11 +38,11 @@ public class PostStockTransactions
 		{
 			throw new StatusCodeException(400, "Missing timestamp");
 		}
-		if (body.transaction.price!.currency is null || body.transaction.price!.currency == "")
+		if (body.transaction.priceNative!.currency is null || body.transaction.priceNative!.currency == "")
 		{
 			throw new StatusCodeException(400, "Missing currency of price");
 		}
-		if (body.transaction.price!.amount < 0)
+		if (body.transaction.priceNative!.amount < 0)
 		{
 			throw new StatusCodeException(400, "Invalid price");
 		}
@@ -60,7 +60,7 @@ public class PostStockTransactions
 		stockTransaction.exchange = body.transaction.exchange;
 		stockTransaction.amount = body.transaction.amount;
 		stockTransaction.timestamp = body.transaction.timestamp;
-		stockTransaction.price = new StockApp.Money(body.transaction.price.amount, body.transaction.price.currency);
+		stockTransaction.priceNative = new StockApp.Money(body.transaction.priceNative.amount, body.transaction.priceNative.currency);
 		await stockTransaction.AddToDb();
 		System.Console.WriteLine("StockTransaction id: " + stockTransaction.id);
 		if (stockTransaction.id != null)

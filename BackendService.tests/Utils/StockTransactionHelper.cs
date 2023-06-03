@@ -12,7 +12,7 @@ public class StockTransactionHelper
 		stockTransaction.exchange = "NASDAQ";
 		stockTransaction.ticker = "AAPL";
 		stockTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
-		stockTransaction.price = new StockApp.Money(100, "USD");
+		stockTransaction.priceNative = new StockApp.Money(100, "USD");
 		try
 		{
 			await stockTransaction.AddToDb();
@@ -41,7 +41,7 @@ public class StockTransactionHelper
 		stockTransaction.exchange = (String)data["exchange"];
 		stockTransaction.ticker = (String)data["ticker"];
 		stockTransaction.timestamp = (int)data["timestamp"];
-		stockTransaction.price = new StockApp.Money((decimal)data["price_amount"], (String)data["price_currency"]);
+		stockTransaction.priceNative = new StockApp.Money((decimal)data["price_amount"], (String)data["price_currency"]);
 		stockTransaction.amountOwned = (decimal)data["amount_owned"];
 		return stockTransaction;
 	}

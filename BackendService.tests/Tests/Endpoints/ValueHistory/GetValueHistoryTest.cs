@@ -26,7 +26,7 @@ public class GetValueHistoryTest
 		StockApp.StockTransaction transaction = new StockApp.StockTransaction();
 		transaction.portfolioId = portfolio.id;
 		transaction.amount = 10;
-		transaction.price = new StockApp.Money(100, "DKK");
+		transaction.priceNative = new StockApp.Money(100, "DKK");
 		transaction.ticker = "TSLA";
 		transaction.exchange = "NASDAQ";
 		transaction.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-10-10"));
@@ -47,7 +47,7 @@ public class GetValueHistoryTest
 		StockApp.StockTransaction transaction = new StockApp.StockTransaction();
 		transaction.portfolioId = portfolio.id;
 		transaction.amount = 10;
-		transaction.price = new StockApp.Money(100, "DKK");
+		transaction.priceNative = new StockApp.Money(100, "DKK");
 		transaction.ticker = "VICI";
 		transaction.exchange = "NYSE";
 		transaction.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-10-10"));
@@ -67,7 +67,7 @@ public class GetValueHistoryTest
 		StockApp.StockTransaction transaction1 = new StockApp.StockTransaction();
 		transaction1.portfolioId = portfolio.id;
 		transaction1.amount = 10;
-		transaction1.price = new StockApp.Money(100, "DKK");
+		transaction1.priceNative = new StockApp.Money(100, "DKK");
 		transaction1.ticker = "TSLA";
 		transaction1.exchange = "NASDAQ";
 		transaction1.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-10-10"));
@@ -75,7 +75,7 @@ public class GetValueHistoryTest
 		StockApp.StockTransaction transaction2 = new StockApp.StockTransaction();
 		transaction2.portfolioId = portfolio.id;
 		transaction2.amount = 20;
-		transaction2.price = new StockApp.Money(200, "DKK");
+		transaction2.priceNative = new StockApp.Money(200, "DKK");
 		transaction2.ticker = "GOOGL";
 		transaction2.exchange = "NASDAQ";
 		transaction2.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-08-08"));
@@ -83,7 +83,7 @@ public class GetValueHistoryTest
 		StockApp.StockTransaction transaction3 = new StockApp.StockTransaction();
 		transaction3.portfolioId = portfolio.id;
 		transaction3.amount = 30;
-		transaction3.price = new StockApp.Money(300, "DKK");
+		transaction3.priceNative = new StockApp.Money(300, "DKK");
 		transaction3.ticker = "DIS";
 		transaction3.exchange = "NYSE";
 		transaction3.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-06-06"));
@@ -104,7 +104,7 @@ public class GetValueHistoryTest
 		StockApp.StockTransaction transaction1 = new StockApp.StockTransaction();
 		transaction1.portfolioId = portfolio.id;
 		transaction1.amount = 10;
-		transaction1.price = new StockApp.Money(100, "EUR");
+		transaction1.priceNative = new StockApp.Money(100, "EUR");
 		transaction1.ticker = "BGS";
 		transaction1.exchange = "NYSE";
 		transaction1.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-10-10"));
@@ -112,7 +112,7 @@ public class GetValueHistoryTest
 		StockApp.StockTransaction transaction2 = new StockApp.StockTransaction();
 		transaction2.portfolioId = portfolio.id;
 		transaction2.amount = 20;
-		transaction2.price = new StockApp.Money(200, "USD");
+		transaction2.priceNative = new StockApp.Money(200, "USD");
 		transaction2.ticker = "VICI";
 		transaction2.exchange = "NYSE";
 		transaction2.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-08-08"));
@@ -120,7 +120,7 @@ public class GetValueHistoryTest
 		StockApp.StockTransaction transaction3 = new StockApp.StockTransaction();
 		transaction3.portfolioId = portfolio.id;
 		transaction3.amount = 30;
-		transaction3.price = new StockApp.Money(300, "CAD");
+		transaction3.priceNative = new StockApp.Money(300, "CAD");
 		transaction3.ticker = "T";
 		transaction3.exchange = "NYSE";
 		transaction3.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-06-06"));
@@ -143,7 +143,7 @@ public class GetValueHistoryTest
 		StockApp.StockTransaction transaction1 = new StockApp.StockTransaction();
 		transaction1.portfolioId = portfolio1.id;
 		transaction1.amount = 10;
-		transaction1.price = new StockApp.Money(100, "EUR");
+		transaction1.priceNative = new StockApp.Money(100, "EUR");
 		transaction1.ticker = "TSLA";
 		transaction1.exchange = "NASDAQ";
 		transaction1.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-10-10"));
@@ -151,7 +151,7 @@ public class GetValueHistoryTest
 		StockApp.StockTransaction transaction2 = new StockApp.StockTransaction();
 		transaction2.portfolioId = portfolio2.id;
 		transaction2.amount = 20;
-		transaction2.price = new StockApp.Money(200, "USD");
+		transaction2.priceNative = new StockApp.Money(200, "USD");
 		transaction2.ticker = "GOOGL";
 		transaction2.exchange = "NASDAQ";
 		transaction2.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-08-08"));
@@ -159,7 +159,7 @@ public class GetValueHistoryTest
 		StockApp.StockTransaction transaction3 = new StockApp.StockTransaction();
 		transaction3.portfolioId = portfolio2.id;
 		transaction3.amount = 30;
-		transaction3.price = new StockApp.Money(300, "CAD");
+		transaction3.priceNative = new StockApp.Money(300, "CAD");
 		transaction3.ticker = "DIS";
 		transaction3.exchange = "NYSE";
 		transaction3.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-06-06"));
@@ -181,7 +181,7 @@ public class GetValueHistoryTest
 		StockApp.StockTransaction transaction1 = new StockApp.StockTransaction();
 		transaction1.portfolioId = portfolio1.id;
 		transaction1.amount = 10;
-		transaction1.price = new StockApp.Money(100, "EUR");
+		transaction1.priceNative = new StockApp.Money(100, "EUR");
 		transaction1.ticker = "T";
 		transaction1.exchange = "NYSE";
 		transaction1.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-10-10"));
@@ -189,7 +189,7 @@ public class GetValueHistoryTest
 		StockApp.StockTransaction transaction2 = new StockApp.StockTransaction();
 		transaction2.portfolioId = portfolio2.id;
 		transaction2.amount = 20;
-		transaction2.price = new StockApp.Money(200, "USD");
+		transaction2.priceNative = new StockApp.Money(200, "USD");
 		transaction2.ticker = "BGS";
 		transaction2.exchange = "NYSE";
 		transaction2.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-08-08"));
@@ -197,7 +197,7 @@ public class GetValueHistoryTest
 		StockApp.StockTransaction transaction3 = new StockApp.StockTransaction();
 		transaction3.portfolioId = portfolio2.id;
 		transaction3.amount = 30;
-		transaction3.price = new StockApp.Money(300, "CAD");
+		transaction3.priceNative = new StockApp.Money(300, "CAD");
 		transaction3.ticker = "VICI";
 		transaction3.exchange = "NYSE";
 		transaction3.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-06-06"));
@@ -226,7 +226,7 @@ public class GetValueHistoryTest
 		StockApp.StockTransaction transaction1 = new StockApp.StockTransaction();
 		transaction1.portfolioId = portfolio1.id;
 		transaction1.amount = 10;
-		transaction1.price = new StockApp.Money(100, "EUR");
+		transaction1.priceNative = new StockApp.Money(100, "EUR");
 		transaction1.ticker = "T";
 		transaction1.exchange = "NYSE";
 		transaction1.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-10-10"));
@@ -234,7 +234,7 @@ public class GetValueHistoryTest
 		StockApp.StockTransaction transaction2 = new StockApp.StockTransaction();
 		transaction2.portfolioId = portfolio2.id;
 		transaction2.amount = 20;
-		transaction2.price = new StockApp.Money(200, "USD");
+		transaction2.priceNative = new StockApp.Money(200, "USD");
 		transaction2.ticker = "BGS";
 		transaction2.exchange = "NYSE";
 		transaction2.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-08-08"));
@@ -242,7 +242,7 @@ public class GetValueHistoryTest
 		StockApp.StockTransaction transaction3 = new StockApp.StockTransaction();
 		transaction3.portfolioId = portfolio2.id;
 		transaction3.amount = 30;
-		transaction3.price = new StockApp.Money(300, "CAD");
+		transaction3.priceNative = new StockApp.Money(300, "CAD");
 		transaction3.ticker = "VICI";
 		transaction3.exchange = "NYSE";
 		transaction3.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-06-06"));

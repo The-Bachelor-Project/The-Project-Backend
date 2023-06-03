@@ -12,7 +12,8 @@ public class StockTransaction
 	public Decimal? amountAdjusted { get; set; }
 	public Decimal? amountOwned { get; set; }
 	public int? timestamp { get; set; }
-	public Money? price { get; set; }
+	public Money? priceNative { get; set; }
+	public Money? priceUSD { get; set; }
 
 	public StockTransaction(int id, String portfolioId, String ticker, String exchange, Decimal amount, int timestamp, Money price)
 	{
@@ -22,7 +23,7 @@ public class StockTransaction
 		this.exchange = exchange;
 		this.amount = amount;
 		this.timestamp = timestamp;
-		this.price = price;
+		this.priceNative = price;
 	}
 
 	public StockTransaction()
@@ -34,7 +35,7 @@ public class StockTransaction
 	public async Task<StockTransaction> AddToDb() //FIXME at some point also ORDER by index as well as timestamp to avoid some issues with calculating amount_owned 
 	{
 
-		if (ticker == null || exchange == null || amount == null || timestamp == null || portfolioId == null || price!.currency == null)
+		if (ticker == null || exchange == null || amount == null || timestamp == null || portfolioId == null || priceNative!.currency == null)
 		{
 			throw new StatusCodeException(400, "Missing required fields");
 		}
@@ -47,9 +48,9 @@ public class StockTransaction
 		{
 			throw new StatusCodeException(404, "Could not find stock " + exchange + ":" + ticker);
 		}
-		if (!(Tools.ValidCurrency.Check(price!.currency)))
+		if (!(Tools.ValidCurrency.Check(priceNative!.currency)))
 		{
-			throw new StatusCodeException(400, "Invalid currency " + price!.currency);
+			throw new StatusCodeException(400, "Invalid currency " + priceNative!.currency);
 		}
 
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
@@ -77,8 +78,8 @@ public class StockTransaction
 		command.Parameters.AddWithValue("@amount_adjusted", amountAdjusted);
 		command.Parameters.AddWithValue("@amount_owned", amountOwned + amountAdjusted);
 		command.Parameters.AddWithValue("@timestamp", timestamp);
-		command.Parameters.AddWithValue("@price_amount", price!.amount);
-		command.Parameters.AddWithValue("@price_currency", price.currency);
+		command.Parameters.AddWithValue("@price_amount", priceNative!.amount);
+		command.Parameters.AddWithValue("@price_currency", priceNative.currency);
 		try
 		{
 			id = int.Parse((command.ExecuteScalar()).ToString()!);

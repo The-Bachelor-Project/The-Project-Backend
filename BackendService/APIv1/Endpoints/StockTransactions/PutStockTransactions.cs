@@ -33,34 +33,36 @@ public class PutStockTransactions
 		{
 			throw new StatusCodeException(400, "Invalid currency " + body.newCurrency);
 		}
-		StockTransaction stockTransaction = portfolio.GetStockTransaction(body.id);
-		await stockTransaction.DeleteFromDb();
+		StockTransaction oldStockTransaction = portfolio.GetStockTransaction(body.id);
+		StockTransaction newStockTransaction = oldStockTransaction;
+
 		if (body.newAmount != 0)
 		{
-			stockTransaction.amount = body.newAmount;
+			newStockTransaction.amount = body.newAmount;
 		}
 
 		if (body.newPrice != 0 && body.newCurrency != "")
 		{
-			stockTransaction.price = new Money(body.newPrice, body.newCurrency);
+			newStockTransaction.priceNative = new Money(body.newPrice, body.newCurrency);
 		}
 		else if (body.newPrice != 0)
 		{
-			stockTransaction.price = new Money(body.newPrice, stockTransaction.price!.currency);
+			newStockTransaction.priceNative = new Money(body.newPrice, newStockTransaction.priceNative!.currency);
 		}
 		else if (body.newCurrency != "")
 		{
-			stockTransaction.price = new Money(stockTransaction.price!.amount, body.newCurrency);
+			newStockTransaction.priceNative = new Money(newStockTransaction.priceNative!.amount, body.newCurrency);
 		}
 
 		if (body.newTimestamp != 0)
 		{
-			stockTransaction.timestamp = body.newTimestamp;
+			newStockTransaction.timestamp = body.newTimestamp;
 		}
 
-		await stockTransaction.AddToDb();
+		await newStockTransaction.AddToDb();
+		await oldStockTransaction.DeleteFromDb();
 
-		return new PutStockTransactionsResponse("success", (int)stockTransaction.id!);
+		return new PutStockTransactionsResponse("success", (int)newStockTransaction.id!);
 
 	}
 }

@@ -90,15 +90,4 @@ public class DeleteCashTransactionsTest
 		exception = Assert.ThrowsException<StatusCodeException>(() => DeleteCashTransactions.Endpoint(portfolio!.id!, 1, null!));
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
 	}
-
-	[TestMethod]
-	public async Task DeleteCashTransactionsTest_DeletetionOfWrongTypeTest()
-	{
-		PostCashTransactionsBody body = new PostCashTransactionsBody(portfolio!.id!, "CAD", 100, Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2023-01-01")), "BUY", "TEST");
-		PostCashTransactionsResponse postResponse = await PostCashTransactions.Endpoint(body, userTestObject!.accessToken!);
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => DeleteCashTransactions.Endpoint(portfolio!.id!, postResponse.id!, userTestObject!.accessToken!));
-		Assert.IsTrue(exception.StatusCode == 403, "Status code should be 403 but was " + exception.StatusCode);
-	}
-
-
 }

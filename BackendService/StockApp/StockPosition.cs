@@ -135,7 +135,7 @@ public class StockPosition
 			newStockTransaction.amountAdjusted = Convert.ToDecimal(row["amount_adjusted"]);
 			newStockTransaction.amountOwned = Convert.ToDecimal(row["amount_owned"]);
 			newStockTransaction.timestamp = Convert.ToInt32(row["timestamp"]);
-			newStockTransaction.price = new Money(Convert.ToDecimal(row["price_amount"]), row["price_currency"].ToString()!);
+			newStockTransaction.priceNative = new Money(Convert.ToDecimal(row["price_amount"]), row["price_currency"].ToString()!);
 
 			if (newStockTransaction.timestamp < startTimeStamp && stockTransactions.Count == 1)
 			{
