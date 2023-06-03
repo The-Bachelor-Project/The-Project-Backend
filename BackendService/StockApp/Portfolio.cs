@@ -339,7 +339,7 @@ public class Portfolio
 			cashTransaction.usdAmount = new Money(Convert.ToDecimal(row["amount"]), "USD");
 			cashTransaction.type = row["type"].ToString();
 			cashTransaction.description = row["description"].ToString();
-			cashTransaction.balance = new Money(Convert.ToDecimal(row["balance"]), row["currency"].ToString()!);
+			cashTransaction.balance = new Money(Convert.ToDecimal(row["balance"]), "USD");
 			cashTransactions.Add(cashTransaction);
 		}
 	}

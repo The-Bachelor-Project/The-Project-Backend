@@ -4,7 +4,7 @@ using Data;
 
 namespace Tools;
 
-public class PriceHistoryConverter
+public class PriceConverter
 {
 	public async Task<List<Data.DatePriceOHLC>> ConvertStockPrice(List<Data.DatePriceOHLC> priceHistory, String newCurrency, Boolean convertFromUSDToNewCurrency)
 	{

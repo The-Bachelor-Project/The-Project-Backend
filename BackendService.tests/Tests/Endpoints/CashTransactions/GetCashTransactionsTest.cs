@@ -31,7 +31,7 @@ public class GetCashTransactionsTest
 		cashTransaction.balance = new StockApp.Money(350, "USD");
 		cashTransaction.description = "Test";
 		await cashTransaction.AddToDb();
-		GetCashTransactionsResponse response = GetCashTransactions.Endpoint(userTestObject!.accessToken!);
+		GetCashTransactionsResponse response = await GetCashTransactions.Endpoint(userTestObject!.accessToken!, "USD");
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.cashTransactions.Count == 1, "There should be 1 cash transaction but there were " + response.cashTransactions.Count);
 		Assert.IsTrue(response.cashTransactions[0].id == cashTransaction.id, "The cash transaction id should be " + cashTransaction.id + " but was " + response.cashTransactions[0].id);
@@ -64,7 +64,7 @@ public class GetCashTransactionsTest
 		cashTransaction2.balance = new StockApp.Money(350, "USD");
 		cashTransaction2.description = "Test";
 		await cashTransaction2.AddToDb();
-		GetCashTransactionsResponse response = GetCashTransactions.Endpoint(userTestObject!.accessToken!);
+		GetCashTransactionsResponse response = await GetCashTransactions.Endpoint(userTestObject!.accessToken!, "USD");
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.cashTransactions.Count == 2, "There should be 2 cash transactions but there were " + response.cashTransactions.Count);
 		Assert.IsTrue(response.cashTransactions[0].id == cashTransaction1.id || response.cashTransactions[0].id == cashTransaction2.id, "The cash transaction id should be " + cashTransaction1.id + " or " + cashTransaction2.id + " but was " + response.cashTransactions[0].id);
@@ -86,9 +86,9 @@ public class GetCashTransactionsTest
 	}
 
 	[TestMethod]
-	public void GetCashTransactionsTest_GetEmptyTest()
+	public async Task GetCashTransactionsTest_GetEmptyTest()
 	{
-		GetCashTransactionsResponse response = GetCashTransactions.Endpoint(userTestObject!.accessToken!);
+		GetCashTransactionsResponse response = await GetCashTransactions.Endpoint(userTestObject!.accessToken!, "USD");
 		Assert.IsTrue(response.cashTransactions.Count == 0, "The cash transactions count should be 0 but was " + response.cashTransactions.Count);
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 	}
@@ -142,7 +142,7 @@ public class GetCashTransactionsTest
 		cashTransaction5.description = "Test";
 		await cashTransaction5.AddToDb();
 
-		GetCashTransactionsResponse response = GetCashTransactions.Endpoint(userTestObject!.accessToken!);
+		GetCashTransactionsResponse response = await GetCashTransactions.Endpoint(userTestObject!.accessToken!, "USD");
 		Assert.IsTrue(response.cashTransactions.Count == 5, "The cash transactions count should be 5 but was " + response.cashTransactions.Count);
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.cashTransactions[0].type == cashTransaction1.type, "The cash transaction type should be " + cashTransaction1.type + " but was " + response.cashTransactions[0].type);
@@ -155,7 +155,7 @@ public class GetCashTransactionsTest
 	[TestMethod]
 	public void GetCashTransactionsTest_InvalidUserTest()
 	{
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => GetCashTransactions.Endpoint("invalid"));
+		StatusCodeException exception = Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await GetCashTransactions.Endpoint("invalid", "USD")).Result;
 		Assert.IsTrue(exception.StatusCode == 401, "Status code should be 401 but was " + exception.StatusCode);
 	}
 }

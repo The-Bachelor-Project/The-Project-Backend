@@ -62,6 +62,8 @@ public class CurrencyFetcher : ICurrencyFetcher
 		}
 		catch (Exception e)
 		{
+			System.Console.WriteLine("Start tracking date: " + history.history.First().date);
+			System.Console.WriteLine("End tracking date: " + history.history.Last().date);
 			System.Console.WriteLine(e);
 			throw new StatusCodeException(500, "There was a problem when adding currency rates to the database");
 		}
@@ -78,6 +80,8 @@ public class CurrencyFetcher : ICurrencyFetcher
 			}
 			catch (Exception e)
 			{
+				System.Console.WriteLine("Start tracking date: " + history.history.First().date);
+				System.Console.WriteLine("End tracking date: " + history.history.Last().date);
 				System.Console.WriteLine(e);
 				throw new StatusCodeException(500, "There was a problem when updating the start tracking date of the currency");
 			}

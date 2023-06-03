@@ -59,9 +59,9 @@ public class StockFetcher : IStockFetcher
 			}
 		}
 		StockHistory stockHistoryReturn = await new Data.Fetcher.DatabaseFetcher.StockFetcher().GetHistory(ticker, exchange, startDate, endDate, interval, currency);
-		stockHistoryReturn.history = await new Tools.PriceHistoryConverter().ConvertStockPrice(stockHistoryReturn.history, currency, true);
+		stockHistoryReturn.history = await new Tools.PriceConverter().ConvertStockPrice(stockHistoryReturn.history, currency, true);
 		stockHistoryReturn.dividends = await new Data.Fetcher.DatabaseFetcher.StockFetcher().GetDividends(ticker, exchange, startDate, endDate);
-		stockHistoryReturn.dividends = await new Tools.PriceHistoryConverter().ConvertStockDividends(stockHistoryReturn.dividends, currency, true);
+		stockHistoryReturn.dividends = await new Tools.PriceConverter().ConvertStockDividends(stockHistoryReturn.dividends, currency, true);
 		return stockHistoryReturn;
 	}
 

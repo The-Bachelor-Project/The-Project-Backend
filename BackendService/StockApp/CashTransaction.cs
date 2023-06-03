@@ -53,7 +53,7 @@ public class CashTransaction
 			balance.amount = (Decimal)data["balance"];
 		}
 
-		usdAmount = await Tools.PriceHistoryConverter.ConvertMoney(nativeAmount, timestamp, "USD", false);
+		usdAmount = await Tools.PriceConverter.ConvertMoney(nativeAmount, timestamp, "USD", false);
 
 		String insertCashTransactionQuery = "INSERT INTO CashTransactions (portfolio, currency, native_amount, amount, timestamp, balance, type, description) OUTPUT INSERTED.id VALUES (@portfolio, @currency, @native_amount, @amount, @timestamp, @balance, @type, @description)";
 		SqlCommand command = new SqlCommand(insertCashTransactionQuery, connection);

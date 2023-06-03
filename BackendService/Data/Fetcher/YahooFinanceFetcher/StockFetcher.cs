@@ -72,7 +72,7 @@ public class StockFetcher : IStockFetcher
 
 			}
 		}
-		await new Tools.PriceHistoryConverter().ConvertStockPrice(result.history, "USD", false);
+		await new Tools.PriceConverter().ConvertStockPrice(result.history, "USD", false);
 		foreach (Data.DatePriceOHLC datePrice in result.history)
 		{
 			try
@@ -277,7 +277,7 @@ public class StockFetcher : IStockFetcher
 			}
 
 		}
-		await new Tools.PriceHistoryConverter().ConvertStockDividends(dividends, "USD", false);
+		await new Tools.PriceConverter().ConvertStockDividends(dividends, "USD", false);
 		return dividends;
 	}
 }
