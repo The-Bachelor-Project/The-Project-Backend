@@ -316,4 +316,31 @@ public class Portfolio
 		}
 		throw new StatusCodeException(404, "Could not find cash transaction with id " + cashTransactionID);
 	}
+
+	public void UpdateCashTransactions()
+	{
+		if (id == null)
+		{
+			throw new StatusCodeException(400, "Missing required fields");
+		}
+
+		String query = "SELECT * FROM CashTransactions WHERE portfolio = @portfolio";
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@portfolio", id!);
+		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(query, parameters);
+		cashTransactions = new List<CashTransaction>();
+		foreach (Dictionary<String, object> row in data)
+		{
+			CashTransaction cashTransaction = new CashTransaction();
+			cashTransaction.id = int.Parse(row["id"].ToString()!);
+			cashTransaction.portfolioId = row["portfolio"].ToString();
+			cashTransaction.timestamp = Convert.ToInt32(row["timestamp"]);
+			cashTransaction.nativeAmount = new Money(Convert.ToDecimal(row["native_amount"]), row["currency"].ToString()!);
+			cashTransaction.usdAmount = new Money(Convert.ToDecimal(row["amount"]), "USD");
+			cashTransaction.type = row["type"].ToString();
+			cashTransaction.description = row["description"].ToString();
+			cashTransaction.balance = new Money(Convert.ToDecimal(row["balance"]), row["currency"].ToString()!);
+			cashTransactions.Add(cashTransaction);
+		}
+	}
 }

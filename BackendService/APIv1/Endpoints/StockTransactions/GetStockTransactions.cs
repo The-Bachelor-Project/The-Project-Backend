@@ -18,7 +18,7 @@ public class GetStockTransactions
 		});
 	}
 
-	public static GetStockTransactionsResponse Endpoint(string accessToken)
+	public static GetStockTransactionsResponse Endpoint(String accessToken)
 	{
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
 		List<StockApp.StockTransaction> stockTransactions = user.GetAllStockTransactions();

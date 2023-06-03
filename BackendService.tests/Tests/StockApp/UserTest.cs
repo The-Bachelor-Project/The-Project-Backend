@@ -477,4 +477,39 @@ public class UserTest
 		exception = Assert.ThrowsException<StatusCodeException>(() => user.DeletePreference("Setting"));
 		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
 	}
+
+	[TestMethod]
+	public async Task UserTest_GetAllCashTransactions_GetFromMultiplePortfoliosTest()
+	{
+		StockApp.User user = userTestObject.user!;
+		StockApp.Portfolio portfolio = PortfolioHelper.Create(userTestObject);
+		StockApp.Portfolio portfolio2 = PortfolioHelper.Create(userTestObject);
+		StockApp.Portfolio portfolio3 = PortfolioHelper.Create(userTestObject);
+		StockApp.CashTransaction cashTransaction1 = new StockApp.CashTransaction();
+		cashTransaction1.portfolioId = portfolio.id;
+		cashTransaction1.nativeAmount = new StockApp.Money(100, "CAD");
+		cashTransaction1.usdAmount = new StockApp.Money(100, "USD");
+		cashTransaction1.type = "Deposit";
+		cashTransaction1.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
+		cashTransaction1.description = "test";
+		await cashTransaction1.AddToDb();
+		StockApp.CashTransaction cashTransaction2 = new StockApp.CashTransaction();
+		cashTransaction2.portfolioId = portfolio2.id;
+		cashTransaction2.nativeAmount = new StockApp.Money(100, "CAD");
+		cashTransaction2.usdAmount = new StockApp.Money(100, "USD");
+		cashTransaction2.type = "Withdrawal";
+		cashTransaction2.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
+		cashTransaction2.description = "test";
+		await cashTransaction2.AddToDb();
+		StockApp.CashTransaction cashTransaction3 = new StockApp.CashTransaction();
+		cashTransaction3.portfolioId = portfolio3.id;
+		cashTransaction3.nativeAmount = new StockApp.Money(100, "CAD");
+		cashTransaction3.usdAmount = new StockApp.Money(100, "USD");
+		cashTransaction3.type = "Stock BUY";
+		cashTransaction3.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
+		cashTransaction3.description = "test";
+		await cashTransaction3.AddToDb();
+		List<StockApp.CashTransaction> cashTransactions = user.GetAllCashTransactions();
+		Assert.IsTrue(cashTransactions.Count == 3, "cashTransactions should have 3 entries but was " + cashTransactions.Count);
+	}
 }

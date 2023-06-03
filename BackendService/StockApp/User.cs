@@ -356,4 +356,31 @@ public class User
 			throw new StatusCodeException(500, "Could not delete preference");
 		}
 	}
+
+	public List<CashTransaction> GetAllCashTransactions()
+	{
+		UpdatePortfolios();
+
+		List<CashTransaction> transactions = new List<CashTransaction>();
+
+		foreach (Portfolio portfolio in portfolios)
+		{
+			portfolio.UpdateCashTransactions();
+			foreach (CashTransaction transaction in portfolio.cashTransactions)
+			{
+				CashTransaction cashTransaction = new CashTransaction();
+				cashTransaction.portfolioId = transaction.portfolioId;
+				cashTransaction.nativeAmount = transaction.nativeAmount;
+				cashTransaction.timestamp = transaction.timestamp;
+				cashTransaction.type = transaction.type;
+				cashTransaction.description = transaction.description;
+				cashTransaction.id = transaction.id;
+				cashTransaction.balance = transaction.balance;
+				cashTransaction.usdAmount = transaction.usdAmount;
+				transactions.Add(cashTransaction);
+			}
+		}
+
+		return transactions;
+	}
 }
