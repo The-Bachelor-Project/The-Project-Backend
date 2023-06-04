@@ -21,12 +21,7 @@ public class GetTransactions
 	public static GetTransactionsResponse Endpoint(String accessToken, String currency)
 	{
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
-		user.UpdatePortfolios();
-		foreach (StockApp.Portfolio portfolio in user.portfolios)
-		{
-			portfolio.UpdateStockTransactions();
-		}
 
-		return new GetTransactionsResponse("success", user.portfolios);
+		return new GetTransactionsResponse("success", user.GetTransactions());
 	}
 }

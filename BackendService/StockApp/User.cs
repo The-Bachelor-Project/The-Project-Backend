@@ -263,6 +263,60 @@ public class User
 		return new Data.UserAssetsValueHistory(valueHistory, dataPortfolios, dividendHistory);
 	}
 
+	public List<Data.Transaction> GetTransactions()
+	{
+		String getStockHistoryQuery = "SELECT * FROM AllTransactions WHERE owner = @owner ORDER BY timestamp ASC";
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@owner", id!);
+		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(getStockHistoryQuery, parameters);
+
+		List<Data.Transaction> transactions = new List<Data.Transaction>();
+		Money balance = new Money(0, "USD");
+		Dictionary<String, Money> portfolioBalances = new Dictionary<string, Money>();
+
+		foreach (Dictionary<String, object> row in data)
+		{
+			String type = row["transaction_type"].ToString()!;
+			String portfolio = row["portfolio"].ToString()!;
+			int timestamp = Convert.ToInt32(row["timestamp"]);
+			String description;
+			Money amount;
+
+			switch (type)
+			{
+				case "DividendPayout":
+					amount = new Money(Convert.ToDecimal(row["payout"]) * Convert.ToDecimal(row["shares_amount"]), "USD");
+					break;
+				default:
+					amount = new Money(Convert.ToDecimal(row["amount_usd"]), "USD");
+					break;
+			}
+
+			balance.amount += amount.amount;
+			if (portfolioBalances.ContainsKey(portfolio))
+			{
+				portfolioBalances[portfolio].amount += amount.amount;
+			}
+			else
+			{
+				portfolioBalances.Add(portfolio, new Money(amount.amount, amount.currency));
+			}
+
+			switch (type)
+			{
+				case "CashTransaction":
+					description = row["description"].ToString()!;
+					break;
+				default:
+					description = row["shares_amount"].ToString()! + " " + row["exchange"].ToString()! + " " + row["ticker"].ToString()! + " " + amount.amount.ToString() + " " + amount.currency;
+					break;
+			}
+
+			transactions.Add(new Data.Transaction(type, portfolio, timestamp, description, amount, new Money(balance.amount, balance.currency), new Money(portfolioBalances[portfolio].amount, portfolioBalances[portfolio].currency)));
+		}
+		return transactions;
+	}
+
 	public List<StockApp.StockTransaction> GetAllStockTransactions()
 	{
 		UpdatePortfolios();
