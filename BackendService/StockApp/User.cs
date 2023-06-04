@@ -194,7 +194,7 @@ public class User
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@owner", id);
 		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(query, parameters);
-		if (data == null || data.Count == 0)
+		if (data == null)
 		{
 			throw new StatusCodeException(404, "No portfolios found");
 		}
