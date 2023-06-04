@@ -4,15 +4,15 @@ public class PostStockTransactions
 {
 	public static void Setup(WebApplication app)
 	{
-		app.MapPost("/v1/stock-transactions", (HttpContext context, PostStockTransactionsBody body) =>
+		app.MapPost("/v1/stock-transactions", async (HttpContext context, PostStockTransactionsBody body) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
 			if (accessToken is null)
 			{
 				context.Response.StatusCode = 401;
-				return Results.Ok(new GetPortfoliosResponse("error", new List<StockApp.Portfolio> { }));
+				return new PostStockTransactionsResponse("error", -1);
 			}
-			return Results.Ok(EndpointAsync(body, accessToken));
+			return await EndpointAsync(body, accessToken);
 		});
 	}
 

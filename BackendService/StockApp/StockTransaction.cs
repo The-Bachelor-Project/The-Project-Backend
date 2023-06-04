@@ -1,5 +1,4 @@
 using System.Data.SqlClient;
-using System.Text.Json.Serialization;
 
 namespace StockApp;
 
