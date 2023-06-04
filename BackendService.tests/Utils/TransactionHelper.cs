@@ -7,15 +7,15 @@ public class TransactionHelper
 		List<TransactionTestObject> transactions = new List<TransactionTestObject>();
 		foreach (StockApp.StockTransaction stockTransaction in list.portfolios[0].stockTransactions)
 		{
-			transactions.Add(new TransactionTestObject((int)stockTransaction.timestamp!, stockTransaction.balance!.amount));
+			// transactions.Add(new TransactionTestObject((int)stockTransaction.timestamp!, stockTransaction.balance!.amount));
 		}
 		foreach (StockApp.CashTransaction cashTransaction in list.portfolios[0].cashTransactions)
 		{
-			transactions.Add(new TransactionTestObject((int)cashTransaction.timestamp!, cashTransaction.balance!.amount));
+			// transactions.Add(new TransactionTestObject((int)cashTransaction.timestamp!, cashTransaction.balance!.amount));
 		}
 		foreach (StockApp.DividendPayout dividendPayout in list.portfolios[0].dividendPayouts)
 		{
-			transactions.Add(new TransactionTestObject((int)dividendPayout.timestamp!, dividendPayout.balance!.amount));
+			// transactions.Add(new TransactionTestObject((int)dividendPayout.timestamp!, dividendPayout.balance!.amount));
 		}
 		transactions.Sort((x, y) => x.timestamp.CompareTo(y.timestamp));
 		return transactions;

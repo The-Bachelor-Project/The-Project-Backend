@@ -18,7 +18,7 @@ public class PostCashTransactions
 
 	public static async Task<PostCashTransactionsResponse> Endpoint(PostCashTransactionsBody body, String accessToken)
 	{
-		if (body.currency is null || body.currency == "" || body.nativeAmount == 0 || body.timestamp == 0 || body.type is null || body.type == "" || body.portfolio is null || body.portfolio == "")
+		if (body.currency is null || body.currency == "" || body.nativeAmount == 0 || body.timestamp == 0 || body.portfolio is null || body.portfolio == "")
 		{
 			throw new StatusCodeException(400, "Missing required fields");
 		}
@@ -28,7 +28,7 @@ public class PostCashTransactions
 		{
 			throw new StatusCodeException(403, "User is not owner of portfolio");
 		}
-		StockApp.CashTransaction cashTransaction = new StockApp.CashTransaction(body.portfolio, new StockApp.Money(body.nativeAmount, body.currency), body.timestamp, body.type, body.description);
+		StockApp.CashTransaction cashTransaction = new StockApp.CashTransaction(body.portfolio, new StockApp.Money(body.nativeAmount, body.currency), body.timestamp, body.description);
 		await cashTransaction.AddToDb();
 		if (cashTransaction.id != null)
 		{

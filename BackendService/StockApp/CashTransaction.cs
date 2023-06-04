@@ -9,15 +9,13 @@ public class CashTransaction
 	public Money? nativeAmount { get; set; }
 	public Money? usdAmount { get; set; }
 	public int? timestamp { get; set; }
-	public String? type { get; set; }
 	public String? description { get; set; }
 
-	public CashTransaction(String portfolioId, Money nativeAmount, int timestamp, String type, String? description)
+	public CashTransaction(String portfolioId, Money nativeAmount, int timestamp, String? description)
 	{
 		this.portfolioId = portfolioId;
 		this.nativeAmount = nativeAmount;
 		this.timestamp = timestamp;
-		this.type = type;
 		this.description = description;
 	}
 
@@ -27,7 +25,7 @@ public class CashTransaction
 
 	public async Task<CashTransaction> AddToDb()
 	{
-		if (portfolioId == null || nativeAmount == null || nativeAmount.currency == null || timestamp == null || type == null)
+		if (portfolioId == null || nativeAmount == null || nativeAmount.currency == null || timestamp == null)
 		{
 			throw new StatusCodeException(400, "Missing required fields");
 		}
@@ -36,43 +34,17 @@ public class CashTransaction
 		{
 			throw new StatusCodeException(400, "Invalid currency: " + nativeAmount.currency);
 		}
-
-		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
-		String getBalance = "SELECT TOP 1 balance FROM CashTransactions WHERE portfolio = @portfolio AND timestamp <= @timestamp ORDER BY id DESC, timestamp DESC";
-		Dictionary<String, object> parameters = new Dictionary<string, object>();
-		parameters.Add("@portfolio", portfolioId);
-		parameters.Add("@currency", nativeAmount.currency);
-		parameters.Add("@timestamp", timestamp);
-		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(getBalance, parameters);
-
 		usdAmount = await Tools.PriceConverter.ConvertMoney(nativeAmount, timestamp, "USD", false);
 
-		String insertCashTransactionQuery = "INSERT INTO CashTransactions (portfolio, currency, native_amount, amount, timestamp, type, description) VALUES (@portfolio, @currency, @native_amount, @amount, @timestamp, @type, @description)";
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
+		String insertCashTransactionQuery = "INSERT INTO CashTransactions (portfolio, currency, amount_currency, amount_usd, timestamp, description) VALUES (@portfolio, @currency, @amount_currency, @amount_usd, @timestamp, @description)";
 		SqlCommand command = new SqlCommand(insertCashTransactionQuery, connection);
 		command.Parameters.AddWithValue("@portfolio", portfolioId);
 		command.Parameters.AddWithValue("@currency", nativeAmount.currency);
-		command.Parameters.AddWithValue("@native_amount", nativeAmount.amount);
-		command.Parameters.AddWithValue("@amount", usdAmount.amount);
+		command.Parameters.AddWithValue("@amount_currency", nativeAmount.amount);
+		command.Parameters.AddWithValue("@amount_usd", usdAmount.amount);
 		command.Parameters.AddWithValue("@timestamp", timestamp);
-		command.Parameters.AddWithValue("@type", type);
 		command.Parameters.AddWithValue("@description", description);
-		try
-		{
-			// id = int.Parse((command.ExecuteScalar()).ToString()!);
-		}
-		catch (Exception e)
-		{
-			System.Console.WriteLine(e);
-			throw new StatusCodeException(500, "Could not add cash transaction to database");
-		}
-
-		String updateCashTransactions = "UPDATE CashTransactions SET balance = balance + @amount WHERE portfolio = @portfolio AND timestamp > @timestamp OR (timestamp = @timestamp AND id > @id)";
-		command = new SqlCommand(updateCashTransactions, connection);
-		command.Parameters.AddWithValue("@portfolio", portfolioId);
-		command.Parameters.AddWithValue("@currency", nativeAmount.currency);
-		command.Parameters.AddWithValue("@timestamp", timestamp);
-		command.Parameters.AddWithValue("@id", id);
-		command.Parameters.AddWithValue("@amount", usdAmount.amount);
 		try
 		{
 			command.ExecuteNonQuery();
@@ -80,8 +52,17 @@ public class CashTransaction
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e);
-			throw new StatusCodeException(500, "Could not update cash transactions");
+			throw new StatusCodeException(500, "Could not add cash transaction to database");
 		}
+		String getLastInsertIdQuery = "SELECT TOP 1 id FROM CashTransactions WHERE @portfolio = portfolio ORDER BY id DESC";
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@portfolio", portfolioId);
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(getLastInsertIdQuery, parameters);
+		if (data == null)
+		{
+			throw new StatusCodeException(500, "Could not get last insert id");
+		}
+		id = (int)data["id"];
 		return this;
 	}
 

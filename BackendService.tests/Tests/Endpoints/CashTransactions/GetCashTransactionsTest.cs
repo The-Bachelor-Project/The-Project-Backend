@@ -26,7 +26,6 @@ public class GetCashTransactionsTest
 		cashTransaction.portfolioId = portfolio!.id;
 		cashTransaction.nativeAmount = new StockApp.Money(100, "CAD");
 		cashTransaction.usdAmount = new StockApp.Money(100, "USD");
-		cashTransaction.type = "Deposit";
 		cashTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		cashTransaction.description = "Test";
 		await cashTransaction.AddToDb();
@@ -38,7 +37,6 @@ public class GetCashTransactionsTest
 		Assert.IsTrue(response.cashTransactions[0].nativeAmount!.amount == cashTransaction.nativeAmount.amount, "The cash transaction native amount should be " + cashTransaction.nativeAmount.amount + " but was " + response.cashTransactions[0].nativeAmount!.amount);
 		Assert.IsTrue(response.cashTransactions[0].nativeAmount!.currency == cashTransaction.nativeAmount.currency, "The cash transaction native currency should be " + cashTransaction.nativeAmount.currency + " but was " + response.cashTransactions[0].nativeAmount!.currency);
 		Assert.IsTrue(response.cashTransactions[0].usdAmount!.currency == cashTransaction.usdAmount.currency, "The cash transaction usd currency should be " + cashTransaction.usdAmount.currency + " but was " + response.cashTransactions[0].usdAmount!.currency);
-		Assert.IsTrue(response.cashTransactions[0].type == cashTransaction.type, "The cash transaction type should be " + cashTransaction.type + " but was " + response.cashTransactions[0].type);
 		Assert.IsTrue(response.cashTransactions[0].timestamp == cashTransaction.timestamp, "The cash transaction timestamp should be " + cashTransaction.timestamp + " but was " + response.cashTransactions[0].timestamp);
 	}
 
@@ -49,7 +47,6 @@ public class GetCashTransactionsTest
 		cashTransaction1.portfolioId = portfolio!.id;
 		cashTransaction1.nativeAmount = new StockApp.Money(100, "CAD");
 		cashTransaction1.usdAmount = new StockApp.Money(100, "USD");
-		cashTransaction1.type = "Deposit";
 		cashTransaction1.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		cashTransaction1.description = "Test";
 		await cashTransaction1.AddToDb();
@@ -57,7 +54,6 @@ public class GetCashTransactionsTest
 		cashTransaction2.portfolioId = portfolio!.id;
 		cashTransaction2.nativeAmount = new StockApp.Money(100, "CAD");
 		cashTransaction2.usdAmount = new StockApp.Money(100, "USD");
-		cashTransaction2.type = "Deposit";
 		cashTransaction2.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		cashTransaction2.description = "Test";
 		await cashTransaction2.AddToDb();
@@ -69,7 +65,6 @@ public class GetCashTransactionsTest
 		Assert.IsTrue(response.cashTransactions[0].nativeAmount!.amount == cashTransaction1.nativeAmount.amount || response.cashTransactions[0].nativeAmount!.amount == cashTransaction2.nativeAmount.amount, "The cash transaction native amount should be " + cashTransaction1.nativeAmount.amount + " or " + cashTransaction2.nativeAmount.amount + " but was " + response.cashTransactions[0].nativeAmount!.amount);
 		Assert.IsTrue(response.cashTransactions[0].nativeAmount!.currency == cashTransaction1.nativeAmount.currency || response.cashTransactions[0].nativeAmount!.currency == cashTransaction2.nativeAmount.currency, "The cash transaction native currency should be " + cashTransaction1.nativeAmount.currency + " or " + cashTransaction2.nativeAmount.currency + " but was " + response.cashTransactions[0].nativeAmount!.currency);
 		Assert.IsTrue(response.cashTransactions[0].usdAmount!.currency == cashTransaction1.usdAmount.currency || response.cashTransactions[0].usdAmount!.currency == cashTransaction2.usdAmount.currency, "The cash transaction usd currency should be " + cashTransaction1.usdAmount.currency + " or " + cashTransaction2.usdAmount.currency + " but was " + response.cashTransactions[0].usdAmount!.currency);
-		Assert.IsTrue(response.cashTransactions[0].type == cashTransaction1.type || response.cashTransactions[0].type == cashTransaction2.type, "The cash transaction type should be " + cashTransaction1.type + " or " + cashTransaction2.type + " but was " + response.cashTransactions[0].type);
 		Assert.IsTrue(response.cashTransactions[0].timestamp == cashTransaction1.timestamp || response.cashTransactions[0].timestamp == cashTransaction2.timestamp, "The cash transaction timestamp should be " + cashTransaction1.timestamp + " or " + cashTransaction2.timestamp + " but was " + response.cashTransactions[0].timestamp);
 		Assert.IsTrue(response.cashTransactions[0].description == cashTransaction1.description || response.cashTransactions[0].description == cashTransaction2.description, "The cash transaction description should be " + cashTransaction1.description + " or " + cashTransaction2.description + " but was " + response.cashTransactions[0].description);
 		Assert.IsTrue(response.cashTransactions[1].id == cashTransaction1.id || response.cashTransactions[1].id == cashTransaction2.id, "The cash transaction id should be " + cashTransaction1.id + " or " + cashTransaction2.id + " but was " + response.cashTransactions[1].id);
@@ -77,7 +72,6 @@ public class GetCashTransactionsTest
 		Assert.IsTrue(response.cashTransactions[1].nativeAmount!.amount == cashTransaction1.nativeAmount.amount || response.cashTransactions[1].nativeAmount!.amount == cashTransaction2.nativeAmount.amount, "The cash transaction native amount should be " + cashTransaction1.nativeAmount.amount + " or " + cashTransaction2.nativeAmount.amount + " but was " + response.cashTransactions[1].nativeAmount!.amount);
 		Assert.IsTrue(response.cashTransactions[1].nativeAmount!.currency == cashTransaction1.nativeAmount.currency || response.cashTransactions[1].nativeAmount!.currency == cashTransaction2.nativeAmount.currency, "The cash transaction native currency should be " + cashTransaction1.nativeAmount.currency + " or " + cashTransaction2.nativeAmount.currency + " but was " + response.cashTransactions[1].nativeAmount!.currency);
 		Assert.IsTrue(response.cashTransactions[1].usdAmount!.currency == cashTransaction1.usdAmount.currency || response.cashTransactions[1].usdAmount!.currency == cashTransaction2.usdAmount.currency, "The cash transaction usd currency should be " + cashTransaction1.usdAmount.currency + " or " + cashTransaction2.usdAmount.currency + " but was " + response.cashTransactions[1].usdAmount!.currency);
-		Assert.IsTrue(response.cashTransactions[1].type == cashTransaction1.type || response.cashTransactions[1].type == cashTransaction2.type, "The cash transaction type should be " + cashTransaction1.type + " or " + cashTransaction2.type + " but was " + response.cashTransactions[1].type);
 		Assert.IsTrue(response.cashTransactions[1].timestamp == cashTransaction1.timestamp || response.cashTransactions[1].timestamp == cashTransaction2.timestamp, "The cash transaction timestamp should be " + cashTransaction1.timestamp + " or " + cashTransaction2.timestamp + " but was " + response.cashTransactions[1].timestamp);
 		Assert.IsTrue(response.cashTransactions[1].description == cashTransaction1.description || response.cashTransactions[1].description == cashTransaction2.description, "The cash transaction description should be " + cashTransaction1.description + " or " + cashTransaction2.description + " but was " + response.cashTransactions[1].description);
 	}

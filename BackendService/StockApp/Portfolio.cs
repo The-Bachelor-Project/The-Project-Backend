@@ -310,7 +310,6 @@ public class Portfolio
 			cashTransaction.timestamp = Convert.ToInt32(data["timestamp"]);
 			cashTransaction.nativeAmount = new Money(Convert.ToDecimal(data["native_amount"]), data["currency"].ToString()!);
 			cashTransaction.usdAmount = new Money(Convert.ToDecimal(data["amount"]), "USD");
-			cashTransaction.type = data["type"].ToString();
 			cashTransaction.description = data["description"].ToString();
 			return cashTransaction;
 		}
@@ -337,7 +336,6 @@ public class Portfolio
 			cashTransaction.timestamp = Convert.ToInt32(row["timestamp"]);
 			cashTransaction.nativeAmount = new Money(Convert.ToDecimal(row["native_amount"]), row["currency"].ToString()!);
 			cashTransaction.usdAmount = new Money(Convert.ToDecimal(row["amount"]), "USD");
-			cashTransaction.type = row["type"].ToString();
 			cashTransaction.description = row["description"].ToString();
 			cashTransactions.Add(cashTransaction);
 		}

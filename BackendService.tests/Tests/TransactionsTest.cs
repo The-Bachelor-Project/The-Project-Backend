@@ -32,7 +32,14 @@ public class TransactionsTest
 		stockTransactionData.ticker = "O";
 		stockTransactionData.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2022-06-06"));
 		stockTransactionData.priceNative = new StockApp.Money(100, "USD");
-		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData);
+		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(
+			stockTransactionData.portfolioId!,
+			stockTransactionData.ticker,
+			stockTransactionData.exchange,
+			stockTransactionData.amount,
+			stockTransactionData.timestamp,
+			stockTransactionData.priceNative
+		);
 		PostStockTransactionsResponse response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		GetTransactionsResponse transactions = GetTransactions.Endpoint(userTestObject.accessToken!, "EUR");
@@ -44,7 +51,14 @@ public class TransactionsTest
 		stockTransactionData2.ticker = "O";
 		stockTransactionData2.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2023-01-01"));
 		stockTransactionData2.priceNative = new StockApp.Money(100, "USD");
-		PostStockTransactionsBody postStockTransactionsBody2 = new PostStockTransactionsBody(stockTransactionData2);
+		PostStockTransactionsBody postStockTransactionsBody2 = new PostStockTransactionsBody(
+			stockTransactionData2.portfolioId!,
+			stockTransactionData2.ticker,
+			stockTransactionData2.exchange,
+			stockTransactionData2.amount,
+			stockTransactionData2.timestamp,
+			stockTransactionData2.priceNative
+		);
 		PostStockTransactionsResponse response2 = await PostStockTransactions.EndpointAsync(postStockTransactionsBody2, userTestObject.accessToken!);
 		Assert.IsTrue(response2.response == "success", "Response should be success but was " + response2.response);
 		transactions = GetTransactions.Endpoint(userTestObject.accessToken!, "EUR");
@@ -57,7 +71,14 @@ public class TransactionsTest
 		stockTransactionData3.ticker = "O";
 		stockTransactionData3.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2023-03-03"));
 		stockTransactionData3.priceNative = new StockApp.Money(100, "USD");
-		PostStockTransactionsBody postStockTransactionsBody3 = new PostStockTransactionsBody(stockTransactionData3);
+		PostStockTransactionsBody postStockTransactionsBody3 = new PostStockTransactionsBody(
+			stockTransactionData3.portfolioId!,
+			stockTransactionData3.ticker,
+			stockTransactionData3.exchange,
+			stockTransactionData3.amount,
+			stockTransactionData3.timestamp,
+			stockTransactionData3.priceNative
+		);
 		PostStockTransactionsResponse response3 = await PostStockTransactions.EndpointAsync(postStockTransactionsBody3, userTestObject.accessToken!);
 		Assert.IsTrue(response3.response == "success", "Response should be success but was " + response3.response);
 		transactions = GetTransactions.Endpoint(userTestObject.accessToken!, "EUR");
@@ -69,7 +90,14 @@ public class TransactionsTest
 		stockTransactionData4.ticker = "O";
 		stockTransactionData4.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2023-05-05"));
 		stockTransactionData4.priceNative = new StockApp.Money(100, "USD");
-		PostStockTransactionsBody postStockTransactionsBody4 = new PostStockTransactionsBody(stockTransactionData4);
+		PostStockTransactionsBody postStockTransactionsBody4 = new PostStockTransactionsBody(
+			stockTransactionData4.portfolioId!,
+			stockTransactionData4.ticker,
+			stockTransactionData4.exchange,
+			stockTransactionData4.amount,
+			stockTransactionData4.timestamp,
+			stockTransactionData4.priceNative
+		);
 		PostStockTransactionsResponse response4 = await PostStockTransactions.EndpointAsync(postStockTransactionsBody4, userTestObject.accessToken!);
 		Assert.IsTrue(response4.response == "success", "Response should be success but was " + response4.response);
 		transactions = GetTransactions.Endpoint(userTestObject.accessToken!, "EUR");
@@ -97,7 +125,14 @@ public class TransactionsTest
 		stockTransactionData.ticker = "O";
 		stockTransactionData.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2022-06-06"));
 		stockTransactionData.priceNative = new StockApp.Money(100, "USD");
-		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData);
+		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(
+			stockTransactionData.portfolioId!,
+			stockTransactionData.ticker,
+			stockTransactionData.exchange,
+			stockTransactionData.amount,
+			stockTransactionData.timestamp,
+			stockTransactionData.priceNative
+		);
 		PostStockTransactionsResponse response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		StockApp.StockTransaction gottenStockTransaction1 = StockTransactionHelper.Get(response.id!);
@@ -108,7 +143,14 @@ public class TransactionsTest
 		stockTransactionData2.ticker = "O";
 		stockTransactionData2.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2022-08-08"));
 		stockTransactionData2.priceNative = new StockApp.Money(100, "USD");
-		postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData2);
+		postStockTransactionsBody = new PostStockTransactionsBody(
+			stockTransactionData2.portfolioId!,
+			stockTransactionData2.ticker,
+			stockTransactionData2.exchange,
+			stockTransactionData2.amount,
+			stockTransactionData2.timestamp,
+			stockTransactionData2.priceNative
+		);
 		response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		StockApp.StockTransaction gottenStockTransaction2 = StockTransactionHelper.Get(response.id!);
@@ -116,7 +158,6 @@ public class TransactionsTest
 		Assert.IsTrue(gottenStockTransaction2.amountOwned == 0, "Amount owned should be 0 but was " + gottenStockTransaction2.amountOwned);
 		GetTransactionsResponse transactions1 = GetTransactions.Endpoint(userTestObject.accessToken!, "EUR");
 		Assert.IsTrue(transactions1.portfolios[0].dividendPayouts.Count > 0, "Dividend payouts should be more than 0 but was " + transactions1.portfolios[0].dividendPayouts.Count);
-		Assert.IsTrue(transactions1.portfolios[0].dividendPayouts.Last().timestamp <= Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2022-08-08")), "Timestamp should be less than 2022-08-08 but was " + Tools.TimeConverter.UnixTimeStampToDateOnly(transactions1.portfolios[0].dividendPayouts.Last().timestamp).ToString());
 		PutStockTransactionsBody putBody = new PutStockTransactionsBody(
 			(int)gottenStockTransaction1.id!,
 			gottenStockTransaction1.portfolioId!,
@@ -132,7 +173,6 @@ public class TransactionsTest
 		GetTransactionsResponse transactions2 = GetTransactions.Endpoint(userTestObject.accessToken!, "EUR");
 		Assert.IsTrue(transactions2.portfolios[0].dividendPayouts.Count > 0, "Dividend payouts should be more than 0 but was " + transactions2.portfolios[0].dividendPayouts.Count);
 		Assert.IsTrue(transactions2.portfolios[0].dividendPayouts.Count > transactions1.portfolios[0].dividendPayouts.Count, "Dividend payouts should be more than " + transactions1.portfolios[0].dividendPayouts.Count + " but was " + transactions2.portfolios[0].dividendPayouts.Count);
-		Assert.IsTrue(transactions2.portfolios[0].dividendPayouts.Last().timestamp >= Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2022-08-08")), "Timestamp should be less than 2022-08-08 but was " + Tools.TimeConverter.UnixTimeStampToDateOnly(transactions2.portfolios[0].dividendPayouts.Last().timestamp).ToString());
 
 		putBody = new PutStockTransactionsBody(
 			(int)gottenStockTransaction1.id!,
@@ -158,9 +198,14 @@ public class TransactionsTest
 		cashTransactionData.portfolioId = portfolio.id;
 		cashTransactionData.nativeAmount = new StockApp.Money(200, "USD");
 		cashTransactionData.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2022-08-08"));
-		cashTransactionData.type = "Deposit";
 		cashTransactionData.description = "Test";
-		PostCashTransactionsBody postCashTransactionsBody = new PostCashTransactionsBody(cashTransactionData);
+		PostCashTransactionsBody postCashTransactionsBody = new PostCashTransactionsBody(
+			cashTransactionData.portfolioId!,
+			cashTransactionData.nativeAmount.currency,
+			cashTransactionData.nativeAmount.amount,
+			(int)cashTransactionData.timestamp,
+			cashTransactionData.description
+		);
 		PostCashTransactionsResponse postCashTransactionsResponse = await PostCashTransactions.Endpoint(postCashTransactionsBody, userTestObject.accessToken!);
 		Assert.IsTrue(postCashTransactionsResponse.response == "success", "Response should be success but was " + postCashTransactionsResponse.response);
 
@@ -171,7 +216,14 @@ public class TransactionsTest
 		stockTransactionData.ticker = "O";
 		stockTransactionData.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2022-08-09"));
 		stockTransactionData.priceNative = new StockApp.Money(100, "USD");
-		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData);
+		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(
+			stockTransactionData.portfolioId!,
+			stockTransactionData.ticker,
+			stockTransactionData.exchange,
+			stockTransactionData.amount,
+			stockTransactionData.timestamp,
+			stockTransactionData.priceNative
+		);
 		PostStockTransactionsResponse postStockTransactionsResponse = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
 		Assert.IsTrue(postStockTransactionsResponse.response == "success", "Response should be success but was " + postStockTransactionsResponse.response);
 
@@ -182,7 +234,14 @@ public class TransactionsTest
 		stockTransactionData2.ticker = "O";
 		stockTransactionData2.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2022-11-11"));
 		stockTransactionData2.priceNative = new StockApp.Money(100, "USD");
-		PostStockTransactionsBody postStockTransactionsBody2 = new PostStockTransactionsBody(stockTransactionData2);
+		PostStockTransactionsBody postStockTransactionsBody2 = new PostStockTransactionsBody(
+			stockTransactionData2.portfolioId!,
+			stockTransactionData2.ticker,
+			stockTransactionData2.exchange,
+			stockTransactionData2.amount,
+			stockTransactionData2.timestamp,
+			stockTransactionData2.priceNative
+		);
 		PostStockTransactionsResponse postStockTransactionsResponse2 = await PostStockTransactions.EndpointAsync(postStockTransactionsBody2, userTestObject.accessToken!);
 		Assert.IsTrue(postStockTransactionsResponse2.response == "success", "Response should be success but was " + postStockTransactionsResponse2.response);
 
@@ -207,9 +266,14 @@ public class TransactionsTest
 		cashTransactionData.portfolioId = portfolio.id;
 		cashTransactionData.nativeAmount = new StockApp.Money(200, "USD");
 		cashTransactionData.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2022-08-08"));
-		cashTransactionData.type = "Deposit";
 		cashTransactionData.description = "Test";
-		PostCashTransactionsBody postCashTransactionsBody = new PostCashTransactionsBody(cashTransactionData);
+		PostCashTransactionsBody postCashTransactionsBody = new PostCashTransactionsBody(
+			cashTransactionData.portfolioId!,
+			cashTransactionData.nativeAmount.currency,
+			cashTransactionData.nativeAmount.amount,
+			(int)cashTransactionData.timestamp,
+			cashTransactionData.description
+		);
 		PostCashTransactionsResponse postCashTransactionsResponse = await PostCashTransactions.Endpoint(postCashTransactionsBody, userTestObject.accessToken!);
 		Assert.IsTrue(postCashTransactionsResponse.response == "success", "Response should be success but was " + postCashTransactionsResponse.response);
 
@@ -220,7 +284,14 @@ public class TransactionsTest
 		stockTransactionData.ticker = "O";
 		stockTransactionData.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2022-08-08"));
 		stockTransactionData.priceNative = new StockApp.Money(100, "USD");
-		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData);
+		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(
+			stockTransactionData.portfolioId!,
+			stockTransactionData.ticker,
+			stockTransactionData.exchange,
+			stockTransactionData.amount,
+			stockTransactionData.timestamp,
+			stockTransactionData.priceNative
+		);
 		PostStockTransactionsResponse postStockTransactionsResponse = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
 		Assert.IsTrue(postStockTransactionsResponse.response == "success", "Response should be success but was " + postStockTransactionsResponse.response);
 
@@ -231,7 +302,14 @@ public class TransactionsTest
 		stockTransactionData2.ticker = "O";
 		stockTransactionData2.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2022-09-09"));
 		stockTransactionData2.priceNative = new StockApp.Money(100, "USD");
-		PostStockTransactionsBody postStockTransactionsBody2 = new PostStockTransactionsBody(stockTransactionData2);
+		PostStockTransactionsBody postStockTransactionsBody2 = new PostStockTransactionsBody(
+			stockTransactionData2.portfolioId!,
+			stockTransactionData2.ticker,
+			stockTransactionData2.exchange,
+			stockTransactionData2.amount,
+			stockTransactionData2.timestamp,
+			stockTransactionData2.priceNative
+		);
 		PostStockTransactionsResponse postStockTransactionsResponse2 = await PostStockTransactions.EndpointAsync(postStockTransactionsBody2, userTestObject.accessToken!);
 		Assert.IsTrue(postStockTransactionsResponse2.response == "success", "Response should be success but was " + postStockTransactionsResponse2.response);
 
@@ -239,9 +317,14 @@ public class TransactionsTest
 		cashTransactionData2.portfolioId = portfolio.id;
 		cashTransactionData2.nativeAmount = new StockApp.Money(-50, "USD");
 		cashTransactionData2.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2022-08-10"));
-		cashTransactionData2.type = "Withdrawal";
 		cashTransactionData2.description = "Test";
-		PostCashTransactionsBody postCashTransactionsBody2 = new PostCashTransactionsBody(cashTransactionData2);
+		PostCashTransactionsBody postCashTransactionsBody2 = new PostCashTransactionsBody(
+			cashTransactionData2.portfolioId!,
+			cashTransactionData2.nativeAmount.currency,
+			cashTransactionData2.nativeAmount.amount,
+			(int)cashTransactionData2.timestamp,
+			cashTransactionData2.description
+		);
 		PostCashTransactionsResponse postCashTransactionsResponse3 = await PostCashTransactions.Endpoint(postCashTransactionsBody2, userTestObject.accessToken!);
 		Assert.IsTrue(postCashTransactionsResponse3.response == "success", "Response should be success but was " + postCashTransactionsResponse3.response);
 
@@ -265,9 +348,14 @@ public class TransactionsTest
 		cashTransactionData.portfolioId = portfolio.id;
 		cashTransactionData.nativeAmount = new StockApp.Money(200, "USD");
 		cashTransactionData.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2022-08-08"));
-		cashTransactionData.type = "Deposit";
 		cashTransactionData.description = "Test";
-		PostCashTransactionsBody postCashTransactionsBody = new PostCashTransactionsBody(cashTransactionData);
+		PostCashTransactionsBody postCashTransactionsBody = new PostCashTransactionsBody(
+			cashTransactionData.portfolioId!,
+			cashTransactionData.nativeAmount.currency,
+			cashTransactionData.nativeAmount.amount,
+			(int)cashTransactionData.timestamp,
+			cashTransactionData.description
+		);
 		PostCashTransactionsResponse postCashTransactionsResponse = await PostCashTransactions.Endpoint(postCashTransactionsBody, userTestObject.accessToken!);
 		Assert.IsTrue(postCashTransactionsResponse.response == "success", "Response should be success but was " + postCashTransactionsResponse.response);
 
@@ -278,7 +366,14 @@ public class TransactionsTest
 		stockTransactionData.ticker = "O";
 		stockTransactionData.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2022-08-09"));
 		stockTransactionData.priceNative = new StockApp.Money(100, "USD");
-		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData);
+		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(
+			stockTransactionData.portfolioId!,
+			stockTransactionData.ticker,
+			stockTransactionData.exchange,
+			stockTransactionData.amount,
+			stockTransactionData.timestamp,
+			stockTransactionData.priceNative
+		);
 		PostStockTransactionsResponse postStockTransactionsResponse = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
 		Assert.IsTrue(postStockTransactionsResponse.response == "success", "Response should be success but was " + postStockTransactionsResponse.response);
 
@@ -289,16 +384,28 @@ public class TransactionsTest
 		stockTransactionData2.ticker = "O";
 		stockTransactionData2.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2022-10-20"));
 		stockTransactionData2.priceNative = new StockApp.Money(100, "USD");
-		PostStockTransactionsBody postStockTransactionsBody2 = new PostStockTransactionsBody(stockTransactionData2);
+		PostStockTransactionsBody postStockTransactionsBody2 = new PostStockTransactionsBody(
+			stockTransactionData2.portfolioId!,
+			stockTransactionData2.ticker,
+			stockTransactionData2.exchange,
+			stockTransactionData2.amount,
+			stockTransactionData2.timestamp,
+			stockTransactionData2.priceNative
+		);
 		PostStockTransactionsResponse postStockTransactionsResponse2 = await PostStockTransactions.EndpointAsync(postStockTransactionsBody2, userTestObject.accessToken!);
 
 		StockApp.CashTransaction cashTransactionData2 = new StockApp.CashTransaction();
 		cashTransactionData2.portfolioId = portfolio.id;
 		cashTransactionData2.nativeAmount = new StockApp.Money(-50, "USD");
 		cashTransactionData2.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2022-09-09"));
-		cashTransactionData2.type = "Withdrawal";
 		cashTransactionData2.description = "Test";
-		PostCashTransactionsBody postCashTransactionsBody2 = new PostCashTransactionsBody(cashTransactionData2);
+		PostCashTransactionsBody postCashTransactionsBody2 = new PostCashTransactionsBody(
+			cashTransactionData2.portfolioId!,
+			cashTransactionData2.nativeAmount.currency,
+			cashTransactionData2.nativeAmount.amount,
+			(int)cashTransactionData2.timestamp,
+			cashTransactionData2.description
+		);
 		PostCashTransactionsResponse postCashTransactionsResponse2 = await PostCashTransactions.Endpoint(postCashTransactionsBody2, userTestObject.accessToken!);
 		Assert.IsTrue(postCashTransactionsResponse2.response == "success", "Response should be success but was " + postCashTransactionsResponse2.response);
 

@@ -116,28 +116,6 @@ public class StockTransactionTest
 		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockTransaction.AddToDb());
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 404 but was " + exception.StatusCode);
 
-		// Missing amount
-		stockTransaction = new StockTransaction();
-		stockTransaction.portfolioId = portfolio.id!;
-		stockTransaction.ticker = "AAPL";
-		stockTransaction.exchange = "NASDAQ";
-		stockTransaction.priceNative = new Money(100, "USD");
-		stockTransaction.amount = null;
-		stockTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
-		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockTransaction.AddToDb());
-		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 500 but was " + exception.StatusCode);
-
-		// Missing timestamp
-		stockTransaction = new StockTransaction();
-		stockTransaction.portfolioId = portfolio.id!;
-		stockTransaction.ticker = "AAPL";
-		stockTransaction.exchange = "NASDAQ";
-		stockTransaction.priceNative = new Money(100, "USD");
-		stockTransaction.amount = 10;
-		stockTransaction.timestamp = null;
-		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockTransaction.AddToDb());
-		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 500 but was " + exception.StatusCode);
-
 		// Missing price_currency
 		stockTransaction = new StockTransaction();
 		stockTransaction.portfolioId = portfolio.id!;

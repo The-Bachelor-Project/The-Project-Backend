@@ -26,7 +26,6 @@ public class PutCashTransactionsTest
 		cashTransaction.portfolioId = portfolio!.id;
 		cashTransaction.nativeAmount = new StockApp.Money(100, "CAD");
 		cashTransaction.usdAmount = new StockApp.Money(100, "USD");
-		cashTransaction.type = "Deposit";
 		cashTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		cashTransaction.description = "Test";
 		await cashTransaction.AddToDb();
@@ -72,7 +71,6 @@ public class PutCashTransactionsTest
 		cashTransaction.portfolioId = portfolio!.id;
 		cashTransaction.nativeAmount = new StockApp.Money(100, "CAD");
 		cashTransaction.usdAmount = new StockApp.Money(100, "USD");
-		cashTransaction.type = "Deposit";
 		cashTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		cashTransaction.description = "Test";
 		await cashTransaction.AddToDb();

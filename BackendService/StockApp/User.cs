@@ -372,7 +372,6 @@ public class User
 				cashTransaction.portfolioId = transaction.portfolioId;
 				cashTransaction.nativeAmount = transaction.nativeAmount;
 				cashTransaction.timestamp = transaction.timestamp;
-				cashTransaction.type = transaction.type;
 				cashTransaction.description = transaction.description;
 				cashTransaction.id = transaction.id;
 				cashTransaction.usdAmount = transaction.usdAmount;

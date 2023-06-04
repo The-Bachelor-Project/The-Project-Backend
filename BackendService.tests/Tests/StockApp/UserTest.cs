@@ -489,7 +489,6 @@ public class UserTest
 		cashTransaction1.portfolioId = portfolio.id;
 		cashTransaction1.nativeAmount = new StockApp.Money(100, "CAD");
 		cashTransaction1.usdAmount = new StockApp.Money(100, "USD");
-		cashTransaction1.type = "Deposit";
 		cashTransaction1.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		cashTransaction1.description = "test";
 		await cashTransaction1.AddToDb();
@@ -497,7 +496,6 @@ public class UserTest
 		cashTransaction2.portfolioId = portfolio2.id;
 		cashTransaction2.nativeAmount = new StockApp.Money(100, "CAD");
 		cashTransaction2.usdAmount = new StockApp.Money(100, "USD");
-		cashTransaction2.type = "Withdrawal";
 		cashTransaction2.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		cashTransaction2.description = "test";
 		await cashTransaction2.AddToDb();
@@ -505,7 +503,6 @@ public class UserTest
 		cashTransaction3.portfolioId = portfolio3.id;
 		cashTransaction3.nativeAmount = new StockApp.Money(100, "CAD");
 		cashTransaction3.usdAmount = new StockApp.Money(100, "USD");
-		cashTransaction3.type = "Stock BUY";
 		cashTransaction3.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		cashTransaction3.description = "test";
 		await cashTransaction3.AddToDb();
@@ -513,38 +510,33 @@ public class UserTest
 		Assert.IsTrue(cashTransactions.Count == 3, "cashTransactions should have 3 entries but was " + cashTransactions.Count);
 	}
 
-	// TODO: Fix this test, apparently it gets an FK constraint error for numerous currencies
-	// [TestMethod]
-	// public async Task UserTest_GetAllCashTransactions_GetDifferentCurrencyTest()
-	// {
-	// 	StockApp.Portfolio portfolio = PortfolioHelper.Create(userTestObject);
-	// 	StockApp.CashTransaction cashTransaction1 = new StockApp.CashTransaction();
-	// 	cashTransaction1.portfolioId = portfolio!.id;
-	// 	cashTransaction1.nativeAmount = new StockApp.Money(100, "CAD");
-	// 	cashTransaction1.usdAmount = new StockApp.Money(100, "USD");
-	// 	cashTransaction1.type = "Deposit";
-	// 	cashTransaction1.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
-	// 	cashTransaction1.balance = new StockApp.Money(350, "USD");
-	// 	cashTransaction1.description = "Test";
-	// 	await cashTransaction1.AddToDb();
-	// 	StockApp.CashTransaction cashTransaction2 = new StockApp.CashTransaction();
-	// 	cashTransaction2.portfolioId = portfolio!.id;
-	// 	cashTransaction2.nativeAmount = new StockApp.Money(100, "CAD");
-	// 	cashTransaction2.usdAmount = new StockApp.Money(100, "USD");
-	// 	cashTransaction2.type = "Deposit";
-	// 	cashTransaction2.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
-	// 	cashTransaction2.balance = new StockApp.Money(350, "USD");
-	// 	cashTransaction2.description = "Test";
-	// 	await cashTransaction2.AddToDb();
+	[TestMethod]
+	public async Task UserTest_GetAllCashTransactions_GetDifferentCurrencyTest()
+	{
+		StockApp.Portfolio portfolio = PortfolioHelper.Create(userTestObject);
+		StockApp.CashTransaction cashTransaction1 = new StockApp.CashTransaction();
+		cashTransaction1.portfolioId = portfolio!.id;
+		cashTransaction1.nativeAmount = new StockApp.Money(100, "CAD");
+		cashTransaction1.usdAmount = new StockApp.Money(100, "USD");
+		cashTransaction1.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
+		cashTransaction1.description = "Test";
+		await cashTransaction1.AddToDb();
+		StockApp.CashTransaction cashTransaction2 = new StockApp.CashTransaction();
+		cashTransaction2.portfolioId = portfolio!.id;
+		cashTransaction2.nativeAmount = new StockApp.Money(100, "CAD");
+		cashTransaction2.usdAmount = new StockApp.Money(100, "USD");
+		cashTransaction2.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
+		cashTransaction2.description = "Test";
+		await cashTransaction2.AddToDb();
 
-	// 	foreach (String currency in Dictionaries.currencies)
-	// 	{
-	// 		List<StockApp.CashTransaction> cashTransactions = await userTestObject.user!.GetAllCashTransactions(currency);
-	// 		Assert.IsTrue(cashTransactions.Count == 2, "cashTransactions should have 2 entries but was " + cashTransactions.Count);
-	// 		foreach (StockApp.CashTransaction cashTransaction in cashTransactions)
-	// 		{
-	// 			Assert.IsTrue(cashTransaction.balance!.currency == currency, "currency should be " + currency + " but was " + cashTransaction.balance!.currency);
-	// 		}
-	// 	}
-	// }
+		foreach (String currency in Dictionaries.currencies)
+		{
+			List<StockApp.CashTransaction> cashTransactions = await userTestObject.user!.GetAllCashTransactions(currency);
+			Assert.IsTrue(cashTransactions.Count == 2, "cashTransactions should have 2 entries but was " + cashTransactions.Count);
+			foreach (StockApp.CashTransaction cashTransaction in cashTransactions)
+			{
+				Assert.IsTrue(cashTransaction.nativeAmount!.currency == currency, "currency should be " + currency + " but was " + cashTransaction.nativeAmount.currency);
+			}
+		}
+	}
 }
