@@ -265,10 +265,10 @@ public class User
 
 	public List<Data.Transaction> GetTransactions()
 	{
-		String getStockHistoryQuery = "SELECT * FROM AllTransactions WHERE owner = @owner ORDER BY timestamp ASC";
+		String getTransactionsQuery = "SELECT * FROM AllTransactions WHERE owner = @owner ORDER BY timestamp ASC, transaction_type ASC, portfolio ASC, id ASC";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@owner", id!);
-		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(getStockHistoryQuery, parameters);
+		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(getTransactionsQuery, parameters);
 
 		List<Data.Transaction> transactions = new List<Data.Transaction>();
 		Money balance = new Money(0, "USD");
