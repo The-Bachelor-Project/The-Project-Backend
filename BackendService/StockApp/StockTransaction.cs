@@ -9,10 +9,10 @@ public class StockTransaction
 	public String? portfolioId { get; set; }
 	public String? ticker { get; set; }
 	public String? exchange { get; set; }
-	public Decimal? amount { get; set; }
+	public Decimal amount { get; set; }
 	public Decimal? amountAdjusted { get; set; }
 	public Decimal? amountOwned { get; set; }
-	public int? timestamp { get; set; }
+	public int timestamp { get; set; }
 	public Money? priceNative { get; set; }
 	public Money? priceUSD { get; set; }
 
@@ -27,27 +27,15 @@ public class StockTransaction
 		this.priceNative = priceNative;
 	}
 
-	[JsonConstructor]
-	public StockTransaction(String portfolioId, String ticker, String exchange, Decimal amount, int timestamp, Money priceNative)
-	{
-		this.portfolioId = portfolioId;
-		this.ticker = ticker;
-		this.exchange = exchange;
-		this.amount = amount;
-		this.timestamp = timestamp;
-		this.priceNative = priceNative;
-	}
-
 	public StockTransaction()
 	{
+
 	}
-
-
 
 	public async Task<StockTransaction> AddToDb()
 	{
 
-		if (ticker == null || exchange == null || amount == null || timestamp == null || portfolioId == null || priceNative!.currency == null)
+		if (ticker == null || exchange == null || portfolioId == null || priceNative!.currency == null)
 		{
 			throw new StatusCodeException(400, "Missing required fields");
 		}
@@ -75,7 +63,7 @@ public class StockTransaction
 		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(getAmountOwned, parameters);
 
 		decimal amountOwned = 0;
-		decimal amountAdjusted = amount!.Value;
+		decimal amountAdjusted = amount!;
 		if (data != null)
 		{
 			amountOwned = (Decimal)data["amount_owned"];
@@ -101,13 +89,28 @@ public class StockTransaction
 		command.Parameters.AddWithValue("@amount_usd", priceUSD!.amount);
 		try
 		{
-			// id = int.Parse((command.ExecuteScalar()).ToString()!);
+			command.ExecuteNonQuery();
 		}
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e);
 			throw new StatusCodeException(500, "Could not insert stock transaction into database");
 		}
+		String getId = "SELECT TOP 1 id FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp = @timestamp AND amount_currency = @amount_currency AND currency = @currency AND amount_usd = @amount_usd ORDER BY id DESC";
+		Dictionary<String, object> parameters2 = new Dictionary<string, object>();
+		parameters2.Add("@portfolio", portfolioId);
+		parameters2.Add("@ticker", ticker);
+		parameters2.Add("@exchange", exchange);
+		parameters2.Add("@timestamp", timestamp);
+		parameters2.Add("@amount_currency", priceNative!.amount);
+		parameters2.Add("@currency", priceNative.currency);
+		parameters2.Add("@amount_usd", priceUSD!.amount);
+		Dictionary<String, object>? data2 = Data.Database.Reader.ReadOne(getId, parameters2);
+		if (data2 == null)
+		{
+			throw new StatusCodeException(500, "Could not get id of inserted stock transaction");
+		}
+		id = (int)data2["id"];
 		return this;
 	}
 

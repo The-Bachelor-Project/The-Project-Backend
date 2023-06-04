@@ -29,7 +29,7 @@ public class StockPosition
 		}
 
 
-		if (Tools.TimeConverter.UnixTimeStampToDateOnly(stockTransactions.First().timestamp!.Value) < startDate)
+		if (Tools.TimeConverter.UnixTimeStampToDateOnly(stockTransactions.First().timestamp) < startDate)
 		{
 			currentlyOwned = stockTransactions.First().amountOwned!.Value;
 		}
@@ -40,7 +40,7 @@ public class StockPosition
 		}
 		*/
 
-		DateOnly currentDate = Tools.TimeConverter.UnixTimeStampToDateOnly(stockTransactions.First().timestamp!.Value);
+		DateOnly currentDate = Tools.TimeConverter.UnixTimeStampToDateOnly(stockTransactions.First().timestamp);
 		currentDate = currentDate < startDate ? currentDate : startDate;
 		Data.StockHistory stockHistory = await new Data.Fetcher.StockFetcher().GetHistory(stock.ticker, stock.exchange, currentDate, endDate, "daily", currency);
 		Data.DatePriceOHLC currentStockPrice = stockHistory.history.First();
@@ -62,7 +62,7 @@ public class StockPosition
 			if (transactionIndex < stockTransactions.Count)
 			{
 				System.Console.WriteLine(currentDate);
-				while (Tools.TimeConverter.UnixTimeStampToDateOnly(stockTransactions[transactionIndex].timestamp!.Value) == currentDate)
+				while (Tools.TimeConverter.UnixTimeStampToDateOnly(stockTransactions[transactionIndex].timestamp) == currentDate)
 				{
 					currentlyOwned = stockTransactions[transactionIndex].amountOwned!.Value;
 					transactionIndex++;

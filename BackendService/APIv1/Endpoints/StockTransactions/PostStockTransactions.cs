@@ -18,55 +18,49 @@ public class PostStockTransactions
 
 	public static async Task<PostStockTransactionsResponse> EndpointAsync(PostStockTransactionsBody body, String accessToken)
 	{
-		if (body.transaction.portfolioId is null || body.transaction.portfolioId == "")
+		if (body.portfolioId is null || body.portfolioId == "")
 		{
 			throw new StatusCodeException(400, "Missing portfolio id");
 		}
-		if (body.transaction.ticker is null || body.transaction.ticker == "")
+		if (body.ticker is null || body.ticker == "")
 		{
 			throw new StatusCodeException(400, "Missing ticker");
 		}
-		if (body.transaction.exchange is null || body.transaction.exchange == "")
+		if (body.exchange is null || body.exchange == "")
 		{
 			throw new StatusCodeException(400, "Missing exchange");
 		}
-		if (body.transaction.amount is null || body.transaction.amount == 0)
+		if (body.amount == 0)
 		{
 			throw new StatusCodeException(400, "Missing amount. Can not be 0");
 		}
-		if (body.transaction.timestamp is null || body.transaction.timestamp == 0)
+		if (body.timestamp == 0)
 		{
 			throw new StatusCodeException(400, "Missing timestamp");
 		}
-		if (body.transaction.priceNative!.currency is null || body.transaction.priceNative!.currency == "")
+		if (body.priceNative!.currency is null || body.priceNative!.currency == "")
 		{
 			throw new StatusCodeException(400, "Missing currency of price");
 		}
-		if (body.transaction.priceNative!.amount < 0)
+		if (body.priceNative!.amount < 0)
 		{
 			throw new StatusCodeException(400, "Invalid price");
 		}
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
 		System.Console.WriteLine("User: " + user.id);
-		StockApp.User owner = new StockApp.Portfolio(body.transaction.portfolioId).GetOwner();
+		StockApp.User owner = new StockApp.Portfolio(body.portfolioId).GetOwner();
 		if (user.id != owner.id)
 		{
 			throw new StatusCodeException(403, "User is not owner of portfolio");
 		}
-
-		StockApp.StockTransaction stockTransaction = new StockApp.StockTransaction();
-		stockTransaction.portfolioId = body.transaction.portfolioId;
-		stockTransaction.ticker = body.transaction.ticker;
-		stockTransaction.exchange = body.transaction.exchange;
-		stockTransaction.amount = body.transaction.amount;
-		stockTransaction.timestamp = body.transaction.timestamp;
-		stockTransaction.priceNative = new StockApp.Money(body.transaction.priceNative.amount, body.transaction.priceNative.currency);
-		await stockTransaction.AddToDb();
-		System.Console.WriteLine("StockTransaction id: " + stockTransaction.id);
-		if (stockTransaction.id != null)
-		{
-			return new PostStockTransactionsResponse("success", (int)stockTransaction.id);
-		}
-		return new PostStockTransactionsResponse("error", 0);
+		StockApp.StockTransaction transaction = new StockApp.StockTransaction();
+		transaction.portfolioId = body.portfolioId;
+		transaction.ticker = body.ticker;
+		transaction.exchange = body.exchange;
+		transaction.amount = body.amount;
+		transaction.timestamp = body.timestamp;
+		transaction.priceNative = body.priceNative;
+		await transaction.AddToDb();
+		return new PostStockTransactionsResponse("success", (int)transaction.id!);
 	}
 }

@@ -11,11 +11,11 @@ public class ErrorHandlingMiddlware : IMiddleware
 			context.Response.StatusCode = e.StatusCode;
 			await context.Response.WriteAsync(e.Message);
 		}
-		catch (Exception e)
-		{
-			System.Console.WriteLine(e);
-			context.Response.StatusCode = 500;
-			await context.Response.WriteAsync(e.Message);
-		}
+		// catch (Exception e)
+		// {
+		// 	System.Console.WriteLine(e);
+		// 	context.Response.StatusCode = 500;
+		// 	await context.Response.WriteAsync(e.Message);
+		// }
 	}
 }
