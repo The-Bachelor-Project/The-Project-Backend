@@ -41,7 +41,8 @@ public class StockTransactionHelper
 		stockTransaction.exchange = (String)data["exchange"];
 		stockTransaction.ticker = (String)data["ticker"];
 		stockTransaction.timestamp = (int)data["timestamp"];
-		stockTransaction.priceNative = new StockApp.Money((decimal)data["price_amount"], (String)data["price_currency"]);
+		stockTransaction.priceNative = new StockApp.Money((decimal)data["amount_currency"], (String)data["currency"]);
+		stockTransaction.priceUSD = new StockApp.Money((decimal)data["amount_usd"], "USD");
 		stockTransaction.amountOwned = (decimal)data["amount_owned"];
 		return stockTransaction;
 	}

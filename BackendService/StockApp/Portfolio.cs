@@ -37,7 +37,7 @@ public class Portfolio
 	public List<StockTransaction> stockTransactions { get; set; } = new List<StockTransaction>();
 	public List<CashTransaction> cashTransactions { get; set; } = new List<CashTransaction>();
 	public List<StockPosition> stockPositions { get; set; } = new List<StockPosition>();
-
+	public List<DividendPayout> dividendPayouts { get; set; } = new List<DividendPayout>();
 
 
 	public Portfolio AddToDb()
@@ -339,7 +339,6 @@ public class Portfolio
 			cashTransaction.usdAmount = new Money(Convert.ToDecimal(row["amount"]), "USD");
 			cashTransaction.type = row["type"].ToString();
 			cashTransaction.description = row["description"].ToString();
-			cashTransaction.balance = new Money(Convert.ToDecimal(row["balance"]), "USD");
 			cashTransactions.Add(cashTransaction);
 		}
 	}

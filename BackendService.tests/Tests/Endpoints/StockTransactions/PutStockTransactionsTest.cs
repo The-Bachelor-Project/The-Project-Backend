@@ -263,4 +263,44 @@ public class PutStockTransactionsTest
 		exception = Assert.ThrowsException<StatusCodeException>(() => PutStockTransactions.Endpoint(userTestObject.accessToken!, body).GetAwaiter().GetResult());
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
 	}
+
+	[TestMethod]
+	public async Task PutStockTransactionsTest_ChangeBoughtAmountTes()
+	{
+		StockApp.Portfolio portfolio = PortfolioHelper.Create(userTestObject);
+		StockApp.StockTransaction stockTransactionData = new StockApp.StockTransaction();
+		stockTransactionData.portfolioId = portfolio.id;
+		stockTransactionData.amount = 10;
+		stockTransactionData.exchange = "NYSE";
+		stockTransactionData.ticker = "O";
+		stockTransactionData.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2022-06-06"));
+		stockTransactionData.priceNative = new StockApp.Money(100, "USD");
+		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData);
+		PostStockTransactionsResponse response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
+		StockApp.StockTransaction gottenStockTransaction1 = StockTransactionHelper.Get(response.id!);
+		StockApp.StockTransaction stockTransactionData2 = new StockApp.StockTransaction();
+		stockTransactionData2.portfolioId = portfolio.id;
+		stockTransactionData2.amount = -10;
+		stockTransactionData2.exchange = "NYSE";
+		stockTransactionData2.ticker = "O";
+		stockTransactionData2.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2022-08-08"));
+		stockTransactionData2.priceNative = new StockApp.Money(100, "USD");
+		postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData2);
+		response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
+		StockApp.StockTransaction gottenStockTransaction2 = StockTransactionHelper.Get(response.id!);
+		Assert.IsTrue(gottenStockTransaction1.amountOwned == 10, "Amount owned should be 10 but was " + gottenStockTransaction1.amountOwned);
+		Assert.IsTrue(gottenStockTransaction2.amountOwned == 0, "Amount owned should be 0 but was " + gottenStockTransaction2.amountOwned);
+
+		PutStockTransactionsBody body = new PutStockTransactionsBody(
+			(int)gottenStockTransaction1.id!,
+			gottenStockTransaction1.portfolioId!,
+			15,
+			0,
+			0,
+			""
+		);
+
+	}
 }

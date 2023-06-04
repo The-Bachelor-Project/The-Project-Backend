@@ -398,6 +398,45 @@ public class PostStockTransactionsTest
 	}
 
 	[TestMethod]
+	public async Task PostStockTransactionsTest_MinusAmountOwnedTest()
+	{
+		StockApp.StockTransaction stockTransactionData = new StockApp.StockTransaction();
+		stockTransactionData.portfolioId = portfolio.id;
+		stockTransactionData.amount = 1;
+		stockTransactionData.exchange = "NASDAQ";
+		stockTransactionData.ticker = "AAPL";
+		stockTransactionData.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
+		stockTransactionData.priceNative = new StockApp.Money(100, "USD");
+		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData);
+		PostStockTransactionsResponse response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
+
+		stockTransactionData = new StockApp.StockTransaction();
+		stockTransactionData.portfolioId = portfolio.id;
+		stockTransactionData.amount = -2;
+		stockTransactionData.exchange = "NASDAQ";
+		stockTransactionData.ticker = "AAPL";
+		stockTransactionData.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
+		stockTransactionData.priceNative = new StockApp.Money(100, "USD");
+		postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData);
+		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
+
+		stockTransactionData = new StockApp.StockTransaction();
+		stockTransactionData.portfolioId = portfolio.id;
+		stockTransactionData.amount = -1;
+		stockTransactionData.exchange = "NASDAQ";
+		stockTransactionData.ticker = "TSLA";
+		stockTransactionData.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
+		stockTransactionData.priceNative = new StockApp.Money(100, "USD");
+		postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData);
+		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
+	}
+
+
+
+	[TestMethod]
 	public async Task PostStockTransactionsTest_AllCurrenciesConversionTest()
 	{
 		foreach (String currency in Dictionaries.currencies)
@@ -422,8 +461,20 @@ public class PostStockTransactionsTest
 	}
 
 	[TestMethod]
-	public async Task PostStockTransactionsTest_DividendPayoutCreatedTest()
+	public async Task PostStockTransactionsTest_DividendPayoutTests_SuccessfulCreatedTest()
 	{
-
+		StockApp.StockTransaction stockTransactionData = new StockApp.StockTransaction();
+		stockTransactionData.portfolioId = portfolio.id;
+		stockTransactionData.amount = 10;
+		stockTransactionData.exchange = "NYSE";
+		stockTransactionData.ticker = "O";
+		stockTransactionData.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2023-01-01"));
+		stockTransactionData.priceNative = new StockApp.Money(100, "USD");
+		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(stockTransactionData);
+		PostStockTransactionsResponse response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
+		StockApp.StockTransaction gottenStockTransaction = StockTransactionHelper.Get(response.id!);
+		GetTransactionsResponse transactions = GetTransactions.Endpoint(userTestObject.accessToken!, "EUR");
+		Assert.IsTrue(transactions.portfolios[0].dividendPayouts.Count > 0, "Dividend payouts should be more than 0 but was " + transactions.portfolios[0].dividendPayouts.Count);
 	}
 }

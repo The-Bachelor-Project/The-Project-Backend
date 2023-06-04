@@ -19,7 +19,6 @@ public class CashTransactionHelper
 		cashTransaction.nativeAmount = new StockApp.Money((Decimal)data["native_amount"], (String)data["currency"]);
 		cashTransaction.usdAmount = new StockApp.Money((Decimal)data["amount"], "USD");
 		cashTransaction.timestamp = (int)data["timestamp"];
-		cashTransaction.balance = new StockApp.Money((Decimal)data["balance"], "USD");
 		cashTransaction.type = (String)data["type"];
 		cashTransaction.description = (String)data["description"];
 		return cashTransaction;

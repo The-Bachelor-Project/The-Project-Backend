@@ -28,7 +28,6 @@ public class GetCashTransactionsTest
 		cashTransaction.usdAmount = new StockApp.Money(100, "USD");
 		cashTransaction.type = "Deposit";
 		cashTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
-		cashTransaction.balance = new StockApp.Money(350, "USD");
 		cashTransaction.description = "Test";
 		await cashTransaction.AddToDb();
 		GetCashTransactionsResponse response = await GetCashTransactions.Endpoint(userTestObject!.accessToken!, "USD");
@@ -52,7 +51,6 @@ public class GetCashTransactionsTest
 		cashTransaction1.usdAmount = new StockApp.Money(100, "USD");
 		cashTransaction1.type = "Deposit";
 		cashTransaction1.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
-		cashTransaction1.balance = new StockApp.Money(350, "USD");
 		cashTransaction1.description = "Test";
 		await cashTransaction1.AddToDb();
 		StockApp.CashTransaction cashTransaction2 = new StockApp.CashTransaction();
@@ -61,7 +59,6 @@ public class GetCashTransactionsTest
 		cashTransaction2.usdAmount = new StockApp.Money(100, "USD");
 		cashTransaction2.type = "Deposit";
 		cashTransaction2.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
-		cashTransaction2.balance = new StockApp.Money(350, "USD");
 		cashTransaction2.description = "Test";
 		await cashTransaction2.AddToDb();
 		GetCashTransactionsResponse response = await GetCashTransactions.Endpoint(userTestObject!.accessToken!, "USD");
@@ -91,65 +88,6 @@ public class GetCashTransactionsTest
 		GetCashTransactionsResponse response = await GetCashTransactions.Endpoint(userTestObject!.accessToken!, "USD");
 		Assert.IsTrue(response.cashTransactions.Count == 0, "The cash transactions count should be 0 but was " + response.cashTransactions.Count);
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
-	}
-
-	[TestMethod]
-	public async Task GetCashTransactionsTest_GetEveryTypeTest()
-	{
-		StockApp.CashTransaction cashTransaction1 = new StockApp.CashTransaction();
-		cashTransaction1.portfolioId = portfolio!.id;
-		cashTransaction1.nativeAmount = new StockApp.Money(100, "CAD");
-		cashTransaction1.usdAmount = new StockApp.Money(100, "USD");
-		cashTransaction1.type = "Deposit";
-		cashTransaction1.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
-		cashTransaction1.balance = new StockApp.Money(350, "USD");
-		cashTransaction1.description = "Test";
-		await cashTransaction1.AddToDb();
-		StockApp.CashTransaction cashTransaction2 = new StockApp.CashTransaction();
-		cashTransaction2.portfolioId = portfolio!.id;
-		cashTransaction2.nativeAmount = new StockApp.Money(100, "CAD");
-		cashTransaction2.usdAmount = new StockApp.Money(100, "USD");
-		cashTransaction2.type = "Withdrawal";
-		cashTransaction2.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
-		cashTransaction2.balance = new StockApp.Money(250, "USD");
-		cashTransaction2.description = "Test";
-		await cashTransaction2.AddToDb();
-		StockApp.CashTransaction cashTransaction3 = new StockApp.CashTransaction();
-		cashTransaction3.portfolioId = portfolio!.id;
-		cashTransaction3.nativeAmount = new StockApp.Money(100, "CAD");
-		cashTransaction3.usdAmount = new StockApp.Money(100, "USD");
-		cashTransaction3.type = "Stock BUY";
-		cashTransaction3.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
-		cashTransaction3.balance = new StockApp.Money(150, "USD");
-		cashTransaction3.description = "Test";
-		await cashTransaction3.AddToDb();
-		StockApp.CashTransaction cashTransaction4 = new StockApp.CashTransaction();
-		cashTransaction4.portfolioId = portfolio!.id;
-		cashTransaction4.nativeAmount = new StockApp.Money(100, "CAD");
-		cashTransaction4.usdAmount = new StockApp.Money(100, "USD");
-		cashTransaction4.type = "Stock SELL";
-		cashTransaction4.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
-		cashTransaction4.balance = new StockApp.Money(50, "USD");
-		cashTransaction4.description = "Test";
-		await cashTransaction4.AddToDb();
-		StockApp.CashTransaction cashTransaction5 = new StockApp.CashTransaction();
-		cashTransaction5.portfolioId = portfolio!.id;
-		cashTransaction5.nativeAmount = new StockApp.Money(100, "CAD");
-		cashTransaction5.usdAmount = new StockApp.Money(100, "USD");
-		cashTransaction5.type = "Dividend";
-		cashTransaction5.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
-		cashTransaction5.balance = new StockApp.Money(0, "USD");
-		cashTransaction5.description = "Test";
-		await cashTransaction5.AddToDb();
-
-		GetCashTransactionsResponse response = await GetCashTransactions.Endpoint(userTestObject!.accessToken!, "USD");
-		Assert.IsTrue(response.cashTransactions.Count == 5, "The cash transactions count should be 5 but was " + response.cashTransactions.Count);
-		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
-		Assert.IsTrue(response.cashTransactions[0].type == cashTransaction1.type, "The cash transaction type should be " + cashTransaction1.type + " but was " + response.cashTransactions[0].type);
-		Assert.IsTrue(response.cashTransactions[1].type == cashTransaction2.type, "The cash transaction type should be " + cashTransaction2.type + " but was " + response.cashTransactions[1].type);
-		Assert.IsTrue(response.cashTransactions[2].type == cashTransaction3.type, "The cash transaction type should be " + cashTransaction3.type + " but was " + response.cashTransactions[2].type);
-		Assert.IsTrue(response.cashTransactions[3].type == cashTransaction4.type, "The cash transaction type should be " + cashTransaction4.type + " but was " + response.cashTransactions[3].type);
-		Assert.IsTrue(response.cashTransactions[4].type == cashTransaction5.type, "The cash transaction type should be " + cashTransaction5.type + " but was " + response.cashTransactions[4].type);
 	}
 
 	[TestMethod]

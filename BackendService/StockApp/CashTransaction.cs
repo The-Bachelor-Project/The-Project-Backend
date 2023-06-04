@@ -9,7 +9,6 @@ public class CashTransaction
 	public Money? nativeAmount { get; set; }
 	public Money? usdAmount { get; set; }
 	public int? timestamp { get; set; }
-	public Money? balance { get; set; }
 	public String? type { get; set; }
 	public String? description { get; set; }
 
@@ -18,7 +17,6 @@ public class CashTransaction
 		this.portfolioId = portfolioId;
 		this.nativeAmount = nativeAmount;
 		this.timestamp = timestamp;
-		this.balance = balance;
 		this.type = type;
 		this.description = description;
 	}
@@ -47,22 +45,15 @@ public class CashTransaction
 		parameters.Add("@timestamp", timestamp);
 		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(getBalance, parameters);
 
-		balance = new Money(0, "USD");
-		if (data != null)
-		{
-			balance.amount = (Decimal)data["balance"];
-		}
-
 		usdAmount = await Tools.PriceConverter.ConvertMoney(nativeAmount, timestamp, "USD", false);
 
-		String insertCashTransactionQuery = "INSERT INTO CashTransactions (portfolio, currency, native_amount, amount, timestamp, balance, type, description) OUTPUT INSERTED.id VALUES (@portfolio, @currency, @native_amount, @amount, @timestamp, @balance, @type, @description)";
+		String insertCashTransactionQuery = "INSERT INTO CashTransactions (portfolio, currency, native_amount, amount, timestamp, type, description) OUTPUT INSERTED.id VALUES (@portfolio, @currency, @native_amount, @amount, @timestamp, @type, @description)";
 		SqlCommand command = new SqlCommand(insertCashTransactionQuery, connection);
 		command.Parameters.AddWithValue("@portfolio", portfolioId);
 		command.Parameters.AddWithValue("@currency", nativeAmount.currency);
 		command.Parameters.AddWithValue("@native_amount", nativeAmount.amount);
 		command.Parameters.AddWithValue("@amount", usdAmount.amount);
 		command.Parameters.AddWithValue("@timestamp", timestamp);
-		command.Parameters.AddWithValue("@balance", balance.amount + usdAmount.amount);
 		command.Parameters.AddWithValue("@type", type);
 		command.Parameters.AddWithValue("@description", description);
 		try

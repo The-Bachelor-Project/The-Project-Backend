@@ -28,7 +28,6 @@ public class PutCashTransactionsTest
 		cashTransaction.usdAmount = new StockApp.Money(100, "USD");
 		cashTransaction.type = "Deposit";
 		cashTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
-		cashTransaction.balance = new StockApp.Money(350, "USD");
 		cashTransaction.description = "Test";
 		await cashTransaction.AddToDb();
 
@@ -75,7 +74,6 @@ public class PutCashTransactionsTest
 		cashTransaction.usdAmount = new StockApp.Money(100, "USD");
 		cashTransaction.type = "Deposit";
 		cashTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
-		cashTransaction.balance = new StockApp.Money(350, "USD");
 		cashTransaction.description = "Test";
 		await cashTransaction.AddToDb();
 

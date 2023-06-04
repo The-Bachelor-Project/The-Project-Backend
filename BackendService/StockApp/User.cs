@@ -375,7 +375,6 @@ public class User
 				cashTransaction.type = transaction.type;
 				cashTransaction.description = transaction.description;
 				cashTransaction.id = transaction.id;
-				cashTransaction.balance = await Tools.PriceConverter.ConvertMoney(transaction.balance!, transaction.timestamp, currency, true);
 				cashTransaction.usdAmount = transaction.usdAmount;
 				transactions.Add(cashTransaction);
 			}

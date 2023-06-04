@@ -54,7 +54,7 @@ public class StockTransaction
 		}
 
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
-		String getAmountOwned = "SELECT TOP 1 amount_owned FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp <= @timestamp ORDER BY timestamp DESC, id DESC";
+		String getAmountOwned = "SELECT TOP 1 amount_owned,balance FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp <= @timestamp ORDER BY timestamp DESC, id DESC";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@portfolio", portfolioId);
 		parameters.Add("@ticker", ticker);
@@ -66,10 +66,16 @@ public class StockTransaction
 		decimal amountAdjusted = amount!.Value;
 		if (data != null)
 		{
-			amountOwned = Convert.ToDecimal(data["amount_owned"]);
+			amountOwned = (Decimal)data["amount_owned"];
+		}
+		if (amountOwned + amountAdjusted < 0)
+		{
+			throw new StatusCodeException(400, "Not enough owned stocks");
 		}
 
-		String insertStockTransaction = "INSERT INTO StockTransactions(portfolio, ticker, exchange, amount, amount_adjusted, amount_owned, timestamp, price_amount, price_currency) OUTPUT INSERTED.id VALUES (@portfolio, @ticker, @exchange, @amount, @amount_adjusted, @amount_owned, @timestamp, @price_amount, @price_currency)";
+		priceUSD = await Tools.PriceConverter.ConvertMoney(priceNative, timestamp, "USD", false);
+
+		String insertStockTransaction = "INSERT INTO StockTransactions(portfolio, ticker, exchange, amount, amount_adjusted, amount_owned, timestamp, amount_currency, currency, amount_usd) OUTPUT INSERTED.id VALUES (@portfolio, @ticker, @exchange, @amount, @amount_adjusted, @amount_owned, @timestamp, @amount_currency, @currency, @amount_usd)";
 		SqlCommand command = new SqlCommand(insertStockTransaction, connection);
 		command.Parameters.AddWithValue("@portfolio", portfolioId);
 		command.Parameters.AddWithValue("@ticker", ticker);
@@ -78,8 +84,9 @@ public class StockTransaction
 		command.Parameters.AddWithValue("@amount_adjusted", amountAdjusted);
 		command.Parameters.AddWithValue("@amount_owned", amountOwned + amountAdjusted);
 		command.Parameters.AddWithValue("@timestamp", timestamp);
-		command.Parameters.AddWithValue("@price_amount", priceNative!.amount);
-		command.Parameters.AddWithValue("@price_currency", priceNative.currency);
+		command.Parameters.AddWithValue("@amount_currency", priceNative!.amount);
+		command.Parameters.AddWithValue("@currency", priceNative.currency);
+		command.Parameters.AddWithValue("@amount_usd", priceUSD!.amount);
 		try
 		{
 			id = int.Parse((command.ExecuteScalar()).ToString()!);

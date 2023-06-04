@@ -31,7 +31,7 @@ public class GetTransactionsTest
 		transaction.priceNative = new StockApp.Money(100, "USD");
 		transaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		await transaction.AddToDb();
-		GetTransactionsResponse response = GetTransactions.Endpoint(userTestObject.accessToken!);
+		GetTransactionsResponse response = GetTransactions.Endpoint(userTestObject.accessToken!, "USD");
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.portfolios.Count == 1, "There should be 1 portfolio but there were " + response.portfolios.Count);
 		Assert.IsTrue(response.portfolios[0].stockTransactions.Count == 1, "There should be 1 transaction but there were " + response.portfolios[0].stockTransactions.Count);
@@ -62,7 +62,7 @@ public class GetTransactionsTest
 		transaction2.priceNative = new StockApp.Money(100, "USD");
 		transaction2.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		await transaction2.AddToDb();
-		GetTransactionsResponse response = GetTransactions.Endpoint(userTestObject.accessToken!);
+		GetTransactionsResponse response = GetTransactions.Endpoint(userTestObject.accessToken!, "USD");
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.portfolios.Count == 1, "There should be 1 portfolio but there were " + response.portfolios.Count);
 		Assert.IsTrue(response.portfolios[0].stockTransactions.Count == 2, "There should be 2 transactions but there were " + response.portfolios[0].stockTransactions.Count);
@@ -93,7 +93,7 @@ public class GetTransactionsTest
 		transaction2.priceNative = new StockApp.Money(100, "USD");
 		transaction2.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		await transaction2.AddToDb();
-		GetTransactionsResponse response = GetTransactions.Endpoint(userTestObject.accessToken!);
+		GetTransactionsResponse response = GetTransactions.Endpoint(userTestObject.accessToken!, "USD");
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.portfolios.Count == 2, "There should be 2 portfolios but there were " + response.portfolios.Count);
 		Assert.IsTrue(response.portfolios[0].stockTransactions.Count == 1, "There should be 1 transaction but there were " + response.portfolios[0].stockTransactions.Count);
@@ -103,7 +103,7 @@ public class GetTransactionsTest
 	[TestMethod]
 	public void GetTransactionsTest_EmptyPortfolioTest()
 	{
-		GetTransactionsResponse response = GetTransactions.Endpoint(userTestObject.accessToken!);
+		GetTransactionsResponse response = GetTransactions.Endpoint(userTestObject.accessToken!, "USD");
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 	}
 }
