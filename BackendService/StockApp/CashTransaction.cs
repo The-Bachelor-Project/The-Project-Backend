@@ -47,7 +47,7 @@ public class CashTransaction
 
 		usdAmount = await Tools.PriceConverter.ConvertMoney(nativeAmount, timestamp, "USD", false);
 
-		String insertCashTransactionQuery = "INSERT INTO CashTransactions (portfolio, currency, native_amount, amount, timestamp, type, description) OUTPUT INSERTED.id VALUES (@portfolio, @currency, @native_amount, @amount, @timestamp, @type, @description)";
+		String insertCashTransactionQuery = "INSERT INTO CashTransactions (portfolio, currency, native_amount, amount, timestamp, type, description) VALUES (@portfolio, @currency, @native_amount, @amount, @timestamp, @type, @description)";
 		SqlCommand command = new SqlCommand(insertCashTransactionQuery, connection);
 		command.Parameters.AddWithValue("@portfolio", portfolioId);
 		command.Parameters.AddWithValue("@currency", nativeAmount.currency);
@@ -58,7 +58,7 @@ public class CashTransaction
 		command.Parameters.AddWithValue("@description", description);
 		try
 		{
-			id = int.Parse((command.ExecuteScalar()).ToString()!);
+			// id = int.Parse((command.ExecuteScalar()).ToString()!);
 		}
 		catch (Exception e)
 		{

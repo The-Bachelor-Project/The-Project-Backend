@@ -1,4 +1,5 @@
 using System.Data.SqlClient;
+using System.Text.Json.Serialization;
 
 namespace StockApp;
 
@@ -15,7 +16,7 @@ public class StockTransaction
 	public Money? priceNative { get; set; }
 	public Money? priceUSD { get; set; }
 
-	public StockTransaction(int id, String portfolioId, String ticker, String exchange, Decimal amount, int timestamp, Money price)
+	public StockTransaction(int id, String portfolioId, String ticker, String exchange, Decimal amount, int timestamp, Money priceNative)
 	{
 		this.id = id;
 		this.portfolioId = portfolioId;
@@ -23,7 +24,18 @@ public class StockTransaction
 		this.exchange = exchange;
 		this.amount = amount;
 		this.timestamp = timestamp;
-		this.priceNative = price;
+		this.priceNative = priceNative;
+	}
+
+	[JsonConstructor]
+	public StockTransaction(String portfolioId, String ticker, String exchange, Decimal amount, int timestamp, Money priceNative)
+	{
+		this.portfolioId = portfolioId;
+		this.ticker = ticker;
+		this.exchange = exchange;
+		this.amount = amount;
+		this.timestamp = timestamp;
+		this.priceNative = priceNative;
 	}
 
 	public StockTransaction()
@@ -32,7 +44,7 @@ public class StockTransaction
 
 
 
-	public async Task<StockTransaction> AddToDb() //FIXME at some point also ORDER by index as well as timestamp to avoid some issues with calculating amount_owned 
+	public async Task<StockTransaction> AddToDb()
 	{
 
 		if (ticker == null || exchange == null || amount == null || timestamp == null || portfolioId == null || priceNative!.currency == null)
@@ -54,7 +66,7 @@ public class StockTransaction
 		}
 
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
-		String getAmountOwned = "SELECT TOP 1 amount_owned,balance FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp <= @timestamp ORDER BY timestamp DESC, id DESC";
+		String getAmountOwned = "SELECT TOP 1 amount_owned FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp <= @timestamp ORDER BY timestamp DESC, id DESC";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@portfolio", portfolioId);
 		parameters.Add("@ticker", ticker);
@@ -75,7 +87,7 @@ public class StockTransaction
 
 		priceUSD = await Tools.PriceConverter.ConvertMoney(priceNative, timestamp, "USD", false);
 
-		String insertStockTransaction = "INSERT INTO StockTransactions(portfolio, ticker, exchange, amount, amount_adjusted, amount_owned, timestamp, amount_currency, currency, amount_usd) OUTPUT INSERTED.id VALUES (@portfolio, @ticker, @exchange, @amount, @amount_adjusted, @amount_owned, @timestamp, @amount_currency, @currency, @amount_usd)";
+		String insertStockTransaction = "INSERT INTO StockTransactions(portfolio, ticker, exchange, amount, amount_adjusted, amount_owned, timestamp, amount_currency, currency, amount_usd) VALUES (@portfolio, @ticker, @exchange, @amount, @amount_adjusted, @amount_owned, @timestamp, @amount_currency, @currency, @amount_usd)";
 		SqlCommand command = new SqlCommand(insertStockTransaction, connection);
 		command.Parameters.AddWithValue("@portfolio", portfolioId);
 		command.Parameters.AddWithValue("@ticker", ticker);
@@ -89,30 +101,12 @@ public class StockTransaction
 		command.Parameters.AddWithValue("@amount_usd", priceUSD!.amount);
 		try
 		{
-			id = int.Parse((command.ExecuteScalar()).ToString()!);
+			// id = int.Parse((command.ExecuteScalar()).ToString()!);
 		}
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e);
 			throw new StatusCodeException(500, "Could not insert stock transaction into database");
-		}
-
-		String updateStockTransactions = "UPDATE StockTransactions SET amount_owned = amount_owned + @amount_adjusted WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp > @timestamp OR (timestamp = @timestamp AND id > @id)";
-		SqlCommand command2 = new SqlCommand(updateStockTransactions, connection);
-		command2.Parameters.AddWithValue("@portfolio", portfolioId);
-		command2.Parameters.AddWithValue("@id", id);
-		command2.Parameters.AddWithValue("@ticker", ticker);
-		command2.Parameters.AddWithValue("@exchange", exchange);
-		command2.Parameters.AddWithValue("@amount_adjusted", amountAdjusted);
-		command2.Parameters.AddWithValue("@timestamp", timestamp);
-		try
-		{
-			command2.ExecuteNonQuery();
-		}
-		catch (System.Exception e)
-		{
-			System.Console.WriteLine(e);
-			throw new StatusCodeException(409, "Could not update stock transactions in database");
 		}
 		return this;
 	}

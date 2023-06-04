@@ -13,6 +13,7 @@ public class ErrorHandlingMiddlware : IMiddleware
 		}
 		catch (Exception e)
 		{
+			System.Console.WriteLine(e);
 			context.Response.StatusCode = 500;
 			await context.Response.WriteAsync(e.Message);
 		}
