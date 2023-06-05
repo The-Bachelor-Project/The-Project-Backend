@@ -48,6 +48,10 @@ public class CurrencyFetcher : ICurrencyFetcher
 
 	private CurrencyHistory InsertMissingValues(CurrencyHistory currencyHistory)
 	{
+		if (currencyHistory.history.Count == 0)
+		{
+			return currencyHistory;
+		}
 		if (currencyHistory.history.First().date != currencyHistory.startDate)
 		{
 			DatePriceOHLC newPrice = new DatePriceOHLC(
@@ -97,41 +101,6 @@ public class CurrencyFetcher : ICurrencyFetcher
 			System.Console.WriteLine("End tracking date: " + history.history.Last().date);
 			System.Console.WriteLine(e);
 			throw new StatusCodeException(500, "There was a problem when adding currency rates to the database");
-		}
-
-		if (updateStartTrackingDate)
-		{
-			String updateStartTrackingDateQuery = "UPDATE Currencies SET start_tracking_date = @start_tracking_date WHERE code = @code";
-			command = new SqlCommand(updateStartTrackingDateQuery, connection);
-			command.Parameters.AddWithValue("@code", history.currency);
-			command.Parameters.AddWithValue("@start_tracking_date", Tools.TimeConverter.dateOnlyToString(history.history.First().date));
-			try
-			{
-				command.ExecuteNonQuery();
-			}
-			catch (Exception e)
-			{
-				System.Console.WriteLine("Start tracking date: " + history.history.First().date);
-				System.Console.WriteLine("End tracking date: " + history.history.Last().date);
-				System.Console.WriteLine(e);
-				throw new StatusCodeException(500, "There was a problem when updating the start tracking date of the currency");
-			}
-		}
-		if (updateEndTrackingDate)
-		{
-			String updateEndTrackingDateQuery = "UPDATE Currencies SET end_tracking_date = @end_tracking_date WHERE code = @code";
-			command = new SqlCommand(updateEndTrackingDateQuery, connection);
-			command.Parameters.AddWithValue("@code", history.currency);
-			command.Parameters.AddWithValue("@end_tracking_date", Tools.TimeConverter.dateOnlyToString(history.history.Last().date));
-			try
-			{
-				command.ExecuteNonQuery();
-			}
-			catch (Exception e)
-			{
-				System.Console.WriteLine(e);
-				throw new StatusCodeException(500, "There was a problem when updating the end tracking date of the currency");
-			}
 		}
 	}
 }

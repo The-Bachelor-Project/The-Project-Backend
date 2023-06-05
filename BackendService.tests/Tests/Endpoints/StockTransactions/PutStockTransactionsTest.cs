@@ -61,7 +61,7 @@ public class PutStockTransactionsTest
 			Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 			Assert.IsTrue(response.id != stockTransaction.id, "Stock transaction id should not be " + stockTransaction.id + " but was " + response.id);
 			StockApp.StockTransaction gottenTransaction = StockTransactionHelper.Get(response.id);
-			Assert.IsTrue(gottenTransaction.priceNative!.amount == body.newPrice, "Price should be " + body.newPrice + " but was " + gottenTransaction.priceNative!.amount);
+			Assert.IsTrue(gottenTransaction.priceNative!.amount == (body.newPrice * -1), "Price should be " + (body.newPrice * -1) + " but was " + gottenTransaction.priceNative!.amount);
 			stockTransaction = gottenTransaction;
 		}
 		catch (Exception e)
@@ -107,7 +107,7 @@ public class PutStockTransactionsTest
 			Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 			Assert.IsTrue(response.id != stockTransaction.id, "Stock transaction id should not be " + stockTransaction.id + " but was " + response.id);
 			StockApp.StockTransaction gottenTransaction = StockTransactionHelper.Get(response.id);
-			Assert.IsTrue(gottenTransaction.priceNative!.amount == body.newPrice, "Price should be " + body.newPrice + " but was " + gottenTransaction.priceNative!.amount);
+			Assert.IsTrue(gottenTransaction.priceNative!.amount == (body.newPrice * -1), "Price should be " + (body.newPrice * -1) + " but was " + gottenTransaction.priceNative!.amount);
 			Assert.IsTrue(gottenTransaction.priceNative!.currency == body.newCurrency, "Currency should be " + body.newCurrency + " but was " + gottenTransaction.priceNative!.currency);
 			stockTransaction = gottenTransaction;
 		}
@@ -156,7 +156,7 @@ public class PutStockTransactionsTest
 			StockApp.StockTransaction gottenTransaction = StockTransactionHelper.Get(response.id);
 			Assert.IsTrue(gottenTransaction.amount == body.newAmount, "Amount should be " + body.newAmount + " but was " + gottenTransaction.amount);
 			Assert.IsTrue(gottenTransaction.timestamp == body.newTimestamp, "Timestamp should be " + body.newTimestamp + " but was " + gottenTransaction.timestamp);
-			Assert.IsTrue(gottenTransaction.priceNative!.amount == body.newPrice, "Price should be " + body.newPrice + " but was " + gottenTransaction.priceNative!.amount);
+			Assert.IsTrue(gottenTransaction.priceNative!.amount == (body.newPrice * -1), "Price should be " + (body.newPrice * -1) + " but was " + gottenTransaction.priceNative!.amount);
 			Assert.IsTrue(gottenTransaction.priceNative!.currency == body.newCurrency, "Currency should be " + body.newCurrency + " but was " + gottenTransaction.priceNative!.currency);
 			stockTransaction = gottenTransaction;
 		}

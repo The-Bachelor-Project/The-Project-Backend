@@ -4,10 +4,7 @@ public class Dictionaries
 {
 	public static Dictionary<string, string> stockDictionary = new Dictionary<string, string>()
 	{
-		//TODO: Fix NGM, OTCMKTS, ASE, not being converted in YF Translator
-		// TODO: AMS just broken ??
-		// {"AMS", "RAND"},
-		{"SAO", "A1AP34"},
+		{"SAO", "EQIX34"},
 		{"BMV", "1299N"},
 		{"STU", "014"},
 		{"EBR", "ABI"},
@@ -29,7 +26,6 @@ public class Dictionaries
 		{"PRA", "ATS"},
 		{"ETR", "02M"},
 		{"TLV", "ABRA"},
-		// {"NGM", "AACI"},
 		{"ICE", "MAREL"},
 		{"BOM", "1STCUS"},
 		{"HKG", "0001"},
@@ -57,8 +53,6 @@ public class Dictionaries
 		{"NYSE", "A"},
 		{"IST", "ACSEL"},
 		{"TPE", "1101"},
-		// {"OTCMKTS", "AABVF"},
-		// {"ASE", "AAU"},
 		{"TAL", "ARC1T"},
 		{"BCBA", "AAPL"},
 		{"HAM", "VVX"},

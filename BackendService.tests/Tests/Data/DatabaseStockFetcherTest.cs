@@ -14,6 +14,10 @@ public class DatabaseStockFetcherTest
 	{
 		foreach (KeyValuePair<String, String> stock in Dictionaries.stockDictionary)
 		{
+			// Make sure it is in the database:
+			Data.Fetcher.StockFetcher fetchFirst = new Data.Fetcher.StockFetcher();
+			await fetchFirst.GetHistory(stock.Value, stock.Key, DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), "daily", "USD");
+
 			Data.StockHistory stockHistory = await stockFetcher.GetHistory(stock.Value, stock.Key, DateOnly.Parse("2021-01-01"), DateOnly.Parse("2021-01-20"), "daily", "USD");
 			Assert.IsTrue(stockHistory != null, "Stock history should not be null");
 			Assert.IsTrue(stockHistory.ticker == stock.Value, "Ticker should be " + stock.Value + " but was " + stockHistory.ticker);
@@ -118,6 +122,10 @@ public class DatabaseStockFetcherTest
 	[TestMethod]
 	public async Task DatabaseStockFetcherTest_GetDividends_WithDividendsTest()
 	{
+		// Make sure it is in database
+		Data.Fetcher.StockFetcher getStock = new Data.Fetcher.StockFetcher();
+		await getStock.GetHistory("AAPL", "NASDAQ", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"), "daily", "USD");
+
 		List<Data.Dividend> dividends = await stockFetcher.GetDividends("AAPL", "NASDAQ", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"));
 		Assert.IsTrue(dividends.Count > 0, "Dividends should not be empty");
 	}

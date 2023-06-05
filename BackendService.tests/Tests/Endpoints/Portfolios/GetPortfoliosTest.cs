@@ -57,8 +57,9 @@ public class GetPortfoliosTest
 	[TestMethod]
 	public void GetPortfoliosTest_NoPortfoliosTest()
 	{
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => GetPortfolios.Endpoint(userTestObject.accessToken!));
-		Assert.IsTrue(exception.StatusCode == 404, "Status code should be 404 but was " + exception.StatusCode);
+		GetPortfoliosResponse response = GetPortfolios.Endpoint(userTestObject.accessToken!);
+		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
+		Assert.IsTrue(response.portfolios.Count == 0, "There should be 0 portfolios but there were " + response.portfolios.Count);
 	}
 
 	[TestMethod]

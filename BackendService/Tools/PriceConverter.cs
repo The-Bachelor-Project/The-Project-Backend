@@ -166,12 +166,6 @@ public class PriceConverter
 		{
 			throw new StatusCodeException(500, "Currency exchange rate list of " + newCurrency + " is empty");
 		}
-
-		for (int i = 0; i < currencyHistory.history.Count; i++)
-		{
-			System.Console.WriteLine(currencyHistory.history[i].date.ToString() + " " + currencyHistory.history[i].closePrice.amount.ToString() + " " + currencyHistory.history[i].closePrice.currency.ToString());
-		}
-
 		Dictionary<DateOnly, Data.DatePriceOHLC> currencyDictionary = currencyHistory.history.ToDictionary(x => x.date, x => x);
 		List<Decimal> exchangeRates = new List<Decimal>();
 		foreach (int timestamp in timestamps)

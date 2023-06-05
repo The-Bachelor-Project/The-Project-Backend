@@ -249,9 +249,17 @@ public class User
 		UpdatePortfolios();
 		List<Data.Transaction> allTransactions = await GetTransactions(currency);
 		int firstIndex = allTransactions.FindLastIndex(x => x.timestamp <= Tools.TimeConverter.DateOnlyToUnix(startDate));
-		int lastIndex = allTransactions.FindIndex(x => x.timestamp <= Tools.TimeConverter.DateOnlyToUnix(endDate));
-		int tempIndex = 0;
-		List<Data.Transaction> newTransactions = allTransactions.GetRange(firstIndex < 0 ? 0 : firstIndex, ((lastIndex - firstIndex + 1) < 0 ? 0 : (lastIndex - firstIndex + 1)));
+		int lastIndex = allTransactions.FindLastIndex(x => x.timestamp <= Tools.TimeConverter.DateOnlyToUnix(endDate));
+		if (firstIndex == -1)
+		{
+			firstIndex = 0;
+		}
+		List<Data.Transaction> newTransactions = new List<Data.Transaction>();
+		if (lastIndex != -1)
+		{
+			newTransactions = allTransactions.GetRange(firstIndex < 0 ? 0 : firstIndex, ((lastIndex - firstIndex + 1) < 0 ? 0 : (lastIndex - firstIndex + 1)));
+		}
+
 
 		List<Data.DatePriceOHLC> valueHistory = new List<Data.DatePriceOHLC>();
 		List<Data.Portfolio> dataPortfolios = new List<Data.Portfolio>();
@@ -310,7 +318,6 @@ public class User
 		data.ForEach(row => timestamps.Add((int)row["timestamp"]));
 		List<Decimal> exchangeRates = await Tools.PriceConverter.GetExchangeHistory(timestamps, currency);
 		int i = 0;
-		System.Console.WriteLine("--------------------------------- " + exchangeRates.Count + " " + data.Count);
 		foreach (Dictionary<String, object> row in data)
 		{
 			String type = row["transaction_type"].ToString()!;

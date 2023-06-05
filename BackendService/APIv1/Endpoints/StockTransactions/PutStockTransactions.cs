@@ -25,10 +25,6 @@ public class PutStockTransactions
 		}
 		User user = new TokenSet(accessToken).GetUser();
 		Portfolio portfolio = user.GetPortfolio(body.portfolio);
-		if (body.newPrice < 0)
-		{
-			throw new StatusCodeException(400, "Invalid price");
-		}
 		if (body.newCurrency != "" && !(Tools.ValidCurrency.Check(body.newCurrency)))
 		{
 			throw new StatusCodeException(400, "Invalid currency " + body.newCurrency);

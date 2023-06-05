@@ -179,7 +179,15 @@ public class Portfolio
 		List<Data.Transaction> allTransactions = await GetOwner().GetTransactions(currency);
 		int firstIndex = allTransactions.FindLastIndex(x => x.timestamp <= Tools.TimeConverter.DateOnlyToUnix(startDate) && x.portfolio == id);
 		int lastIndex = allTransactions.FindIndex(x => x.timestamp <= Tools.TimeConverter.DateOnlyToUnix(endDate) && x.portfolio == id);
-		List<Data.Transaction> newTransactions = allTransactions.GetRange(firstIndex < 0 ? 0 : firstIndex, ((lastIndex - firstIndex + 1) < 0 ? 0 : (lastIndex - firstIndex + 1)));
+		if (firstIndex == -1)
+		{
+			firstIndex = 0;
+		}
+		List<Data.Transaction> newTransactions = new List<Data.Transaction>();
+		if (lastIndex != -1)
+		{
+			newTransactions = allTransactions.GetRange(firstIndex < 0 ? 0 : firstIndex, ((lastIndex - firstIndex + 1) < 0 ? 0 : (lastIndex - firstIndex + 1)));
+		}
 		User user = GetOwner();
 		cashBalance = user.InsertMissingValues(cashBalance);
 
@@ -342,8 +350,8 @@ public class Portfolio
 			cashTransaction.id = int.Parse(row["id"].ToString()!);
 			cashTransaction.portfolioId = row["portfolio"].ToString();
 			cashTransaction.timestamp = Convert.ToInt32(row["timestamp"]);
-			cashTransaction.nativeAmount = new Money(Convert.ToDecimal(row["native_amount"]), row["currency"].ToString()!);
-			cashTransaction.usdAmount = new Money(Convert.ToDecimal(row["amount"]), "USD");
+			cashTransaction.nativeAmount = new Money(Convert.ToDecimal(row["amount_currency"]), row["currency"].ToString()!);
+			cashTransaction.usdAmount = new Money(Convert.ToDecimal(row["amount_usd"]), "USD");
 			cashTransaction.description = row["description"].ToString();
 			cashTransactions.Add(cashTransaction);
 		}
