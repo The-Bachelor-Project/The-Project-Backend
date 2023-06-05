@@ -263,7 +263,7 @@ public class User
 		return new Data.UserAssetsValueHistory(valueHistory, dataPortfolios, dividendHistory);
 	}
 
-	public List<Data.Transaction> GetTransactions()
+	public async Task<List<Data.Transaction>> GetTransactions(String currency)
 	{
 		String getTransactionsQuery = "SELECT * FROM AllTransactions WHERE owner = @owner ORDER BY timestamp ASC, transaction_type ASC, portfolio ASC, id ASC";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
@@ -273,7 +273,11 @@ public class User
 		List<Data.Transaction> transactions = new List<Data.Transaction>();
 		Money balance = new Money(0, "USD");
 		Dictionary<String, Money> portfolioBalances = new Dictionary<string, Money>();
-
+		List<int> timestamps = new List<int>();
+		data.ForEach(row => timestamps.Add((int)row["timestamp"]));
+		List<Decimal> exchangeRates = await Tools.PriceConverter.GetExchangeHistory(timestamps, currency);
+		int i = 0;
+		System.Console.WriteLine("--------------------------------- " + exchangeRates.Count + " " + data.Count);
 		foreach (Dictionary<String, object> row in data)
 		{
 			String type = row["transaction_type"].ToString()!;
@@ -312,7 +316,8 @@ public class User
 					break;
 			}
 
-			transactions.Add(new Data.Transaction(type, portfolio, timestamp, description, amount, new Money(portfolioBalances[portfolio].amount, portfolioBalances[portfolio].currency), new Money(balance.amount, balance.currency)));
+			transactions.Add(new Data.Transaction(type, portfolio, timestamp, description, new Money(amount.amount * (1 / exchangeRates[i]), currency), new Money(portfolioBalances[portfolio].amount * (1 / exchangeRates[i]), currency), new Money(balance.amount * (1 / exchangeRates[i]), currency)));
+			i++;
 		}
 		return transactions;
 	}

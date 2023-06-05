@@ -144,7 +144,52 @@ public class PriceConverter
 		return dividends;
 	}
 
-	public static async Task<StockApp.Money> ConvertMoney(StockApp.Money nativeAmount, int? timestamp, String newCurrency, Boolean convertFromUSDToNewCurrency)
+	public static async Task<List<Decimal>> GetExchangeHistory(List<int> timestamps, String newCurrency)
+	{
+		if (!(Tools.ValidCurrency.Check(newCurrency)))
+		{
+			throw new StatusCodeException(400, "Invalid currency");
+		}
+		if (timestamps.Count == 0)
+		{
+			return new List<Decimal>();
+		}
+		if (newCurrency == "USD")
+		{
+			List<Decimal> temp = Enumerable.Repeat((decimal)1, timestamps.Count).ToList();
+			return temp;
+		}
+		int highestTimestamp = timestamps.Max();
+		int lowestTimestamp = timestamps.Min();
+		Data.CurrencyHistory currencyHistory = await new Data.Fetcher.CurrencyFetcher().GetHistory(newCurrency, Tools.TimeConverter.UnixTimeStampToDateOnly(lowestTimestamp).AddDays(-7), Tools.TimeConverter.UnixTimeStampToDateOnly(highestTimestamp).AddDays(7));
+		if (currencyHistory.history.Count == 0)
+		{
+			throw new StatusCodeException(500, "Currency exchange rate list of " + newCurrency + " is empty");
+		}
+
+		for (int i = 0; i < currencyHistory.history.Count; i++)
+		{
+			System.Console.WriteLine(currencyHistory.history[i].date.ToString() + " " + currencyHistory.history[i].closePrice.amount.ToString() + " " + currencyHistory.history[i].closePrice.currency.ToString());
+		}
+
+		Dictionary<DateOnly, Data.DatePriceOHLC> currencyDictionary = currencyHistory.history.ToDictionary(x => x.date, x => x);
+		List<Decimal> exchangeRates = new List<Decimal>();
+		foreach (int timestamp in timestamps)
+		{
+			DateOnly date = Tools.TimeConverter.UnixTimeStampToDateOnly(timestamp);
+			if (currencyDictionary.ContainsKey(date))
+			{
+				exchangeRates.Add(currencyDictionary[date].closePrice.amount);
+			}
+			else
+			{
+				throw new StatusCodeException(500, "Currency exchange rate list of " + newCurrency + " does not contain " + date.ToString());
+			}
+		}
+		return exchangeRates;
+	}
+
+	public static async Task<StockApp.Money> ConvertMoney(StockApp.Money nativeAmount, int timestamp, String newCurrency, Boolean convertFromUSDToNewCurrency)
 	{
 		if (!(Tools.ValidCurrency.Check(newCurrency)))
 		{

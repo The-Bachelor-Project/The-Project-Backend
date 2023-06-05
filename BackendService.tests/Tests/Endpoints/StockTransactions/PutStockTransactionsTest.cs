@@ -283,7 +283,7 @@ public class PutStockTransactionsTest
 			stockTransactionData.timestamp,
 			stockTransactionData.priceNative!
 		);
-		PostStockTransactionsResponse response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		PostStockTransactionsResponse response = await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!);
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		StockApp.StockTransaction gottenStockTransaction1 = StockTransactionHelper.Get(response.id!);
 		StockApp.StockTransaction stockTransactionData2 = new StockApp.StockTransaction();
@@ -301,7 +301,7 @@ public class PutStockTransactionsTest
 			stockTransactionData2.timestamp,
 			stockTransactionData2.priceNative!
 		);
-		response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		response = await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!);
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		StockApp.StockTransaction gottenStockTransaction2 = StockTransactionHelper.Get(response.id!);
 		Assert.IsTrue(gottenStockTransaction1.amountOwned == 10, "Amount owned should be 10 but was " + gottenStockTransaction1.amountOwned);

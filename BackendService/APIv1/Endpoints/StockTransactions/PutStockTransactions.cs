@@ -34,7 +34,14 @@ public class PutStockTransactions
 			throw new StatusCodeException(400, "Invalid currency " + body.newCurrency);
 		}
 		StockTransaction oldStockTransaction = portfolio.GetStockTransaction(body.id);
-		StockTransaction newStockTransaction = oldStockTransaction;
+		StockTransaction newStockTransaction = new StockTransaction();
+		newStockTransaction.portfolioId = oldStockTransaction.portfolioId;
+		newStockTransaction.ticker = oldStockTransaction.ticker;
+		newStockTransaction.exchange = oldStockTransaction.exchange;
+		newStockTransaction.amount = oldStockTransaction.amount;
+		newStockTransaction.timestamp = oldStockTransaction.timestamp;
+		newStockTransaction.priceNative = oldStockTransaction.priceNative;
+		newStockTransaction.priceUSD = oldStockTransaction.priceUSD;
 
 		if (body.newAmount != 0)
 		{
@@ -61,6 +68,8 @@ public class PutStockTransactions
 
 		await newStockTransaction.AddToDb();
 		await oldStockTransaction.DeleteFromDb();
+
+		System.Console.WriteLine("Old id " + oldStockTransaction.id + " new id " + newStockTransaction.id);
 
 		return new PutStockTransactionsResponse("success", (int)newStockTransaction.id!);
 

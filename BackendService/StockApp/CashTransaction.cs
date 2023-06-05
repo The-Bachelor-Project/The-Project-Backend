@@ -34,7 +34,7 @@ public class CashTransaction
 		{
 			throw new StatusCodeException(400, "Invalid currency: " + nativeAmount.currency);
 		}
-		usdAmount = await Tools.PriceConverter.ConvertMoney(nativeAmount, timestamp, "USD", false);
+		usdAmount = await Tools.PriceConverter.ConvertMoney(nativeAmount, (int)timestamp, "USD", false);
 
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String insertCashTransactionQuery = "INSERT INTO CashTransactions (portfolio, currency, amount_currency, amount_usd, timestamp, description) VALUES (@portfolio, @currency, @amount_currency, @amount_usd, @timestamp, @description)";

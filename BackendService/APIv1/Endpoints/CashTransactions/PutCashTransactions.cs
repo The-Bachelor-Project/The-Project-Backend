@@ -25,7 +25,12 @@ public class PutCashTransactions
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
 		StockApp.Portfolio portfolio = user.GetPortfolio(body.portfolio);
 		StockApp.CashTransaction oldCashTransaction = portfolio.GetCashTransaction(body.id);
-		StockApp.CashTransaction newCashTransaction = oldCashTransaction;
+		StockApp.CashTransaction newCashTransaction = new StockApp.CashTransaction();
+		newCashTransaction.portfolioId = oldCashTransaction.portfolioId;
+		newCashTransaction.description = oldCashTransaction.description;
+		newCashTransaction.nativeAmount = oldCashTransaction.nativeAmount;
+		newCashTransaction.timestamp = oldCashTransaction.timestamp;
+		newCashTransaction.usdAmount = oldCashTransaction.usdAmount;
 		if (body.newDescription != "")
 		{
 			newCashTransaction.description = body.newDescription;

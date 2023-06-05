@@ -12,11 +12,11 @@ public class PostStockTransactions
 				context.Response.StatusCode = 401;
 				return new PostStockTransactionsResponse("error", -1);
 			}
-			return await EndpointAsync(body, accessToken);
+			return await Endpoint(body, accessToken);
 		});
 	}
 
-	public static async Task<PostStockTransactionsResponse> EndpointAsync(PostStockTransactionsBody body, String accessToken)
+	public static async Task<PostStockTransactionsResponse> Endpoint(PostStockTransactionsBody body, String accessToken)
 	{
 		if (body.portfolioId is null || body.portfolioId == "")
 		{
@@ -45,11 +45,6 @@ public class PostStockTransactions
 		if (body.priceNative!.amount < 0)
 		{
 			throw new StatusCodeException(400, "Invalid price");
-		}
-
-		if (body.amount > 0 == body.priceNative!.amount > 0)
-		{
-			body.priceNative!.amount *= -1;
 		}
 
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();

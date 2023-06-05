@@ -31,16 +31,16 @@ public class GetTransactionsTest
 		transaction.priceNative = new StockApp.Money(100, "USD");
 		transaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		await transaction.AddToDb();
-		GetTransactionsResponse response = GetTransactions.Endpoint(userTestObject.accessToken!, "USD");
+		GetTransactionsResponse response = await GetTransactions.Endpoint(userTestObject.accessToken!, "USD");
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.transactions.Count == 1, "There should be 1 transaction but there were " + response.transactions.Count);
 		Assert.IsTrue(response.transactions[0].description.Contains("TSLA"), "Description should contain TSLA but was " + response.transactions[0].description);
 		Assert.IsTrue(response.transactions[0].description.Contains("NASDAQ"), "Description should contain NASDAQ but was " + response.transactions[0].description);
-		Assert.IsTrue(response.transactions[0].value.amount == 100, "Amount should be 100 but was " + response.transactions[0].value.amount);
+		Assert.IsTrue(response.transactions[0].value.amount == -100, "Amount should be -100 but was " + response.transactions[0].value.amount);
 		Assert.IsTrue(response.transactions[0].value.currency == "USD", "Currency should be USD but was " + response.transactions[0].value.currency);
-		Assert.IsTrue(response.transactions[0].balance.amount == 100, "Balance should be 100 but was " + response.transactions[0].balance.amount);
+		Assert.IsTrue(response.transactions[0].balance.amount == -100, "Balance should be 100 but was " + response.transactions[0].balance.amount);
 		Assert.IsTrue(response.transactions[0].balance.currency == "USD", "Currency should be USD but was " + response.transactions[0].balance.currency);
-		Assert.IsTrue(response.transactions[0].combinedBalance.amount == 100, "Combined balance should be 100 but was " + response.transactions[0].combinedBalance.amount);
+		Assert.IsTrue(response.transactions[0].combinedBalance.amount == -100, "Combined balance should be 100 but was " + response.transactions[0].combinedBalance.amount);
 		Assert.IsTrue(response.transactions[0].combinedBalance.currency == "USD", "Currency should be USD but was " + response.transactions[0].combinedBalance.currency);
 	}
 
@@ -63,7 +63,7 @@ public class GetTransactionsTest
 		transaction2.priceNative = new StockApp.Money(-100, "USD");
 		transaction2.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		await transaction2.AddToDb();
-		GetTransactionsResponse response = GetTransactions.Endpoint(userTestObject.accessToken!, "USD");
+		GetTransactionsResponse response = await GetTransactions.Endpoint(userTestObject.accessToken!, "USD");
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 
 		Assert.IsTrue(response.transactions[0].description.Contains("TSLA"), "Description should contain TSLA but was " + response.transactions[0].description);
@@ -103,9 +103,9 @@ public class GetTransactionsTest
 		transaction2.exchange = "NASDAQ";
 		transaction2.amount = 1;
 		transaction2.priceNative = new StockApp.Money(-100, "USD");
-		transaction2.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
+		transaction2.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now) + 1;
 		await transaction2.AddToDb();
-		GetTransactionsResponse response = GetTransactions.Endpoint(userTestObject.accessToken!, "USD");
+		GetTransactionsResponse response = await GetTransactions.Endpoint(userTestObject.accessToken!, "USD");
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.transactions[0].description.Contains("TSLA"), "Description should contain TSLA but was " + response.transactions[0].description);
 		Assert.IsTrue(response.transactions[0].description.Contains("NASDAQ"), "Description should contain NASDAQ but was " + response.transactions[0].description);
@@ -128,10 +128,12 @@ public class GetTransactionsTest
 	}
 
 	[TestMethod]
-	public void GetTransactionsTest_EmptyPortfolioTest()
+	public async Task GetTransactionsTest_EmptyPortfolioTest()
 	{
-		GetTransactionsResponse response = GetTransactions.Endpoint(userTestObject.accessToken!, "USD");
+		GetTransactionsResponse response = await GetTransactions.Endpoint(userTestObject.accessToken!, "USD");
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.transactions.Count == 0, "Transactions should be empty but was " + response.transactions.Count);
 	}
+
+
 }

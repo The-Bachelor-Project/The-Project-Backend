@@ -6,7 +6,7 @@ public class GetTransactions
 {
 	public static void Setup(WebApplication app)
 	{
-		app.MapGet("/v1/transactions", ([FromQuery] String currency, HttpContext context) =>
+		app.MapGet("/v1/transactions", async (HttpContext context, [FromQuery] String currency) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
 			if (accessToken is null)
@@ -14,14 +14,13 @@ public class GetTransactions
 				context.Response.StatusCode = 401;
 				return Results.Ok(new GetPortfoliosResponse("error", new List<StockApp.Portfolio> { }));
 			}
-			return Results.Ok(Endpoint(accessToken, currency));
+			return Results.Ok(await Endpoint(accessToken, currency));
 		});
 	}
 
-	public static GetTransactionsResponse Endpoint(String accessToken, String currency)
+	public async static Task<GetTransactionsResponse> Endpoint(String accessToken, String currency)
 	{
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
-
-		return new GetTransactionsResponse("success", user.GetTransactions());
+		return new GetTransactionsResponse("success", await user.GetTransactions(currency));
 	}
 }

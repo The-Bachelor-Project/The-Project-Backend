@@ -539,4 +539,44 @@ public class UserTest
 			}
 		}
 	}
+
+	[TestMethod]
+	public async Task UserTest_GetTransactions_GetAllCurrencies()
+	{
+		StockApp.Portfolio portfolio = PortfolioHelper.Create(userTestObject);
+		StockApp.StockTransaction stockTransaction = new StockApp.StockTransaction();
+		stockTransaction.portfolioId = portfolio!.id;
+		stockTransaction.ticker = "VICI";
+		stockTransaction.exchange = "NYSE";
+		stockTransaction.amount = 10;
+		stockTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now) - 8000000;
+		stockTransaction.priceNative = new StockApp.Money(100, "CAD");
+		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(
+			stockTransaction.portfolioId!,
+			stockTransaction.ticker,
+			stockTransaction.exchange,
+			stockTransaction.amount,
+			stockTransaction.timestamp,
+			stockTransaction.priceNative!
+		);
+
+		PostCashTransactionsBody postCashTransactionsBody = new PostCashTransactionsBody(
+			stockTransaction.portfolioId!,
+			"DKK",
+			stockTransaction.priceNative.amount,
+			stockTransaction.timestamp,
+			"Test"
+		);
+		PostCashTransactionsResponse postCashTransactionsResponse = await PostCashTransactions.Endpoint(postCashTransactionsBody, userTestObject.accessToken!);
+		Assert.IsTrue(postCashTransactionsResponse.response == "success", "response should be success but was " + postCashTransactionsResponse.response);
+
+		foreach (String currency in Dictionaries.currencies)
+		{
+			GetTransactionsResponse transactions = await GetTransactions.Endpoint(userTestObject.accessToken!, currency);
+			Assert.IsTrue(transactions.response == "success", "response should be success but was " + transactions.response);
+			Assert.IsTrue(transactions.transactions.All(transaction => transaction.balance!.currency == currency), "currency should be " + currency + " but was " + transactions.transactions[0].balance!.currency);
+			Assert.IsTrue(transactions.transactions.All(transaction => transaction.combinedBalance!.currency == currency), "currency should be " + currency + " but was " + transactions.transactions[0].combinedBalance!.currency);
+			Assert.IsTrue(transactions.transactions.All(transaction => transaction.value!.currency == currency), "currency should be " + currency + " but was " + transactions.transactions[0].value!.currency);
+		}
+	}
 }

@@ -33,6 +33,10 @@ public class StockTransaction
 
 	public async Task<StockTransaction> AddToDb()
 	{
+		if (amount > 0 == priceNative!.amount > 0)
+		{
+			priceNative!.amount *= -1;
+		}
 
 		if (ticker == null || exchange == null || portfolioId == null || priceNative!.currency == null)
 		{
@@ -67,7 +71,6 @@ public class StockTransaction
 		{
 			amountOwned = (Decimal)data["amount_owned"];
 		}
-		System.Console.WriteLine("----------------------" + amountOwned + " " + amountAdjusted + " " + (amountOwned + amountAdjusted));
 		if ((amountOwned + amountAdjusted) < 0)
 		{
 			throw new StatusCodeException(400, "Not enough owned stocks");

@@ -40,7 +40,7 @@ public class PostStockTransactionsTest
 			successfulStockTransaction.timestamp,
 			successfulStockTransaction.priceNative!
 		);
-		PostStockTransactionsResponse response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		PostStockTransactionsResponse response = await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!);
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.id != 0, "Response id should not be 0");
 	}
@@ -63,7 +63,7 @@ public class PostStockTransactionsTest
 			stockTransaction1.timestamp,
 			stockTransaction1.priceNative!
 		);
-		PostStockTransactionsResponse response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		PostStockTransactionsResponse response = await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!);
 		int stockTransaction1ID = response.id;
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.id != 0, "Response id should not be 0");
@@ -85,7 +85,7 @@ public class PostStockTransactionsTest
 			stockTransaction2.timestamp,
 			stockTransaction2.priceNative!
 		);
-		response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		response = await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!);
 		int stockTransaction2ID = response.id;
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.id != 0, "Response id should not be 0");
@@ -110,7 +110,7 @@ public class PostStockTransactionsTest
 			stockTransaction3.timestamp,
 			stockTransaction3.priceNative!
 		);
-		response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		response = await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!);
 		int stockTransaction3ID = response.id;
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.id != 0, "Response id should not be 0");
@@ -140,7 +140,7 @@ public class PostStockTransactionsTest
 			stockTransaction1.timestamp,
 			stockTransaction1.priceNative!
 		);
-		PostStockTransactionsResponse response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		PostStockTransactionsResponse response = await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!);
 		int stockTransaction1ID = response.id;
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.id != 0, "Response id should not be 0");
@@ -162,7 +162,7 @@ public class PostStockTransactionsTest
 			stockTransaction2.timestamp,
 			stockTransaction2.priceNative!
 		);
-		response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		response = await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!);
 		int stockTransaction2ID = response.id;
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.id != 0, "Response id should not be 0");
@@ -187,7 +187,7 @@ public class PostStockTransactionsTest
 			stockTransaction3.timestamp,
 			stockTransaction3.priceNative!
 		);
-		response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		response = await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!);
 		int stockTransaction3ID = response.id;
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.id != 0, "Response id should not be 0");
@@ -217,7 +217,7 @@ public class PostStockTransactionsTest
 			stockTransaction1.timestamp,
 			stockTransaction1.priceNative!
 		);
-		PostStockTransactionsResponse response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		PostStockTransactionsResponse response = await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!);
 		int stockTransaction1ID = response.id;
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.id != 0, "Response id should not be 0");
@@ -239,7 +239,7 @@ public class PostStockTransactionsTest
 			stockTransaction2.timestamp,
 			stockTransaction2.priceNative!
 		);
-		response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		response = await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!);
 		int stockTransaction2ID = response.id;
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.id != 0, "Response id should not be 0");
@@ -264,7 +264,7 @@ public class PostStockTransactionsTest
 			stockTransaction3.timestamp,
 			stockTransaction3.priceNative!
 		);
-		response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		response = await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!);
 		int stockTransaction3ID = response.id;
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.id != 0, "Response id should not be 0");
@@ -293,7 +293,7 @@ public class PostStockTransactionsTest
 			stockTransactionData.timestamp,
 			stockTransactionData.priceNative!
 		);
-		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
 	}
 
@@ -315,7 +315,7 @@ public class PostStockTransactionsTest
 			stockTransactionData.timestamp,
 			stockTransactionData.priceNative!
 		);
-		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 400, "Status code for missing portfolio id should be 400 but was " + exception.StatusCode);
 
 		// Missing exchange
@@ -333,7 +333,7 @@ public class PostStockTransactionsTest
 			stockTransactionData.timestamp,
 			stockTransactionData.priceNative!
 		);
-		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 400, "Status code for missing exchange should be 400 but was " + exception.StatusCode);
 
 		// Missing ticker
@@ -351,7 +351,7 @@ public class PostStockTransactionsTest
 			stockTransactionData.timestamp,
 			stockTransactionData.priceNative!
 		);
-		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 400, "Status code for missing ticker should be 400 but was " + exception.StatusCode);
 
 		// Missing timestamp
@@ -369,7 +369,7 @@ public class PostStockTransactionsTest
 			stockTransactionData.timestamp,
 			stockTransactionData.priceNative!
 		);
-		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 400, "Status code for missing timestamp should be 400 but was " + exception.StatusCode);
 
 		// Missing amount
@@ -386,7 +386,7 @@ public class PostStockTransactionsTest
 			stockTransactionData.timestamp,
 			stockTransactionData.priceNative!
 		);
-		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 400, "Status code for missing amount should be 400 but was " + exception.StatusCode);
 
 		// Missing price currency
@@ -404,7 +404,7 @@ public class PostStockTransactionsTest
 			stockTransactionData.timestamp,
 			stockTransactionData.priceNative!
 		);
-		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 400, "Status code for missing price currency should be 400 but was " + exception.StatusCode);
 	}
 
@@ -419,7 +419,7 @@ public class PostStockTransactionsTest
 			successfulStockTransaction.timestamp,
 			successfulStockTransaction.priceNative!
 		);
-		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, "invalid"));
+		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.Endpoint(postStockTransactionsBody, "invalid"));
 		Assert.IsTrue(exception.StatusCode == 401, "Status code should be 401 but was " + exception.StatusCode);
 	}
 
@@ -435,7 +435,7 @@ public class PostStockTransactionsTest
 			successfulStockTransaction.timestamp,
 			successfulStockTransaction.priceNative!
 		);
-		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, invalidUser.accessToken!));
+		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.Endpoint(postStockTransactionsBody, invalidUser.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 403, "Status code should be 403 but was " + exception.StatusCode);
 		UserHelper.Delete(invalidUser);
 	}
@@ -458,7 +458,7 @@ public class PostStockTransactionsTest
 			stockTransactionData.timestamp,
 			stockTransactionData.priceNative!
 		);
-		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
 	}
 
@@ -480,7 +480,7 @@ public class PostStockTransactionsTest
 			stockTransactionData.timestamp,
 			stockTransactionData.priceNative!
 		);
-		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 404, "Status code should be 404 but was " + exception.StatusCode);
 	}
 
@@ -502,7 +502,7 @@ public class PostStockTransactionsTest
 			stockTransactionData.timestamp,
 			stockTransactionData.priceNative!
 		);
-		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 404, "Status code should be 404 but was " + exception.StatusCode);
 	}
 
@@ -525,7 +525,7 @@ public class PostStockTransactionsTest
 			stockTransactionData.priceNative!
 		);
 
-		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 404, "Status code should be 404 but was " + exception.StatusCode);
 	}
 
@@ -548,7 +548,7 @@ public class PostStockTransactionsTest
 			stockTransactionData.priceNative!
 		);
 
-		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
 	}
 
@@ -571,7 +571,7 @@ public class PostStockTransactionsTest
 			stockTransactionData.priceNative!
 		);
 
-		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
 	}
 
@@ -594,7 +594,7 @@ public class PostStockTransactionsTest
 			stockTransactionData.priceNative!
 		);
 
-		PostStockTransactionsResponse response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+		PostStockTransactionsResponse response = await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!);
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 
 		stockTransactionData = new StockApp.StockTransaction();
@@ -613,7 +613,7 @@ public class PostStockTransactionsTest
 			stockTransactionData.priceNative!
 		);
 
-		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
 
 		stockTransactionData = new StockApp.StockTransaction();
@@ -632,7 +632,7 @@ public class PostStockTransactionsTest
 			stockTransactionData.priceNative!
 		);
 
-		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!));
+		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
 	}
 
@@ -659,7 +659,7 @@ public class PostStockTransactionsTest
 				stockTransactionData.priceNative!
 			);
 
-			PostStockTransactionsResponse response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
+			PostStockTransactionsResponse response = await PostStockTransactions.Endpoint(postStockTransactionsBody, userTestObject.accessToken!);
 			Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 			StockApp.StockTransaction gottenStockTransaction = StockTransactionHelper.Get(response.id!);
 			Assert.IsTrue(gottenStockTransaction.portfolioId == stockTransactionData.portfolioId, "Portfolio id should be " + stockTransactionData.portfolioId + " but was " + gottenStockTransaction.portfolioId);

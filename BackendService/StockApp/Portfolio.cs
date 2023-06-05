@@ -256,7 +256,7 @@ public class Portfolio
 			stockTransaction.amountAdjusted = Convert.ToDecimal(data["amount_adjusted"]);
 			stockTransaction.amountOwned = Convert.ToDecimal(data["amount_owned"]);
 			stockTransaction.timestamp = Convert.ToInt32(data["timestamp"]);
-			stockTransaction.priceNative = new Money(Convert.ToDecimal(data["price_amount"]), data["price_currency"].ToString()!);
+			stockTransaction.priceNative = new Money(Convert.ToDecimal(data["amount_currency"]), data["currency"].ToString()!);
 			return stockTransaction;
 		}
 		throw new StatusCodeException(404, "Could not find stock transaction with id " + transactionID);
@@ -308,8 +308,8 @@ public class Portfolio
 			cashTransaction.id = int.Parse(data["id"].ToString()!);
 			cashTransaction.portfolioId = data["portfolio"].ToString();
 			cashTransaction.timestamp = Convert.ToInt32(data["timestamp"]);
-			cashTransaction.nativeAmount = new Money(Convert.ToDecimal(data["native_amount"]), data["currency"].ToString()!);
-			cashTransaction.usdAmount = new Money(Convert.ToDecimal(data["amount"]), "USD");
+			cashTransaction.nativeAmount = new Money(Convert.ToDecimal(data["amount_currency"]), data["currency"].ToString()!);
+			cashTransaction.usdAmount = new Money(Convert.ToDecimal(data["amount_usd"]), "USD");
 			cashTransaction.description = data["description"].ToString();
 			return cashTransaction;
 		}
