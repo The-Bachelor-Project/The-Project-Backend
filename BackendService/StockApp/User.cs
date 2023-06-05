@@ -247,15 +247,23 @@ public class User
 	public async Task<Data.UserAssetsValueHistory> GetValueHistory(string currency, DateOnly startDate, DateOnly endDate)
 	{
 		UpdatePortfolios();
-		List<Data.Transaction> transactions = await GetTransactions(currency);
-		// Filter transactions to only include transactions between the start and end date, but also include the previous one
-		transactions = transactions
-		.Where((transaction, index) =>
-			index == 0 ||
-			(Tools.TimeConverter.UnixTimeStampToDateOnly(transaction.timestamp) >= startDate &&
-			Tools.TimeConverter.UnixTimeStampToDateOnly(transaction.timestamp) <= endDate))
-		.ToList();
+		List<Data.Transaction> allTransactions = await GetTransactions(currency);
+		List<Data.Transaction> newTransactions = new List<Data.Transaction>();
+		if (allTransactions.Count != 0)
+		{
+			foreach (Data.Transaction transaction in allTransactions)
+			{
+				if (transaction.timestamp >= Tools.TimeConverter.DateOnlyToUnix(startDate) && transaction.timestamp <= Tools.TimeConverter.DateOnlyToUnix(endDate))
+				{
+					newTransactions.Add(transaction);
+				}
+			}
+			if (newTransactions.First().timestamp > Tools.TimeConverter.DateOnlyToUnix(startDate) &&
+			allTransactions.First() != newTransactions.First())
+			{
 
+			}
+		}
 		List<Data.DatePriceOHLC> valueHistory = new List<Data.DatePriceOHLC>();
 		List<Data.Portfolio> dataPortfolios = new List<Data.Portfolio>();
 		List<Data.Dividend> dividendHistory = new List<Data.Dividend>();
@@ -266,53 +274,39 @@ public class User
 			dataPortfolios.Add(dataPortfolio);
 			valueHistory = Data.DatePriceOHLC.AddLists(valueHistory, dataPortfolio.valueHistory);
 			dividendHistory.AddRange(dataPortfolio.dividendHistory);
-			cashBalance.AddRange(
-				transactions
-					.Where(transaction => transaction.portfolio == portfolio.id)
-					.Select(transaction => new Data.CashBalance(
-						Tools.TimeConverter.UnixTimeStampToDateOnly(transaction.timestamp),
-						transaction.balance
-					)).ToList()
-			);
 		}
+		cashBalance.AddRange(newTransactions.Select(transaction => new Data.CashBalance(
+			Tools.TimeConverter.UnixTimeStampToDateOnly(transaction.timestamp),
+			transaction.combinedBalance
+		)).ToList());
 
-		return new Data.UserAssetsValueHistory(valueHistory, dataPortfolios, dividendHistory, InsertMissingValues(cashBalance, startDate, endDate));
+		return new Data.UserAssetsValueHistory(valueHistory, dataPortfolios, dividendHistory, InsertMissingValues(cashBalance));
 	}
 
-	private List<Data.CashBalance> InsertMissingValues(List<Data.CashBalance> cashBalances, DateOnly startDate, DateOnly endDate)
+	public List<Data.CashBalance> InsertMissingValues(List<Data.CashBalance> cashBalances)
 	{
 		List<Data.CashBalance> newCashBalances = new List<Data.CashBalance>();
-		if (cashBalances.Count > 0)
-		{
-			if (cashBalances[0].date < startDate)
-			{
-				Data.CashBalance firstCashBalance = cashBalances.Where(cashBalances => cashBalances.date < startDate).OrderByDescending(cashBalances => cashBalances.date).First();
-				cashBalances.Add(new Data.CashBalance(startDate, firstCashBalance.balance));
-			}
-		}
-		cashBalances.Sort((x, y) => x.date.CompareTo(y.date));
 		for (int i = 0; i < cashBalances.Count - 1; i++)
 		{
-			if (cashBalances[i].date < startDate)
+			Data.CashBalance current = cashBalances[i];
+			Data.CashBalance next = cashBalances[i + 1];
+
+			newCashBalances.Add(current);
+
+			DateOnly currentDate = current.date;
+			DateOnly nextDate = next.date;
+
+			while (currentDate.AddDays(1) < nextDate)
 			{
-				continue;
-			}
-			if (cashBalances[i].date > endDate)
-			{
-				break;
-			}
-			Data.CashBalance cashBalance = cashBalances[i];
-			Data.CashBalance nextCashBalance = cashBalances[i + 1];
-			newCashBalances.Add(cashBalance);
-			while (cashBalance.date.AddDays(1) < nextCashBalance.date)
-			{
-				cashBalance = new Data.CashBalance(cashBalance.date.AddDays(1), cashBalance.balance);
-				newCashBalances.Add(cashBalance);
+				currentDate = currentDate.AddDays(1);
+				Data.CashBalance missingCashBalance = new Data.CashBalance(currentDate, current.balance);
+				newCashBalances.Add(missingCashBalance);
 			}
 		}
 
 		return newCashBalances;
 	}
+
 	public async Task<List<Data.Transaction>> GetTransactions(String currency)
 	{
 		String getTransactionsQuery = "SELECT * FROM AllTransactions WHERE owner = @owner ORDER BY timestamp ASC, transaction_type ASC, portfolio ASC, id ASC";

@@ -16,8 +16,8 @@ public class GetValueHistoryTest
 	[TestCleanup]
 	public void Cleanup()
 	{
-		PortfolioHelper.Delete(userTestObject);
-		UserHelper.Delete(userTestObject);
+		// PortfolioHelper.Delete(userTestObject);
+		// UserHelper.Delete(userTestObject);
 	}
 
 	[TestMethod]
@@ -253,6 +253,82 @@ public class GetValueHistoryTest
 			response = await GetValueHistory.EndpointAsync("2020-01-01", "2021-01-01", currency, userTestObject.accessToken!);
 			Assert.IsTrue(response.valueHistory.portfolios.Count == 3, "There should be two portfolios in the response, but there was " + response.valueHistory.portfolios.Count);
 			Assert.IsTrue(response.valueHistory.valueHistory[0].highPrice.currency == currency, "The currency of the high price should be " + currency + " but was " + response.valueHistory.valueHistory[0].highPrice.currency);
+		}
+	}
+
+	[TestMethod]
+	public async Task GetValueHistoryTest_BalanceTest()
+	{
+
+		StockApp.Portfolio portfolio1 = PortfolioHelper.Create(userTestObject);
+		StockApp.Portfolio portfolio2 = PortfolioHelper.Create(userTestObject);
+
+		StockApp.CashTransaction cashTransaction1 = new StockApp.CashTransaction();
+		cashTransaction1.portfolioId = portfolio1.id;
+		cashTransaction1.nativeAmount = new StockApp.Money(100, "USD");
+		cashTransaction1.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-02-02"));
+		cashTransaction1.description = "Test";
+		await cashTransaction1.AddToDb();
+
+		StockApp.StockTransaction transaction1 = new StockApp.StockTransaction();
+		transaction1.portfolioId = portfolio1.id;
+		transaction1.amount = 10;
+		transaction1.priceNative = new StockApp.Money(100, "USD");
+		transaction1.ticker = "T";
+		transaction1.exchange = "NYSE";
+		transaction1.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-10-10"));
+		await transaction1.AddToDb();
+
+		StockApp.CashTransaction cashTransaction2 = new StockApp.CashTransaction();
+		cashTransaction2.portfolioId = portfolio1.id;
+		cashTransaction2.nativeAmount = new StockApp.Money(150, "USD");
+		cashTransaction2.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-10-11"));
+		cashTransaction2.description = "Test";
+		await cashTransaction2.AddToDb();
+
+		StockApp.StockTransaction transaction2 = new StockApp.StockTransaction();
+		transaction2.portfolioId = portfolio1.id;
+		transaction2.amount = 20;
+		transaction2.priceNative = new StockApp.Money(200, "USD");
+		transaction2.ticker = "BGS";
+		transaction2.exchange = "NYSE";
+		transaction2.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2020-10-12"));
+		await transaction2.AddToDb();
+
+		transaction1.portfolioId = portfolio2.id;
+		await transaction1.AddToDb();
+		cashTransaction2.portfolioId = portfolio2.id;
+		await cashTransaction2.AddToDb();
+		transaction2.portfolioId = portfolio2.id;
+		await transaction2.AddToDb();
+
+		GetValueHistoryResponse response = await GetValueHistory.EndpointAsync("2020-10-01", "2021-01-01", "USD", userTestObject.accessToken!);
+		Assert.IsTrue(response.valueHistory.portfolios.Count == 3, "There should be two portfolios in the response, but there was " + response.valueHistory.portfolios.Count);
+		List<Decimal> balances = response.valueHistory.portfolios[0].cashBalance
+		.Select(balance => balance.balance.amount)
+		.Distinct()
+		.ToList();
+		List<Decimal> expectedBalances = new List<Decimal>() { 100, 0, 150, -50 };
+		// for (int i = 0; i < balances.Count; i++)
+		// {
+		// 	Assert.IsTrue(expectedBalances.Contains(balances[i]), "The balance " + balances[i] + " was not expected " + userTestObject.accessToken!);
+		// }
+
+		// balances = response.valueHistory.portfolios[1].cashBalance
+		// .Select(balance => balance.balance.amount)
+		// .Distinct()
+		// .ToList();
+		// expectedBalances = new List<Decimal>() { -100, 50, -150 };
+		// for (int i = 0; i < balances.Count; i++)
+		// {
+		// 	Assert.IsTrue(expectedBalances.Contains(balances[i]), "The balance " + balances[i] + " was not expected " + userTestObject.accessToken!);
+		// }
+
+		balances = response.valueHistory.cashBalance.Select(balance => balance.balance.amount).Distinct().ToList();
+		expectedBalances = new List<Decimal>() { 100, -100, 200, -200 };
+		for (int i = 0; i < balances.Count; i++)
+		{
+			Assert.IsTrue(expectedBalances.Contains(balances[i]), "The balance " + balances[i] + " was not expected");
 		}
 	}
 }

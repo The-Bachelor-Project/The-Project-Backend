@@ -38,6 +38,7 @@ public class Portfolio
 	public List<CashTransaction> cashTransactions { get; set; } = new List<CashTransaction>();
 	public List<StockPosition> stockPositions { get; set; } = new List<StockPosition>();
 	public List<DividendPayout> dividendPayouts { get; set; } = new List<DividendPayout>();
+	public List<Data.CashBalance> cashBalance { get; set; } = new List<Data.CashBalance>();
 
 
 	public Portfolio AddToDb()
@@ -164,7 +165,6 @@ public class Portfolio
 		List<Data.DatePriceOHLC> valueHistory = new List<Data.DatePriceOHLC>();
 		List<Data.Position> dataPositions = new List<Data.Position>();
 		List<Data.Dividend> dividendHistory = new List<Data.Dividend>();
-		List<Data.CashBalance> cashBalanceHistory = new List<Data.CashBalance>();
 
 		foreach (StockPosition position in stockPositions)
 		{
@@ -176,8 +176,37 @@ public class Portfolio
 				dividendHistory.AddRange(dataPosition.dividends);
 			}
 		}
+		List<Data.Transaction> allTansactions = await GetOwner().GetTransactions(currency);
+		List<Data.Transaction> newTransactions = new List<Data.Transaction>();
+		if (allTansactions.Count != 0)
+		{
+			foreach (Data.Transaction transaction in allTansactions)
+			{
+				if (transaction.timestamp >= Tools.TimeConverter.DateOnlyToUnix(startDate) && transaction.timestamp <= Tools.TimeConverter.DateOnlyToUnix(endDate) && transaction.portfolio == id)
+				{
+					newTransactions.Add(transaction);
+				}
+			}
+			if (newTransactions.First().timestamp > Tools.TimeConverter.DateOnlyToUnix(startDate) &&
+			allTansactions.First() != newTransactions.First())
+			{
+				for (int i = allTansactions.Count - 1; i >= 0; i--)
+				{
+					if (allTansactions[i].timestamp < Tools.TimeConverter.DateOnlyToUnix(startDate))
+					{
+						allTansactions[i].timestamp = Tools.TimeConverter.DateOnlyToUnix(startDate);
+						newTransactions.Insert(0, allTansactions[i]);
+						break;
+					}
+
+				}
+			}
+		}
+		User user = GetOwner();
+		cashBalance = user.InsertMissingValues(cashBalance);
+
 		System.Console.WriteLine("RETURNED: " + dividendHistory.Count);
-		return new Data.Portfolio("[NAME]"/* TODO Get name */, currency, valueHistory, dataPositions, dividendHistory);
+		return new Data.Portfolio("[NAME]"/* TODO Get name */, currency, valueHistory, dataPositions, dividendHistory, cashBalance);
 	}
 
 	public Portfolio ChangeName(string newName)

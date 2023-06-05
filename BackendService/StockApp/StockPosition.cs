@@ -61,7 +61,7 @@ public class StockPosition
 
 			if (transactionIndex < stockTransactions.Count)
 			{
-				System.Console.WriteLine(currentDate);
+				// System.Console.WriteLine(currentDate);
 				while (Tools.TimeConverter.UnixTimeStampToDateOnly(stockTransactions[transactionIndex].timestamp) == currentDate)
 				{
 					currentlyOwned = stockTransactions[transactionIndex].amountOwned!.Value;

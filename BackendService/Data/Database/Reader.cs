@@ -38,7 +38,7 @@ public class Reader
 
 			if (data.Count >= 1)
 			{
-				System.Console.WriteLine("\n\nQuery: " + query + "\nData points: " + DictionaryToString(data[0]) + "\n\n");
+				// System.Console.WriteLine("\n\nQuery: " + query + "\nData points: " + DictionaryToString(data[0]) + "\n\n");
 			}
 
 			blocking = false;
