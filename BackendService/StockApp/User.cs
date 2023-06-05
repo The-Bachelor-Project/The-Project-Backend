@@ -279,6 +279,7 @@ public class User
 			String type = row["transaction_type"].ToString()!;
 			String portfolio = row["portfolio"].ToString()!;
 			int timestamp = Convert.ToInt32(row["timestamp"]);
+			int id = Convert.ToInt32(row["id"]);
 			String description;
 			Money amount;
 
@@ -312,7 +313,7 @@ public class User
 					break;
 			}
 
-			transactions.Add(new Data.Transaction(type, portfolio, timestamp, description, amount, new Money(portfolioBalances[portfolio].amount, portfolioBalances[portfolio].currency), new Money(balance.amount, balance.currency)));
+			transactions.Add(new Data.Transaction(type, id, portfolio, timestamp, description, amount, new Money(portfolioBalances[portfolio].amount, portfolioBalances[portfolio].currency), new Money(balance.amount, balance.currency)));
 		}
 		return transactions;
 	}

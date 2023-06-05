@@ -2,9 +2,10 @@ namespace Data;
 
 public class Transaction
 {
-	public Transaction(string type, string portfolio, int timestamp, string description, StockApp.Money value, StockApp.Money balance, StockApp.Money combinedBalance)
+	public Transaction(string type, int id, string portfolio, int timestamp, string description, StockApp.Money value, StockApp.Money balance, StockApp.Money combinedBalance)
 	{
 		this.type = type;
+		this.id = id;
 		this.portfolio = portfolio;
 		this.timestamp = timestamp;
 		this.description = description;
@@ -14,6 +15,7 @@ public class Transaction
 	}
 
 	public String type { get; set; }
+	public int id { get; set; }
 	public String portfolio { get; set; }
 	public int timestamp { get; set; }
 	public String description { get; set; }
