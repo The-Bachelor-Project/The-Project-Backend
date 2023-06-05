@@ -283,6 +283,7 @@ public class User
 			String type = row["transaction_type"].ToString()!;
 			String portfolio = row["portfolio"].ToString()!;
 			int timestamp = Convert.ToInt32(row["timestamp"]);
+			int id = Convert.ToInt32(row["id"]);
 			String description;
 			Money amount;
 
