@@ -317,7 +317,16 @@ public class User
 					break;
 			}
 
-			transactions.Add(new Data.Transaction(type, portfolio, timestamp, description, new Money(amount.amount * (1 / exchangeRates[i]), currency), new Money(portfolioBalances[portfolio].amount * (1 / exchangeRates[i]), currency), new Money(balance.amount * (1 / exchangeRates[i]), currency)));
+			transactions.Add(new Data.Transaction(
+				type,
+				id,
+				portfolio,
+				timestamp,
+				description,
+				new Money(amount.amount * (1 / exchangeRates[i]), currency),
+				new Money(portfolioBalances[portfolio].amount * (1 / exchangeRates[i]), currency),
+				new Money(balance.amount * (1 / exchangeRates[i]), currency))
+				);
 			i++;
 		}
 		return transactions;

@@ -27,7 +27,7 @@ public class CurrencyFetcher : ICurrencyFetcher
 			{
 				Data.CurrencyHistory fromYahoo = await (new Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher()).GetHistory(currency, startDate.AddDays(-7), endDate);
 				SaveCurrencyHistory(fromYahoo, true, true);
-				return fromYahoo;
+				return InsertMissingValues(fromYahoo);
 			}
 
 			if (startDate < startTrackingDate)
@@ -42,7 +42,38 @@ public class CurrencyFetcher : ICurrencyFetcher
 				SaveCurrencyHistory(fromYahooAfter, false, true);
 			}
 		}
-		return await (new Data.Fetcher.DatabaseFetcher.CurrencyFetcher()).GetHistory(currency, startDate, endDate);
+		CurrencyHistory currencyHistory = await new Data.Fetcher.DatabaseFetcher.CurrencyFetcher().GetHistory(currency, startDate, endDate);
+		return InsertMissingValues(currencyHistory);
+	}
+
+	private CurrencyHistory InsertMissingValues(CurrencyHistory currencyHistory)
+	{
+		if (currencyHistory.history.First().date != currencyHistory.startDate)
+		{
+			DatePriceOHLC newPrice = new DatePriceOHLC(
+				currencyHistory.startDate,
+				currencyHistory.history.First().openPrice,
+				currencyHistory.history.First().highPrice,
+				currencyHistory.history.First().lowPrice,
+				currencyHistory.history.First().closePrice
+			);
+			currencyHistory.history.Insert(0, newPrice);
+		}
+		for (int i = 0; i < currencyHistory.history.Count - 1; i++)
+		{
+			if (currencyHistory.history[i].date.AddDays(1) != currencyHistory.history[i + 1].date)
+			{
+				DatePriceOHLC newPrice = new DatePriceOHLC(
+					currencyHistory.history[i].date.AddDays(1),
+					currencyHistory.history[i].openPrice,
+					currencyHistory.history[i].highPrice,
+					currencyHistory.history[i].lowPrice,
+					currencyHistory.history[i].closePrice
+				);
+				currencyHistory.history.Insert(i + 1, newPrice);
+			}
+		}
+		return currencyHistory;
 	}
 
 	private void SaveCurrencyHistory(Data.CurrencyHistory history, bool updateStartTrackingDate, bool updateEndTrackingDate)

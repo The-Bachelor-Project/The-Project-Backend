@@ -579,4 +579,37 @@ public class UserTest
 			Assert.IsTrue(transactions.transactions.All(transaction => transaction.value!.currency == currency), "currency should be " + currency + " but was " + transactions.transactions[0].value!.currency);
 		}
 	}
+
+	[TestMethod]
+	public async Task UserTest_GetTransactions_InvalidCurrency()
+	{
+		StockApp.Portfolio portfolio = PortfolioHelper.Create(userTestObject);
+		StockApp.StockTransaction stockTransaction = new StockApp.StockTransaction();
+		stockTransaction.portfolioId = portfolio!.id;
+		stockTransaction.ticker = "VICI";
+		stockTransaction.exchange = "NYSE";
+		stockTransaction.amount = 10;
+		stockTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now) - 8000000;
+		stockTransaction.priceNative = new StockApp.Money(100, "CAD");
+		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(
+			stockTransaction.portfolioId!,
+			stockTransaction.ticker,
+			stockTransaction.exchange,
+			stockTransaction.amount,
+			stockTransaction.timestamp,
+			stockTransaction.priceNative!
+		);
+
+		PostCashTransactionsBody postCashTransactionsBody = new PostCashTransactionsBody(
+			stockTransaction.portfolioId!,
+			"DKK",
+			stockTransaction.priceNative.amount,
+			stockTransaction.timestamp,
+			"Test"
+		);
+		PostCashTransactionsResponse postCashTransactionsResponse = await PostCashTransactions.Endpoint(postCashTransactionsBody, userTestObject.accessToken!);
+		Assert.IsTrue(postCashTransactionsResponse.response == "success", "response should be success but was " + postCashTransactionsResponse.response);
+		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await GetTransactions.Endpoint(userTestObject.accessToken!, "invalid"));
+		Assert.IsTrue(exception.StatusCode == 400, "StatusCode should be 400 but was " + exception.StatusCode);
+	}
 }
