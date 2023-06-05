@@ -164,6 +164,7 @@ public class Portfolio
 		List<Data.DatePriceOHLC> valueHistory = new List<Data.DatePriceOHLC>();
 		List<Data.Position> dataPositions = new List<Data.Position>();
 		List<Data.Dividend> dividendHistory = new List<Data.Dividend>();
+		List<Data.CashBalance> cashBalanceHistory = new List<Data.CashBalance>();
 
 		foreach (StockPosition position in stockPositions)
 		{
