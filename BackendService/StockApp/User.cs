@@ -248,22 +248,10 @@ public class User
 	{
 		UpdatePortfolios();
 		List<Data.Transaction> allTransactions = await GetTransactions(currency);
-		List<Data.Transaction> newTransactions = new List<Data.Transaction>();
-		if (allTransactions.Count != 0)
-		{
-			foreach (Data.Transaction transaction in allTransactions)
-			{
-				if (transaction.timestamp >= Tools.TimeConverter.DateOnlyToUnix(startDate) && transaction.timestamp <= Tools.TimeConverter.DateOnlyToUnix(endDate))
-				{
-					newTransactions.Add(transaction);
-				}
-			}
-			if (newTransactions.First().timestamp > Tools.TimeConverter.DateOnlyToUnix(startDate) &&
-			allTransactions.First() != newTransactions.First())
-			{
+		int firstIndex = allTransactions.FindLastIndex(x => x.timestamp <= Tools.TimeConverter.DateOnlyToUnix(startDate));
+		int lastIndex = allTransactions.FindIndex(x => x.timestamp <= Tools.TimeConverter.DateOnlyToUnix(endDate));
+		List<Data.Transaction> newTransactions = allTransactions.GetRange(firstIndex, lastIndex - firstIndex + 1);
 
-			}
-		}
 		List<Data.DatePriceOHLC> valueHistory = new List<Data.DatePriceOHLC>();
 		List<Data.Portfolio> dataPortfolios = new List<Data.Portfolio>();
 		List<Data.Dividend> dividendHistory = new List<Data.Dividend>();
