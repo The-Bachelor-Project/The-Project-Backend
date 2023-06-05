@@ -31,7 +31,6 @@ public class PostCashTransactionsTest
 	[TestMethod]
 	public async Task PostCashTransactionsTest_AllCurrenciesTest()
 	{
-		int tempBalance = 0;
 		foreach (String currency in Dictionaries.currencies)
 		{
 			PostCashTransactionsBody body = new PostCashTransactionsBody(portfolio!.id!, currency, 100, Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2023-01-01")), "TEST");

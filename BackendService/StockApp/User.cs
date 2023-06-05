@@ -308,11 +308,11 @@ public class User
 					description = row["description"].ToString()!;
 					break;
 				default:
-					description = row["shares_amount"].ToString()! + " " + row["exchange"].ToString()! + " " + row["ticker"].ToString()! + " " + amount.amount.ToString() + " " + amount.currency;
+					description = row["shares_amount"].ToString()! + " " + row["exchange"].ToString()! + " " + row["ticker"].ToString()!;
 					break;
 			}
 
-			transactions.Add(new Data.Transaction(type, portfolio, timestamp, description, amount, new Money(balance.amount, balance.currency), new Money(portfolioBalances[portfolio].amount, portfolioBalances[portfolio].currency)));
+			transactions.Add(new Data.Transaction(type, portfolio, timestamp, description, amount, new Money(portfolioBalances[portfolio].amount, portfolioBalances[portfolio].currency), new Money(balance.amount, balance.currency)));
 		}
 		return transactions;
 	}

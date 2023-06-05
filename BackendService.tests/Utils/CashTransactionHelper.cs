@@ -16,8 +16,8 @@ public class CashTransactionHelper
 		StockApp.CashTransaction cashTransaction = new StockApp.CashTransaction();
 		cashTransaction.id = (int)data["id"];
 		cashTransaction.portfolioId = (String)data["portfolio"];
-		cashTransaction.nativeAmount = new StockApp.Money((Decimal)data["native_amount"], (String)data["currency"]);
-		cashTransaction.usdAmount = new StockApp.Money((Decimal)data["amount"], "USD");
+		cashTransaction.nativeAmount = new StockApp.Money((Decimal)data["amount_currency"], (String)data["currency"]);
+		cashTransaction.usdAmount = new StockApp.Money((Decimal)data["amount_usd"], "USD");
 		cashTransaction.timestamp = (int)data["timestamp"];
 		cashTransaction.description = (String)data["description"];
 		return cashTransaction;

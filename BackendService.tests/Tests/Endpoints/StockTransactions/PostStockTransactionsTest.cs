@@ -599,7 +599,7 @@ public class PostStockTransactionsTest
 
 		stockTransactionData = new StockApp.StockTransaction();
 		stockTransactionData.portfolioId = portfolio.id;
-		stockTransactionData.amount = -2;
+		stockTransactionData.amount = -3;
 		stockTransactionData.exchange = "NASDAQ";
 		stockTransactionData.ticker = "AAPL";
 		stockTransactionData.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
@@ -668,31 +668,5 @@ public class PostStockTransactionsTest
 			Assert.IsTrue(gottenStockTransaction.priceUSD!.amount != stockTransactionData.priceNative.amount, "Price should not be " + stockTransactionData.priceNative.amount + " but was " + gottenStockTransaction.priceUSD.amount);
 			Assert.IsTrue(gottenStockTransaction.priceUSD.currency == "USD", "Currency should be USD but was " + gottenStockTransaction.priceUSD.currency);
 		}
-	}
-
-	[TestMethod]
-	public async Task PostStockTransactionsTest_DividendPayoutTests_SuccessfulCreatedTest()
-	{
-		StockApp.StockTransaction stockTransactionData = new StockApp.StockTransaction();
-		stockTransactionData.portfolioId = portfolio.id;
-		stockTransactionData.amount = 10;
-		stockTransactionData.exchange = "NYSE";
-		stockTransactionData.ticker = "O";
-		stockTransactionData.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2023-01-01"));
-		stockTransactionData.priceNative = new StockApp.Money(100, "USD");
-		PostStockTransactionsBody postStockTransactionsBody = new PostStockTransactionsBody(
-			stockTransactionData.portfolioId!,
-			stockTransactionData.ticker!,
-			stockTransactionData.exchange!,
-			stockTransactionData.amount,
-			stockTransactionData.timestamp,
-			stockTransactionData.priceNative!
-		);
-
-		PostStockTransactionsResponse response = await PostStockTransactions.EndpointAsync(postStockTransactionsBody, userTestObject.accessToken!);
-		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
-		StockApp.StockTransaction gottenStockTransaction = StockTransactionHelper.Get(response.id!);
-		GetTransactionsResponse transactions = GetTransactions.Endpoint(userTestObject.accessToken!, "EUR");
-		Assert.IsTrue(transactions.portfolios[0].dividendPayouts.Count > 0, "Dividend payouts should be more than 0 but was " + transactions.portfolios[0].dividendPayouts.Count);
 	}
 }

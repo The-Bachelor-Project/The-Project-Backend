@@ -118,7 +118,7 @@ public class Portfolio
 			stockTransactions.Last().amountAdjusted = Convert.ToDecimal(row["amount_adjusted"]);
 			stockTransactions.Last().amountOwned = Convert.ToDecimal(row["amount_owned"]);
 			stockTransactions.Last().timestamp = Convert.ToInt32(row["timestamp"]);
-			stockTransactions.Last().priceNative = new Money(Convert.ToDecimal(row["price_amount"]), row["price_currency"].ToString()!);
+			stockTransactions.Last().priceNative = new Money(Convert.ToDecimal(row["amount_currency"]), row["currency"].ToString()!);
 		}
 		return this;
 	}

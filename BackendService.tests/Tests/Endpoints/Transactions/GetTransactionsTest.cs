@@ -33,14 +33,15 @@ public class GetTransactionsTest
 		await transaction.AddToDb();
 		GetTransactionsResponse response = GetTransactions.Endpoint(userTestObject.accessToken!, "USD");
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
-		Assert.IsTrue(response.portfolios.Count == 1, "There should be 1 portfolio but there were " + response.portfolios.Count);
-		Assert.IsTrue(response.portfolios[0].stockTransactions.Count == 1, "There should be 1 transaction but there were " + response.portfolios[0].stockTransactions.Count);
-		Assert.IsTrue(response.portfolios[0].stockTransactions[0].ticker == "TSLA", "Ticker should be TSLA but was " + response.portfolios[0].stockTransactions[0].ticker);
-		Assert.IsTrue(response.portfolios[0].stockTransactions[0].exchange == "NASDAQ", "Exchange should be NASDAQ but was " + response.portfolios[0].stockTransactions[0].exchange);
-		Assert.IsTrue(response.portfolios[0].stockTransactions[0].amount == 1, "Amount should be 1 but was " + response.portfolios[0].stockTransactions[0].amount);
-		Assert.IsTrue(response.portfolios[0].stockTransactions[0].priceNative!.amount == 100, "Price should be 100 but was " + response.portfolios[0].stockTransactions[0].priceNative!.amount);
-		Assert.IsTrue(response.portfolios[0].stockTransactions[0].priceNative!.currency == "USD", "Currency should be USD but was " + response.portfolios[0].stockTransactions[0].priceNative!.currency);
-		Assert.IsTrue(response.portfolios[0].stockTransactions[0].timestamp == transaction.timestamp, "Timestamp should be " + transaction.timestamp + " but was " + response.portfolios[0].stockTransactions[0].timestamp);
+		Assert.IsTrue(response.transactions.Count == 1, "There should be 1 transaction but there were " + response.transactions.Count);
+		Assert.IsTrue(response.transactions[0].description.Contains("TSLA"), "Description should contain TSLA but was " + response.transactions[0].description);
+		Assert.IsTrue(response.transactions[0].description.Contains("NASDAQ"), "Description should contain NASDAQ but was " + response.transactions[0].description);
+		Assert.IsTrue(response.transactions[0].value.amount == 100, "Amount should be 100 but was " + response.transactions[0].value.amount);
+		Assert.IsTrue(response.transactions[0].value.currency == "USD", "Currency should be USD but was " + response.transactions[0].value.currency);
+		Assert.IsTrue(response.transactions[0].balance.amount == 100, "Balance should be 100 but was " + response.transactions[0].balance.amount);
+		Assert.IsTrue(response.transactions[0].balance.currency == "USD", "Currency should be USD but was " + response.transactions[0].balance.currency);
+		Assert.IsTrue(response.transactions[0].combinedBalance.amount == 100, "Combined balance should be 100 but was " + response.transactions[0].combinedBalance.amount);
+		Assert.IsTrue(response.transactions[0].combinedBalance.currency == "USD", "Currency should be USD but was " + response.transactions[0].combinedBalance.currency);
 	}
 
 	[TestMethod]
@@ -51,7 +52,7 @@ public class GetTransactionsTest
 		transaction1.ticker = "TSLA";
 		transaction1.exchange = "NASDAQ";
 		transaction1.amount = 1;
-		transaction1.priceNative = new StockApp.Money(100, "USD");
+		transaction1.priceNative = new StockApp.Money(-100, "USD");
 		transaction1.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		await transaction1.AddToDb();
 		StockApp.StockTransaction transaction2 = new StockApp.StockTransaction();
@@ -59,18 +60,29 @@ public class GetTransactionsTest
 		transaction2.ticker = "AAPL";
 		transaction2.exchange = "NASDAQ";
 		transaction2.amount = 1;
-		transaction2.priceNative = new StockApp.Money(100, "USD");
+		transaction2.priceNative = new StockApp.Money(-100, "USD");
 		transaction2.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		await transaction2.AddToDb();
 		GetTransactionsResponse response = GetTransactions.Endpoint(userTestObject.accessToken!, "USD");
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
-		Assert.IsTrue(response.portfolios.Count == 1, "There should be 1 portfolio but there were " + response.portfolios.Count);
-		Assert.IsTrue(response.portfolios[0].stockTransactions.Count == 2, "There should be 2 transactions but there were " + response.portfolios[0].stockTransactions.Count);
-		Assert.IsTrue(response.portfolios[0].stockTransactions[0].ticker == "TSLA", "Ticker should be TSLA but was " + response.portfolios[0].stockTransactions[0].ticker);
-		Assert.IsTrue(response.portfolios[0].stockTransactions[0].exchange == "NASDAQ", "Exchange should be NASDAQ but was " + response.portfolios[0].stockTransactions[0].exchange);
-		Assert.IsTrue(response.portfolios[0].stockTransactions[0].amount == 1, "Amount should be 1 but was " + response.portfolios[0].stockTransactions[0].amount);
-		Assert.IsTrue(response.portfolios[0].stockTransactions[0].priceNative!.amount == 100, "Price should be 100 but was " + response.portfolios[0].stockTransactions[0].priceNative!.amount);
-		Assert.IsTrue(response.portfolios[0].stockTransactions[0].priceNative!.currency == "USD", "Currency should be USD but was " + response.portfolios[0].stockTransactions[0].priceNative!.currency);
+
+		Assert.IsTrue(response.transactions[0].description.Contains("TSLA"), "Description should contain TSLA but was " + response.transactions[0].description);
+		Assert.IsTrue(response.transactions[0].description.Contains("NASDAQ"), "Description should contain NASDAQ but was " + response.transactions[0].description);
+		Assert.IsTrue(response.transactions[0].value.amount == -100, "Amount should be 100 but was " + response.transactions[0].value.amount);
+		Assert.IsTrue(response.transactions[0].value.currency == "USD", "Currency should be USD but was " + response.transactions[0].value.currency);
+		Assert.IsTrue(response.transactions[0].balance.amount == -100, "Balance should be -100 but was " + response.transactions[0].balance.amount);
+		Assert.IsTrue(response.transactions[0].balance.currency == "USD", "Currency should be USD but was " + response.transactions[0].balance.currency);
+		Assert.IsTrue(response.transactions[0].combinedBalance.amount == -100, "Combined balance should be -100 but was " + response.transactions[0].combinedBalance.amount);
+		Assert.IsTrue(response.transactions[0].combinedBalance.currency == "USD", "Currency should be USD but was " + response.transactions[0].combinedBalance.currency);
+
+		Assert.IsTrue(response.transactions[1].description.Contains("AAPL"), "Description should contain AAPL but was " + response.transactions[1].description);
+		Assert.IsTrue(response.transactions[1].description.Contains("NASDAQ"), "Description should contain NASDAQ but was " + response.transactions[1].description);
+		Assert.IsTrue(response.transactions[1].value.amount == -100, "Amount should be 100 but was " + response.transactions[1].value.amount);
+		Assert.IsTrue(response.transactions[1].value.currency == "USD", "Currency should be USD but was " + response.transactions[1].value.currency);
+		Assert.IsTrue(response.transactions[1].balance.amount == -200, "Balance should be -200 but was " + response.transactions[1].balance.amount);
+		Assert.IsTrue(response.transactions[1].balance.currency == "USD", "Currency should be USD but was " + response.transactions[1].balance.currency);
+		Assert.IsTrue(response.transactions[1].combinedBalance.amount == -200, "Combined balance should be -200 but was " + response.transactions[1].combinedBalance.amount);
+		Assert.IsTrue(response.transactions[1].combinedBalance.currency == "USD", "Currency should be USD but was " + response.transactions[1].combinedBalance.currency);
 	}
 
 	[TestMethod]
@@ -82,7 +94,7 @@ public class GetTransactionsTest
 		transaction1.ticker = "TSLA";
 		transaction1.exchange = "NASDAQ";
 		transaction1.amount = 1;
-		transaction1.priceNative = new StockApp.Money(100, "USD");
+		transaction1.priceNative = new StockApp.Money(-100, "USD");
 		transaction1.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		await transaction1.AddToDb();
 		StockApp.StockTransaction transaction2 = new StockApp.StockTransaction();
@@ -90,14 +102,29 @@ public class GetTransactionsTest
 		transaction2.ticker = "AAPL";
 		transaction2.exchange = "NASDAQ";
 		transaction2.amount = 1;
-		transaction2.priceNative = new StockApp.Money(100, "USD");
+		transaction2.priceNative = new StockApp.Money(-100, "USD");
 		transaction2.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		await transaction2.AddToDb();
 		GetTransactionsResponse response = GetTransactions.Endpoint(userTestObject.accessToken!, "USD");
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
-		Assert.IsTrue(response.portfolios.Count == 2, "There should be 2 portfolios but there were " + response.portfolios.Count);
-		Assert.IsTrue(response.portfolios[0].stockTransactions.Count == 1, "There should be 1 transaction but there were " + response.portfolios[0].stockTransactions.Count);
-		Assert.IsTrue(response.portfolios[1].stockTransactions.Count == 1, "There should be 1 transaction but there were " + response.portfolios[1].stockTransactions.Count);
+		Assert.IsTrue(response.transactions[0].description.Contains("TSLA"), "Description should contain TSLA but was " + response.transactions[0].description);
+		Assert.IsTrue(response.transactions[0].description.Contains("NASDAQ"), "Description should contain NASDAQ but was " + response.transactions[0].description);
+		Assert.IsTrue(response.transactions[0].value.amount == -100, "Amount should be 100 but was " + response.transactions[0].value.amount);
+		Assert.IsTrue(response.transactions[0].value.currency == "USD", "Currency should be USD but was " + response.transactions[0].value.currency);
+		Assert.IsTrue(response.transactions[0].balance.amount == -100, "Balance should be -100 but was " + response.transactions[0].balance.amount);
+		Assert.IsTrue(response.transactions[0].balance.currency == "USD", "Currency should be USD but was " + response.transactions[0].balance.currency);
+		Assert.IsTrue(response.transactions[0].combinedBalance.amount == -100, "Combined balance should be -100 but was " + response.transactions[0].combinedBalance.amount);
+		Assert.IsTrue(response.transactions[0].combinedBalance.currency == "USD", "Currency should be USD but was " + response.transactions[0].combinedBalance.currency);
+
+		Assert.IsTrue(response.transactions[1].description.Contains("AAPL"), "Description should contain AAPL but was " + response.transactions[1].description);
+		Assert.IsTrue(response.transactions[1].description.Contains("NASDAQ"), "Description should contain NASDAQ but was " + response.transactions[1].description);
+		Assert.IsTrue(response.transactions[1].value.amount == -100, "Amount should be 100 but was " + response.transactions[1].value.amount);
+		Assert.IsTrue(response.transactions[1].value.currency == "USD", "Currency should be USD but was " + response.transactions[1].value.currency);
+		Assert.IsTrue(response.transactions[1].balance.amount == -100, "Balance should be -100 but was " + response.transactions[1].balance.amount);
+		Assert.IsTrue(response.transactions[1].balance.currency == "USD", "Currency should be USD but was " + response.transactions[1].balance.currency);
+		Assert.IsTrue(response.transactions[1].combinedBalance.amount == -200, "Combined balance should be -200 but was " + response.transactions[1].combinedBalance.amount);
+		Assert.IsTrue(response.transactions[1].combinedBalance.currency == "USD", "Currency should be USD but was " + response.transactions[1].combinedBalance.currency);
+
 	}
 
 	[TestMethod]
@@ -105,5 +132,6 @@ public class GetTransactionsTest
 	{
 		GetTransactionsResponse response = GetTransactions.Endpoint(userTestObject.accessToken!, "USD");
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
+		Assert.IsTrue(response.transactions.Count == 0, "Transactions should be empty but was " + response.transactions.Count);
 	}
 }

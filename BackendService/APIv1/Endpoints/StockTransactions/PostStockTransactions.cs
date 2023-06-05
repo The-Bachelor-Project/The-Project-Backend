@@ -46,6 +46,12 @@ public class PostStockTransactions
 		{
 			throw new StatusCodeException(400, "Invalid price");
 		}
+
+		if (body.amount > 0 == body.priceNative!.amount > 0)
+		{
+			body.priceNative!.amount *= -1;
+		}
+
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
 		System.Console.WriteLine("User: " + user.id);
 		StockApp.User owner = new StockApp.Portfolio(body.portfolioId).GetOwner();

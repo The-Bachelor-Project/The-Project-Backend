@@ -67,7 +67,8 @@ public class StockTransaction
 		{
 			amountOwned = (Decimal)data["amount_owned"];
 		}
-		if (amountOwned + amountAdjusted < 0)
+		System.Console.WriteLine("----------------------" + amountOwned + " " + amountAdjusted + " " + (amountOwned + amountAdjusted));
+		if ((amountOwned + amountAdjusted) < 0)
 		{
 			throw new StatusCodeException(400, "Not enough owned stocks");
 		}
@@ -95,15 +96,9 @@ public class StockTransaction
 			System.Console.WriteLine(e);
 			throw new StatusCodeException(500, "Could not insert stock transaction into database");
 		}
-		String getId = "SELECT TOP 1 id FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp = @timestamp AND amount_currency = @amount_currency AND currency = @currency AND amount_usd = @amount_usd ORDER BY id DESC";
+		String getId = "SELECT TOP 1 id FROM StockTransactions WHERE portfolio = @portfolio ORDER BY id DESC";
 		Dictionary<String, object> parameters2 = new Dictionary<string, object>();
 		parameters2.Add("@portfolio", portfolioId);
-		parameters2.Add("@ticker", ticker);
-		parameters2.Add("@exchange", exchange);
-		parameters2.Add("@timestamp", timestamp);
-		parameters2.Add("@amount_currency", priceNative!.amount);
-		parameters2.Add("@currency", priceNative.currency);
-		parameters2.Add("@amount_usd", priceUSD!.amount);
 		Dictionary<String, object>? data2 = Data.Database.Reader.ReadOne(getId, parameters2);
 		if (data2 == null)
 		{

@@ -5,7 +5,7 @@ public class PortfolioHelper
 {
 	public static StockApp.Portfolio Create(UserTestObject userTestObject)
 	{
-		StockApp.Portfolio portfolio = new StockApp.Portfolio("TEST", userTestObject.user!.id!, "EUR", 0, false);
+		StockApp.Portfolio portfolio = new StockApp.Portfolio("This one", userTestObject.user!.id!, "EUR", 0, false);
 		try
 		{
 			portfolio.AddToDb();
