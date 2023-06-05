@@ -16,8 +16,8 @@ public class GetValueHistoryTest
 	[TestCleanup]
 	public void Cleanup()
 	{
-		// PortfolioHelper.Delete(userTestObject);
-		// UserHelper.Delete(userTestObject);
+		PortfolioHelper.Delete(userTestObject);
+		UserHelper.Delete(userTestObject);
 	}
 
 	[TestMethod]
@@ -309,20 +309,20 @@ public class GetValueHistoryTest
 		.Distinct()
 		.ToList();
 		List<Decimal> expectedBalances = new List<Decimal>() { 100, 0, 150, -50 };
-		// for (int i = 0; i < balances.Count; i++)
-		// {
-		// 	Assert.IsTrue(expectedBalances.Contains(balances[i]), "The balance " + balances[i] + " was not expected " + userTestObject.accessToken!);
-		// }
+		for (int i = 0; i < balances.Count; i++)
+		{
+			Assert.IsTrue(expectedBalances.Contains(balances[i]), "The balance " + balances[i] + " was not expected " + userTestObject.accessToken!);
+		}
 
-		// balances = response.valueHistory.portfolios[1].cashBalance
-		// .Select(balance => balance.balance.amount)
-		// .Distinct()
-		// .ToList();
-		// expectedBalances = new List<Decimal>() { -100, 50, -150 };
-		// for (int i = 0; i < balances.Count; i++)
-		// {
-		// 	Assert.IsTrue(expectedBalances.Contains(balances[i]), "The balance " + balances[i] + " was not expected " + userTestObject.accessToken!);
-		// }
+		balances = response.valueHistory.portfolios[1].cashBalance
+		.Select(balance => balance.balance.amount)
+		.Distinct()
+		.ToList();
+		expectedBalances = new List<Decimal>() { -100, 50, -150 };
+		for (int i = 0; i < balances.Count; i++)
+		{
+			Assert.IsTrue(expectedBalances.Contains(balances[i]), "The balance " + balances[i] + " was not expected " + userTestObject.accessToken!);
+		}
 
 		balances = response.valueHistory.cashBalance.Select(balance => balance.balance.amount).Distinct().ToList();
 		expectedBalances = new List<Decimal>() { 100, -100, 200, -200 };

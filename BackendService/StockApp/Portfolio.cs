@@ -176,32 +176,10 @@ public class Portfolio
 				dividendHistory.AddRange(dataPosition.dividends);
 			}
 		}
-		List<Data.Transaction> allTansactions = await GetOwner().GetTransactions(currency);
-		List<Data.Transaction> newTransactions = new List<Data.Transaction>();
-		if (allTansactions.Count != 0)
-		{
-			foreach (Data.Transaction transaction in allTansactions)
-			{
-				if (transaction.timestamp >= Tools.TimeConverter.DateOnlyToUnix(startDate) && transaction.timestamp <= Tools.TimeConverter.DateOnlyToUnix(endDate) && transaction.portfolio == id)
-				{
-					newTransactions.Add(transaction);
-				}
-			}
-			if (newTransactions.First().timestamp > Tools.TimeConverter.DateOnlyToUnix(startDate) &&
-			allTansactions.First() != newTransactions.First())
-			{
-				for (int i = allTansactions.Count - 1; i >= 0; i--)
-				{
-					if (allTansactions[i].timestamp < Tools.TimeConverter.DateOnlyToUnix(startDate))
-					{
-						allTansactions[i].timestamp = Tools.TimeConverter.DateOnlyToUnix(startDate);
-						newTransactions.Insert(0, allTansactions[i]);
-						break;
-					}
-
-				}
-			}
-		}
+		List<Data.Transaction> allTransactions = await GetOwner().GetTransactions(currency);
+		int firstIndex = allTransactions.FindLastIndex(x => x.timestamp <= Tools.TimeConverter.DateOnlyToUnix(startDate) && x.portfolio == id);
+		int lastIndex = allTransactions.FindIndex(x => x.timestamp <= Tools.TimeConverter.DateOnlyToUnix(endDate) && x.portfolio == id);
+		List<Data.Transaction> newTransactions = allTransactions.GetRange(firstIndex < 0 ? 0 : firstIndex, ((lastIndex - firstIndex + 1) < 0 ? 0 : (lastIndex - firstIndex + 1)));
 		User user = GetOwner();
 		cashBalance = user.InsertMissingValues(cashBalance);
 

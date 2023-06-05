@@ -6,7 +6,7 @@ public class Dictionaries
 	{
 		//TODO: Fix NGM, OTCMKTS, ASE, not being converted in YF Translator
 		// TODO: AMS just broken ??
-		{"AMS", "RAND"},
+		// {"AMS", "RAND"},
 		{"SAO", "A1AP34"},
 		{"BMV", "1299N"},
 		{"STU", "014"},

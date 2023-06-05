@@ -250,7 +250,8 @@ public class User
 		List<Data.Transaction> allTransactions = await GetTransactions(currency);
 		int firstIndex = allTransactions.FindLastIndex(x => x.timestamp <= Tools.TimeConverter.DateOnlyToUnix(startDate));
 		int lastIndex = allTransactions.FindIndex(x => x.timestamp <= Tools.TimeConverter.DateOnlyToUnix(endDate));
-		List<Data.Transaction> newTransactions = allTransactions.GetRange(firstIndex, lastIndex - firstIndex + 1);
+		int tempIndex = 0;
+		List<Data.Transaction> newTransactions = allTransactions.GetRange(firstIndex < 0 ? 0 : firstIndex, ((lastIndex - firstIndex + 1) < 0 ? 0 : (lastIndex - firstIndex + 1)));
 
 		List<Data.DatePriceOHLC> valueHistory = new List<Data.DatePriceOHLC>();
 		List<Data.Portfolio> dataPortfolios = new List<Data.Portfolio>();
