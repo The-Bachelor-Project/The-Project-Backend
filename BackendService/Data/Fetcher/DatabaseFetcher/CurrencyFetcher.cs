@@ -29,10 +29,10 @@ public class CurrencyFetcher : ICurrencyFetcher
 			{
 				result.history.Add(new Data.DatePriceOHLC(
 					DateOnly.FromDateTime(DateTime.Parse(row["end_date"].ToString()!)),
-					new Data.Money(Decimal.Parse("" + row["open_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
-					new Data.Money(Decimal.Parse("" + row["high_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
-					new Data.Money(Decimal.Parse("" + row["low_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
-					new Data.Money(Decimal.Parse("" + row["close_price"].ToString()), Data.Money.DEFAULT_CURRENCY)
+					new StockApp.Money(Decimal.Parse("" + row["open_price"].ToString()), StockApp.Money.DEFAULT_CURRENCY),
+					new StockApp.Money(Decimal.Parse("" + row["high_price"].ToString()), StockApp.Money.DEFAULT_CURRENCY),
+					new StockApp.Money(Decimal.Parse("" + row["low_price"].ToString()), StockApp.Money.DEFAULT_CURRENCY),
+					new StockApp.Money(Decimal.Parse("" + row["close_price"].ToString()), StockApp.Money.DEFAULT_CURRENCY)
 				));
 			}
 			catch (Exception e)

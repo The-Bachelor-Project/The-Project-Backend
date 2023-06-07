@@ -23,7 +23,7 @@ public class DeleteStockTransactions
 		User user = new TokenSet(accessToken).GetUser();
 		Portfolio portfolio = user.GetPortfolio(portfolioID);
 		StockTransaction stockTransaction = portfolio.GetStockTransaction(transactionID);
-		await stockTransaction.DeleteFromDb();
+		await stockTransaction.Delete();
 		return new DeleteStockTransactionsResponse("success");
 	}
 }

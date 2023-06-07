@@ -125,10 +125,10 @@ public class CashTransactionsTest
 	}
 
 	[TestMethod]
-	public void CashTransactionsTest_DeleteFromDb_NullIDTest()
+	public void CashTransactionsTest_Delete_NullIDTest()
 	{
 		StockApp.CashTransaction cashTransaction = new StockApp.CashTransaction();
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => cashTransaction.DeleteFromDb());
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => cashTransaction.Delete());
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
 	}
 

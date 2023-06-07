@@ -38,7 +38,7 @@ public class GetValueHistoryTest
 		Assert.IsTrue(response.valueHistory.portfolios[0].positions[0].exchange == "NASDAQ", "The exchange should be NASDAQ but was " + response.valueHistory.portfolios[0].positions[0].exchange);
 		Assert.IsTrue(response.valueHistory.portfolios[0].positions[0].valueHistory.Count > 0, "There should be more than 0 value history entries, but there was " + response.valueHistory.portfolios[0].positions[0].valueHistory.Count);
 		Assert.IsTrue(response.valueHistory.portfolios[0].positions[0].dividends.Count == 0, "There should be 0 dividends, but there was " + response.valueHistory.portfolios[0].positions[0].dividends.Count);
-		await transaction.DeleteFromDb();
+		await transaction.Delete();
 	}
 
 	[TestMethod]

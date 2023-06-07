@@ -41,10 +41,10 @@ public class StockFetcher : IStockFetcher
 			{
 				result.history.Add(new Data.DatePriceOHLC(
 					DateOnly.FromDateTime((DateTime)row["end_date"]),
-					new Money(Decimal.Parse("" + row["open_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
-					new Money(Decimal.Parse("" + row["high_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
-					new Money(Decimal.Parse("" + row["low_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
-					new Money(Decimal.Parse("" + row["close_price"].ToString()), Data.Money.DEFAULT_CURRENCY)
+					new StockApp.Money(Decimal.Parse("" + row["open_price"].ToString()), StockApp.Money.DEFAULT_CURRENCY),
+					new StockApp.Money(Decimal.Parse("" + row["high_price"].ToString()), StockApp.Money.DEFAULT_CURRENCY),
+					new StockApp.Money(Decimal.Parse("" + row["low_price"].ToString()), StockApp.Money.DEFAULT_CURRENCY),
+					new StockApp.Money(Decimal.Parse("" + row["close_price"].ToString()), StockApp.Money.DEFAULT_CURRENCY)
 				));
 			}
 			catch (System.Exception e)
@@ -138,7 +138,7 @@ public class StockFetcher : IStockFetcher
 			{
 				dividends.Add(new Dividend(
 					DateOnly.FromDateTime((DateTime)row["date"]),
-					new Money(Decimal.Parse("" + row["payout"].ToString()), Data.Money.DEFAULT_CURRENCY)
+					new StockApp.Money(Decimal.Parse("" + row["payout"].ToString()), StockApp.Money.DEFAULT_CURRENCY)
 				));
 			}
 			catch (System.Exception e)

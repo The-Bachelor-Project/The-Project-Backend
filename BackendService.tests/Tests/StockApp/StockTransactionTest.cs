@@ -129,35 +129,7 @@ public class StockTransactionTest
 	}
 
 	[TestMethod]
-	public void StockTransactionTest_GetPortfolio_SuccessfulTest()
-	{
-		StockTransaction stockTransaction = new StockTransaction();
-		stockTransaction.portfolioId = portfolio.id;
-		Portfolio gottenPortfolio = stockTransaction.GetPortfolio();
-		Assert.IsTrue(gottenPortfolio.id == portfolio.id, "Portfolio ID should be " + portfolio.id + " but was " + gottenPortfolio.id);
-
-	}
-
-	[TestMethod]
-	public void StockTransactionTest_GetPortfolio_InvalidIDTest()
-	{
-		StockTransaction stockTransaction = new StockTransaction();
-		stockTransaction.portfolioId = "invalid";
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => stockTransaction.GetPortfolio());
-		Assert.IsTrue(exception.StatusCode == 404, "Status code should be 404 but was " + exception.StatusCode);
-	}
-
-	[TestMethod]
-	public void StockTransactionTest_GetPortfolio_NullPortfolioIDTest()
-	{
-		StockTransaction stockTransaction = new StockTransaction();
-		stockTransaction.portfolioId = null;
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => stockTransaction.GetPortfolio());
-		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 404 but was " + exception.StatusCode);
-	}
-
-	[TestMethod]
-	public async Task StockTransactionTest_DeleteFromDb_SuccessfulTest()
+	public async Task StockTransactionTest_Delete_SuccessfulTest()
 	{
 		StockTransaction stockTransaction = new StockTransaction();
 		stockTransaction.portfolioId = portfolio.id!;
@@ -168,13 +140,13 @@ public class StockTransactionTest
 		stockTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		stockTransaction.portfolioId = portfolio.id;
 		await stockTransaction.AddToDb();
-		await stockTransaction.DeleteFromDb();
+		await stockTransaction.Delete();
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => StockTransactionHelper.Get((int)stockTransaction.id!));
 		Assert.IsTrue(exception.StatusCode == 404, "Status code should be 404 but was " + exception.StatusCode);
 	}
 
 	[TestMethod]
-	public async Task StockTransactionTest_DeleteFromDb_InvalidIDTest()
+	public async Task StockTransactionTest_Delete_InvalidIDTest()
 	{
 		StockTransaction stockTransaction = new StockTransaction();
 		stockTransaction.portfolioId = portfolio.id!;
@@ -184,7 +156,7 @@ public class StockTransactionTest
 		stockTransaction.amount = 10;
 		stockTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
 		stockTransaction.id = -1;
-		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockTransaction.DeleteFromDb());
+		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockTransaction.Delete());
 		Assert.IsTrue(exception.StatusCode == 404, "Status code should be 404 but was " + exception.StatusCode);
 	}
 }

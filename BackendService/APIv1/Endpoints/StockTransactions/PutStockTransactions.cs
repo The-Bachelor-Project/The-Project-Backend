@@ -63,7 +63,7 @@ public class PutStockTransactions
 		}
 
 		await newStockTransaction.AddToDb();
-		await oldStockTransaction.DeleteFromDb();
+		await oldStockTransaction.Delete();
 
 		System.Console.WriteLine("Old id " + oldStockTransaction.id + " new id " + newStockTransaction.id);
 

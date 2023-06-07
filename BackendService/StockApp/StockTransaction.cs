@@ -111,25 +111,7 @@ public class StockTransaction
 		return this;
 	}
 
-	public Portfolio GetPortfolio()
-	{
-		if (portfolioId == null)
-		{
-			throw new StatusCodeException(400, "Missing required fields");
-		}
-		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
-		String checkIfPortfolioExistsQuery = "SELECT * FROM Portfolios WHERE uid = @id";
-		Dictionary<String, object> parameters = new Dictionary<string, object>();
-		parameters.Add("@id", portfolioId);
-		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(checkIfPortfolioExistsQuery, parameters);
-		if (data == null)
-		{
-			throw new StatusCodeException(404, "Could not find portfolio with id " + portfolioId);
-		}
-		return new Portfolio(portfolioId!);
-	}
-
-	public Task DeleteFromDb()
+	public Task Delete()
 	{
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String checkIfTransactionExistsQuery = "SELECT * FROM StockTransactions WHERE id = @id";

@@ -66,7 +66,7 @@ public class CashTransaction
 		return this;
 	}
 
-	public void DeleteFromDb()
+	public void Delete()
 	{
 		if (id == null)
 		{

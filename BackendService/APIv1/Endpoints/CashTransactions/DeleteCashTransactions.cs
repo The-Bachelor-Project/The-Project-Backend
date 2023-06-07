@@ -25,7 +25,7 @@ public class DeleteCashTransactions
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
 		StockApp.Portfolio portfolio = user.GetPortfolio(portfolioID);
 		StockApp.CashTransaction cashTransaction = portfolio.GetCashTransaction(id);
-		cashTransaction.DeleteFromDb();
+		cashTransaction.Delete();
 		return new DeleteCashTransactionsResponse("success");
 	}
 }

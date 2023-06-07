@@ -51,7 +51,7 @@ public class CurrencyFetcher : ICurrencyFetcher
 					}
 					else
 					{
-						Data.DatePriceOHLC temp = new Data.DatePriceOHLC(DateOnly.Parse(data[0]), new Data.Money(Decimal.Parse(data[1]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[2]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[3]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[4]), Data.Money.DEFAULT_CURRENCY));
+						Data.DatePriceOHLC temp = new Data.DatePriceOHLC(DateOnly.Parse(data[0]), new StockApp.Money(Decimal.Parse(data[1]), StockApp.Money.DEFAULT_CURRENCY), new StockApp.Money(Decimal.Parse(data[2]), StockApp.Money.DEFAULT_CURRENCY), new StockApp.Money(Decimal.Parse(data[3]), StockApp.Money.DEFAULT_CURRENCY), new StockApp.Money(Decimal.Parse(data[4]), StockApp.Money.DEFAULT_CURRENCY));
 						temp.openPrice.amount /= 100;
 						temp.highPrice.amount /= 100;
 						temp.lowPrice.amount /= 100;
@@ -81,7 +81,7 @@ public class CurrencyFetcher : ICurrencyFetcher
 					}
 					else
 					{
-						result.history.Add(new Data.DatePriceOHLC(DateOnly.Parse(data[0]), new Data.Money(Decimal.Parse(data[1]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[2]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[3]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[4]), Data.Money.DEFAULT_CURRENCY)));
+						result.history.Add(new Data.DatePriceOHLC(DateOnly.Parse(data[0]), new StockApp.Money(Decimal.Parse(data[1]), StockApp.Money.DEFAULT_CURRENCY), new StockApp.Money(Decimal.Parse(data[2]), StockApp.Money.DEFAULT_CURRENCY), new StockApp.Money(Decimal.Parse(data[3]), StockApp.Money.DEFAULT_CURRENCY), new StockApp.Money(Decimal.Parse(data[4]), StockApp.Money.DEFAULT_CURRENCY)));
 					}
 				}
 				catch (Exception e)

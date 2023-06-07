@@ -52,7 +52,7 @@ public class PutCashTransactions
 			newCashTransaction.timestamp = body.newTimestamp;
 		}
 		await newCashTransaction.AddToDb();
-		oldCashTransaction.DeleteFromDb();
+		oldCashTransaction.Delete();
 		return new PutCashTransactionsResponse("success", (int)newCashTransaction.id!);
 	}
 }

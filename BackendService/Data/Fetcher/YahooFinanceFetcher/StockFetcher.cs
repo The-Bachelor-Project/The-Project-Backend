@@ -57,10 +57,10 @@ public class StockFetcher : IStockFetcher
 				{
 					Data.DatePriceOHLC dataPoint = new Data.DatePriceOHLC(
 					DateOnly.Parse(dataSplit[0]),
-					new Data.Money(Decimal.Parse(dataSplit[1]), currency),
-					new Data.Money(Decimal.Parse(dataSplit[2]), currency),
-					new Data.Money(Decimal.Parse(dataSplit[3]), currency),
-					new Data.Money(Decimal.Parse(dataSplit[4]), currency)
+					new StockApp.Money(Decimal.Parse(dataSplit[1]), currency),
+					new StockApp.Money(Decimal.Parse(dataSplit[2]), currency),
+					new StockApp.Money(Decimal.Parse(dataSplit[3]), currency),
+					new StockApp.Money(Decimal.Parse(dataSplit[4]), currency)
 					);
 					result.history.Add(dataPoint);
 				}
@@ -265,7 +265,7 @@ public class StockFetcher : IStockFetcher
 				{
 					Data.Dividend dataPoint = new Data.Dividend(
 						DateOnly.Parse(dataSplit[0]),
-						new Data.Money(Decimal.Parse(dataSplit[1]), currency)
+						new StockApp.Money(Decimal.Parse(dataSplit[1]), currency)
 					);
 					dividends.Add(dataPoint);
 				}
