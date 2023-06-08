@@ -144,29 +144,10 @@ public class User
 		}
 	}
 
-	public void Delete(String email)
+	public void Delete()
 	{
-		if (id == null || email == null)
-		{
-			throw new StatusCodeException(400, "Fields are missing");
-		}
-
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
-		String query = "SELECT user_id FROM Accounts WHERE email = @email";
-		Dictionary<String, object> parameters = new Dictionary<string, object>();
-		parameters.Add("@email", email);
-		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(query, parameters);
-		if (data == null)
-		{
-			throw new StatusCodeException(404, "No user with the email: " + email + " was found");
-		}
-		String userID = data["user_id"].ToString()!;
-		if (userID != id)
-		{
-			throw new StatusCodeException(401, "Not authorized to delete this user");
-		}
-
-		query = "DELETE FROM Accounts WHERE user_id = @user_id";
+		String query = "DELETE FROM Accounts WHERE user_id = @user_id";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@user_id", id);
 		try

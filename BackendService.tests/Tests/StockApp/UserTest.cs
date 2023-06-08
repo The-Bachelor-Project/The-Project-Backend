@@ -326,25 +326,9 @@ public class UserTest
 	public void UserTest_Delete_SuccessfulTest()
 	{
 		StockApp.User user = userTestObject.user!;
-		user.Delete(user.email!);
+		user.Delete();
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => GetUsers.Endpoint(userTestObject.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 401, "status code should be 401 but was " + exception.StatusCode);
-	}
-
-	[TestMethod]
-	public void UserTest_Delete_InvalidEmailTest()
-	{
-		StockApp.User user = userTestObject.user!;
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.Delete(Tools.RandomString.Generate(10)));
-		Assert.IsTrue(exception.StatusCode == 404, "status code should be 404 but was " + exception.StatusCode);
-	}
-
-	[TestMethod]
-	public void UserTest_Delete_EmailNullTest()
-	{
-		StockApp.User user = userTestObject.user!;
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.Delete(null!));
-		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
 	}
 
 	[TestMethod]
@@ -352,7 +336,7 @@ public class UserTest
 	{
 		StockApp.User user = userTestObject.user!;
 		user.id = "invalid";
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.Delete(user.email!));
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.Delete());
 		Assert.IsTrue(exception.StatusCode == 401, "status code should be 401 but was " + exception.StatusCode);
 	}
 
@@ -361,17 +345,8 @@ public class UserTest
 	{
 		StockApp.User user = userTestObject.user!;
 		user.id = null;
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.Delete(user.email!));
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.Delete());
 		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
-	}
-
-	[TestMethod]
-	public void UserTest_Delete_WrongExistEmailTest()
-	{
-		StockApp.User user = userTestObject.user!;
-		UserTestObject otherUser = UserHelper.Create();
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.Delete(otherUser.user!.email!));
-		Assert.IsTrue(exception.StatusCode == 401, "status code should be 401 but was " + exception.StatusCode);
 	}
 
 	[TestMethod]

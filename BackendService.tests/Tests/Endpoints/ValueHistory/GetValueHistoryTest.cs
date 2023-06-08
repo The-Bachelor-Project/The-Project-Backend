@@ -324,7 +324,7 @@ public class GetValueHistoryTest
 			Assert.IsTrue(expectedBalances.Contains(balances[i]), "The balance " + balances[i] + " was not expected " + userTestObject.accessToken!);
 		}
 
-		balances = response.valueHistory.cashBalance.Select(balance => balance.balance.amount).Distinct().ToList();
+		balances = response.valueHistory.cashBalanceHistory.Select(balance => balance.balance.amount).Distinct().ToList();
 		expectedBalances = new List<Decimal>() { 100, -100, 200, -200 };
 		for (int i = 0; i < balances.Count; i++)
 		{
