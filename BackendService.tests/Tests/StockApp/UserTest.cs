@@ -141,7 +141,7 @@ public class UserTest
 		String newEmail = Tools.RandomString.Generate(200) + "@test.com";
 		try
 		{
-			user.ChangeEmail(user.email!, newEmail);
+			user.ChangeEmail(newEmail);
 			UserExistsInDatabaseCheck(newEmail);
 			user.email = newEmail;
 		}
@@ -165,7 +165,7 @@ public class UserTest
 		{
 			Assert.Fail("Exception thrown, user not added to database: " + e.Message);
 		}
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.ChangeEmail(user.email!, otherEmail));
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.ChangeEmail(otherEmail));
 		Assert.IsTrue(exception.StatusCode == 409, "status code should be 409 but was " + exception.StatusCode);
 		UserHelper.Delete(new UserTestObject(otherUser, "", "", -2));
 	}
@@ -174,15 +174,7 @@ public class UserTest
 	public void UserTest_ChangeEmail_NewEmailNullTest()
 	{
 		StockApp.User user = userTestObject.user!;
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.ChangeEmail(user.email!, null!));
-		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
-	}
-
-	[TestMethod]
-	public void UserTest_ChangeEmail_OldEmailNullTest()
-	{
-		StockApp.User user = userTestObject.user!;
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.ChangeEmail(null!, Tools.RandomString.Generate(200) + "@test.com"));
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.ChangeEmail(null!));
 		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
 	}
 
@@ -193,7 +185,7 @@ public class UserTest
 		String newPassword = Tools.RandomString.Generate(10);
 		try
 		{
-			user.ChangePassword(user.password!, newPassword, user.email!);
+			user.ChangePassword(user.password!, newPassword);
 			user.password = newPassword;
 			user.SignIn();
 		}
@@ -209,7 +201,7 @@ public class UserTest
 		StockApp.User user = userTestObject.user!;
 		String newPassword = Tools.RandomString.Generate(10);
 		String randomPassword = Tools.RandomString.Generate(10);
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.ChangePassword(randomPassword, newPassword, user.email!));
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.ChangePassword(randomPassword, newPassword));
 		Assert.IsTrue(exception.StatusCode == 401, "status code should be 401 but was " + exception.StatusCode);
 	}
 
@@ -217,7 +209,7 @@ public class UserTest
 	public void UserTest_ChangePassword_NewPasswordNullTest()
 	{
 		StockApp.User user = userTestObject.user!;
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.ChangePassword(user.password!, null!, user.email!));
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.ChangePassword(user.password!, null!));
 		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
 	}
 
@@ -225,7 +217,7 @@ public class UserTest
 	public void UserTest_ChangePassword_OldPasswordNullTest()
 	{
 		StockApp.User user = userTestObject.user!;
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.ChangePassword(null!, Tools.RandomString.Generate(10), user.email!));
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.ChangePassword(null!, Tools.RandomString.Generate(10)));
 		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
 	}
 

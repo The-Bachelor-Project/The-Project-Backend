@@ -35,7 +35,7 @@ public class PutUsers
 			throw new StatusCodeException(400, "Missing required fields");
 		}
 		User user = new TokenSet(accessToken).GetUser();
-		user.ChangePassword(body.oldPassword, body.newPassword, body.email!);
+		user.ChangePassword(body.oldPassword, body.newPassword);
 		return new PutUserResponse("success");
 
 	}
@@ -51,7 +51,7 @@ public class PutUsers
 			throw new StatusCodeException(400, "Invalid email");
 		}
 		User user = new TokenSet(accessToken).GetUser();
-		user.ChangeEmail(body.oldEmail, body.newEmail);
+		user.ChangeEmail(body.newEmail);
 		return new PutUserResponse("success");
 	}
 }

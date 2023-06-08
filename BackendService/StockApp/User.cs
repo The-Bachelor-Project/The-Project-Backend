@@ -86,17 +86,16 @@ public class User
 		throw new StatusCodeException(404, "No user with the email: " + email + " was found");
 	}
 
-	public User ChangeEmail(String oldEmail, String newEmail)
+	public User ChangeEmail(String newEmail)
 	{
-		if (oldEmail == null || newEmail == null)
+		if (newEmail == null)
 		{
 			throw new StatusCodeException(400, "Fields are missing");
 		}
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
-		String query = "UPDATE Accounts SET email = @new_email WHERE user_id = @user_id AND email = @old_email";
+		String query = "UPDATE Accounts SET email = @new_email WHERE user_id = @user_id";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@user_id", id);
-		command.Parameters.AddWithValue("@old_email", oldEmail);
 		command.Parameters.AddWithValue("@new_email", newEmail);
 		try
 		{
@@ -111,29 +110,27 @@ public class User
 		}
 	}
 
-	public User ChangePassword(String oldPassword, String newPassword, String email)
+	public User ChangePassword(String oldPassword, String newPassword)
 	{
-		if (oldPassword == null || newPassword == null || email == null)
+		if (oldPassword == null || newPassword == null)
 		{
 			throw new StatusCodeException(400, "Fields are missing");
 		}
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		oldPassword = Tools.Password.Hash(oldPassword);
-		String getOldPasswordQuery = "SELECT password FROM Accounts WHERE password = @password AND email = @email";
+		String getOldPasswordQuery = "SELECT password FROM Accounts WHERE password = @password";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@password", oldPassword);
-		parameters.Add("@email", email);
 		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(getOldPasswordQuery, parameters);
 		if (data == null)
 		{
 			throw new StatusCodeException(401, "The password is incorrect");
 		}
-		String updatePasswordQuery = "UPDATE Accounts SET password = @new_password WHERE user_id = @user_id AND email = @email AND password = @old_password";
+		String updatePasswordQuery = "UPDATE Accounts SET password = @new_password WHERE user_id = @user_id AND password = @old_password";
 		SqlCommand command = new SqlCommand(updatePasswordQuery, connection);
 		command.Parameters.AddWithValue("@user_id", id);
 		command.Parameters.AddWithValue("@old_password", oldPassword);
 		command.Parameters.AddWithValue("@new_password", Tools.Password.Hash(newPassword));
-		command.Parameters.AddWithValue("@email", email);
 		try
 		{
 			command.ExecuteNonQuery();
