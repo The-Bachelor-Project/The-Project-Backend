@@ -26,45 +26,6 @@ public class GetStockPorfilesTest
 
 	// Tests for all exchanges
 
-	// [TestMethod]
-	// public async Task GetStockProfilesTest_MEX()
-	// {
-	// 	string ticker = "";
-	// 	string exchange = "MEX";
-
-	// 	GetStockProfilesResponse response = await GetStockProfiles.Endpoint(ticker, exchange);
-
-	// 	Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
-	// 	Assert.IsTrue(response.stock!.ticker == ticker, "Ticker should be " + ticker + " but was " + response.stock!.ticker);
-	// 	Assert.IsTrue(response.stock!.exchange == exchange, "Exchange should be " + exchange + " but was " + response.stock!.exchange);
-	// }
-
-	// [TestMethod]
-	// public async Task GetStockProfilesTest_TSE()
-	// {
-	// 	string ticker = "";
-	// 	string exchange = "TSE";
-
-	// 	GetStockProfilesResponse response = await GetStockProfiles.Endpoint(ticker, exchange);
-
-	// 	Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
-	// 	Assert.IsTrue(response.stock!.ticker == ticker, "Ticker should be " + ticker + " but was " + response.stock.ticker);
-	// 	Assert.IsTrue(response.stock!.exchange == exchange, "Exchange should be " + exchange + " but was " + response.stock.exchange);
-	// }
-
-	// [TestMethod]
-	// public async Task GetStockProfilesTest_CXE()
-	// {
-	// 	string ticker = "";
-	// 	string exchange = "CXE";
-
-	// 	GetStockProfilesResponse response = await GetStockProfiles.Endpoint(ticker, exchange);
-
-	// 	Assert.IsTrue(response.response == "error", "Response should be error but was " + response.response);
-	// 	Assert.IsTrue(response.stock!.ticker == ticker, "Ticker should be " + ticker + " but was " + response.stock.ticker);
-	// 	Assert.IsTrue(response.stock!.exchange == exchange, "Exchange should be " + exchange + " but was " + response.stock.exchange);
-	// }
-
 	[TestMethod]
 	public async Task GetStockProfilesTest_OTCMKTS()
 	{

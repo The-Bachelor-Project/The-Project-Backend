@@ -1,8 +1,8 @@
 namespace API.v1;
 
-class Application
+public class Application
 {
-	public static void Setup()
+	public static void Setup(Boolean startServer)
 	{
 		var allowCORS = "_allowCors";
 		WebApplicationBuilder builder = WebApplication.CreateBuilder();
@@ -48,6 +48,9 @@ class Application
 		DeleteCashTransactions.Setup(app);
 		GetCashTransactions.Setup(app);
 		PutCashTransactions.Setup(app);
-		app.Run();
+		if (startServer) // This is only false for when testing the setup of everything
+		{
+			app.Run();
+		}
 	}
 }

@@ -228,7 +228,6 @@ public class PortfolioTest
 	public async Task PortfolioTest_GetValueHistory_SinglePortfolioSingleTransactionTest()
 	{
 		//TODO: Fix value history to use busniess logic instead of data
-
 	}
 
 	[TestMethod]

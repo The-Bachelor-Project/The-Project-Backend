@@ -59,7 +59,7 @@ def convertExchanges():
 			df.at[i, 'convertedExchange'] = DICTIONARY_CONVERT[row['yfExchange']]
 	df.to_csv('tickers_converted.csv', index=False)
 
-async def populate_db():
+async def get_stock_profile():
 	url_quote = 'https://query1.finance.yahoo.com/v6/finance/quote?symbols={tic_exc}'
 	url_summary = 'https://query1.finance.yahoo.com/v11/finance/quoteSummary/{tic_exc}?modules=assetProfile'
 	df = pd.read_csv('tickers_converted.csv')
@@ -97,4 +97,4 @@ async def populate_db():
 if __name__ == '__main__':
 	# get_exchanges()
 	# convertExchanges()
-	asyncio.run(populate_db())
+	asyncio.run(get_stock_profile())

@@ -112,6 +112,7 @@ public class MiddlewareTest
 		await middleware.InvokeAsync(context, next);
 		Assert.AreEqual(StatusCodes.Status403Forbidden, context.Response.StatusCode);
 	}
+
 	[TestMethod]
 	public async Task MiddlewareTest_ExpiredRefreshTokenAndTokenRefreshPathTest()
 	{
