@@ -227,43 +227,82 @@ public class PortfolioTest
 	[TestMethod]
 	public async Task PortfolioTest_GetValueHistory_SinglePortfolioSingleTransactionTest()
 	{
-		//TODO: Fix value history to use busniess logic instead of data
+		portfolio.AddToDb();
+		StockTransaction stockTransaction = new StockTransaction();
+		stockTransaction.portfolioId = portfolio.id!;
+		stockTransaction.ticker = "TSLA";
+		stockTransaction.exchange = "NASDAQ";
+		stockTransaction.amount = 10;
+		stockTransaction.priceNative = new Money(100, "USD");
+		stockTransaction.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2021-04-04"));
+		await stockTransaction.AddToDb();
+		await portfolio.GetValueHistory("USD", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2021-06-06"));
+		Assert.IsTrue(portfolio.stockPositions.Count == 1, "Stock position count should be 1 but was " + portfolio.stockPositions.Count);
+		Assert.IsTrue(portfolio.stockPositions[0].stock.ticker == stockTransaction.ticker, "Stock position ticker should be \"" + stockTransaction.ticker + "\" but was \"" + portfolio.stockPositions[0].stock.ticker + "\"");
+		Assert.IsTrue(portfolio.stockTransactions.Count == 1, "Stock transaction count should be 1 but was " + portfolio.stockTransactions.Count);
+		Assert.IsTrue(portfolio.stockTransactions[0].ticker == stockTransaction.ticker, "Stock transaction ticker should be \"" + stockTransaction.ticker + "\" but was \"" + portfolio.stockTransactions[0].ticker + "\"");
+		Assert.IsTrue(portfolio.valueHistory!.Count > 0, "Value history count should be bigger than 0 but was " + portfolio.valueHistory.Count);
 	}
 
 	[TestMethod]
 	public async Task PortfolioTest_GetValueHistory_SinglePortfolioMultipleTransactionsTest()
 	{
-
+		portfolio.AddToDb();
+		StockTransaction stockTransaction1 = new StockTransaction();
+		stockTransaction1.portfolioId = portfolio.id!;
+		stockTransaction1.ticker = "TSLA";
+		stockTransaction1.exchange = "NASDAQ";
+		stockTransaction1.amount = 10;
+		stockTransaction1.priceNative = new Money(100, "USD");
+		stockTransaction1.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2021-04-04"));
+		await stockTransaction1.AddToDb();
+		StockTransaction stockTransaction2 = new StockTransaction();
+		stockTransaction2.portfolioId = portfolio.id!;
+		stockTransaction2.ticker = "CHEMM";
+		stockTransaction2.exchange = "CPH";
+		stockTransaction2.amount = 10;
+		stockTransaction2.priceNative = new Money(100, "DKK");
+		stockTransaction2.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2021-04-04"));
+		await stockTransaction2.AddToDb();
+		await portfolio.GetValueHistory("USD", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2021-06-06"));
+		Assert.IsTrue(portfolio.stockPositions.Count == 2, "Stock position count should be 2 but was " + portfolio.stockPositions.Count);
+		Assert.IsTrue(portfolio.stockPositions[0].stock.ticker == stockTransaction2.ticker, "Stock position ticker should be \"" + stockTransaction1.ticker + "\" but was \"" + portfolio.stockPositions[0].stock.ticker + "\"");
+		Assert.IsTrue(portfolio.stockPositions[1].stock.ticker == stockTransaction1.ticker, "Stock position ticker should be \"" + stockTransaction2.ticker + "\" but was \"" + portfolio.stockPositions[1].stock.ticker + "\"");
+		Assert.IsTrue(portfolio.stockTransactions.Count == 2, "Stock transaction count should be 2 but was " + portfolio.stockTransactions.Count);
+		Assert.IsTrue(portfolio.stockTransactions[0].ticker == stockTransaction1.ticker, "Stock transaction ticker should be \"" + stockTransaction1.ticker + "\" but was \"" + portfolio.stockTransactions[0].ticker + "\"");
+		Assert.IsTrue(portfolio.stockTransactions[1].ticker == stockTransaction2.ticker, "Stock transaction ticker should be \"" + stockTransaction2.ticker + "\" but was \"" + portfolio.stockTransactions[1].ticker + "\"");
+		Assert.IsTrue(portfolio.valueHistory!.Count > 0, "Value history count should be bigger than 0 but was " + portfolio.valueHistory.Count);
 	}
 
 	[TestMethod]
 	public async Task PortfolioTest_GetValueHistory_MultiplePortfoliosSingleTransactionsTest()
 	{
-
-	}
-
-	[TestMethod]
-	public async Task PortfolioTest_GetValueHistory_MultiplePortfoliosMultipleTransactionsTest()
-	{
-
-	}
-
-	[TestMethod]
-	public void PortfolioTest_GetValueHistory_EmptySinglePortfolioTest()
-	{
-
-	}
-
-	[TestMethod]
-	public void PortfolioTest_GetValueHistory_EmptyMultiplePortfoliosTest()
-	{
-
-	}
-
-	[TestMethod]
-	public async Task PortfolioTest_GetValueHistory_EmptyAndFilledPortfoliosTest()
-	{
-
+		portfolio.AddToDb();
+		Portfolio portfolio2 = new Portfolio(
+			"Test",
+			userTestObject.user!.id!,
+			"DKK",
+			true
+		);
+		portfolio2.AddToDb();
+		StockTransaction stockTransaction = new StockTransaction();
+		stockTransaction.portfolioId = portfolio.id!;
+		stockTransaction.ticker = "TSLA";
+		stockTransaction.exchange = "NASDAQ";
+		stockTransaction.amount = 10;
+		stockTransaction.priceNative = new Money(100, "USD");
+		stockTransaction.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2021-04-04"));
+		await stockTransaction.AddToDb();
+		await portfolio.GetValueHistory("USD", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2021-06-06"));
+		await portfolio2.GetValueHistory("USD", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2021-06-06"));
+		Assert.IsTrue(portfolio.stockPositions.Count == 1, "Stock position count should be 1 but was " + portfolio.stockPositions.Count);
+		Assert.IsTrue(portfolio.stockPositions[0].stock.ticker == stockTransaction.ticker, "Stock position ticker should be \"" + stockTransaction.ticker + "\" but was \"" + portfolio.stockPositions[0].stock.ticker + "\"");
+		Assert.IsTrue(portfolio.stockTransactions.Count == 1, "Stock transaction count should be 1 but was " + portfolio.stockTransactions.Count);
+		Assert.IsTrue(portfolio.stockTransactions[0].ticker == stockTransaction.ticker, "Stock transaction ticker should be \"" + stockTransaction.ticker + "\" but was \"" + portfolio.stockTransactions[0].ticker + "\"");
+		Assert.IsTrue(portfolio.valueHistory!.Count > 0, "Value history count should be bigger than 0 but was " + portfolio.valueHistory.Count);
+		Assert.IsTrue(portfolio2.stockPositions.Count == 0, "Stock position count should be 0 but was " + portfolio2.stockPositions.Count);
+		Assert.IsTrue(portfolio2.stockTransactions.Count == 0, "Stock transaction count should be 0 but was " + portfolio2.stockTransactions.Count);
+		Assert.IsTrue(portfolio2.valueHistory!.Count == 0, "Value history count should be 0 but was " + portfolio2.valueHistory.Count);
 	}
 
 	[TestMethod]

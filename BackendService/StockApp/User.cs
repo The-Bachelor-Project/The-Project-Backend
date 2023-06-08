@@ -146,6 +146,10 @@ public class User
 
 	public void Delete()
 	{
+		if (id == null)
+		{
+			throw new StatusCodeException(400, "Required fields are missing");
+		}
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "DELETE FROM Accounts WHERE user_id = @user_id";
 		SqlCommand command = new SqlCommand(query, connection);
@@ -238,15 +242,15 @@ public class User
 
 
 		List<Data.DatePriceOHLC> valueHistory = new List<Data.DatePriceOHLC>();
-		List<Data.Portfolio> dataPortfolios = new List<Data.Portfolio>();
+		List<Portfolio> dataPortfolios = new List<Portfolio>();
 		List<Data.Dividend> dividendHistory = new List<Data.Dividend>();
 		List<Data.CashBalance> cashBalance = new List<Data.CashBalance>();
 		foreach (Portfolio portfolio in portfolios)
 		{
-			Data.Portfolio dataPortfolio = await portfolio.GetValueHistory(currency, startDate, endDate);
+			Portfolio dataPortfolio = await portfolio.GetValueHistory(currency, startDate, endDate);
 			dataPortfolios.Add(dataPortfolio);
-			valueHistory = Data.DatePriceOHLC.AddLists(valueHistory, dataPortfolio.valueHistory);
-			dividendHistory.AddRange(dataPortfolio.dividendHistory);
+			valueHistory = Data.DatePriceOHLC.AddLists(valueHistory, dataPortfolio.valueHistory!);
+			dividendHistory.AddRange(dataPortfolio.dividendHistory!);
 		}
 		cashBalance.AddRange(newTransactions.Select(transaction => new Data.CashBalance(
 			Tools.TimeConverter.UnixTimeStampToDateOnly(transaction.timestamp),
@@ -440,30 +444,5 @@ public class User
 			System.Console.WriteLine(e);
 			throw new StatusCodeException(500, "Could not delete preference");
 		}
-	}
-
-	public async Task<List<CashTransaction>> GetAllCashTransactions(String currency)
-	{
-		UpdatePortfolios();
-
-		List<CashTransaction> transactions = new List<CashTransaction>();
-
-		foreach (Portfolio portfolio in portfolios)
-		{
-			portfolio.UpdateCashTransactions();
-			foreach (CashTransaction transaction in portfolio.cashTransactions)
-			{
-				CashTransaction cashTransaction = new CashTransaction();
-				cashTransaction.portfolioId = transaction.portfolioId;
-				cashTransaction.nativeAmount = transaction.nativeAmount;
-				cashTransaction.timestamp = transaction.timestamp;
-				cashTransaction.description = transaction.description;
-				cashTransaction.id = transaction.id;
-				cashTransaction.usdAmount = transaction.usdAmount;
-				transactions.Add(cashTransaction);
-			}
-		}
-
-		return transactions;
 	}
 }

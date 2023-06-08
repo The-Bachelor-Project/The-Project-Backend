@@ -25,15 +25,28 @@ public class Portfolio
 		this.trackBalance = trackBalance;
 	}
 
+	public Portfolio(String name, String currency, List<Data.DatePriceOHLC> valueHistory, List<Data.Position> positions, List<Data.Dividend> dividendHistory, List<Data.CashBalance> cashBalance)
+	{
+		this.name = name;
+		this.currency = currency;
+		this.valueHistory = valueHistory;
+		this.positionHistories = positions;
+		this.dividendHistory = dividendHistory;
+		this.cashBalance = cashBalance;
+	}
+
 	public String? id { get; set; }
 	public String? name { get; set; }
 	public String? owner { get; set; }
 	public String? currency { get; set; }
 	public Boolean? trackBalance { get; set; }
 
+	public List<Data.DatePriceOHLC>? valueHistory { get; set; }
 	public List<StockTransaction> stockTransactions { get; set; } = new List<StockTransaction>();
 	public List<CashTransaction> cashTransactions { get; set; } = new List<CashTransaction>();
 	public List<StockPosition> stockPositions { get; set; } = new List<StockPosition>();
+	public List<Data.Position>? positionHistories { get; set; }
+	public List<Data.Dividend>? dividendHistory { get; set; }
 	public List<DividendPayout> dividendPayouts { get; set; } = new List<DividendPayout>();
 	public List<Data.CashBalance> cashBalance { get; set; } = new List<Data.CashBalance>();
 
@@ -140,7 +153,7 @@ public class Portfolio
 		return this;
 	}
 
-	public async Task<Data.Portfolio> GetValueHistory(string currency, DateOnly startDate, DateOnly endDate)
+	public async Task<Portfolio> GetValueHistory(string currency, DateOnly startDate, DateOnly endDate)
 	{
 		if (id == null || currency == null || startDate == null || endDate == null)
 		{
@@ -158,16 +171,16 @@ public class Portfolio
 		UpdateStockPositions();
 		UpdateStockTransactions();
 
-		List<Data.DatePriceOHLC> valueHistory = new List<Data.DatePriceOHLC>();
-		List<Data.Position> dataPositions = new List<Data.Position>();
-		List<Data.Dividend> dividendHistory = new List<Data.Dividend>();
+		valueHistory = new List<Data.DatePriceOHLC>();
+		positionHistories = new List<Data.Position>();
+		dividendHistory = new List<Data.Dividend>();
 
 		foreach (StockPosition position in stockPositions)
 		{
 			Data.Position dataPosition = await position.GetValueHistory(currency, startDate, endDate);
 			if (dataPosition.valueHistory.Count > 0)
 			{
-				dataPositions.Add(dataPosition);
+				positionHistories.Add(dataPosition);
 				valueHistory = Data.DatePriceOHLC.AddLists(valueHistory, dataPosition.valueHistory);
 				dividendHistory.AddRange(dataPosition.dividends);
 			}
@@ -188,7 +201,7 @@ public class Portfolio
 		cashBalance = user.InsertMissingValues(cashBalance);
 
 		System.Console.WriteLine("RETURNED: " + dividendHistory.Count);
-		return new Data.Portfolio("[NAME]"/* TODO Get name */, currency, valueHistory, dataPositions, dividendHistory, cashBalance);
+		return new Portfolio("[NAME]"/* TODO Get name */, currency, valueHistory, positionHistories, dividendHistory, cashBalance);
 	}
 
 	public Portfolio ChangeName(string newName)

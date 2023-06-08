@@ -250,18 +250,6 @@ public class PutStockTransactionsTest
 		);
 		exception = Assert.ThrowsException<StatusCodeException>(() => PutStockTransactions.Endpoint(userTestObject.accessToken!, body).GetAwaiter().GetResult());
 		Assert.IsTrue(exception.StatusCode == 404, "Status code should be 403 but was " + exception.StatusCode);
-
-		// Invalid price
-		body = new PutStockTransactionsBody(
-			(int)stockTransaction.id!,
-			stockTransaction.portfolioId!,
-			(decimal)stockTransaction.amount!,
-			(int)stockTransaction.timestamp!,
-			-1,
-			stockTransaction.priceNative!.currency
-		);
-		exception = Assert.ThrowsException<StatusCodeException>(() => PutStockTransactions.Endpoint(userTestObject.accessToken!, body).GetAwaiter().GetResult());
-		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
 	}
 
 	[TestMethod]

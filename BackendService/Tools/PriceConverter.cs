@@ -98,7 +98,10 @@ public class PriceConverter
 		{
 			return dividends;
 		}
-
+		if (dividends.First().date > dividends.Last().date)
+		{
+			dividends.Reverse();
+		}
 		DateOnly startDate = dividends.First().date;
 		DateOnly endDate = dividends.Last().date;
 		Data.CurrencyHistory currencyHistory;
@@ -112,7 +115,7 @@ public class PriceConverter
 		}
 		if (currencyHistory.history.Count == 0)
 		{
-			throw new StatusCodeException(500, "Currency exchange rate list of " + newCurrency + " is empty");
+			throw new StatusCodeException(500, "Currency exchange rate list of " + newCurrency + " is empty ");
 		}
 
 		Dictionary<DateOnly, Data.Dividend> dividendDictionary = dividends.ToDictionary(x => x.date, x => x);

@@ -4,7 +4,7 @@ public class DeleteUsers
 {
 	public static void Setup(WebApplication app)
 	{
-		app.MapDelete("/v1/users", ([FromQuery] String email, HttpContext context) =>
+		app.MapDelete("/v1/users", ([FromQuery] HttpContext context) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
 			if (accessToken is null)
@@ -12,11 +12,11 @@ public class DeleteUsers
 				context.Response.StatusCode = 401;
 				return new DeleteUsersResponse("error");
 			}
-			return Endpoint(email, accessToken);
+			return Endpoint(accessToken);
 		});
 	}
 
-	public static DeleteUsersResponse Endpoint(String email, String accessToken)
+	public static DeleteUsersResponse Endpoint(String accessToken)
 	{
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
 		user.Delete();

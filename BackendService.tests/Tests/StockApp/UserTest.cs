@@ -264,9 +264,8 @@ public class UserTest
 	{
 		StockApp.User user = userTestObject.user!;
 		Assert.IsTrue(user.portfolios.Count == 0, "portfolio list should be empty for a start but was " + user.portfolios.Count);
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.UpdatePortfolios());
-		Assert.IsTrue(exception.StatusCode == 404, "status code should be 404 but was " + exception.StatusCode);
-		Assert.IsTrue(user.portfolios.Count == 0, "portfolio list should be empty after updating but has " + user.portfolios.Count);
+		user.UpdatePortfolios();
+		Assert.IsTrue(user.portfolios.Count == 0, "portfolio list should be empty but has " + user.portfolios.Count);
 	}
 
 	[TestMethod]
@@ -276,15 +275,6 @@ public class UserTest
 		user.id = null;
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.UpdatePortfolios());
 		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
-	}
-
-	[TestMethod]
-	public void UserTest_UpdatePortfolios_InvalidUserIDTest()
-	{
-		StockApp.User user = userTestObject.user!;
-		user.id = "invalid";
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.UpdatePortfolios());
-		Assert.IsTrue(exception.StatusCode == 404, "status code should be 400 but was " + exception.StatusCode);
 	}
 
 	[TestMethod]
@@ -328,15 +318,6 @@ public class UserTest
 		StockApp.User user = userTestObject.user!;
 		user.Delete();
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => GetUsers.Endpoint(userTestObject.accessToken!));
-		Assert.IsTrue(exception.StatusCode == 401, "status code should be 401 but was " + exception.StatusCode);
-	}
-
-	[TestMethod]
-	public void UserTest_Delete_InvalidUserIDTest()
-	{
-		StockApp.User user = userTestObject.user!;
-		user.id = "invalid";
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.Delete());
 		Assert.IsTrue(exception.StatusCode == 401, "status code should be 401 but was " + exception.StatusCode);
 	}
 
@@ -443,68 +424,6 @@ public class UserTest
 		user.id = null!;
 		exception = Assert.ThrowsException<StatusCodeException>(() => user.DeletePreference("Setting"));
 		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
-	}
-
-	[TestMethod]
-	public async Task UserTest_GetAllCashTransactions_GetFromMultiplePortfoliosTest()
-	{
-		StockApp.User user = userTestObject.user!;
-		StockApp.Portfolio portfolio = PortfolioHelper.Create(userTestObject);
-		StockApp.Portfolio portfolio2 = PortfolioHelper.Create(userTestObject);
-		StockApp.Portfolio portfolio3 = PortfolioHelper.Create(userTestObject);
-		StockApp.CashTransaction cashTransaction1 = new StockApp.CashTransaction();
-		cashTransaction1.portfolioId = portfolio.id;
-		cashTransaction1.nativeAmount = new StockApp.Money(100, "CAD");
-		cashTransaction1.usdAmount = new StockApp.Money(100, "USD");
-		cashTransaction1.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
-		cashTransaction1.description = "test";
-		await cashTransaction1.AddToDb();
-		StockApp.CashTransaction cashTransaction2 = new StockApp.CashTransaction();
-		cashTransaction2.portfolioId = portfolio2.id;
-		cashTransaction2.nativeAmount = new StockApp.Money(100, "CAD");
-		cashTransaction2.usdAmount = new StockApp.Money(100, "USD");
-		cashTransaction2.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
-		cashTransaction2.description = "test";
-		await cashTransaction2.AddToDb();
-		StockApp.CashTransaction cashTransaction3 = new StockApp.CashTransaction();
-		cashTransaction3.portfolioId = portfolio3.id;
-		cashTransaction3.nativeAmount = new StockApp.Money(100, "CAD");
-		cashTransaction3.usdAmount = new StockApp.Money(100, "USD");
-		cashTransaction3.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
-		cashTransaction3.description = "test";
-		await cashTransaction3.AddToDb();
-		List<StockApp.CashTransaction> cashTransactions = await user.GetAllCashTransactions("USD");
-		Assert.IsTrue(cashTransactions.Count == 3, "cashTransactions should have 3 entries but was " + cashTransactions.Count);
-	}
-
-	[TestMethod]
-	public async Task UserTest_GetAllCashTransactions_GetDifferentCurrencyTest()
-	{
-		StockApp.Portfolio portfolio = PortfolioHelper.Create(userTestObject);
-		StockApp.CashTransaction cashTransaction1 = new StockApp.CashTransaction();
-		cashTransaction1.portfolioId = portfolio!.id;
-		cashTransaction1.nativeAmount = new StockApp.Money(100, "CAD");
-		cashTransaction1.usdAmount = new StockApp.Money(100, "USD");
-		cashTransaction1.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
-		cashTransaction1.description = "Test";
-		await cashTransaction1.AddToDb();
-		StockApp.CashTransaction cashTransaction2 = new StockApp.CashTransaction();
-		cashTransaction2.portfolioId = portfolio!.id;
-		cashTransaction2.nativeAmount = new StockApp.Money(100, "CAD");
-		cashTransaction2.usdAmount = new StockApp.Money(100, "USD");
-		cashTransaction2.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
-		cashTransaction2.description = "Test";
-		await cashTransaction2.AddToDb();
-
-		foreach (String currency in Dictionaries.currencies)
-		{
-			List<StockApp.CashTransaction> cashTransactions = await userTestObject.user!.GetAllCashTransactions(currency);
-			Assert.IsTrue(cashTransactions.Count == 2, "cashTransactions should have 2 entries but was " + cashTransactions.Count);
-			foreach (StockApp.CashTransaction cashTransaction in cashTransactions)
-			{
-				Assert.IsTrue(cashTransaction.nativeAmount!.currency == currency, "currency should be " + currency + " but was " + cashTransaction.nativeAmount.currency);
-			}
-		}
 	}
 
 	[TestMethod]

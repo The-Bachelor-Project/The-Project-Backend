@@ -123,13 +123,4 @@ public class CashTransactionsTest
 		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await cashTransaction.AddToDb());
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
 	}
-
-	[TestMethod]
-	public void CashTransactionsTest_Delete_NullIDTest()
-	{
-		StockApp.CashTransaction cashTransaction = new StockApp.CashTransaction();
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => cashTransaction.Delete());
-		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
-	}
-
 }

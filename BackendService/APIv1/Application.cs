@@ -46,7 +46,6 @@ public class Application
 		PostUserPreferences.Setup(app);
 		GetUserPreferences.Setup(app);
 		DeleteCashTransactions.Setup(app);
-		GetCashTransactions.Setup(app);
 		PutCashTransactions.Setup(app);
 		if (startServer) // This is only false for when testing the setup of everything
 		{

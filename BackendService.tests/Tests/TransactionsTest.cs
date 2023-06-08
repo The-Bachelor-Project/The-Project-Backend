@@ -185,7 +185,8 @@ public class TransactionsTest
 		gottenStockTransaction1 = StockTransactionHelper.Get(putResponse.id!);
 		Assert.IsTrue(gottenStockTransaction1.amountOwned == 10, "Amount owned should be 10 but was " + gottenStockTransaction1.amountOwned);
 		GetTransactionsResponse transactions3 = await GetTransactions.Endpoint(userTestObject.accessToken!, "EUR");
-		Assert.IsTrue(transactions3.transactions.Where(x => x.type == "DividendPayout").Count() > transactions1.transactions.Where(x => x.type == "DividendPayout").Count() && transactions3.transactions.Where(x => x.type == "DividendPayout").Count() < transactions2.transactions.Where(x => x.type == "DividendPayout").Count(), "Dividend payouts should be more than " + transactions1.transactions.Where(x => x.type == "DividendPayout").Count() + " but was " + transactions3.transactions.Where(x => x.type == "DividendPayout").Count() + " and less than " + transactions2.transactions.Where(x => x.type == "DividendPayout").Count());
+		Assert.IsTrue(transactions3.transactions.Where(x => x.type == "DividendPayout").Count() > transactions2.transactions.Where(x => x.type == "DividendPayout").Count() && transactions2.transactions.Where(x => x.type == "DividendPayout").Count() > transactions1.transactions.Where(x => x.type == "DividendPayout").Count(),
+		"Dividend payouts should be more than " + transactions1.transactions.Where(x => x.type == "DividendPayout").Count() + " and " + transactions2.transactions.Where(x => x.type == "DividendPayout").Count() + " but was " + transactions3.transactions.Where(x => x.type == "DividendPayout").Count());
 	}
 
 	[TestMethod]
