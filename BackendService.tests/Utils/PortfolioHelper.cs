@@ -5,7 +5,7 @@ public class PortfolioHelper
 {
 	public static StockApp.Portfolio Create(UserTestObject userTestObject)
 	{
-		StockApp.Portfolio portfolio = new StockApp.Portfolio("This one", userTestObject.user!.id!, "EUR", 0, false);
+		StockApp.Portfolio portfolio = new StockApp.Portfolio("This one", userTestObject.user!.id!, "EUR", false);
 		try
 		{
 			portfolio.AddToDb();
@@ -43,7 +43,7 @@ public class PortfolioHelper
 		{
 			Assert.Fail("Failed to get portfolio");
 		}
-		StockApp.Portfolio portfolio = new StockApp.Portfolio(data["uid"].ToString()!, data["name"].ToString()!, data["owner"].ToString()!, data["currency"].ToString()!, Convert.ToDecimal(data["balance"].ToString()!), true); // FIXME: This is a hack, add track balance to db
+		StockApp.Portfolio portfolio = new StockApp.Portfolio(data["uid"].ToString()!, data["name"].ToString()!, data["owner"].ToString()!, data["currency"].ToString()!, true); // FIXME: This is a hack, add track balance to db
 		return portfolio;
 
 	}

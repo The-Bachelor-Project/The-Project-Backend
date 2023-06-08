@@ -184,7 +184,6 @@ public class User
 				row["name"].ToString()!,
 				row["owner"].ToString()!,
 				row["currency"].ToString()!,
-				Convert.ToDecimal(row["balance"]),
 				true //Convert.ToBoolean(Reader["track_balance"]) //TODO add to database to it can be used here
 			);
 			portfolios.Add(portfolio);
@@ -213,7 +212,6 @@ public class User
 				data["name"].ToString()!,
 				data["owner"].ToString()!,
 				data["currency"].ToString()!,
-				Convert.ToDecimal(data["balance"]),
 				true //Convert.ToBoolean(Reader["track_balance"]) //TODO add to database to it can be used here
 			);
 			return portfolio;

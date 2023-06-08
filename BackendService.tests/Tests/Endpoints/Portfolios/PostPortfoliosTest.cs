@@ -92,7 +92,7 @@ public class PostPortfoliosTest
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.id != "", "Id should not be empty");
 
-		StockApp.Portfolio portfolio = new StockApp.Portfolio(response.id, "", "", "EUR", 0, true);
+		StockApp.Portfolio portfolio = new StockApp.Portfolio(response.id, "", "", "EUR", true);
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => portfolio.AddToDb());
 		Assert.IsTrue(exception.StatusCode == 500, "Status code should be 500 but was " + exception.StatusCode);
 

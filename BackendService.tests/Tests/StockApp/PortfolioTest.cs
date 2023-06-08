@@ -14,7 +14,6 @@ public class PortfolioTest
 			"test",
 			userTestObject.user!.id!,
 			"USD",
-			0,
 			true
 		);
 	}
@@ -34,7 +33,6 @@ public class PortfolioTest
 		Assert.IsTrue(gottenPortfolio.name == portfolio.name, "Portfolio name should be \"" + portfolio.name + "\" but was \"" + gottenPortfolio.name + "\"");
 		Assert.IsTrue(gottenPortfolio.owner == portfolio.owner, "Portfolio owner should be \"" + portfolio.owner + "\" but was \"" + gottenPortfolio.owner + "\"");
 		Assert.IsTrue(gottenPortfolio.currency == portfolio.currency, "Portfolio currency should be \"" + portfolio.currency + "\" but was \"" + gottenPortfolio.currency + "\"");
-		Assert.IsTrue(gottenPortfolio.balance == portfolio.balance, "Portfolio balance should be \"" + portfolio.balance + "\" but was \"" + gottenPortfolio.balance + "\"");
 	}
 
 	[TestMethod]
@@ -53,7 +51,6 @@ public class PortfolioTest
 			null!,
 			userTestObject.user!.id!,
 			"USD",
-			0,
 			true
 		);
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => portfolio.AddToDb());
@@ -64,7 +61,6 @@ public class PortfolioTest
 			"test",
 			null!,
 			"USD",
-			0,
 			true
 		);
 		exception = Assert.ThrowsException<StatusCodeException>(() => portfolio.AddToDb());
@@ -75,7 +71,6 @@ public class PortfolioTest
 			"test",
 			userTestObject.user!.id!,
 			null!,
-			0,
 			true
 		);
 		exception = Assert.ThrowsException<StatusCodeException>(() => portfolio.AddToDb());

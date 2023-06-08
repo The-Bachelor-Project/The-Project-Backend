@@ -19,7 +19,7 @@ public class DeleteUsers
 	public static DeleteUsersResponse Endpoint(String email, String accessToken)
 	{
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
-		user.Delete(email);
+		user.Delete();
 		return new DeleteUsersResponse("success");
 	}
 }

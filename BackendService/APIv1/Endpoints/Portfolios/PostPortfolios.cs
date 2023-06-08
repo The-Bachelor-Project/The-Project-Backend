@@ -27,7 +27,7 @@ public class PostPortfolios
 		{
 			throw new StatusCodeException(400, "Missing currency of portfolio");
 		}
-		StockApp.Portfolio portfolio = new StockApp.Portfolio(body.portfolio.name, user.id!, body.portfolio.currency, body.portfolio.balance, body.portfolio.trackBalance);
+		StockApp.Portfolio portfolio = new StockApp.Portfolio(body.portfolio.name, user.id!, body.portfolio.currency, body.portfolio.trackBalance);
 		portfolio.AddToDb();
 		if (portfolio.id != null)
 		{

@@ -9,21 +9,19 @@ public class Portfolio
 	{
 		this.id = id;
 	}
-	public Portfolio(string name, string owner, string currency, decimal balance, bool trackBalance)
+	public Portfolio(string name, string owner, string currency, bool trackBalance)
 	{
 		this.name = name;
 		this.owner = owner;
 		this.currency = currency;
-		this.balance = balance;
 		this.trackBalance = trackBalance;
 	}
-	public Portfolio(string id, string name, string owner, string currency, decimal balance, bool trackBalance)
+	public Portfolio(string id, string name, string owner, string currency, bool trackBalance)
 	{
 		this.id = id;
 		this.name = name;
 		this.owner = owner;
 		this.currency = currency;
-		this.balance = balance;
 		this.trackBalance = trackBalance;
 	}
 
@@ -31,7 +29,6 @@ public class Portfolio
 	public String? name { get; set; }
 	public String? owner { get; set; }
 	public String? currency { get; set; }
-	public Decimal? balance { get; set; }
 	public Boolean? trackBalance { get; set; }
 
 	public List<StockTransaction> stockTransactions { get; set; } = new List<StockTransaction>();
@@ -53,13 +50,12 @@ public class Portfolio
 		}
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		id = Tools.RandomString.Generate(32);
-		String query = "INSERT INTO Portfolios (uid, name, owner, currency, balance) VALUES (@uid, @name, @owner, @currency, @balance)";
+		String query = "INSERT INTO Portfolios (uid, name, owner, currency) VALUES (@uid, @name, @owner, @currency)";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@uid", id);
 		command.Parameters.AddWithValue("@name", name);
 		command.Parameters.AddWithValue("@owner", owner);
 		command.Parameters.AddWithValue("@currency", currency);
-		command.Parameters.AddWithValue("@balance", balance);
 		try
 		{
 			command.ExecuteNonQuery();
