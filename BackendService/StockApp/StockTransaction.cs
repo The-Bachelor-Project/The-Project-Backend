@@ -116,7 +116,7 @@ public class StockTransaction
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String checkIfTransactionExistsQuery = "SELECT * FROM StockTransactions WHERE id = @id";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
-		parameters.Add("@id", id);
+		parameters.Add("@id", id!);
 		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(checkIfTransactionExistsQuery, parameters);
 		if (data == null)
 		{

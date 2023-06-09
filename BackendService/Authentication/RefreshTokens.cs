@@ -18,8 +18,6 @@ public class RefreshTokens
 			return tokenSet;
 		}
 		throw new StatusCodeException(401, "Invalid refresh token");
-
-
 	}
 
 }

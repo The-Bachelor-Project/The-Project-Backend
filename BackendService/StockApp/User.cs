@@ -204,7 +204,7 @@ public class User
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "SELECT * FROM Portfolios WHERE owner = @owner AND uid = @uid";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
-		parameters.Add("@owner", this.id);
+		parameters.Add("@owner", this.id!);
 		parameters.Add("@uid", id);
 		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(query, parameters);
 

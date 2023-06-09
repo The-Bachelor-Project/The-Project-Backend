@@ -4,10 +4,12 @@ namespace BackendService.tests;
 public class YahooFinanceStockFetcherTest
 {
 	private Data.Fetcher.YahooFinanceFetcher.StockFetcher stockFetcher = null!;
+	private Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher currencyFetcher = null!;
 	[TestInitialize]
 	public void Initialize()
 	{
 		stockFetcher = new Data.Fetcher.YahooFinanceFetcher.StockFetcher();
+		currencyFetcher = new Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher();
 	}
 
 	[TestMethod]
@@ -69,6 +71,26 @@ public class YahooFinanceStockFetcherTest
 	{
 		List<Data.Dividend> dividends = await stockFetcher.GetDividends("TSLA", "NASDAQ", DateOnly.Parse("2021-02-01"), DateOnly.Parse("2022-01-01"));
 		Assert.IsTrue(dividends.Count == 0, "Dividends should be empty");
+	}
+
+	[TestMethod]
+	public async Task YahooFinanceCurrencyFetcher_GetHistory_AllCurrenciesTest()
+	{
+
+		foreach (String currency in Dictionaries.currencies)
+		{
+			Data.CurrencyHistory currencyHistory = await currencyFetcher.GetHistory(currency, DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01"));
+			Assert.IsTrue(currencyHistory != null, "Currency history should not be null");
+			Assert.IsTrue(currencyHistory.currency == currency, "Currency should be " + currency + " but was " + currencyHistory.currency);
+			Assert.IsTrue(currencyHistory.history.Count > 0, "History should not be empty for " + currency);
+		}
+	}
+
+	[TestMethod]
+	public async Task YahooFinanceCurrencyFetcher_GetHistory_EmptyHistoryTest()
+	{
+		Data.CurrencyHistory currencyHistory = await currencyFetcher.GetHistory("USD", DateOnly.Parse("2021-02-01"), DateOnly.Parse("2021-01-01"));
+		Assert.IsTrue(currencyHistory.history.Count == 0, "History should be empty for invalid ticker");
 	}
 
 	// [TestMethod]

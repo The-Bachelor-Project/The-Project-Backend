@@ -198,7 +198,8 @@ public class StockFetcher : IStockFetcher
 					}
 					catch (Exception e)
 					{
-						//TODO maybe do something about this, i dunno
+						System.Console.WriteLine(e);
+						continue;
 					}
 				}
 				else

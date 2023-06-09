@@ -103,7 +103,7 @@ public class StockPosition
 		System.Console.WriteLine("UpdateStockTransactions: " + startDate + " " + endDate + " " + stock.ticker + " " + stock.exchange + " " + portfolio.id);
 		String query = "SELECT * FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp <= @endDate";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
-		parameters.Add("@portfolio", portfolio.id);
+		parameters.Add("@portfolio", portfolio.id!);
 		parameters.Add("@ticker", stock.ticker);
 		parameters.Add("@exchange", stock.exchange);
 		parameters.Add("@startDate", Tools.TimeConverter.DateOnlyToUnix(startDate));
