@@ -7,7 +7,6 @@ public class GetPortfolios
 		app.MapGet("/v1/portfolios", (HttpContext context) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
-
 			return Results.Ok(Endpoint(accessToken!));
 		});
 	}
