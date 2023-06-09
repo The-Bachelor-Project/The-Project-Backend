@@ -23,6 +23,10 @@ public class CashTransaction
 	{
 	}
 
+	/// <summary>
+	/// Adds a cash transaction to the database for the portfolio.
+	/// </summary>
+	/// <returns>The added cash transaction.</returns>
 	public async Task<CashTransaction> AddToDb()
 	{
 		if (portfolioId == null || nativeAmount == null || nativeAmount.currency == null || timestamp == null)
@@ -66,6 +70,9 @@ public class CashTransaction
 		return this;
 	}
 
+	/// <summary>
+	/// Deletes the cash transaction from the database.
+	/// </summary>
 	public void Delete()
 	{
 		if (id == null)

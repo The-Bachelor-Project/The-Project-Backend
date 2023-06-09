@@ -6,6 +6,16 @@ namespace Data.Fetcher;
 
 public class StockFetcher : IStockFetcher
 {
+	/// <summary>
+	/// Retrieves the historical price and dividend data for a specific stock in a specified date range.
+	/// </summary>
+	/// <param name="ticker">The stock ticker symbol.</param>
+	/// <param name="exchange">The stock exchange.</param>
+	/// <param name="startDate">The start date of the historical data.</param>
+	/// <param name="endDate">The end date of the historical data.</param>
+	/// <param name="interval">The interval of the historical data.</param>
+	/// <param name="currency">The currency in which the data should be returned.</param>
+	/// <returns>The historical price and dividend data for the specified stock.</returns>
 	public async Task<StockHistory> GetHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, string interval, string currency)
 	{
 		if (ticker == null || exchange == null || interval == null || currency == null)
@@ -65,6 +75,12 @@ public class StockFetcher : IStockFetcher
 		return stockHistoryReturn;
 	}
 
+	/// <summary>
+	/// Retrieves the profile information for a specific stock.
+	/// </summary>
+	/// <param name="ticker">The stock ticker symbol.</param>
+	/// <param name="exchange">The stock exchange.</param>
+	/// <returns>The profile information for the specified stock.</returns>
 	public async Task<Data.StockProfile> GetProfile(string ticker, string exchange)
 	{
 		if (ticker == null || exchange == null)

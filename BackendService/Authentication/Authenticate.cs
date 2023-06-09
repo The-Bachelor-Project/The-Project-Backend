@@ -4,6 +4,11 @@ namespace Authentication;
 
 public class Authenticate
 {
+	/// <summary>
+	/// Authenticates an access token.
+	/// </summary>
+	/// <param name="accessToken">The access token to authenticate.</param>
+	/// <returns>The status of the access token: "Valid" if valid, "Expired" if expired, or "Invalid" if invalid.</returns>
 	public static String AccessToken(string accessToken)
 	{
 		String query = "SELECT * FROM CheckIfAccessIsValid(@access_token, @UnixNow)";
@@ -41,6 +46,11 @@ public class Authenticate
 		}
 	}
 
+	/// <summary>
+	/// Authenticates a refresh token.
+	/// </summary>
+	/// <param name="refreshToken">The refresh token to authenticate.</param>
+	/// <returns>The status of the refresh token: "Valid" if valid, "Expired" if expired, or "Invalid" if invalid.</returns>
 	public static RefreshAuthenticationResponse RefreshToken(String refreshToken)
 	{
 		String checkIfValidQuery = "SELECT * FROM CheckIfRefreshIsValid(@RefreshToken, @UnixNow)";

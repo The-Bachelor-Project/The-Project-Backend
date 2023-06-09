@@ -4,6 +4,12 @@ namespace Authentication;
 
 public class RefreshTokens
 {
+	/// <summary>
+	/// Refreshes tokens.
+	/// </summary>
+	/// <param name="refreshToken">The refresh token to refresh with.</param>
+	/// <returns>A <see cref="TokenSet"/> containing the access token and refresh token.</returns>
+
 	public static StockApp.TokenSet All(String refreshToken)
 	{
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();

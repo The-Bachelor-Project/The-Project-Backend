@@ -49,7 +49,9 @@ public class Portfolio
 	public List<Data.Dividend>? dividendHistory { get; set; }
 	public List<Data.CashBalance> cashBalance { get; set; } = new List<Data.CashBalance>();
 
-
+	/// Adds the portfolio to the database.
+	/// </summary>
+	/// <returns>The added portfolio.</returns>
 	public Portfolio AddToDb()
 	{
 		if (name == null || owner == null || currency == null)
@@ -82,6 +84,10 @@ public class Portfolio
 		return this;
 	}
 
+	/// <summary>
+	/// Retrieves the owner of the portfolio.
+	/// </summary>
+	/// <returns>The user who owns the portfolio.</returns>
 	public User GetOwner()
 	{
 		if (id == null)
@@ -104,6 +110,10 @@ public class Portfolio
 	}
 
 
+	/// <summary>
+	/// Updates the stock transactions of the portfolio.
+	/// </summary>
+	/// <returns>The updated portfolio with the updated stock transactions.</returns>
 	public Portfolio UpdateStockTransactions()
 	{
 		if (id == null)
@@ -132,6 +142,10 @@ public class Portfolio
 		return this;
 	}
 
+	/// <summary>
+	/// Updates the stock positions of the portfolio based on the stock transactions on the portfolio.
+	/// </summary>
+	/// <returns>The updated portfolio with the updated stock positions.</returns>
 	public Portfolio UpdateStockPositions()
 	{
 		if (id == null)
@@ -151,6 +165,13 @@ public class Portfolio
 		return this;
 	}
 
+	/// <summary>
+	/// Retrieves the value history for a portfolio with the specified currency, for a given date range.
+	/// </summary>
+	/// <param name="currency">The currency in which to retrieve the value history.</param>
+	/// <param name="startDate">The start date of the value history.</param>
+	/// <param name="endDate">The end date of the value history.</param>
+	/// <returns>The portfolio with the value, dividend, position and cash balance histories.</returns>
 	public async Task<Portfolio> GetValueHistory(string currency, DateOnly startDate, DateOnly endDate)
 	{
 		if (id == null || currency == null)
@@ -200,6 +221,11 @@ public class Portfolio
 		return new Portfolio(name!, currency, valueHistory, positionHistories, dividendHistory, cashBalance);
 	}
 
+	/// <summary>
+	/// Changes the name of the portfolio.
+	/// </summary>
+	/// <param name="newName">The new name to set for the portfolio.</param>
+	/// <returns>The updated portfolio with the new name.</returns>
 	public Portfolio ChangeName(string newName)
 	{
 		if (id == null || newName == null)
@@ -224,6 +250,11 @@ public class Portfolio
 		}
 	}
 
+	/// <summary>
+	/// Changes the currency of the portfolio.
+	/// </summary>
+	/// <param name="newCurrency">The new currency to set for the portfolio.</param>
+	/// <returns>The updated portfolio with the new currency.</returns>
 	public Portfolio ChangeCurrency(String newCurrency)
 	{
 		if (id == null || newCurrency == null)
@@ -253,6 +284,11 @@ public class Portfolio
 		}
 	}
 
+	/// <summary>
+	/// Retrieves the stock transaction with the specified transaction ID from the portfolio.
+	/// </summary>
+	/// <param name="transactionID">The ID of the stock transaction to retrieve.</param>
+	/// <returns>The stock transaction with the specified ID.</returns>
 	public StockTransaction GetStockTransaction(int transactionID)
 	{
 		if (id == null)
@@ -282,6 +318,9 @@ public class Portfolio
 		throw new StatusCodeException(404, "Could not find stock transaction with id " + transactionID);
 	}
 
+	/// <summary>
+	/// Deletes the portfolio from the database.
+	/// </summary>
 	public void Delete()
 	{
 		if (id == null)
@@ -311,6 +350,11 @@ public class Portfolio
 		}
 	}
 
+	/// <summary>
+	/// Retrieves the cash transaction with the specified ID from the portfolio.
+	/// </summary>
+	/// <param name="cashTransactionID">The ID of the cash transaction to retrieve.</param>
+	/// <returns>The cash transaction with the specified ID.</returns>
 	public CashTransaction GetCashTransaction(int cashTransactionID)
 	{
 		if (id == null)
@@ -336,6 +380,9 @@ public class Portfolio
 		throw new StatusCodeException(404, "Could not find cash transaction with id " + cashTransactionID);
 	}
 
+	/// <summary>
+	/// Updates the list of cash transactions for the portfolio.
+	/// </summary>
 	public void UpdateCashTransactions()
 	{
 		if (id == null)

@@ -7,7 +7,13 @@ namespace Data.Fetcher;
 public class CurrencyFetcher : ICurrencyFetcher
 {
 
-
+	/// <summary>
+	/// Retrieves the historical data for a specific currency within a date range.
+	/// </summary>
+	/// <param name="currency">The currency code.</param>
+	/// <param name="startDate">The start date of the historical data.</param>
+	/// <param name="endDate">The end date of the historical data.</param>
+	/// <returns>The historical data for the specified currency.</returns>
 	public async Task<Data.CurrencyHistory> GetHistory(string currency, DateOnly startDate, DateOnly endDate)
 	{
 		String getTrackingDateQuery = "SELECT start_tracking_date, end_tracking_date FROM Currencies WHERE code = @currency";

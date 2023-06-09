@@ -21,6 +21,10 @@ public class User
 		this.id = id;
 	}
 
+	/// <summary>
+	/// Signs up a new user with the provided email and password.
+	/// </summary>
+	/// <returns>The <see cref="User"/> object representing the new registered user.</returns>
 
 	public User SignUp()
 	{
@@ -56,6 +60,10 @@ public class User
 		throw new StatusCodeException(409, "User with email: " + email + " already exist");
 	}
 
+	/// <summary>
+	/// Sign in a user with the provided email and password.
+	/// </summary>
+	/// <returns>The <see cref="User"/> object representing the signed in user.</returns>
 	public User SignIn()
 	{
 		if (email == null || password == null)
@@ -84,6 +92,11 @@ public class User
 		throw new StatusCodeException(404, "No user with the email: " + email + " was found");
 	}
 
+	/// <summary>
+	/// Changes the email address of the user.
+	/// </summary>
+	/// <param name="newEmail">The new email address.</param>
+	/// <returns>The <see cref="User"/> object with the updated email address.</returns>
 	public User ChangeEmail(String newEmail)
 	{
 		if (newEmail == null)
@@ -108,6 +121,12 @@ public class User
 		}
 	}
 
+	/// <summary>
+	/// Changes the password of the user.
+	/// </summary>
+	/// <param name="oldPassword">The old password.</param>
+	/// <param name="newPassword">The new password.</param>
+	/// <returns>The <see cref="User"/> object with the updated password.</returns>
 	public User ChangePassword(String oldPassword, String newPassword)
 	{
 		if (oldPassword == null || newPassword == null)
@@ -142,6 +161,9 @@ public class User
 		}
 	}
 
+	/// <summary>
+	/// Deletes the user.
+	/// </summary>
 	public void Delete()
 	{
 		if (id == null)
@@ -163,6 +185,10 @@ public class User
 		}
 	}
 
+	/// <summary>
+	/// Updates the portfolios of the user.
+	/// </summary>
+	/// <returns>The <see cref="User"/> object with the updated portfolios.</returns>
 	public User UpdatePortfolios()
 	{
 		if (id == null)
@@ -193,6 +219,11 @@ public class User
 		return this;
 	}
 
+	/// <summary>
+	/// Retrieves a portfolio belonging to the user.
+	/// </summary>
+	/// <param name="id">The ID of the portfolio to retrieve.</param>
+	/// <returns>The gotten <see cref="Portfolio"/> object.</returns>
 	public Portfolio GetPortfolios(string id)
 	{
 		if (id == null)
@@ -222,6 +253,13 @@ public class User
 
 	}
 
+	/// <summary>
+	/// Retrieves the value history of the user's assets within a date range.
+	/// </summary>
+	/// <param name="currency">The currency of the assets to get.</param>
+	/// <param name="startDate">The start date of getting the value history.</param>
+	/// <param name="endDate">The end date of getting the value history.</param>
+	/// <returns>The <see cref="UserAssetsValueHistory"/> object containing the value history, portfolios, dividend history, and cash balance.</returns>
 	public async Task<Data.UserAssetsValueHistory> GetValueHistory(string currency, DateOnly startDate, DateOnly endDate)
 	{
 		UpdatePortfolios();
@@ -262,6 +300,11 @@ public class User
 		return new Data.UserAssetsValueHistory(valueHistory, dataPortfolios, dividendHistory, InsertMissingValues(cashBalance));
 	}
 
+	/// <summary>
+	/// Inserts missing cash balance values between existing cash balances in the cash balance list.
+	/// </summary>
+	/// <param name="cashBalances">The list of cash balances.</param>
+	/// <returns>The list of cash balances with missing values inserted.</returns>
 	public List<Data.CashBalance> InsertMissingValues(List<Data.CashBalance> cashBalances)
 	{
 		List<Data.CashBalance> newCashBalances = new List<Data.CashBalance>();
@@ -286,6 +329,11 @@ public class User
 		return newCashBalances;
 	}
 
+	/// <summary>
+	/// Retrieves all the different transactions for the user.
+	/// </summary>
+	/// <param name="currency">The currency of the transactions.</param>
+	/// <returns>A list of transactions.</returns>
 	public async Task<List<Data.Transaction>> GetTransactions(String currency)
 	{
 		String getTransactionsQuery = "SELECT * FROM AllTransactions WHERE owner = @owner ORDER BY timestamp ASC, transaction_type ASC, portfolio ASC, id ASC";
@@ -354,6 +402,10 @@ public class User
 		return transactions;
 	}
 
+	/// <summary>
+	/// Retrieves all stock transactions for the user.
+	/// </summary>
+	/// <returns>A list of stock transactions.</returns>
 	public List<StockApp.StockTransaction> GetAllStockTransactions()
 	{
 		UpdatePortfolios();
@@ -372,6 +424,12 @@ public class User
 		return transactions;
 	}
 
+	/// <summary>
+	/// Posts a user preference setting.
+	/// </summary>
+	/// <param name="setting">The preference setting.</param>
+	/// <param name="value">The preference value.</param>
+	/// <returns>The ID of the inserted preference.</returns>
 	public int PostPreference(string setting, string value)
 	{
 		if (id == null || setting == null || value == null)
@@ -403,6 +461,10 @@ public class User
 		}
 	}
 
+	/// <summary>
+	/// Retrieves a users preferences.
+	/// </summary>
+	/// <returns>A dictionary containing the user preferences.</returns>
 	public Dictionary<string, string> GetPreferences()
 	{
 		if (id == null)
@@ -426,6 +488,10 @@ public class User
 		return preferences;
 	}
 
+	/// <summary>
+	/// Deletes a user preference.
+	/// </summary>
+	/// <param name="setting">The name of the preference setting to delete.</param>
 	public void DeletePreference(string setting)
 	{
 		if (id == null || setting == null)

@@ -14,6 +14,14 @@ public class StockPosition
 
 	public List<StockTransaction> stockTransactions { get; set; } = new List<StockTransaction>();
 
+	/// <summary>
+	/// Retrieves the value history and dividend history for the specified currency, in the specified date range.
+	/// </summary>
+	/// <param name="currency">The currency in which the values and dividends are gotten.</param>
+	/// <param name="startDate">The start date of the value history.</param>
+	/// <param name="endDate">The end date of the value history.</param>
+	/// <returns>A <see cref="Data.Position"/> object containing the value history and dividend history for the specified stock, in the specified date range.</returns>
+
 	public async Task<Data.Position> GetValueHistory(string currency, DateOnly startDate, DateOnly endDate)
 	{
 		UpdateStockTransactions(startDate.AddYears(-1), endDate);
@@ -92,6 +100,13 @@ public class StockPosition
 		return new Data.Position(stock.ticker, stock.exchange, valueHistory, dividendHistory);
 	}
 
+	/// <summary>
+	/// Updates the list of stock transactions for the current stock position within the date range.
+	/// </summary>
+	/// <param name="startDate">The start date of when to get stock transactions.</param>
+	/// <param name="endDate">The end date of when to get stock transactions.</param>
+	/// <returns>The updated <see cref="StockPosition"/> object with the updated stock transaction list.</returns>
+
 	public StockPosition UpdateStockTransactions(DateOnly startDate, DateOnly endDate)
 	{
 		String query = "SELECT * FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp <= @endDate";
@@ -102,8 +117,6 @@ public class StockPosition
 		parameters.Add("@startDate", Tools.TimeConverter.DateOnlyToUnix(startDate));
 		parameters.Add("@endDate", Tools.TimeConverter.DateOnlyToUnix(endDate));
 		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(query, parameters);
-		//String query = "SELECT * FROM(SELECT TOP 1 * FROM StockTransactions	WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp < @startDate ORDER BY timestamp DESC) AS first_row UNION ALL SELECT * FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp >= @startDate AND timestamp <= @endDate ORDER BY timestamp DESC";
-
 		stockTransactions = new List<StockTransaction>();
 
 		int startTimeStamp = Tools.TimeConverter.DateOnlyToUnix(startDate);

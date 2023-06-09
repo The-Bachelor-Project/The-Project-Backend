@@ -31,6 +31,10 @@ public class StockTransaction
 
 	}
 
+	/// <summary>
+	/// Adds the stock transaction to the database.
+	/// </summary>
+	/// <returns>The added <see cref="StockTransaction"/> object.</returns>
 	public async Task<StockTransaction> AddToDb()
 	{
 		if (amount > 0 == priceNative!.amount > 0)
@@ -133,6 +137,10 @@ public class StockTransaction
 		return this;
 	}
 
+	/// <summary>
+	/// Deletes the stock transaction from the database.
+	/// </summary>
+	/// <returns>Void, but in task.</returns>
 	public Task Delete()
 	{
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();

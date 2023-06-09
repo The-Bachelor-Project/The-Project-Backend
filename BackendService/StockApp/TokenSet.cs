@@ -33,7 +33,11 @@ public class TokenSet
 	}
 
 
-
+	/// <summary>
+	/// Creates a new TokenSet for the specified user.
+	/// </summary>
+	/// <param name="uid">The user ID to create the TokenSet.</param>
+	/// <returns>The newly created <see cref="TokenSet"/>.</returns>
 	public static TokenSet Create(String uid)
 	{
 		if (uid == null)
@@ -51,6 +55,10 @@ public class TokenSet
 		return newTokenSet;
 	}
 
+	/// <summary>
+	/// Refreshes the access token using the refresh token.
+	/// </summary>
+	/// <returns>The <see cref="TokenSet"/> with the new access and refresh token.</returns>
 	public TokenSet Refresh()
 	{
 		if (refreshToken == null)
@@ -64,6 +72,10 @@ public class TokenSet
 		return this;
 	}
 
+	/// <summary>
+	/// Retrieves the user who has the access token.
+	/// </summary>
+	/// <returns>The <see cref="User"/> object who has the access token.</returns>
 	public User GetUser()
 	{
 		if (accessToken == null)
