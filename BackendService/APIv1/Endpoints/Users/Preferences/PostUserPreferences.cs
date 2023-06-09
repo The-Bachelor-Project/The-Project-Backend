@@ -7,12 +7,7 @@ public class PostUserPreferences
 		app.MapPost("/v1/users/preferences", (HttpContext context, PostUserPreferencesBody body) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
-			if (accessToken is null)
-			{
-				context.Response.StatusCode = 401;
-				return new PostUserPreferencesResponse("error", -1);
-			}
-			return Endpoint(body, accessToken);
+			return Endpoint(body, accessToken!);
 		});
 	}
 

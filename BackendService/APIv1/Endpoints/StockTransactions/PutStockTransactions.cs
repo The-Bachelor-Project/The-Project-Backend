@@ -8,12 +8,7 @@ public class PutStockTransactions
 		app.MapPut("/v1/stock-transactions", (HttpContext context, PutStockTransactionsBody body) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
-			if (accessToken is null)
-			{
-				context.Response.StatusCode = 401;
-				return Results.Ok(new PutStockTransactionsResponse("error", 0));
-			}
-			return Results.Ok(Endpoint(accessToken, body));
+			return Results.Ok(Endpoint(accessToken!, body));
 		});
 	}
 

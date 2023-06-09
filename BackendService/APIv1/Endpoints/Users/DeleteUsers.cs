@@ -7,12 +7,7 @@ public class DeleteUsers
 		app.MapDelete("/v1/users", ([FromQuery] HttpContext context) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
-			if (accessToken is null)
-			{
-				context.Response.StatusCode = 401;
-				return new DeleteUsersResponse("error");
-			}
-			return Endpoint(accessToken);
+			return Endpoint(accessToken!);
 		});
 	}
 

@@ -8,12 +8,7 @@ public class GetValueHistory
 		app.MapGet("/v1/value-history", async (HttpContext context, [FromQuery] string startDate, string endDate, string currency) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
-			if (accessToken is null)
-			{
-				context.Response.StatusCode = 401;
-				return Results.Ok(new GetPortfoliosResponse("error", new List<StockApp.Portfolio> { }));
-			}
-			return Results.Ok(await EndpointAsync(startDate, endDate, currency, accessToken));
+			return Results.Ok(await EndpointAsync(startDate, endDate, currency, accessToken!));
 		});
 	}
 

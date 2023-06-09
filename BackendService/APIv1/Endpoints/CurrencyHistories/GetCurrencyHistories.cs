@@ -8,12 +8,7 @@ public class GetCurrencyHistories
 		app.MapGet("/v1/currency-histories", async (HttpContext context, [FromQuery] string currency, DateOnly startDate, DateOnly endDate) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
-			if (accessToken is null)
-			{
-				context.Response.StatusCode = 401;
-				return Results.Ok(new GetPortfoliosResponse("error", new List<StockApp.Portfolio> { }));
-			}
-			return Results.Ok(await Endpoint(currency, startDate, endDate, accessToken));
+			return Results.Ok(await Endpoint(currency, startDate, endDate, accessToken!));
 		});
 	}
 

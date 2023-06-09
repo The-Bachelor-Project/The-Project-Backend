@@ -7,12 +7,7 @@ public class PostCashTransactions
 		app.MapPost("/v1/cash-transactions", async (HttpContext context, PostCashTransactionsBody body) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
-			if (accessToken is null)
-			{
-				context.Response.StatusCode = 401;
-				return new PostCashTransactionsResponse("error", -1);
-			}
-			return await Endpoint(body, accessToken);
+			return await Endpoint(body, accessToken!);
 		});
 	}
 

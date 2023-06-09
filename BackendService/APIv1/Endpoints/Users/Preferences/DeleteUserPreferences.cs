@@ -8,12 +8,7 @@ public class DeleteUserPreferences
 		app.MapDelete("/v1/users/preferences", ([FromQuery] String setting, HttpContext context) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
-			if (accessToken is null)
-			{
-				context.Response.StatusCode = 401;
-				return new DeleteUserPreferencesResponse("error");
-			}
-			return Endpoint(setting, accessToken);
+			return Endpoint(setting, accessToken!);
 		});
 	}
 

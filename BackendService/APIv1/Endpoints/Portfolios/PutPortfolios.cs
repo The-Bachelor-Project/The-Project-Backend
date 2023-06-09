@@ -9,12 +9,7 @@ public class PutPortfolios
 		app.MapPut("/v1/portfolios", (HttpContext context, PutPortfoliosBody body) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
-			if (accessToken is null)
-			{
-				context.Response.StatusCode = 401;
-				return Results.Ok(new PutPortfoliosResponse("error"));
-			}
-			return Results.Ok(Endpoint(accessToken, body));
+			return Results.Ok(Endpoint(accessToken!, body));
 		});
 	}
 

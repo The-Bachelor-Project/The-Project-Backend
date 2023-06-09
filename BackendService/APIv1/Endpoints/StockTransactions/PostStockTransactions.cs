@@ -7,12 +7,7 @@ public class PostStockTransactions
 		app.MapPost("/v1/stock-transactions", async (HttpContext context, PostStockTransactionsBody body) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
-			if (accessToken is null)
-			{
-				context.Response.StatusCode = 401;
-				return new PostStockTransactionsResponse("error", -1);
-			}
-			return await Endpoint(body, accessToken);
+			return await Endpoint(body, accessToken!);
 		});
 	}
 

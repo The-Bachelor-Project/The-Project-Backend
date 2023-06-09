@@ -9,18 +9,7 @@ public class PutTokens
 		app.MapPut("/v1/tokens", (HttpContext context) =>
 		{
 			String? refreshToken = context.Items["RefreshToken"] as String;
-			if (refreshToken is null)
-			{
-				context.Response.StatusCode = 401;
-				return Results.Ok(new GetPortfoliosResponse("error", new List<StockApp.Portfolio> { }));
-			}
-			int? familyID = (int?)context.Items["FamilyID"];
-			if (familyID == null)
-			{
-				context.Response.StatusCode = 401;
-				return Results.Ok(new GetPortfoliosResponse("error", new List<StockApp.Portfolio> { }));
-			}
-			return Results.Ok(Endpoint(refreshToken));
+			return Results.Ok(Endpoint(refreshToken!));
 		});
 	}
 

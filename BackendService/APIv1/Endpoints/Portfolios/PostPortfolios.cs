@@ -6,12 +6,7 @@ public class PostPortfolios
 		app.MapPost("/v1/portfolios", (HttpContext context, PostPortfoliosBody body) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
-			if (accessToken is null)
-			{
-				context.Response.StatusCode = 401;
-				return Results.Ok(new GetPortfoliosResponse("error", new List<StockApp.Portfolio> { }));
-			}
-			return Results.Ok(Endpoint(body, accessToken));
+			return Results.Ok(Endpoint(body, accessToken!));
 		});
 	}
 

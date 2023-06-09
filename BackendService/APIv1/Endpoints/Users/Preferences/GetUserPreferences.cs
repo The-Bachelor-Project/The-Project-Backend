@@ -7,12 +7,7 @@ public class GetUserPreferences
 		app.MapGet("/v1/users/preferences", (HttpContext context) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
-			if (accessToken is null)
-			{
-				context.Response.StatusCode = 401;
-				return new GetUserPreferencesResponse("error", null!);
-			}
-			return Endpoint(accessToken);
+			return Endpoint(accessToken!);
 		});
 	}
 

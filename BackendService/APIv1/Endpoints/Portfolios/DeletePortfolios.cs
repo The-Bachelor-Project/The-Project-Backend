@@ -8,12 +8,7 @@ public class DeletePortfolios
 		app.MapDelete("/v1/portfolios", ([FromQuery] String id, HttpContext context) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
-			if (accessToken is null)
-			{
-				context.Response.StatusCode = 401;
-				return new DeletePortfoliosResponse("error");
-			}
-			return Endpoint(id, accessToken);
+			return Endpoint(id, accessToken!);
 		});
 	}
 

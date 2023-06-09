@@ -8,23 +8,13 @@ public class PutUsers
 		app.MapPut("/v1/users/email", (HttpContext context, PutEmailBody body) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
-			if (accessToken is null)
-			{
-				context.Response.StatusCode = 401;
-				return Results.Ok(new PutUserResponse("error"));
-			}
-			return Results.Ok(EndpointEmail(accessToken, body));
+			return Results.Ok(EndpointEmail(accessToken!, body));
 		});
 
 		app.MapPut("/v1/users/password", (HttpContext context, PutPasswordBody body) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
-			if (accessToken is null)
-			{
-				context.Response.StatusCode = 401;
-				return Results.Ok(new PutUserResponse("error"));
-			}
-			return Results.Ok(EndpointPass(accessToken, body));
+			return Results.Ok(EndpointPass(accessToken!, body));
 		});
 	}
 

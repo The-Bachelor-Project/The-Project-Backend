@@ -9,12 +9,7 @@ public class GetTransactions
 		app.MapGet("/v1/transactions", async (HttpContext context, [FromQuery] String currency) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
-			if (accessToken is null)
-			{
-				context.Response.StatusCode = 401;
-				return Results.Ok(new GetPortfoliosResponse("error", new List<StockApp.Portfolio> { }));
-			}
-			return Results.Ok(await Endpoint(accessToken, currency));
+			return Results.Ok(await Endpoint(accessToken!, currency));
 		});
 	}
 

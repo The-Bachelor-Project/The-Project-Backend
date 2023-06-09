@@ -7,12 +7,7 @@ public class PutCashTransactions
 		app.MapPut("/v1/cash-transactions", (PutCashTransactionsBody body, HttpContext context) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
-			if (accessToken is null)
-			{
-				context.Response.StatusCode = 401;
-				return Results.Ok(new PutCashTransactionsResponse("error", -1));
-			}
-			return Results.Ok(Endpoint(body, accessToken));
+			return Results.Ok(Endpoint(body, accessToken!));
 		});
 	}
 

@@ -7,12 +7,7 @@ public class DeleteCashTransactions
 		app.MapDelete("/v1/cash-transactions", ([FromQuery] String portfolio, int id, HttpContext context) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
-			if (accessToken is null)
-			{
-				context.Response.StatusCode = 401;
-				return Results.Ok(new DeleteCashTransactionsResponse("error"));
-			}
-			return Results.Ok(Endpoint(portfolio, id, accessToken));
+			return Results.Ok(Endpoint(portfolio, id, accessToken!));
 		});
 	}
 
