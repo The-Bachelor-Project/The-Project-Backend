@@ -57,6 +57,24 @@ public class StockTransaction
 		}
 
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
+
+		if (amount < 0)
+		{
+			String getFutureLowestOwned = "SELECT TOP 1 amount_owned FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND (timestamp > @timestamp)";
+			Dictionary<String, object> p = new Dictionary<string, object>();
+			p.Add("@portfolio", portfolioId);
+			p.Add("@ticker", ticker);
+			p.Add("@exchange", exchange);
+			p.Add("@timestamp", timestamp);
+			Dictionary<String, object>? d = Data.Database.Reader.ReadOne(getFutureLowestOwned, p);
+
+			if (d != null)
+			{
+				throw new StatusCodeException(400, "Not enough owned stocks later in time");
+			}
+		}
+
+
 		String getAmountOwned = "SELECT TOP 1 amount_owned FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp <= @timestamp ORDER BY timestamp DESC, id DESC";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@portfolio", portfolioId);
