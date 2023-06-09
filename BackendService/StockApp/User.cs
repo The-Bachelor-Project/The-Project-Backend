@@ -211,8 +211,7 @@ public class User
 				row["uid"].ToString()!,
 				row["name"].ToString()!,
 				row["owner"].ToString()!,
-				row["currency"].ToString()!,
-				true //Convert.ToBoolean(Reader["track_balance"]) //TODO add to database to it can be used here
+				row["currency"].ToString()!
 			);
 			portfolios.Add(portfolio);
 		}
@@ -244,8 +243,7 @@ public class User
 				data["uid"].ToString()!,
 				data["name"].ToString()!,
 				data["owner"].ToString()!,
-				data["currency"].ToString()!,
-				true //Convert.ToBoolean(Reader["track_balance"]) //TODO add to database to it can be used here
+				data["currency"].ToString()!
 			);
 			return portfolio;
 		}

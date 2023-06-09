@@ -9,20 +9,18 @@ public class Portfolio
 	{
 		this.id = id;
 	}
-	public Portfolio(string name, string owner, string currency, bool trackBalance)
+	public Portfolio(string name, string owner, string currency)
 	{
 		this.name = name;
 		this.owner = owner;
 		this.currency = currency;
-		this.trackBalance = trackBalance;
 	}
-	public Portfolio(string id, string name, string owner, string currency, bool trackBalance)
+	public Portfolio(string id, string name, string owner, string currency)
 	{
 		this.id = id;
 		this.name = name;
 		this.owner = owner;
 		this.currency = currency;
-		this.trackBalance = trackBalance;
 	}
 
 	public Portfolio(String name, String currency, List<Data.DatePriceOHLC> valueHistory, List<Data.Position> positions, List<Data.Dividend> dividendHistory, List<Data.CashBalance> cashBalance)
@@ -39,8 +37,6 @@ public class Portfolio
 	public String? name { get; set; }
 	public String? owner { get; set; }
 	public String? currency { get; set; }
-	public Boolean? trackBalance { get; set; }
-
 	public List<Data.DatePriceOHLC>? valueHistory { get; set; }
 	public List<StockTransaction> stockTransactions { get; set; } = new List<StockTransaction>();
 	public List<CashTransaction> cashTransactions { get; set; } = new List<CashTransaction>();

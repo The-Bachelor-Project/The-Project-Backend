@@ -12,15 +12,11 @@ public class PostPortfoliosBody
 
 public class PortfolioBody
 {
-	public PortfolioBody(string name, string currency, decimal balance, bool trackBalance)
+	public PortfolioBody(string name, string currency)
 	{
 		this.name = name;
 		this.currency = currency;
-		this.balance = balance;
-		this.trackBalance = trackBalance;
 	}
 	public String name { get; set; }
 	public String currency { get; set; }
-	public Decimal balance { get; set; }
-	public Boolean trackBalance { get; set; }
 }

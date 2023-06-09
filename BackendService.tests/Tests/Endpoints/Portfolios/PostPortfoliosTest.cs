@@ -37,7 +37,7 @@ public class PostPortfoliosTest
 	[TestMethod]
 	public void PostPortfoliosTest_SuccessfulCreateTest()
 	{
-		PortfolioBody portfolio = new PortfolioBody("Test Portfolio", "USD", 0, false);
+		PortfolioBody portfolio = new PortfolioBody("Test Portfolio", "USD");
 		PostPortfoliosBody body = new PostPortfoliosBody(portfolio);
 		PostPortfoliosResponse response = PostPortfolios.Endpoint(body, userTestObject.accessToken!);
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
@@ -50,7 +50,7 @@ public class PostPortfoliosTest
 	[TestMethod]
 	public void PostPortfoliosTest_InvalidUserTest()
 	{
-		PortfolioBody portfolio = new PortfolioBody("Test Portfolio", "USD", 0, false);
+		PortfolioBody portfolio = new PortfolioBody("Test Portfolio", "USD");
 		PostPortfoliosBody body = new PostPortfoliosBody(portfolio);
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostPortfolios.Endpoint(body, "invalid token"));
 		Assert.IsTrue(exception.StatusCode == 401, "Status code should be 401 but was " + exception.StatusCode);
@@ -59,7 +59,7 @@ public class PostPortfoliosTest
 	[TestMethod]
 	public void PostPortfoliosTest_MissingCurrencyTest()
 	{
-		PortfolioBody portfolio = new PortfolioBody("Test Portfolio", "", 0, false);
+		PortfolioBody portfolio = new PortfolioBody("Test Portfolio", "");
 		PostPortfoliosBody body = new PostPortfoliosBody(portfolio);
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostPortfolios.Endpoint(body, userTestObject.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
@@ -68,7 +68,7 @@ public class PostPortfoliosTest
 	[TestMethod]
 	public void PostPortfoliosTest_MissingNameTest()
 	{
-		PortfolioBody portfolio = new PortfolioBody(null!, "USD", 0, false);
+		PortfolioBody portfolio = new PortfolioBody(null!, "USD");
 		PostPortfoliosBody body = new PostPortfoliosBody(portfolio);
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostPortfolios.Endpoint(body, userTestObject.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
@@ -77,7 +77,7 @@ public class PostPortfoliosTest
 	[TestMethod]
 	public void PostPortfoliosTest_InvalidCurrency()
 	{
-		PortfolioBody portfolio = new PortfolioBody("Test Portfolio", "invalid currency", 0, false);
+		PortfolioBody portfolio = new PortfolioBody("Test Portfolio", "invalid currency");
 		PostPortfoliosBody body = new PostPortfoliosBody(portfolio);
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostPortfolios.Endpoint(body, userTestObject.accessToken!));
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
@@ -86,13 +86,13 @@ public class PostPortfoliosTest
 	[TestMethod]
 	public void PostPortfoliosTest_CreatingWithSameID()
 	{
-		PortfolioBody firstPortfolio = new PortfolioBody("Test Portfolio", "USD", 0, true);
+		PortfolioBody firstPortfolio = new PortfolioBody("Test Portfolio", "USD");
 		PostPortfoliosBody firstBody = new PostPortfoliosBody(firstPortfolio);
 		PostPortfoliosResponse response = PostPortfolios.Endpoint(firstBody, userTestObject.accessToken!);
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.id != "", "Id should not be empty");
 
-		StockApp.Portfolio portfolio = new StockApp.Portfolio(response.id, "", "", "EUR", true);
+		StockApp.Portfolio portfolio = new StockApp.Portfolio(response.id, "", "", "EUR");
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => portfolio.AddToDb());
 		Assert.IsTrue(exception.StatusCode == 500, "Status code should be 500 but was " + exception.StatusCode);
 

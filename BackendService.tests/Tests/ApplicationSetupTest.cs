@@ -316,6 +316,20 @@ public class ApplicationSetupTest
 	}
 
 	[TestMethod]
+	public void SetupEndpoint_DeleteUserPreferences()
+	{
+		try
+		{
+			WebApplication app = WebApplication.CreateBuilder().Build();
+			API.v1.DeleteUserPreferences.Setup(app);
+		}
+		catch (System.Exception e)
+		{
+			Assert.Fail("Endpoint could not setup correctly: " + e.Message);
+		}
+	}
+
+	[TestMethod]
 	public void SetupEndpoint_DeleteCashTransactions()
 	{
 		try

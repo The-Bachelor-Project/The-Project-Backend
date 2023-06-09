@@ -13,8 +13,7 @@ public class PortfolioTest
 		portfolio = new Portfolio(
 			"test",
 			userTestObject.user!.id!,
-			"USD",
-			true
+			"USD"
 		);
 	}
 
@@ -50,8 +49,7 @@ public class PortfolioTest
 		Portfolio portfolio = new Portfolio(
 			null!,
 			userTestObject.user!.id!,
-			"USD",
-			true
+			"USD"
 		);
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => portfolio.AddToDb());
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
@@ -60,8 +58,7 @@ public class PortfolioTest
 		portfolio = new Portfolio(
 			"test",
 			null!,
-			"USD",
-			true
+			"USD"
 		);
 		exception = Assert.ThrowsException<StatusCodeException>(() => portfolio.AddToDb());
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
@@ -70,8 +67,7 @@ public class PortfolioTest
 		portfolio = new Portfolio(
 			"test",
 			userTestObject.user!.id!,
-			null!,
-			true
+			null!
 		);
 		exception = Assert.ThrowsException<StatusCodeException>(() => portfolio.AddToDb());
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
@@ -281,8 +277,7 @@ public class PortfolioTest
 		Portfolio portfolio2 = new Portfolio(
 			"Test",
 			userTestObject.user!.id!,
-			"DKK",
-			true
+			"DKK"
 		);
 		portfolio2.AddToDb();
 		StockTransaction stockTransaction = new StockTransaction();
