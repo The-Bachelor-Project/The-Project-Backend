@@ -4,7 +4,7 @@ public class DeleteUsers
 {
 	public static void Setup(WebApplication app)
 	{
-		app.MapDelete("/v1/users", ([FromQuery] HttpContext context) =>
+		app.MapDelete("/v1/users", (HttpContext context) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
 			return Endpoint(accessToken!);
