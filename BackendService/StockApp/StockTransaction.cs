@@ -58,21 +58,7 @@ public class StockTransaction
 
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 
-		if (amount < 0)
-		{
-			String getFutureLowestOwned = "SELECT TOP 1 amount_owned FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND (timestamp > @timestamp)";
-			Dictionary<String, object> p = new Dictionary<string, object>();
-			p.Add("@portfolio", portfolioId);
-			p.Add("@ticker", ticker);
-			p.Add("@exchange", exchange);
-			p.Add("@timestamp", timestamp);
-			Dictionary<String, object>? d = Data.Database.Reader.ReadOne(getFutureLowestOwned, p);
 
-			if (d != null)
-			{
-				throw new StatusCodeException(400, "Not enough owned stocks later in time");
-			}
-		}
 
 
 		String getAmountOwned = "SELECT TOP 1 amount_owned FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp <= @timestamp ORDER BY timestamp DESC, id DESC";
@@ -83,8 +69,8 @@ public class StockTransaction
 		parameters.Add("@timestamp", timestamp);
 		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(getAmountOwned, parameters);
 
-		decimal amountOwned = 0;
-		decimal amountAdjusted = amount!;
+		amountOwned = 0;
+		amountAdjusted = amount!;
 		if (data != null)
 		{
 			amountOwned = (Decimal)data["amount_owned"];
@@ -92,6 +78,24 @@ public class StockTransaction
 		if ((amountOwned + amountAdjusted) < 0)
 		{
 			throw new StatusCodeException(400, "Not enough owned stocks");
+		}
+
+
+		if (amount < 0)
+		{
+			String getFutureLowestOwned = "SELECT TOP 1 amount_owned FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND (timestamp > @timestamp) AND amount_owned < @amount_adjusted";
+			Dictionary<String, object> p = new Dictionary<string, object>();
+			p.Add("@portfolio", portfolioId);
+			p.Add("@ticker", ticker);
+			p.Add("@exchange", exchange);
+			p.Add("@timestamp", timestamp);
+			p.Add("@amount_adjusted", amountAdjusted!);
+			Dictionary<String, object>? d = Data.Database.Reader.ReadOne(getFutureLowestOwned, p);
+
+			if (d != null)
+			{
+				throw new StatusCodeException(400, "Not enough owned stocks later in time");
+			}
 		}
 
 		priceUSD = await Tools.PriceConverter.ConvertMoney(priceNative, timestamp, "USD", false);
