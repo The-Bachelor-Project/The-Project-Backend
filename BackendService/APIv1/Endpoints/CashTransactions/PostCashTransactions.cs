@@ -25,10 +25,6 @@ public class PostCashTransactions
 		}
 		StockApp.CashTransaction cashTransaction = new StockApp.CashTransaction(body.portfolio, new StockApp.Money(body.nativeAmount, body.currency), body.timestamp, body.description);
 		await cashTransaction.AddToDb();
-		if (cashTransaction.id != null)
-		{
-			return new PostCashTransactionsResponse("success", (int)cashTransaction.id);
-		}
-		return new PostCashTransactionsResponse("error", -1);
+		return new PostCashTransactionsResponse("success", (int)cashTransaction.id!);
 	}
 }

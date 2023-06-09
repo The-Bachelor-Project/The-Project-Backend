@@ -16,7 +16,7 @@ public class DeleteStockTransactions
 	public async static Task<DeleteStockTransactionsResponse> Endpoint(String accessToken, String portfolioID, int transactionID)
 	{
 		User user = new TokenSet(accessToken).GetUser();
-		Portfolio portfolio = user.GetPortfolio(portfolioID);
+		Portfolio portfolio = user.GetPortfolios(portfolioID);
 		StockTransaction stockTransaction = portfolio.GetStockTransaction(transactionID);
 		await stockTransaction.Delete();
 		return new DeleteStockTransactionsResponse("success");

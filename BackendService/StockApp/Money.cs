@@ -15,8 +15,4 @@ public class Money
 		this.amount = amount;
 		this.currency = currency;
 	}
-
-	public Money(decimal amount) : this(amount, DEFAULT_CURRENCY)
-	{
-	}
 }

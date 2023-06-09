@@ -194,7 +194,7 @@ public class User
 		return this;
 	}
 
-	public Portfolio GetPortfolio(string id)
+	public Portfolio GetPortfolios(string id)
 	{
 		if (id == null)
 		{

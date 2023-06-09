@@ -23,11 +23,6 @@ public class StockPosition
 		decimal currentlyOwned = 0;
 		System.Console.WriteLine("Stock ffd   " + stock.ticker + "    " + stockTransactions.Count);
 
-		if (stockTransactions.Count == 0)
-		{
-			return new Data.Position(stock.ticker, stock.exchange, valueHistory, dividendHistory);
-		}
-
 
 		if (Tools.TimeConverter.UnixTimeStampToDateOnly(stockTransactions.First().timestamp) < startDate)
 		{

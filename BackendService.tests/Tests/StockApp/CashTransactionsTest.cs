@@ -123,4 +123,41 @@ public class CashTransactionsTest
 		exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await cashTransaction.AddToDb());
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
 	}
+
+	[TestMethod]
+	public async Task CashTransactionsTest_Delete_SuccessfulTest()
+	{
+		StockApp.CashTransaction cashTransaction = new StockApp.CashTransaction();
+		cashTransaction.portfolioId = portfolio!.id;
+		cashTransaction.nativeAmount = new StockApp.Money(100, "JPY");
+		cashTransaction.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2023-01-01"));
+		cashTransaction.description = "TEST";
+		cashTransaction = await cashTransaction.AddToDb();
+		cashTransaction.Delete();
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => CashTransactionHelper.Get((int)cashTransaction.id!));
+		Assert.IsTrue(exception.StatusCode == 404, "Status code should be 404 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
+	public async Task CashTransactionsTest_Delete_NullIDTest()
+	{
+		StockApp.CashTransaction cashTransaction = new StockApp.CashTransaction();
+		cashTransaction.portfolioId = portfolio!.id;
+		cashTransaction.nativeAmount = new StockApp.Money(100, "JPY");
+		cashTransaction.timestamp = Tools.TimeConverter.DateOnlyToUnix(DateOnly.Parse("2023-01-01"));
+		cashTransaction.description = "TEST";
+		cashTransaction = await cashTransaction.AddToDb();
+		cashTransaction.id = null;
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => cashTransaction.Delete());
+		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
+	public void CashTransactionsTest_Delete_NonExistentTest()
+	{
+		StockApp.CashTransaction cashTransaction = new StockApp.CashTransaction();
+		cashTransaction.id = -12345;
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => cashTransaction.Delete());
+		Assert.IsTrue(exception.StatusCode == 404, "Status code should be 404 but was " + exception.StatusCode);
+	}
 }

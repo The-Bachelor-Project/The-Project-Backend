@@ -23,7 +23,6 @@ public class Application
 		app.UseMiddleware<Authentication.Middleware>();
 		app.UseMiddleware<ErrorHandlingMiddlware>();
 		PostUsers.Setup(app); // This is where the endpoints are setup
-		GetUsers.Setup(app);
 		GetStockProfiles.Setup(app);
 		GetPortfolios.Setup(app);
 		PostPortfolios.Setup(app);
@@ -33,7 +32,6 @@ public class Application
 		GetSearchResults.Setup(app);
 		GetStockTransactions.Setup(app);
 		PostStockTransactions.Setup(app);
-		GetCurrencyHistories.Setup(app);
 		GetTransactions.Setup(app);
 		GetValueHistory.Setup(app);
 		PutUsers.Setup(app);

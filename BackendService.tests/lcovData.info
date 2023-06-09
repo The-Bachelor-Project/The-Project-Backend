@@ -1,0 +1,1999 @@
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/CashBalance.cs
+FN:4,System.DateOnly Data.CashBalance::get_date()
+FNDA:8051,System.DateOnly Data.CashBalance::get_date()
+DA:5,8051
+FN:5,StockApp.Money Data.CashBalance::get_balance()
+FNDA:14843,StockApp.Money Data.CashBalance::get_balance()
+DA:6,14843
+FN:7,System.Void Data.CashBalance::.ctor(System.DateOnly,StockApp.Money)
+FNDA:7563,System.Void Data.CashBalance::.ctor(System.DateOnly,StockApp.Money)
+DA:8,7563
+DA:9,7563
+DA:10,7563
+DA:11,7563
+DA:12,7563
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/CurrencyHistory.cs
+FN:15,System.String Data.CurrencyHistory::get_currency()
+FNDA:704,System.String Data.CurrencyHistory::get_currency()
+DA:16,704
+FN:16,System.DateOnly Data.CurrencyHistory::get_startDate()
+FNDA:1822,System.DateOnly Data.CurrencyHistory::get_startDate()
+DA:17,1822
+FN:17,System.DateOnly Data.CurrencyHistory::get_endDate()
+FNDA:1228,System.DateOnly Data.CurrencyHistory::get_endDate()
+DA:18,1228
+FN:18,System.String Data.CurrencyHistory::get_interval()
+FNDA:634,System.String Data.CurrencyHistory::get_interval()
+DA:19,634
+FN:19,System.Collections.Generic.List`1<Data.DatePriceOHLC> Data.CurrencyHistory::get_history()
+FNDA:1226687,System.Collections.Generic.List`1<Data.DatePriceOHLC> Data.CurrencyHistory::get_history()
+DA:20,1226687
+FN:6,System.Void Data.CurrencyHistory::.ctor(System.String,System.DateOnly,System.DateOnly,System.String)
+FNDA:634,System.Void Data.CurrencyHistory::.ctor(System.String,System.DateOnly,System.DateOnly,System.String)
+DA:7,634
+DA:8,634
+DA:9,634
+DA:10,634
+DA:11,634
+DA:12,634
+DA:13,634
+DA:14,634
+LF:13
+LH:13
+BRF:0
+BRH:0
+FNF:6
+FNH:6
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/DatePriceOHLC.cs
+FN:16,System.DateOnly Data.DatePriceOHLC::get_date()
+FNDA:48722625,System.DateOnly Data.DatePriceOHLC::get_date()
+DA:17,48722625
+FN:17,StockApp.Money Data.DatePriceOHLC::get_openPrice()
+FNDA:769935,StockApp.Money Data.DatePriceOHLC::get_openPrice()
+DA:18,769935
+FN:18,StockApp.Money Data.DatePriceOHLC::get_highPrice()
+FNDA:687139,StockApp.Money Data.DatePriceOHLC::get_highPrice()
+DA:19,687139
+FN:19,StockApp.Money Data.DatePriceOHLC::get_lowPrice()
+FNDA:665431,StockApp.Money Data.DatePriceOHLC::get_lowPrice()
+DA:20,665431
+FN:20,StockApp.Money Data.DatePriceOHLC::get_closePrice()
+FNDA:669053,StockApp.Money Data.DatePriceOHLC::get_closePrice()
+DA:21,669053
+FN:24,System.Collections.Generic.List`1<Data.DatePriceOHLC> Data.DatePriceOHLC::AddLists(System.Collections.Generic.List`1<Data.DatePriceOHLC>,System.Collections.Generic.List`1<Data.DatePriceOHLC>)
+FNDA:223,System.Collections.Generic.List`1<Data.DatePriceOHLC> Data.DatePriceOHLC::AddLists(System.Collections.Generic.List`1<Data.DatePriceOHLC>,System.Collections.Generic.List`1<Data.DatePriceOHLC>)
+DA:25,223
+DA:26,223
+DA:27,149
+DA:28,149
+DA:30,74
+DA:31,0
+DA:32,0
+DA:35,74
+DA:36,74
+DA:38,74
+DA:40,52400
+DA:41,26126
+DA:42,26126
+DA:43,26126
+DA:44,26126
+DA:45,26126
+DA:47,4778602
+DA:48,26126
+DA:49,4778602
+DA:50,4778602
+DA:51,4778602
+DA:52,4778602
+DA:53,26126
+DA:54,4778602
+DA:55,26126
+DA:56,4778602
+DA:57,4778602
+DA:58,4778602
+DA:59,4778602
+DA:60,26126
+DA:62,26126
+DA:63,26126
+DA:66,74
+DA:67,223
+BRDA:26,12,0,149
+BRDA:26,12,1,74
+BRDA:30,36,0,0
+BRDA:30,36,1,74
+BRDA:35,76,0,74
+BRDA:35,76,1,0
+BRDA:36,148,0,74
+BRDA:36,148,1,0
+BRDA:40,843,1,26126
+BRDA:47,357,0,26126
+BRDA:47,357,1,26126
+BRDA:54,579,0,26126
+BRDA:54,579,1,26126
+BRDA:40,843,0,74
+FN:7,System.Void Data.DatePriceOHLC::.ctor(System.DateOnly,StockApp.Money,StockApp.Money,StockApp.Money,StockApp.Money)
+FNDA:373541,System.Void Data.DatePriceOHLC::.ctor(System.DateOnly,StockApp.Money,StockApp.Money,StockApp.Money,StockApp.Money)
+DA:8,373541
+DA:9,373541
+DA:10,373541
+DA:11,373541
+DA:12,373541
+DA:13,373541
+DA:14,373541
+DA:15,373541
+LF:47
+LH:45
+BRF:14
+BRH:11
+FNF:7
+FNH:7
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Dividend.cs
+FN:10,System.DateOnly Data.Dividend::get_date()
+FNDA:33537,System.DateOnly Data.Dividend::get_date()
+DA:11,33537
+FN:11,StockApp.Money Data.Dividend::get_payout()
+FNDA:2317,StockApp.Money Data.Dividend::get_payout()
+DA:12,2317
+FN:4,System.Void Data.Dividend::.ctor(System.DateOnly,StockApp.Money)
+FNDA:919,System.Void Data.Dividend::.ctor(System.DateOnly,StockApp.Money)
+DA:5,919
+DA:6,919
+DA:7,919
+DA:8,919
+DA:9,919
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Position.cs
+FN:4,System.String Data.Position::get_ticker()
+FNDA:120,System.String Data.Position::get_ticker()
+DA:5,120
+FN:5,System.String Data.Position::get_exchange()
+FNDA:120,System.String Data.Position::get_exchange()
+DA:6,120
+FN:6,System.Collections.Generic.List`1<Data.DatePriceOHLC> Data.Position::get_valueHistory()
+FNDA:364,System.Collections.Generic.List`1<Data.DatePriceOHLC> Data.Position::get_valueHistory()
+DA:7,364
+FN:7,System.Collections.Generic.List`1<Data.Dividend> Data.Position::get_dividends()
+FNDA:248,System.Collections.Generic.List`1<Data.Dividend> Data.Position::get_dividends()
+DA:8,248
+FN:9,System.Void Data.Position::.ctor(System.String,System.String,System.Collections.Generic.List`1<Data.DatePriceOHLC>,System.Collections.Generic.List`1<Data.Dividend>)
+FNDA:116,System.Void Data.Position::.ctor(System.String,System.String,System.Collections.Generic.List`1<Data.DatePriceOHLC>,System.Collections.Generic.List`1<Data.Dividend>)
+DA:10,116
+DA:11,116
+DA:12,116
+DA:13,116
+DA:14,116
+DA:15,116
+DA:16,116
+LF:11
+LH:11
+BRF:0
+BRH:0
+FNF:5
+FNH:5
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/StockDividends.cs
+FN:13,System.String Data.StockDividends::get_ticker()
+FNDA:0,System.String Data.StockDividends::get_ticker()
+DA:14,0
+FN:14,System.String Data.StockDividends::get_exchange()
+FNDA:0,System.String Data.StockDividends::get_exchange()
+DA:15,0
+FN:15,System.Nullable`1<System.DateOnly> Data.StockDividends::get_startDate()
+FNDA:0,System.Nullable`1<System.DateOnly> Data.StockDividends::get_startDate()
+DA:16,0
+FN:16,System.Nullable`1<System.DateOnly> Data.StockDividends::get_endDate()
+FNDA:0,System.Nullable`1<System.DateOnly> Data.StockDividends::get_endDate()
+DA:17,0
+FN:17,System.Collections.Generic.List`1<Data.Dividend> Data.StockDividends::get_dividends()
+FNDA:0,System.Collections.Generic.List`1<Data.Dividend> Data.StockDividends::get_dividends()
+DA:18,0
+FN:4,System.Void Data.StockDividends::.ctor(System.String,System.String,System.DateOnly,System.DateOnly)
+FNDA:0,System.Void Data.StockDividends::.ctor(System.String,System.String,System.DateOnly,System.DateOnly)
+DA:5,0
+DA:6,0
+DA:7,0
+DA:8,0
+DA:9,0
+DA:10,0
+DA:11,0
+DA:12,0
+LF:13
+LH:0
+BRF:0
+BRH:0
+FNF:6
+FNH:0
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/StockHistory.cs
+FN:26,System.String Data.StockHistory::get_ticker()
+FNDA:1051,System.String Data.StockHistory::get_ticker()
+DA:27,1051
+FN:27,System.String Data.StockHistory::get_exchange()
+FNDA:1051,System.String Data.StockHistory::get_exchange()
+DA:28,1051
+FN:28,System.Nullable`1<System.DateOnly> Data.StockHistory::get_startDate()
+FNDA:430,System.Nullable`1<System.DateOnly> Data.StockHistory::get_startDate()
+DA:29,430
+FN:29,System.Nullable`1<System.DateOnly> Data.StockHistory::get_endDate()
+FNDA:430,System.Nullable`1<System.DateOnly> Data.StockHistory::get_endDate()
+DA:30,430
+FN:30,System.String Data.StockHistory::get_interval()
+FNDA:536,System.String Data.StockHistory::get_interval()
+DA:31,536
+FN:31,System.Collections.Generic.List`1<Data.DatePriceOHLC> Data.StockHistory::get_history()
+FNDA:186595,System.Collections.Generic.List`1<Data.DatePriceOHLC> Data.StockHistory::get_history()
+DA:32,186595
+FN:32,System.Collections.Generic.List`1<Data.Dividend> Data.StockHistory::get_dividends()
+FNDA:75069,System.Collections.Generic.List`1<Data.Dividend> Data.StockHistory::get_dividends()
+DA:33,75069
+FN:6,System.Void Data.StockHistory::.ctor(System.String,System.String,System.DateOnly,System.DateOnly,System.String)
+FNDA:86,System.Void Data.StockHistory::.ctor(System.String,System.String,System.DateOnly,System.DateOnly,System.String)
+DA:7,86
+DA:8,86
+DA:9,86
+DA:10,86
+DA:11,86
+DA:12,86
+DA:13,86
+DA:14,86
+DA:15,86
+DA:16,86
+FN:17,System.Void Data.StockHistory::.ctor(System.String,System.String,System.String)
+FNDA:446,System.Void Data.StockHistory::.ctor(System.String,System.String,System.String)
+DA:18,446
+DA:19,446
+DA:20,446
+DA:21,446
+DA:22,446
+DA:23,446
+DA:24,446
+DA:25,446
+LF:25
+LH:25
+BRF:0
+BRH:0
+FNF:9
+FNH:9
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/StockProfile.cs
+FN:4,System.String Data.StockProfile::get_ticker()
+FNDA:655,System.String Data.StockProfile::get_ticker()
+DA:5,655
+FN:5,System.String Data.StockProfile::get_exchange()
+FNDA:655,System.String Data.StockProfile::get_exchange()
+DA:6,655
+FN:6,System.String Data.StockProfile::get_displayName()
+FNDA:311,System.String Data.StockProfile::get_displayName()
+DA:7,311
+FN:7,System.String Data.StockProfile::get_shortName()
+FNDA:310,System.String Data.StockProfile::get_shortName()
+DA:8,310
+FN:8,System.String Data.StockProfile::get_longName()
+FNDA:310,System.String Data.StockProfile::get_longName()
+DA:9,310
+FN:9,System.String Data.StockProfile::get_industry()
+FNDA:291,System.String Data.StockProfile::get_industry()
+DA:10,291
+FN:10,System.String Data.StockProfile::get_sector()
+FNDA:291,System.String Data.StockProfile::get_sector()
+DA:11,291
+FN:11,System.String Data.StockProfile::get_website()
+FNDA:291,System.String Data.StockProfile::get_website()
+DA:12,291
+FN:12,System.String Data.StockProfile::get_country()
+FNDA:310,System.String Data.StockProfile::get_country()
+DA:13,310
+FN:13,System.String Data.StockProfile::get_address()
+FNDA:291,System.String Data.StockProfile::get_address()
+DA:14,291
+FN:14,System.String Data.StockProfile::get_city()
+FNDA:291,System.String Data.StockProfile::get_city()
+DA:15,291
+FN:15,System.String Data.StockProfile::get_state()
+FNDA:291,System.String Data.StockProfile::get_state()
+DA:16,291
+FN:16,System.String Data.StockProfile::get_zip()
+FNDA:291,System.String Data.StockProfile::get_zip()
+DA:17,291
+FN:17,System.String Data.StockProfile::get_financialCurrency()
+FNDA:291,System.String Data.StockProfile::get_financialCurrency()
+DA:18,291
+FN:18,System.Nullable`1<System.Decimal> Data.StockProfile::get_sharesOutstanding()
+FNDA:291,System.Nullable`1<System.Decimal> Data.StockProfile::get_sharesOutstanding()
+DA:19,291
+FN:19,System.Nullable`1<System.Decimal> Data.StockProfile::get_trailingAnnualDividendRate()
+FNDA:0,System.Nullable`1<System.Decimal> Data.StockProfile::get_trailingAnnualDividendRate()
+DA:20,0
+FN:20,System.Nullable`1<System.Decimal> Data.StockProfile::get_trailingAnnualDividendYield()
+FNDA:0,System.Nullable`1<System.Decimal> Data.StockProfile::get_trailingAnnualDividendYield()
+DA:21,0
+FN:23,System.Void Data.StockProfile::.ctor()
+FNDA:912,System.Void Data.StockProfile::.ctor()
+DA:24,912
+FN:24,System.Void Data.StockProfile::.ctor(System.String,System.String,System.String,System.String,System.String,System.String)
+FNDA:19,System.Void Data.StockProfile::.ctor(System.String,System.String,System.String,System.String,System.String,System.String)
+DA:25,19
+DA:26,19
+DA:27,19
+DA:28,19
+DA:29,19
+DA:30,19
+DA:31,19
+DA:32,19
+DA:33,19
+LF:27
+LH:25
+BRF:0
+BRH:0
+FNF:19
+FNH:17
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Transaction.cs
+FN:16,System.String Data.Transaction::get_type()
+FNDA:3179,System.String Data.Transaction::get_type()
+DA:17,3179
+FN:17,System.Int32 Data.Transaction::get_id()
+FNDA:3006,System.Int32 Data.Transaction::get_id()
+DA:18,3006
+FN:18,System.String Data.Transaction::get_portfolio()
+FNDA:3520,System.String Data.Transaction::get_portfolio()
+DA:19,3520
+FN:19,System.Int32 Data.Transaction::get_timestamp()
+FNDA:7570,System.Int32 Data.Transaction::get_timestamp()
+DA:20,7570
+FN:20,System.String Data.Transaction::get_description()
+FNDA:3027,System.String Data.Transaction::get_description()
+DA:21,3027
+FN:21,StockApp.Money Data.Transaction::get_value()
+FNDA:3088,StockApp.Money Data.Transaction::get_value()
+DA:22,3088
+FN:22,StockApp.Money Data.Transaction::get_balance()
+FNDA:3132,StockApp.Money Data.Transaction::get_balance()
+DA:23,3132
+FN:23,StockApp.Money Data.Transaction::get_combinedBalance()
+FNDA:3371,StockApp.Money Data.Transaction::get_combinedBalance()
+DA:24,3371
+FN:4,System.Void Data.Transaction::.ctor(System.String,System.Int32,System.String,System.Int32,System.String,StockApp.Money,StockApp.Money,StockApp.Money)
+FNDA:3006,System.Void Data.Transaction::.ctor(System.String,System.Int32,System.String,System.Int32,System.String,StockApp.Money,StockApp.Money,StockApp.Money)
+DA:5,3006
+DA:6,3006
+DA:7,3006
+DA:8,3006
+DA:9,3006
+DA:10,3006
+DA:11,3006
+DA:12,3006
+DA:13,3006
+DA:14,3006
+DA:15,3006
+LF:19
+LH:19
+BRF:0
+BRH:0
+FNF:9
+FNH:9
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/UserAssetsValueHistory.cs
+FN:4,System.Collections.Generic.List`1<Data.DatePriceOHLC> Data.UserAssetsValueHistory::get_valueHistory()
+FNDA:103,System.Collections.Generic.List`1<Data.DatePriceOHLC> Data.UserAssetsValueHistory::get_valueHistory()
+DA:5,103
+FN:5,System.Collections.Generic.List`1<Data.Dividend> Data.UserAssetsValueHistory::get_dividendHistory()
+FNDA:39,System.Collections.Generic.List`1<Data.Dividend> Data.UserAssetsValueHistory::get_dividendHistory()
+DA:6,39
+FN:6,System.Collections.Generic.List`1<StockApp.Portfolio> Data.UserAssetsValueHistory::get_portfolios()
+FNDA:175,System.Collections.Generic.List`1<StockApp.Portfolio> Data.UserAssetsValueHistory::get_portfolios()
+DA:7,175
+FN:7,System.Collections.Generic.List`1<Data.CashBalance> Data.UserAssetsValueHistory::get_cashBalanceHistory()
+FNDA:39,System.Collections.Generic.List`1<Data.CashBalance> Data.UserAssetsValueHistory::get_cashBalanceHistory()
+DA:8,39
+FN:9,System.Void Data.UserAssetsValueHistory::.ctor(System.Collections.Generic.List`1<Data.DatePriceOHLC>,System.Collections.Generic.List`1<StockApp.Portfolio>,System.Collections.Generic.List`1<Data.Dividend>,System.Collections.Generic.List`1<Data.CashBalance>)
+FNDA:39,System.Void Data.UserAssetsValueHistory::.ctor(System.Collections.Generic.List`1<Data.DatePriceOHLC>,System.Collections.Generic.List`1<StockApp.Portfolio>,System.Collections.Generic.List`1<Data.Dividend>,System.Collections.Generic.List`1<Data.CashBalance>)
+DA:10,39
+DA:11,39
+DA:12,39
+DA:13,39
+DA:14,39
+DA:15,39
+DA:16,39
+LF:11
+LH:11
+BRF:0
+BRH:0
+FNF:5
+FNH:5
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Fetcher/CurrencyFetcher.cs
+FN:49,Data.CurrencyHistory Data.Fetcher.CurrencyFetcher::InsertMissingValues(Data.CurrencyHistory)
+FNDA:594,Data.CurrencyHistory Data.Fetcher.CurrencyFetcher::InsertMissingValues(Data.CurrencyHistory)
+DA:50,594
+DA:51,594
+DA:52,0
+DA:53,0
+DA:55,594
+DA:56,0
+DA:57,0
+DA:58,0
+DA:59,0
+DA:60,0
+DA:61,0
+DA:62,0
+DA:63,0
+DA:64,0
+DA:65,0
+DA:66,448342
+DA:67,223577
+DA:68,223577
+DA:69,63596
+DA:70,63596
+DA:71,63596
+DA:72,63596
+DA:73,63596
+DA:74,63596
+DA:75,63596
+DA:76,63596
+DA:77,63596
+DA:78,63596
+DA:79,223577
+DA:80,594
+DA:81,594
+BRDA:51,17,0,0
+BRDA:51,17,1,594
+BRDA:55,56,0,0
+BRDA:55,56,1,594
+BRDA:66,373,1,223577
+BRDA:68,216,0,63596
+BRDA:68,216,1,223577
+BRDA:66,373,0,594
+FN:83,System.Void Data.Fetcher.CurrencyFetcher::SaveCurrencyHistory(Data.CurrencyHistory,System.Boolean,System.Boolean)
+FNDA:8,System.Void Data.Fetcher.CurrencyFetcher::SaveCurrencyHistory(Data.CurrencyHistory,System.Boolean,System.Boolean)
+DA:84,8
+DA:85,8
+DA:86,8
+DA:87,0
+DA:88,8
+DA:89,8
+DA:90,8
+DA:91,8
+DA:92,8
+DA:94,8
+DA:95,8
+DA:97,8
+DA:98,0
+DA:99,0
+DA:100,0
+DA:101,0
+DA:102,0
+DA:103,0
+DA:105,8
+BRDA:86,34,1,8
+BRDA:86,34,0,8
+FN:11,System.Void Data.Fetcher.CurrencyFetcher/<GetHistory>d__0::MoveNext()
+FNDA:594,System.Void Data.Fetcher.CurrencyFetcher/<GetHistory>d__0::MoveNext()
+DA:12,594
+DA:13,594
+DA:14,594
+DA:15,594
+DA:16,594
+DA:17,594
+DA:18,594
+DA:22,594
+DA:23,594
+DA:24,594
+DA:25,594
+DA:26,0
+DA:27,0
+DA:28,0
+DA:29,0
+DA:30,0
+DA:33,594
+DA:34,7
+DA:35,7
+DA:37,7
+DA:38,7
+DA:39,594
+DA:40,1
+DA:41,1
+DA:42,1
+DA:43,1
+DA:44,594
+DA:45,594
+DA:46,594
+DA:47,594
+BRDA:17,131,0,594
+BRDA:33,472,0,7
+BRDA:33,472,1,594
+BRDA:39,686,0,1
+BRDA:39,686,1,594
+BRDA:17,131,1,594
+LF:80
+LH:56
+BRF:16
+BRH:14
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Fetcher/StockFetcher.cs
+FN:105,System.Void Data.Fetcher.StockFetcher::SaveProfile(Data.StockProfile)
+FNDA:0,System.Void Data.Fetcher.StockFetcher::SaveProfile(Data.StockProfile)
+DA:106,0
+DA:107,0
+DA:108,0
+DA:109,0
+DA:110,0
+DA:111,0
+DA:112,0
+DA:113,0
+DA:114,0
+DA:115,0
+DA:116,0
+DA:117,0
+DA:118,0
+DA:119,0
+DA:120,0
+DA:121,0
+DA:122,0
+DA:123,0
+DA:124,0
+DA:125,0
+DA:126,0
+DA:127,0
+DA:128,0
+DA:130,0
+DA:131,0
+DA:132,0
+DA:133,0
+DA:134,0
+DA:135,0
+DA:136,0
+DA:140,0
+FN:142,System.String Data.Fetcher.StockFetcher::GenerateTags(Data.StockProfile)
+FNDA:1,System.String Data.Fetcher.StockFetcher::GenerateTags(Data.StockProfile)
+DA:143,1
+DA:145,1
+DA:146,1
+DA:147,1
+DA:148,1
+DA:149,1
+DA:150,1
+FN:153,System.Void Data.Fetcher.StockFetcher::SaveStockHistory(Data.StockHistory,System.Boolean,System.Boolean)
+FNDA:95,System.Void Data.Fetcher.StockFetcher::SaveStockHistory(Data.StockHistory,System.Boolean,System.Boolean)
+DA:154,95
+DA:155,95
+DA:156,95
+DA:157,94
+DA:158,1
+DA:159,1
+DA:160,1
+DA:161,1
+DA:163,1
+DA:164,1
+DA:165,1
+DA:166,1
+DA:168,1
+DA:169,1
+DA:170,1
+DA:171,0
+DA:172,0
+DA:173,0
+DA:174,0
+DA:178,1
+DA:179,1
+DA:180,1
+DA:181,1
+DA:182,1
+DA:183,1
+DA:184,1
+DA:186,1
+DA:187,1
+DA:188,1
+DA:189,0
+DA:190,0
+DA:191,0
+DA:192,0
+DA:194,1
+DA:195,1
+DA:196,1
+DA:197,1
+DA:198,1
+DA:199,1
+DA:200,1
+DA:201,1
+DA:203,1
+DA:204,1
+DA:205,1
+DA:206,0
+DA:207,0
+DA:208,0
+DA:209,0
+DA:212,1
+DA:213,95
+BRDA:156,36,1,1
+BRDA:164,86,1,1
+BRDA:164,86,0,1
+BRDA:178,337,0,1
+BRDA:178,337,1,1
+BRDA:195,540,0,1
+BRDA:156,36,0,95
+BRDA:195,540,1,95
+FN:215,System.Void Data.Fetcher.StockFetcher::SaveDividends(System.Collections.Generic.List`1<Data.Dividend>,System.String,System.String)
+FNDA:95,System.Void Data.Fetcher.StockFetcher::SaveDividends(System.Collections.Generic.List`1<Data.Dividend>,System.String,System.String)
+DA:216,95
+DA:217,95
+DA:218,94
+DA:219,1
+DA:220,1
+DA:221,1
+DA:222,1
+DA:224,1
+DA:225,1
+DA:226,1
+DA:227,1
+DA:229,1
+DA:230,1
+DA:231,1
+DA:232,0
+DA:233,0
+DA:234,0
+DA:235,0
+DA:237,95
+BRDA:217,14,1,1
+BRDA:225,59,1,1
+BRDA:225,59,0,1
+BRDA:217,14,0,95
+FN:9,System.Void Data.Fetcher.StockFetcher/<GetHistory>d__0::MoveNext()
+FNDA:302,System.Void Data.Fetcher.StockFetcher/<GetHistory>d__0::MoveNext()
+DA:10,302
+DA:11,302
+DA:12,3
+DA:13,3
+DA:15,299
+DA:16,2
+DA:17,2
+DA:19,297
+DA:20,2
+DA:21,2
+DA:23,295
+DA:24,295
+DA:25,295
+DA:26,295
+DA:27,295
+DA:29,295
+DA:30,291
+DA:34,291
+DA:35,291
+DA:36,290
+DA:37,290
+DA:38,1
+DA:39,1
+DA:40,1
+DA:41,1
+DA:42,1
+DA:43,1
+DA:44,1
+DA:46,290
+DA:47,0
+DA:48,0
+DA:49,0
+DA:50,0
+DA:51,0
+DA:52,0
+DA:53,290
+DA:54,94
+DA:55,94
+DA:56,94
+DA:57,94
+DA:58,94
+DA:59,94
+DA:60,290
+DA:61,294
+DA:62,290
+DA:63,290
+DA:64,290
+DA:65,290
+DA:66,291
+BRDA:11,112,0,301
+BRDA:11,120,0,300
+BRDA:11,128,0,299
+BRDA:11,112,1,3
+BRDA:11,120,1,3
+BRDA:11,128,1,3
+BRDA:11,144,0,3
+BRDA:11,144,1,299
+BRDA:15,179,0,2
+BRDA:15,179,1,297
+BRDA:19,230,0,2
+BRDA:19,230,1,295
+BRDA:29,353,0,291
+BRDA:46,922,0,0
+BRDA:46,922,1,290
+BRDA:53,1379,0,94
+BRDA:53,1379,1,290
+BRDA:29,353,1,294
+FN:68,System.Void Data.Fetcher.StockFetcher/<GetProfile>d__1::MoveNext()
+FNDA:248,System.Void Data.Fetcher.StockFetcher/<GetProfile>d__1::MoveNext()
+DA:69,248
+DA:70,248
+DA:71,2
+DA:72,2
+DA:75,246
+DA:77,246
+DA:78,246
+DA:79,237
+DA:80,237
+DA:82,9
+DA:83,9
+DA:85,9
+DA:86,9
+DA:87,0
+DA:88,0
+DA:89,0
+DA:91,237
+BRDA:70,32,0,247
+BRDA:70,32,1,1
+BRDA:70,48,0,2
+BRDA:70,48,1,246
+FN:93,System.Void Data.Fetcher.StockFetcher/<Search>d__2::MoveNext()
+FNDA:6,System.Void Data.Fetcher.StockFetcher/<Search>d__2::MoveNext()
+DA:94,6
+DA:95,6
+DA:96,2
+DA:97,2
+DA:100,4
+DA:101,4
+BRDA:95,21,0,5
+BRDA:95,21,1,1
+BRDA:95,44,0,2
+BRDA:95,44,1,4
+LF:179
+LH:123
+BRF:38
+BRH:37
+FNF:7
+FNH:6
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Fetcher/YahooFinanceFetcher/CurrencyFetcher.cs
+FN:11,System.Void Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher/<GetHistory>d__0::MoveNext()
+FNDA:40,System.Void Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher/<GetHistory>d__0::MoveNext()
+DA:12,40
+DA:13,40
+DA:14,40
+DA:16,40
+DA:17,40
+DA:18,40
+DA:19,1
+DA:20,1
+DA:21,1
+DA:22,1
+DA:23,40
+DA:24,40
+DA:25,40
+DA:26,40
+DA:28,40
+DA:29,40
+DA:30,1
+DA:31,1
+DA:33,39
+DA:35,39
+DA:36,1
+DA:37,1
+DA:38,524
+DA:39,261
+DA:41,261
+DA:42,261
+DA:43,261
+DA:44,0
+DA:45,0
+DA:46,0
+DA:47,0
+DA:48,0
+DA:49,0
+DA:50,0
+DA:51,0
+DA:53,261
+DA:54,261
+DA:55,261
+DA:56,261
+DA:57,261
+DA:58,261
+DA:59,261
+DA:60,261
+DA:61,261
+DA:62,0
+DA:63,0
+DA:64,0
+DA:65,0
+DA:67,261
+DA:68,1
+DA:70,38
+DA:71,38
+DA:72,17072
+DA:73,8498
+DA:75,8498
+DA:76,8498
+DA:77,8498
+DA:78,0
+DA:79,0
+DA:80,0
+DA:81,0
+DA:83,8498
+DA:84,8498
+DA:85,8498
+DA:86,8498
+DA:87,0
+DA:88,0
+DA:89,0
+DA:90,0
+DA:93,8498
+DA:94,38
+DA:96,39
+DA:97,40
+BRDA:18,104,0,1
+BRDA:18,104,1,40
+BRDA:29,538,0,1
+BRDA:29,538,1,39
+BRDA:35,592,0,1
+BRDA:38,1349,1,261
+BRDA:43,697,0,0
+BRDA:43,697,1,261
+BRDA:38,1349,0,1
+BRDA:35,592,1,38
+BRDA:72,1814,1,8498
+BRDA:77,1461,0,0
+BRDA:77,1461,1,8498
+BRDA:72,1814,0,38
+LF:73
+LH:53
+BRF:14
+BRH:12
+FNF:1
+FNH:1
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Fetcher/YahooFinanceFetcher/StockFetcher.cs
+FN:220,System.Void Data.Fetcher.YahooFinanceFetcher.StockFetcher/<GetDividends>d__3::MoveNext()
+FNDA:97,System.Void Data.Fetcher.YahooFinanceFetcher.StockFetcher/<GetDividends>d__3::MoveNext()
+DA:221,97
+DA:222,97
+DA:223,97
+DA:225,97
+DA:226,97
+DA:227,97
+DA:228,97
+DA:231,97
+DA:232,0
+DA:233,0
+DA:235,97
+DA:237,97
+DA:238,97
+DA:239,97
+DA:241,97
+DA:242,97
+DA:243,97
+DA:244,97
+DA:245,97
+DA:246,0
+DA:247,0
+DA:249,97
+DA:250,97
+DA:251,97
+DA:252,95
+DA:253,95
+DA:255,2
+DA:256,2
+DA:257,2
+DA:258,32
+DA:259,13
+DA:261,13
+DA:262,13
+DA:263,13
+DA:264,13
+DA:265,13
+DA:266,13
+DA:267,13
+DA:268,13
+DA:269,13
+DA:270,13
+DA:271,13
+DA:272,13
+DA:273,0
+DA:274,0
+DA:275,0
+DA:276,0
+DA:279,13
+DA:280,2
+DA:281,2
+DA:282,97
+BRDA:231,152,0,0
+BRDA:231,152,1,97
+BRDA:245,460,0,0
+BRDA:245,460,1,97
+BRDA:251,699,0,95
+BRDA:251,699,1,2
+BRDA:258,1051,1,13
+BRDA:264,862,0,13
+BRDA:264,881,0,13
+BRDA:264,862,1,0
+BRDA:264,881,1,0
+BRDA:264,908,0,13
+BRDA:264,908,1,13
+BRDA:258,1051,0,2
+FN:9,System.Void Data.Fetcher.YahooFinanceFetcher.StockFetcher/<GetHistory>d__0::MoveNext()
+FNDA:183,System.Void Data.Fetcher.YahooFinanceFetcher.StockFetcher/<GetHistory>d__0::MoveNext()
+DA:10,183
+DA:11,183
+DA:13,183
+DA:14,183
+DA:15,183
+DA:16,183
+DA:19,183
+DA:20,1
+DA:21,1
+DA:23,182
+DA:25,182
+DA:26,182
+DA:27,182
+DA:29,182
+DA:30,182
+DA:31,182
+DA:32,182
+DA:34,182
+DA:35,95
+DA:36,95
+DA:39,87
+DA:40,87
+DA:41,87
+DA:42,1
+DA:43,1
+DA:45,86
+DA:46,86
+DA:47,86
+DA:48,86
+DA:50,44062
+DA:51,21902
+DA:52,21902
+DA:53,21902
+DA:54,21902
+DA:55,21644
+DA:57,21644
+DA:58,21644
+DA:59,21644
+DA:60,21644
+DA:61,21644
+DA:62,21644
+DA:63,21644
+DA:64,21644
+DA:65,21644
+DA:66,21644
+DA:67,0
+DA:68,0
+DA:69,0
+DA:70,0
+DA:73,21644
+DA:74,21902
+DA:75,86
+DA:76,43546
+DA:77,21644
+DA:79,21644
+DA:80,21644
+DA:81,3
+DA:82,3
+DA:83,0
+DA:84,0
+DA:85,0
+DA:88,3
+DA:89,3
+DA:90,0
+DA:91,0
+DA:92,0
+DA:93,0
+DA:94,0
+DA:95,0
+DA:96,3
+DA:97,3
+DA:98,3
+DA:99,3
+DA:100,3
+DA:101,3
+DA:102,3
+DA:103,3
+DA:104,3
+DA:105,3
+DA:106,3
+DA:107,3
+DA:108,21644
+DA:109,0
+DA:110,0
+DA:111,0
+DA:112,0
+DA:114,21644
+DA:115,86
+DA:116,182
+BRDA:19,229,0,1
+BRDA:19,229,1,182
+BRDA:34,587,0,95
+BRDA:34,587,1,87
+BRDA:41,808,0,1
+BRDA:41,808,1,86
+BRDA:50,1296,1,21902
+BRDA:54,1026,0,21902
+BRDA:54,1045,0,21902
+BRDA:54,1026,1,0
+BRDA:54,1045,1,0
+BRDA:54,1072,0,21644
+BRDA:54,1072,1,21902
+BRDA:50,1296,0,86
+BRDA:76,2228,1,21644
+BRDA:80,1536,0,3
+BRDA:82,1565,0,0
+BRDA:82,1565,1,3
+BRDA:89,1633,0,0
+BRDA:89,1633,1,3
+BRDA:96,1881,0,3
+BRDA:96,1881,1,3
+BRDA:80,1536,1,21644
+BRDA:76,2228,0,86
+FN:118,System.Void Data.Fetcher.YahooFinanceFetcher.StockFetcher/<GetProfile>d__1::MoveNext()
+FNDA:9,System.Void Data.Fetcher.YahooFinanceFetcher.StockFetcher/<GetProfile>d__1::MoveNext()
+DA:119,9
+DA:120,9
+DA:122,4
+DA:123,4
+DA:125,4
+DA:126,4
+DA:127,4
+DA:128,4
+DA:129,0
+DA:130,0
+DA:134,4
+DA:135,4
+DA:136,4
+DA:137,4
+DA:138,4
+DA:139,0
+DA:140,0
+DA:144,4
+DA:145,4
+DA:147,4
+DA:148,4
+DA:149,4
+DA:150,4
+DA:151,4
+DA:152,0
+DA:153,4
+DA:154,4
+DA:155,4
+DA:156,4
+DA:158,0
+DA:159,0
+DA:160,0
+DA:161,0
+DA:162,0
+DA:163,0
+DA:164,0
+DA:165,0
+DA:166,0
+DA:167,0
+DA:168,0
+DA:169,0
+DA:170,0
+DA:171,0
+DA:173,0
+DA:174,0
+BRDA:128,398,1,1
+BRDA:128,398,0,4
+BRDA:128,466,1,1
+BRDA:128,466,0,4
+BRDA:128,544,1,1
+BRDA:128,544,0,4
+BRDA:128,640,0,0
+BRDA:128,640,1,4
+BRDA:137,1006,1,1
+BRDA:137,1006,0,4
+BRDA:138,1115,1,1
+BRDA:138,1115,0,4
+BRDA:138,1183,1,1
+BRDA:138,1183,0,4
+BRDA:138,1261,1,1
+BRDA:138,1261,0,4
+BRDA:138,1357,0,0
+BRDA:138,1357,1,4
+BRDA:148,1472,1,1
+BRDA:148,1472,0,4
+BRDA:148,1532,1,1
+BRDA:148,1532,0,4
+BRDA:148,1603,1,1
+BRDA:148,1603,0,4
+BRDA:148,1679,1,1
+BRDA:148,1679,0,4
+BRDA:148,1751,1,1
+BRDA:148,1751,0,4
+BRDA:148,1845,0,0
+BRDA:148,1856,1,0
+BRDA:148,1856,0,0
+BRDA:148,1927,1,0
+BRDA:148,1927,0,0
+BRDA:148,2003,1,0
+BRDA:148,2003,0,0
+BRDA:148,2075,1,0
+BRDA:148,2075,0,0
+BRDA:148,2169,0,0
+BRDA:148,2180,1,0
+BRDA:148,2180,0,0
+BRDA:148,2251,1,0
+BRDA:148,2251,0,0
+BRDA:148,2327,1,0
+BRDA:148,2327,0,0
+BRDA:148,2399,1,0
+BRDA:148,2399,0,0
+BRDA:148,2493,0,0
+BRDA:148,1845,1,0
+BRDA:148,2169,1,0
+BRDA:148,2493,1,0
+BRDA:158,2624,1,0
+BRDA:158,2624,0,0
+BRDA:158,2684,1,0
+BRDA:158,2684,0,0
+BRDA:158,2755,1,0
+BRDA:158,2755,0,0
+BRDA:158,2831,1,0
+BRDA:158,2831,0,0
+BRDA:158,2903,1,0
+BRDA:158,2903,0,0
+BRDA:158,2997,0,0
+BRDA:158,2997,1,0
+BRDA:159,3027,1,0
+BRDA:159,3027,0,0
+BRDA:159,3087,1,0
+BRDA:159,3087,0,0
+BRDA:159,3158,1,0
+BRDA:159,3158,0,0
+BRDA:159,3234,1,0
+BRDA:159,3234,0,0
+BRDA:159,3306,1,0
+BRDA:159,3306,0,0
+BRDA:159,3400,0,0
+BRDA:159,3400,1,0
+BRDA:160,3430,1,0
+BRDA:160,3430,0,0
+BRDA:160,3495,0,0
+BRDA:160,3495,1,0
+BRDA:160,3508,1,0
+BRDA:160,3508,0,0
+BRDA:160,3585,0,0
+BRDA:160,3585,1,0
+BRDA:160,3598,1,0
+BRDA:160,3598,0,0
+BRDA:160,3675,0,0
+BRDA:160,3675,1,0
+BRDA:160,3688,1,0
+BRDA:160,3688,0,0
+BRDA:160,3771,0,0
+BRDA:160,3771,1,0
+BRDA:160,3781,1,0
+BRDA:160,3781,0,0
+BRDA:160,3855,0,0
+BRDA:160,3855,1,0
+BRDA:161,3886,1,0
+BRDA:161,3886,0,0
+BRDA:161,3951,0,0
+BRDA:161,3951,1,0
+BRDA:161,3964,1,0
+BRDA:161,3964,0,0
+BRDA:161,4041,0,0
+BRDA:161,4041,1,0
+BRDA:161,4054,1,0
+BRDA:161,4054,0,0
+BRDA:161,4131,0,0
+BRDA:161,4131,1,0
+BRDA:161,4144,1,0
+BRDA:161,4144,0,0
+BRDA:161,4227,0,0
+BRDA:161,4227,1,0
+BRDA:161,4237,1,0
+BRDA:161,4237,0,0
+BRDA:161,4311,0,0
+BRDA:161,4311,1,0
+BRDA:162,4341,1,0
+BRDA:162,4341,0,0
+BRDA:162,4401,1,0
+BRDA:162,4401,0,0
+BRDA:162,4472,1,0
+BRDA:162,4472,0,0
+BRDA:162,4558,0,0
+BRDA:162,4558,1,0
+BRDA:162,4571,1,0
+BRDA:162,4571,0,0
+BRDA:162,4642,1,0
+BRDA:162,4642,0,0
+BRDA:162,4713,1,0
+BRDA:162,4713,0,0
+BRDA:162,4803,0,0
+BRDA:162,4803,1,0
+BRDA:163,4833,1,0
+BRDA:163,4833,0,0
+BRDA:163,4898,0,0
+BRDA:163,4898,1,0
+BRDA:163,4911,1,0
+BRDA:163,4911,0,0
+BRDA:163,4988,0,0
+BRDA:163,4988,1,0
+BRDA:163,5001,1,0
+BRDA:163,5001,0,0
+BRDA:163,5078,0,0
+BRDA:163,5078,1,0
+BRDA:163,5091,1,0
+BRDA:163,5091,0,0
+BRDA:163,5174,0,0
+BRDA:163,5174,1,0
+BRDA:163,5187,1,0
+BRDA:163,5187,0,0
+BRDA:163,5264,0,0
+BRDA:163,5264,1,0
+BRDA:163,5274,1,0
+BRDA:163,5274,0,0
+BRDA:163,5348,0,0
+BRDA:163,5348,1,0
+BRDA:164,5378,1,0
+BRDA:164,5378,0,0
+BRDA:164,5443,0,0
+BRDA:164,5443,1,0
+BRDA:164,5456,1,0
+BRDA:164,5456,0,0
+BRDA:164,5533,0,0
+BRDA:164,5533,1,0
+BRDA:164,5546,1,0
+BRDA:164,5546,0,0
+BRDA:164,5623,0,0
+BRDA:164,5623,1,0
+BRDA:164,5636,1,0
+BRDA:164,5636,0,0
+BRDA:164,5719,0,0
+BRDA:164,5719,1,0
+BRDA:164,5732,1,0
+BRDA:164,5732,0,0
+BRDA:164,5809,0,0
+BRDA:164,5809,1,0
+BRDA:164,5819,1,0
+BRDA:164,5819,0,0
+BRDA:164,5893,0,0
+BRDA:164,5893,1,0
+BRDA:165,5923,1,0
+BRDA:165,5923,0,0
+BRDA:165,5988,0,0
+BRDA:165,5988,1,0
+BRDA:165,6001,1,0
+BRDA:165,6001,0,0
+BRDA:165,6078,0,0
+BRDA:165,6078,1,0
+BRDA:165,6091,1,0
+BRDA:165,6091,0,0
+BRDA:165,6168,0,0
+BRDA:165,6168,1,0
+BRDA:165,6181,1,0
+BRDA:165,6181,0,0
+BRDA:165,6264,0,0
+BRDA:165,6264,1,0
+BRDA:165,6277,1,0
+BRDA:165,6277,0,0
+BRDA:165,6354,0,0
+BRDA:165,6354,1,0
+BRDA:165,6364,1,0
+BRDA:165,6364,0,0
+BRDA:165,6438,0,0
+BRDA:165,6438,1,0
+BRDA:166,6468,1,0
+BRDA:166,6468,0,0
+BRDA:166,6533,0,0
+BRDA:166,6533,1,0
+BRDA:166,6546,1,0
+BRDA:166,6546,0,0
+BRDA:166,6623,0,0
+BRDA:166,6623,1,0
+BRDA:166,6636,1,0
+BRDA:166,6636,0,0
+BRDA:166,6713,0,0
+BRDA:166,6713,1,0
+BRDA:166,6726,1,0
+BRDA:166,6726,0,0
+BRDA:166,6809,0,0
+BRDA:166,6809,1,0
+BRDA:166,6822,1,0
+BRDA:166,6822,0,0
+BRDA:166,6899,0,0
+BRDA:166,6899,1,0
+BRDA:166,6909,1,0
+BRDA:166,6909,0,0
+BRDA:166,6983,0,0
+BRDA:166,6983,1,0
+BRDA:167,7013,1,0
+BRDA:167,7013,0,0
+BRDA:167,7078,0,0
+BRDA:167,7078,1,0
+BRDA:167,7091,1,0
+BRDA:167,7091,0,0
+BRDA:167,7168,0,0
+BRDA:167,7168,1,0
+BRDA:167,7181,1,0
+BRDA:167,7181,0,0
+BRDA:167,7258,0,0
+BRDA:167,7258,1,0
+BRDA:167,7271,1,0
+BRDA:167,7271,0,0
+BRDA:167,7354,0,0
+BRDA:167,7354,1,0
+BRDA:167,7367,1,0
+BRDA:167,7367,0,0
+BRDA:167,7444,0,0
+BRDA:167,7444,1,0
+BRDA:167,7454,1,0
+BRDA:167,7454,0,0
+BRDA:167,7528,0,0
+BRDA:167,7528,1,0
+BRDA:168,7558,1,0
+BRDA:168,7558,0,0
+BRDA:168,7623,0,0
+BRDA:168,7623,1,0
+BRDA:168,7636,1,0
+BRDA:168,7636,0,0
+BRDA:168,7713,0,0
+BRDA:168,7713,1,0
+BRDA:168,7726,1,0
+BRDA:168,7726,0,0
+BRDA:168,7803,0,0
+BRDA:168,7803,1,0
+BRDA:168,7816,1,0
+BRDA:168,7816,0,0
+BRDA:168,7899,0,0
+BRDA:168,7899,1,0
+BRDA:168,7912,1,0
+BRDA:168,7912,0,0
+BRDA:168,7989,0,0
+BRDA:168,7989,1,0
+BRDA:168,7999,1,0
+BRDA:168,7999,0,0
+BRDA:168,8073,0,0
+BRDA:168,8073,1,0
+BRDA:169,8103,1,0
+BRDA:169,8103,0,0
+BRDA:169,8168,0,0
+BRDA:169,8168,1,0
+BRDA:169,8181,1,0
+BRDA:169,8181,0,0
+BRDA:169,8258,0,0
+BRDA:169,8258,1,0
+BRDA:169,8271,1,0
+BRDA:169,8271,0,0
+BRDA:169,8348,0,0
+BRDA:169,8348,1,0
+BRDA:169,8361,1,0
+BRDA:169,8361,0,0
+BRDA:169,8444,0,0
+BRDA:169,8444,1,0
+BRDA:169,8457,1,0
+BRDA:169,8457,0,0
+BRDA:169,8534,0,0
+BRDA:169,8534,1,0
+BRDA:169,8544,1,0
+BRDA:169,8544,0,0
+BRDA:169,8618,0,0
+BRDA:169,8618,1,0
+BRDA:170,8648,1,0
+BRDA:170,8648,0,0
+BRDA:170,8713,0,0
+BRDA:170,8713,1,0
+BRDA:170,8726,1,0
+BRDA:170,8726,0,0
+BRDA:170,8803,0,0
+BRDA:170,8803,1,0
+BRDA:170,8816,1,0
+BRDA:170,8816,0,0
+BRDA:170,8892,1,0
+BRDA:170,8892,0,0
+BRDA:170,8976,0,0
+BRDA:170,8976,1,0
+BRDA:170,8986,1,0
+BRDA:170,8986,0,0
+BRDA:170,9060,0,0
+BRDA:170,9060,1,0
+BRDA:171,9091,1,0
+BRDA:171,9091,0,0
+BRDA:171,9156,0,0
+BRDA:171,9156,1,0
+BRDA:171,9169,1,0
+BRDA:171,9169,0,0
+BRDA:171,9246,0,0
+BRDA:171,9246,1,0
+BRDA:171,9259,1,0
+BRDA:171,9259,0,0
+BRDA:171,9335,1,0
+BRDA:171,9335,0,0
+BRDA:171,9419,0,0
+BRDA:171,9419,1,0
+BRDA:171,9429,1,0
+BRDA:171,9429,0,0
+BRDA:171,9503,0,0
+BRDA:171,9503,1,0
+FN:176,System.Void Data.Fetcher.YahooFinanceFetcher.StockFetcher/<Search>d__2::MoveNext()
+FNDA:0,System.Void Data.Fetcher.YahooFinanceFetcher.StockFetcher/<Search>d__2::MoveNext()
+DA:177,0
+DA:178,0
+DA:179,0
+DA:180,0
+DA:181,0
+DA:183,0
+DA:185,0
+DA:187,0
+DA:188,0
+DA:189,0
+DA:190,0
+DA:191,0
+DA:192,0
+DA:193,0
+DA:194,0
+DA:196,0
+DA:197,0
+DA:198,0
+DA:199,0
+DA:200,0
+DA:202,0
+DA:203,0
+DA:205,0
+DA:206,0
+DA:207,0
+DA:208,0
+DA:209,0
+DA:210,0
+DA:211,0
+DA:212,0
+DA:214,0
+DA:215,0
+DA:216,0
+DA:217,0
+DA:218,0
+BRDA:183,348,1,0
+BRDA:183,348,0,0
+BRDA:183,408,1,0
+BRDA:183,408,0,0
+BRDA:183,479,1,0
+BRDA:183,479,0,0
+BRDA:187,3197,1,0
+BRDA:189,641,1,0
+BRDA:189,641,0,0
+BRDA:189,719,1,0
+BRDA:189,719,0,0
+BRDA:189,813,1,0
+BRDA:189,813,0,0
+BRDA:189,883,0,0
+BRDA:189,893,1,0
+BRDA:189,893,0,0
+BRDA:189,961,1,0
+BRDA:189,961,0,0
+BRDA:189,1041,1,0
+BRDA:189,1041,0,0
+BRDA:189,1119,1,0
+BRDA:189,1119,0,0
+BRDA:189,883,1,0
+BRDA:189,1223,0,0
+BRDA:192,1245,1,0
+BRDA:192,1245,0,0
+BRDA:192,1313,1,0
+BRDA:192,1313,0,0
+BRDA:192,1411,1,0
+BRDA:192,1411,0,0
+BRDA:192,1493,1,0
+BRDA:192,1493,0,0
+BRDA:192,1595,0,0
+BRDA:194,1607,1,0
+BRDA:194,1607,0,0
+BRDA:194,1667,1,0
+BRDA:194,1667,0,0
+BRDA:194,1743,1,0
+BRDA:194,1743,0,0
+BRDA:194,1825,1,0
+BRDA:194,1825,0,0
+BRDA:194,1907,1,0
+BRDA:194,1907,0,0
+BRDA:192,1595,1,0
+BRDA:209,2280,1,0
+BRDA:209,2280,0,0
+BRDA:209,2392,1,0
+BRDA:209,2392,0,0
+BRDA:209,2474,1,0
+BRDA:209,2474,0,0
+BRDA:210,2567,1,0
+BRDA:210,2567,0,0
+BRDA:210,2679,1,0
+BRDA:210,2679,0,0
+BRDA:210,2761,1,0
+BRDA:210,2761,0,0
+BRDA:211,2854,1,0
+BRDA:211,2854,0,0
+BRDA:211,2966,1,0
+BRDA:211,2966,0,0
+BRDA:211,3048,1,0
+BRDA:211,3048,0,0
+BRDA:189,1223,1,0
+BRDA:187,3197,0,0
+LF:220
+LH:139
+BRF:436
+BRH:56
+FNF:4
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Fetcher/YahooFinanceFetcher/YfTranslator.cs
+FN:74,System.String Data.Fetcher.YahooFinanceFetcher.YfTranslator::GetYfSymbol(System.String,System.String)
+FNDA:288,System.String Data.Fetcher.YahooFinanceFetcher.YfTranslator::GetYfSymbol(System.String,System.String)
+DA:75,288
+DA:77,288
+DA:79,288
+DA:80,288
+DA:82,5
+DA:83,5
+DA:84,5
+DA:85,5
+DA:88,283
+FN:3,System.Void Data.Fetcher.YahooFinanceFetcher.YfTranslator::.cctor()
+FNDA:1,System.Void Data.Fetcher.YahooFinanceFetcher.YfTranslator::.cctor()
+DA:4,1
+DA:5,1
+DA:6,1
+DA:7,1
+DA:8,1
+DA:9,1
+DA:10,1
+DA:11,1
+DA:12,1
+DA:13,1
+DA:14,1
+DA:15,1
+DA:16,1
+DA:17,1
+DA:18,1
+DA:19,1
+DA:20,1
+DA:21,1
+DA:22,1
+DA:23,1
+DA:24,1
+DA:25,1
+DA:26,1
+DA:27,1
+DA:28,1
+DA:29,1
+DA:30,1
+DA:31,1
+DA:32,1
+DA:33,1
+DA:34,1
+DA:35,1
+DA:36,1
+DA:37,1
+DA:38,1
+DA:39,1
+DA:40,1
+DA:41,1
+DA:42,1
+DA:43,1
+DA:44,1
+DA:45,1
+DA:46,1
+DA:47,1
+DA:48,1
+DA:49,1
+DA:50,1
+DA:51,1
+DA:52,1
+DA:53,1
+DA:54,1
+DA:55,1
+DA:56,1
+DA:57,1
+DA:58,1
+DA:59,1
+DA:60,1
+DA:61,1
+DA:62,1
+DA:63,1
+DA:64,1
+DA:65,1
+DA:66,1
+DA:67,1
+DA:68,1
+DA:69,1
+DA:70,1
+DA:71,1
+DA:72,1
+LF:78
+LH:78
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Fetcher/DatabaseFetcher/CurrencyFetcher.cs
+FN:11,System.Threading.Tasks.Task`1<Data.CurrencyHistory> Data.Fetcher.DatabaseFetcher.CurrencyFetcher::GetHistory(System.String,System.DateOnly,System.DateOnly)
+FNDA:594,System.Threading.Tasks.Task`1<Data.CurrencyHistory> Data.Fetcher.DatabaseFetcher.CurrencyFetcher::GetHistory(System.String,System.DateOnly,System.DateOnly)
+DA:12,594
+DA:13,594
+DA:14,594
+DA:15,594
+DA:16,594
+DA:17,594
+DA:18,594
+DA:19,594
+DA:20,594
+DA:22,594
+DA:23,594
+DA:24,0
+DA:26,322932
+DA:27,160575
+DA:29,160575
+DA:30,160575
+DA:31,160575
+DA:32,160575
+DA:33,160575
+DA:34,160575
+DA:35,160575
+DA:36,160575
+DA:37,160575
+DA:38,0
+DA:39,0
+DA:40,0
+DA:41,0
+DA:44,160575
+DA:45,594
+DA:46,594
+DA:47,594
+DA:48,594
+BRDA:23,121,0,0
+BRDA:23,121,1,594
+BRDA:26,393,1,160575
+BRDA:30,212,0,0
+BRDA:30,212,1,160575
+BRDA:30,253,0,0
+BRDA:30,253,1,160575
+BRDA:30,294,0,0
+BRDA:30,294,1,160575
+BRDA:30,335,0,0
+BRDA:30,335,1,160575
+BRDA:26,393,0,594
+LF:32
+LH:27
+BRF:12
+BRH:7
+FNF:1
+FNH:1
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Fetcher/DatabaseFetcher/StockFetcher.cs
+FN:9,System.Threading.Tasks.Task`1<Data.StockHistory> Data.Fetcher.DatabaseFetcher.StockFetcher::GetHistory(System.String,System.String,System.DateOnly,System.DateOnly,System.String,System.String)
+FNDA:356,System.Threading.Tasks.Task`1<Data.StockHistory> Data.Fetcher.DatabaseFetcher.StockFetcher::GetHistory(System.String,System.String,System.DateOnly,System.DateOnly,System.String,System.String)
+DA:10,356
+DA:11,356
+DA:12,1
+DA:13,1
+DA:15,355
+DA:16,4
+DA:17,4
+DA:19,351
+DA:20,1
+DA:21,1
+DA:23,350
+DA:24,350
+DA:26,350
+DA:27,350
+DA:28,350
+DA:29,350
+DA:30,350
+DA:31,350
+DA:32,350
+DA:33,350
+DA:34,6
+DA:35,6
+DA:38,104570
+DA:39,51769
+DA:41,51769
+DA:42,51769
+DA:43,51769
+DA:44,51769
+DA:45,51769
+DA:46,51769
+DA:47,51769
+DA:48,51769
+DA:49,51769
+DA:50,0
+DA:51,0
+DA:52,0
+DA:53,0
+DA:55,51769
+DA:56,344
+DA:57,344
+DA:58,344
+DA:59,344
+BRDA:11,13,0,1
+BRDA:11,13,1,355
+BRDA:15,33,0,354
+BRDA:15,36,0,353
+BRDA:15,40,0,352
+BRDA:15,33,1,3
+BRDA:15,36,1,3
+BRDA:15,40,1,3
+BRDA:15,54,0,4
+BRDA:15,54,1,351
+BRDA:19,87,0,1
+BRDA:19,87,1,350
+BRDA:33,319,0,6
+BRDA:33,319,1,344
+BRDA:38,628,1,51769
+BRDA:42,447,0,0
+BRDA:42,447,1,51769
+BRDA:42,488,0,0
+BRDA:42,488,1,51769
+BRDA:42,529,0,0
+BRDA:42,529,1,51769
+BRDA:42,570,0,0
+BRDA:42,570,1,51769
+BRDA:38,628,0,344
+FN:61,System.Threading.Tasks.Task`1<Data.StockProfile> Data.Fetcher.DatabaseFetcher.StockFetcher::GetProfile(System.String,System.String)
+FNDA:300,System.Threading.Tasks.Task`1<Data.StockProfile> Data.Fetcher.DatabaseFetcher.StockFetcher::GetProfile(System.String,System.String)
+DA:62,300
+DA:63,300
+DA:64,300
+DA:65,300
+DA:67,300
+DA:68,300
+DA:69,300
+DA:70,300
+DA:71,300
+DA:73,300
+DA:74,291
+DA:75,291
+DA:76,291
+DA:77,291
+DA:78,291
+DA:79,291
+DA:80,291
+DA:81,291
+DA:82,291
+DA:83,291
+DA:84,291
+DA:85,291
+DA:86,291
+DA:87,291
+DA:89,291
+DA:92,9
+DA:93,9
+DA:95,291
+BRDA:73,77,0,291
+BRDA:83,291,0,0
+BRDA:83,291,1,291
+BRDA:73,77,1,9
+FN:97,System.Threading.Tasks.Task`1<Data.StockProfile[]> Data.Fetcher.DatabaseFetcher.StockFetcher::Search(System.String)
+FNDA:8,System.Threading.Tasks.Task`1<Data.StockProfile[]> Data.Fetcher.DatabaseFetcher.StockFetcher::Search(System.String)
+DA:98,8
+DA:99,8
+DA:100,1
+DA:101,1
+DA:103,7
+DA:104,7
+DA:105,7
+DA:106,7
+DA:107,16
+DA:108,1
+DA:109,1
+DA:110,1
+DA:112,7
+DA:113,7
+DA:114,7
+DA:115,7
+DA:117,59
+DA:118,19
+DA:119,19
+DA:120,19
+DA:121,7
+DA:122,7
+BRDA:99,9,0,1
+BRDA:99,9,1,7
+BRDA:107,130,1,1
+BRDA:107,130,0,7
+BRDA:117,338,1,19
+BRDA:117,338,0,7
+FN:124,System.Threading.Tasks.Task`1<System.Collections.Generic.List`1<Data.Dividend>> Data.Fetcher.DatabaseFetcher.StockFetcher::GetDividends(System.String,System.String,System.DateOnly,System.DateOnly)
+FNDA:292,System.Threading.Tasks.Task`1<System.Collections.Generic.List`1<Data.Dividend>> Data.Fetcher.DatabaseFetcher.StockFetcher::GetDividends(System.String,System.String,System.DateOnly,System.DateOnly)
+DA:125,292
+DA:126,292
+DA:127,292
+DA:128,292
+DA:129,292
+DA:130,292
+DA:131,292
+DA:132,292
+DA:133,292
+DA:134,292
+DA:135,1994
+DA:136,559
+DA:138,559
+DA:139,559
+DA:140,559
+DA:141,559
+DA:142,559
+DA:143,559
+DA:144,0
+DA:145,0
+DA:146,0
+DA:147,0
+DA:150,559
+DA:151,292
+DA:152,292
+BRDA:135,300,1,559
+BRDA:139,242,0,0
+BRDA:139,242,1,559
+BRDA:135,300,0,292
+LF:117
+LH:109
+BRF:38
+BRH:32
+FNF:4
+FNH:4
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Database/Connection.cs
+FN:9,System.Data.SqlClient.SqlConnection Data.Database.Connection::GetSqlConnection()
+FNDA:7945,System.Data.SqlClient.SqlConnection Data.Database.Connection::GetSqlConnection()
+DA:10,7945
+DA:12,7945
+DA:13,1
+DA:14,1
+DA:15,1
+DA:16,7945
+DA:17,7945
+BRDA:12,11,0,1
+BRDA:12,11,1,7945
+FN:18,System.Data.SqlClient.SqlConnection Data.Database.Connection::Create()
+FNDA:1,System.Data.SqlClient.SqlConnection Data.Database.Connection::Create()
+DA:19,1
+DA:20,1
+DA:21,1
+DA:22,1
+DA:23,1
+DA:24,1
+DA:25,1
+FN:27,System.Data.SqlClient.SqlConnectionStringBuilder Data.Database.Connection::buildConnectionString()
+FNDA:1,System.Data.SqlClient.SqlConnectionStringBuilder Data.Database.Connection::buildConnectionString()
+DA:28,1
+DA:29,1
+DA:30,1
+DA:31,1
+DA:32,1
+DA:33,1
+DA:34,1
+DA:35,1
+LF:22
+LH:22
+BRF:2
+BRH:2
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Database/Exchange.cs
+FN:7,System.String Data.Database.Exchange::GetCurrency(System.String)
+FNDA:89,System.String Data.Database.Exchange::GetCurrency(System.String)
+DA:8,89
+DA:9,89
+DA:11,89
+DA:12,89
+DA:13,89
+DA:14,89
+DA:15,89
+DA:16,88
+DA:17,88
+DA:18,88
+DA:21,1
+DA:22,1
+DA:24,88
+BRDA:15,48,0,88
+BRDA:15,48,1,1
+LF:13
+LH:13
+BRF:2
+BRH:2
+FNF:1
+FNH:1
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Database/Reader.cs
+FN:9,System.Collections.Generic.List`1<System.Collections.Generic.Dictionary`2<System.String,System.Object>> Data.Database.Reader::ReadData(System.String,System.Collections.Generic.Dictionary`2<System.String,System.Object>)
+FNDA:6064,System.Collections.Generic.List`1<System.Collections.Generic.Dictionary`2<System.String,System.Object>> Data.Database.Reader::ReadData(System.String,System.Collections.Generic.Dictionary`2<System.String,System.Object>)
+DA:10,6064
+DA:11,6064
+DA:12,0
+DA:13,0
+DA:14,0
+DA:15,6064
+DA:17,6064
+DA:18,6064
+DA:20,40740
+DA:21,11274
+DA:22,11274
+DA:23,11274
+DA:25,6064
+DA:26,6064
+DA:27,6064
+DA:28,226624
+DA:29,220560
+DA:30,220560
+DA:31,3113776
+DA:32,1336328
+DA:33,1336328
+DA:34,1336328
+DA:35,220560
+DA:36,220560
+DA:37,6064
+DA:39,6064
+DA:40,5710
+DA:42,5710
+DA:44,6064
+DA:45,6064
+DA:47,6064
+BRDA:11,20,1,0
+BRDA:11,20,0,6064
+BRDA:20,96,1,11274
+BRDA:20,96,0,6064
+BRDA:28,219,1,220560
+BRDA:31,195,1,1336328
+BRDA:31,195,0,220560
+BRDA:28,219,0,6064
+BRDA:39,246,0,5710
+BRDA:39,246,1,6064
+FN:49,System.Collections.Generic.List`1<System.Collections.Generic.Dictionary`2<System.String,System.Object>> Data.Database.Reader::ReadData(System.String)
+FNDA:0,System.Collections.Generic.List`1<System.Collections.Generic.Dictionary`2<System.String,System.Object>> Data.Database.Reader::ReadData(System.String)
+DA:50,0
+DA:51,0
+DA:52,0
+FN:54,System.Collections.Generic.Dictionary`2<System.String,System.Object> Data.Database.Reader::ReadOne(System.String,System.Collections.Generic.Dictionary`2<System.String,System.Object>)
+FNDA:4181,System.Collections.Generic.Dictionary`2<System.String,System.Object> Data.Database.Reader::ReadOne(System.String,System.Collections.Generic.Dictionary`2<System.String,System.Object>)
+DA:55,4181
+DA:56,4181
+DA:58,4181
+DA:59,4034
+DA:60,4034
+DA:63,147
+DA:64,147
+DA:66,4181
+BRDA:58,20,0,4034
+BRDA:58,20,1,147
+FN:68,System.Collections.Generic.Dictionary`2<System.String,System.Object> Data.Database.Reader::ReadOne(System.String)
+FNDA:0,System.Collections.Generic.Dictionary`2<System.String,System.Object> Data.Database.Reader::ReadOne(System.String)
+DA:69,0
+DA:70,0
+DA:71,0
+FN:74,System.String Data.Database.Reader::DictionaryToString(System.Collections.Generic.Dictionary`2<System.String,System.Object>)
+FNDA:0,System.String Data.Database.Reader::DictionaryToString(System.Collections.Generic.Dictionary`2<System.String,System.Object>)
+DA:75,0
+DA:76,0
+DA:77,0
+DA:78,0
+DA:79,0
+DA:80,0
+DA:81,0
+DA:82,0
+BRDA:77,53,1,0
+BRDA:77,53,0,0
+LF:53
+LH:36
+BRF:14
+BRH:11
+FNF:5
+FNH:2
+end_of_record

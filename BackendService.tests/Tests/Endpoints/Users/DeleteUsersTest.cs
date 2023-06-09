@@ -22,8 +22,9 @@ public class DeleteUsersTest
 	{
 		DeleteUsersResponse response = DeleteUsers.Endpoint(userTestObject.accessToken!);
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
-		StatusCodeException statusCodeException = Assert.ThrowsException<StatusCodeException>(() => GetUsers.Endpoint(userTestObject.accessToken!));
-		Assert.IsTrue(statusCodeException.StatusCode == 401, "Status code should be 401 but was " + statusCodeException.StatusCode);
+		PostTokensBody postTokensBody = new PostTokensBody(userTestObject.user!.email!, userTestObject.user!.password!);
+		StatusCodeException statusCodeException = Assert.ThrowsException<StatusCodeException>(() => PostTokens.Endpoint(postTokensBody));
+		Assert.IsTrue(statusCodeException.StatusCode == 404, "Status code should be 404 but was " + statusCodeException.StatusCode);
 	}
 
 	[TestMethod]

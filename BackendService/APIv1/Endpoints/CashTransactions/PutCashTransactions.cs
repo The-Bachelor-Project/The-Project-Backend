@@ -18,7 +18,7 @@ public class PutCashTransactions
 			throw new StatusCodeException(400, "Missing required fields");
 		}
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
-		StockApp.Portfolio portfolio = user.GetPortfolio(body.portfolio);
+		StockApp.Portfolio portfolio = user.GetPortfolios(body.portfolio);
 		StockApp.CashTransaction oldCashTransaction = portfolio.GetCashTransaction(body.id);
 		StockApp.CashTransaction newCashTransaction = new StockApp.CashTransaction();
 		newCashTransaction.portfolioId = oldCashTransaction.portfolioId;

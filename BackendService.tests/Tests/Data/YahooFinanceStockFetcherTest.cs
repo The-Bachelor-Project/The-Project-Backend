@@ -47,7 +47,7 @@ public class YahooFinanceStockFetcherTest
 	}
 
 	[TestMethod]
-	public async Task YahooFinanceStockFetcherTest_GetHistory_CurrenciesSuccessfulTest()
+	public async Task YahooFinanceStockFetcherTest_GetHistory_AllCurrenciesTest()
 	{
 		foreach (String currency in Dictionaries.currencies)
 		{
@@ -71,6 +71,13 @@ public class YahooFinanceStockFetcherTest
 	{
 		List<Data.Dividend> dividends = await stockFetcher.GetDividends("TSLA", "NASDAQ", DateOnly.Parse("2021-02-01"), DateOnly.Parse("2022-01-01"));
 		Assert.IsTrue(dividends.Count == 0, "Dividends should be empty");
+	}
+
+	[TestMethod]
+	public async Task YahooFinanceStockFetcherTest_GetDividends_InvalidTickerTest()
+	{
+		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockFetcher.GetDividends("invalid", "NASDAQ", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01")));
+		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 404 but was " + exception.StatusCode);
 	}
 
 	[TestMethod]

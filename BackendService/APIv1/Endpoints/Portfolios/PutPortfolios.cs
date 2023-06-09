@@ -20,7 +20,7 @@ public class PutPortfolios
 			throw new StatusCodeException(400, "Required fields missing");
 		}
 		User user = new TokenSet(accessToken).GetUser();
-		Portfolio portfolio = user.GetPortfolio(body.id);
+		Portfolio portfolio = user.GetPortfolios(body.id);
 		if (body.newCurrency != "")
 		{
 			portfolio.ChangeCurrency(body.newCurrency);

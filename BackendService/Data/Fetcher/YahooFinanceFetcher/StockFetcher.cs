@@ -231,7 +231,7 @@ public class StockFetcher : IStockFetcher
 
 		if (data == null)
 		{
-			throw new StatusCodeException(400, "Exchange of " + exchange + ":" + ticker + " was not found");
+			throw new StatusCodeException(404, "Exchange of " + exchange + ":" + ticker + " was not found");
 		}
 		String currency = data["currency"].ToString()!;
 

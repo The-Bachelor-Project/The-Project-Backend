@@ -433,4 +433,95 @@ public class PortfolioTest
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => portfolio.Delete());
 		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
 	}
+
+	[TestMethod]
+	public async Task PortfolioTest_GetCashTransaction_SuccessfulTest()
+	{
+		portfolio.AddToDb();
+		CashTransaction cashTransaction = new CashTransaction();
+		cashTransaction.portfolioId = portfolio.id!;
+		cashTransaction.nativeAmount = new Money(100, "USD");
+		cashTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
+		cashTransaction.description = "Test";
+		await cashTransaction.AddToDb();
+		CashTransaction gottenCashTransaction = portfolio.GetCashTransaction((int)cashTransaction.id!);
+		Assert.IsTrue(gottenCashTransaction.id == cashTransaction.id, "Cash transaction ID should be " + cashTransaction.id + " but was " + gottenCashTransaction.id);
+		Assert.IsTrue(gottenCashTransaction.portfolioId == cashTransaction.portfolioId, "Cash transaction portfolio ID should be " + cashTransaction.portfolioId + " but was " + gottenCashTransaction.portfolioId);
+	}
+
+	[TestMethod]
+	public async Task PortfolioTest_GetCashTransaction_PortfolioIDNullTest()
+	{
+		portfolio.AddToDb();
+		CashTransaction cashTransaction = new CashTransaction();
+		cashTransaction.portfolioId = portfolio.id!;
+		cashTransaction.nativeAmount = new Money(100, "USD");
+		cashTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
+		cashTransaction.description = "Test";
+		await cashTransaction.AddToDb();
+		portfolio.id = null;
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => portfolio.GetCashTransaction((int)cashTransaction.id!));
+		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
+	public void PortfolioTest_GetCashTransaction_NonExistentTest()
+	{
+		portfolio.AddToDb();
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => portfolio.GetCashTransaction(-123456789));
+		Assert.IsTrue(exception.StatusCode == 404, "Status code should be 404 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
+	public async Task PortfolioTest_UpdateCashTransactions_SuccessfulTest()
+	{
+		portfolio.AddToDb();
+		CashTransaction cashTransaction = new CashTransaction();
+		cashTransaction.portfolioId = portfolio.id!;
+		cashTransaction.nativeAmount = new Money(100, "USD");
+		cashTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
+		cashTransaction.description = "Test";
+		await cashTransaction.AddToDb();
+		CashTransaction cashTransaction2 = new CashTransaction();
+		cashTransaction2.portfolioId = portfolio.id!;
+		cashTransaction2.nativeAmount = new Money(100, "USD");
+		cashTransaction2.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
+		cashTransaction2.description = "Test";
+		await cashTransaction2.AddToDb();
+		portfolio.UpdateCashTransactions();
+		Assert.IsTrue(portfolio.cashTransactions.Count == 2, "Cash transaction count should be 2 but was " + portfolio.cashTransactions.Count);
+		Assert.IsTrue(portfolio.cashTransactions[0].id == cashTransaction.id, "Cash transaction ID should be " + cashTransaction.id + " but was " + portfolio.cashTransactions[0].id);
+		Assert.IsTrue(portfolio.cashTransactions[1].id == cashTransaction2.id, "Cash transaction ID should be " + cashTransaction2.id + " but was " + portfolio.cashTransactions[1].id);
+	}
+
+	[TestMethod]
+	public async Task PortfolioTest_UpdateCashTransactions_PortfolioIDNullTest()
+	{
+		portfolio.AddToDb();
+		CashTransaction cashTransaction = new CashTransaction();
+		cashTransaction.portfolioId = portfolio.id!;
+		cashTransaction.nativeAmount = new Money(100, "USD");
+		cashTransaction.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
+		cashTransaction.description = "Test";
+		await cashTransaction.AddToDb();
+		CashTransaction cashTransaction2 = new CashTransaction();
+		cashTransaction2.portfolioId = portfolio.id!;
+		cashTransaction2.nativeAmount = new Money(100, "USD");
+		cashTransaction2.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
+		cashTransaction2.description = "Test";
+		await cashTransaction2.AddToDb();
+		portfolio.id = null;
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => portfolio.UpdateCashTransactions());
+		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 400 but was " + exception.StatusCode);
+	}
+
+	[TestMethod]
+	public void PortfolioTest_UpdateCashTransactions_EmptyCashTransactionListTest()
+	{
+		portfolio.AddToDb();
+		portfolio.UpdateCashTransactions();
+		Assert.IsTrue(portfolio.cashTransactions.Count == 0, "Cash transaction count should be 0 but was " + portfolio.cashTransactions.Count);
+	}
+
+
 }

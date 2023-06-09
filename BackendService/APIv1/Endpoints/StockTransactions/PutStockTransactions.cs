@@ -19,7 +19,7 @@ public class PutStockTransactions
 			throw new StatusCodeException(400, "Missing stockTransaction id or portfolio id");
 		}
 		User user = new TokenSet(accessToken).GetUser();
-		Portfolio portfolio = user.GetPortfolio(body.portfolio);
+		Portfolio portfolio = user.GetPortfolios(body.portfolio);
 		if (body.newCurrency != "" && !(Tools.ValidCurrency.Check(body.newCurrency)))
 		{
 			throw new StatusCodeException(400, "Invalid currency " + body.newCurrency);

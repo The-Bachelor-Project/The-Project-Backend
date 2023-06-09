@@ -18,7 +18,7 @@ public class DeleteCashTransactions
 			throw new StatusCodeException(400, "Missing required fields");
 		}
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
-		StockApp.Portfolio portfolio = user.GetPortfolio(portfolioID);
+		StockApp.Portfolio portfolio = user.GetPortfolios(portfolioID);
 		StockApp.CashTransaction cashTransaction = portfolio.GetCashTransaction(id);
 		cashTransaction.Delete();
 		return new DeleteCashTransactionsResponse("success");

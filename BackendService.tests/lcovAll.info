@@ -1,0 +1,6157 @@
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Exceptions/ErrorHandlingMiddleware.cs
+FN:3,System.Void ErrorHandlingMiddlware/<InvokeAsync>d__0::MoveNext()
+FNDA:2,System.Void ErrorHandlingMiddlware/<InvokeAsync>d__0::MoveNext()
+DA:4,2
+DA:6,2
+DA:7,2
+DA:8,0
+DA:9,1
+DA:10,1
+DA:11,1
+DA:12,1
+DA:13,1
+DA:14,1
+DA:15,1
+DA:16,1
+DA:17,1
+DA:18,1
+DA:19,1
+DA:20,2
+LF:16
+LH:15
+BRF:0
+BRH:0
+FNF:1
+FNH:1
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Exceptions/StatusCodeException.cs
+FN:2,System.Int32 StatusCodeException::get_StatusCode()
+FNDA:592,System.Int32 StatusCodeException::get_StatusCode()
+DA:3,592
+FN:3,System.Void StatusCodeException::.ctor(System.Int32)
+FNDA:9,System.Void StatusCodeException::.ctor(System.Int32)
+DA:4,9
+DA:5,9
+DA:6,9
+DA:7,9
+FN:7,System.Void StatusCodeException::.ctor(System.Int32,System.String)
+FNDA:198,System.Void StatusCodeException::.ctor(System.Int32,System.String)
+DA:8,198
+DA:9,198
+DA:10,198
+DA:11,198
+LF:9
+LH:9
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Tools/Password.cs
+FN:9,System.String Tools.Password::Hash(System.String)
+FNDA:250,System.String Tools.Password::Hash(System.String)
+DA:10,250
+DA:12,250
+DA:14,250
+DA:17,250
+DA:20,16500
+DA:21,8000
+DA:22,8000
+DA:23,8000
+DA:25,250
+DA:26,250
+DA:27,250
+BRDA:20,75,1,8000
+BRDA:20,75,0,250
+LF:11
+LH:11
+BRF:2
+BRH:2
+FNF:1
+FNH:1
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Tools/PriceConverter.cs
+FN:40,System.DateOnly Tools.PriceConverter/<>c::<ConvertStockPrice>b__0_0(Data.DatePriceOHLC)
+FNDA:89049,System.DateOnly Tools.PriceConverter/<>c::<ConvertStockPrice>b__0_0(Data.DatePriceOHLC)
+DA:41,89049
+FN:41,System.DateOnly Tools.PriceConverter/<>c::<ConvertStockPrice>b__0_2(Data.DatePriceOHLC)
+FNDA:129301,System.DateOnly Tools.PriceConverter/<>c::<ConvertStockPrice>b__0_2(Data.DatePriceOHLC)
+DA:42,129301
+FN:120,System.DateOnly Tools.PriceConverter/<>c::<ConvertStockDividends>b__1_0(Data.Dividend)
+FNDA:992,System.DateOnly Tools.PriceConverter/<>c::<ConvertStockDividends>b__1_0(Data.Dividend)
+DA:121,992
+FN:121,System.DateOnly Tools.PriceConverter/<>c::<ConvertStockDividends>b__1_2(Data.DatePriceOHLC)
+FNDA:56234,System.DateOnly Tools.PriceConverter/<>c::<ConvertStockDividends>b__1_2(Data.DatePriceOHLC)
+DA:122,56234
+FN:171,System.DateOnly Tools.PriceConverter/<>c::<GetExchangeHistory>b__2_0(Data.DatePriceOHLC)
+FNDA:262050,System.DateOnly Tools.PriceConverter/<>c::<GetExchangeHistory>b__2_0(Data.DatePriceOHLC)
+DA:172,262050
+FN:189,System.Void Tools.PriceConverter/<ConvertMoney>d__3::MoveNext()
+FNDA:179,System.Void Tools.PriceConverter/<ConvertMoney>d__3::MoveNext()
+DA:190,179
+DA:191,179
+DA:192,0
+DA:193,0
+DA:195,179
+DA:196,0
+DA:197,0
+DA:199,179
+DA:200,80
+DA:201,80
+DA:203,99
+DA:204,99
+DA:205,0
+DA:206,0
+DA:210,99
+DA:211,0
+DA:212,0
+DA:213,0
+DA:215,99
+DA:216,99
+DA:217,99
+DA:219,99
+DA:220,0
+DA:221,0
+DA:225,99
+DA:226,198
+DA:227,99
+DA:228,99
+DA:229,99
+DA:230,99
+DA:231,0
+DA:232,0
+DA:235,99
+DA:236,99
+DA:239,0
+DA:240,0
+DA:241,179
+BRDA:191,45,0,0
+BRDA:191,45,1,179
+BRDA:195,87,0,0
+BRDA:195,87,1,179
+BRDA:199,137,0,80
+BRDA:199,137,1,99
+BRDA:199,155,0,80
+BRDA:199,155,1,99
+BRDA:204,193,0,0
+BRDA:204,193,1,99
+BRDA:204,218,0,0
+BRDA:204,218,1,99
+BRDA:210,243,0,0
+BRDA:210,243,1,99
+BRDA:219,619,0,0
+BRDA:219,619,1,99
+BRDA:226,935,1,99
+BRDA:228,743,0,99
+BRDA:230,759,0,0
+BRDA:230,759,1,99
+BRDA:228,743,1,0
+BRDA:226,935,0,0
+FN:86,System.Void Tools.PriceConverter/<ConvertStockDividends>d__1::MoveNext()
+FNDA:292,System.Void Tools.PriceConverter/<ConvertStockDividends>d__1::MoveNext()
+DA:87,292
+DA:88,292
+DA:89,118
+DA:90,118
+DA:92,174
+DA:93,174
+DA:94,2
+DA:95,2
+DA:97,172
+DA:98,48
+DA:99,48
+DA:101,124
+DA:102,31
+DA:103,31
+DA:104,31
+DA:105,124
+DA:106,124
+DA:108,124
+DA:109,124
+DA:110,124
+DA:111,124
+DA:113,0
+DA:114,0
+DA:115,0
+DA:116,124
+DA:117,0
+DA:118,0
+DA:123,124
+DA:124,124
+DA:125,124
+DA:126,1116
+DA:127,372
+DA:128,372
+DA:129,372
+DA:130,372
+DA:131,372
+DA:132,372
+DA:133,124
+DA:135,0
+DA:136,0
+DA:137,0
+DA:138,0
+DA:139,0
+DA:140,0
+DA:141,0
+DA:142,0
+DA:143,0
+DA:146,124
+DA:147,124
+DA:148,292
+BRDA:88,45,0,118
+BRDA:88,45,1,174
+BRDA:93,108,0,174
+BRDA:93,108,1,0
+BRDA:93,124,0,2
+BRDA:93,124,1,172
+BRDA:97,145,0,172
+BRDA:97,145,1,0
+BRDA:97,170,0,48
+BRDA:97,170,1,124
+BRDA:101,226,0,31
+BRDA:101,226,1,124
+BRDA:108,296,0,124
+BRDA:108,296,1,0
+BRDA:116,640,0,0
+BRDA:116,640,1,124
+BRDA:124,859,0,124
+BRDA:126,1109,1,372
+BRDA:126,1109,0,124
+BRDA:124,859,1,0
+BRDA:136,1389,1,0
+BRDA:136,1389,0,0
+FN:9,System.Void Tools.PriceConverter/<ConvertStockPrice>d__0::MoveNext()
+FNDA:376,System.Void Tools.PriceConverter/<ConvertStockPrice>d__0::MoveNext()
+DA:10,376
+DA:11,376
+DA:12,0
+DA:13,0
+DA:15,376
+DA:16,376
+DA:17,34
+DA:18,34
+DA:20,342
+DA:21,135
+DA:22,135
+DA:25,207
+DA:26,207
+DA:28,207
+DA:29,155
+DA:30,155
+DA:31,155
+DA:33,52
+DA:34,52
+DA:35,52
+DA:37,207
+DA:38,0
+DA:39,0
+DA:43,207
+DA:44,207
+DA:45,155
+DA:46,63767
+DA:47,31651
+DA:48,31651
+DA:49,31651
+DA:50,31651
+DA:51,31651
+DA:52,31651
+DA:54,31651
+DA:55,31651
+DA:56,31651
+DA:57,31651
+DA:59,31651
+DA:60,31651
+DA:61,155
+DA:63,52
+DA:64,25690
+DA:65,12767
+DA:66,12767
+DA:67,12767
+DA:68,12767
+DA:69,12767
+DA:70,12767
+DA:72,12767
+DA:73,12767
+DA:74,12767
+DA:75,12767
+DA:77,12767
+DA:78,12767
+DA:79,52
+DA:82,207
+DA:83,207
+DA:84,376
+BRDA:11,45,0,0
+BRDA:11,45,1,376
+BRDA:16,113,0,324
+BRDA:16,113,1,52
+BRDA:16,129,0,34
+BRDA:16,129,1,342
+BRDA:20,150,0,290
+BRDA:20,150,1,52
+BRDA:20,175,0,135
+BRDA:20,175,1,207
+BRDA:28,244,0,155
+BRDA:28,244,1,52
+BRDA:37,593,0,0
+BRDA:37,593,1,207
+BRDA:44,827,0,155
+BRDA:46,1374,1,31651
+BRDA:46,1374,0,155
+BRDA:44,827,1,52
+BRDA:64,1921,1,12767
+BRDA:64,1921,0,52
+FN:150,System.Void Tools.PriceConverter/<GetExchangeHistory>d__2::MoveNext()
+FNDA:198,System.Void Tools.PriceConverter/<GetExchangeHistory>d__2::MoveNext()
+DA:151,198
+DA:152,198
+DA:153,1
+DA:154,1
+DA:156,197
+DA:157,1
+DA:158,1
+DA:160,196
+DA:161,32
+DA:162,32
+DA:163,32
+DA:165,164
+DA:166,164
+DA:167,164
+DA:168,164
+DA:169,0
+DA:170,0
+DA:173,164
+DA:174,5938
+DA:175,2723
+DA:176,2723
+DA:177,2723
+DA:178,2723
+DA:179,2723
+DA:180,2723
+DA:182,0
+DA:183,0
+DA:185,2723
+DA:186,164
+DA:187,197
+BRDA:152,34,0,1
+BRDA:152,34,1,197
+BRDA:156,69,0,1
+BRDA:156,69,1,196
+BRDA:160,103,0,32
+BRDA:160,103,1,164
+BRDA:168,384,0,0
+BRDA:168,384,1,164
+BRDA:174,712,1,2723
+BRDA:177,593,0,2723
+BRDA:177,593,1,0
+BRDA:174,712,0,164
+LF:180
+LH:143
+BRF:76
+BRH:56
+FNF:9
+FNH:9
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Tools/RandomString.cs
+FN:8,System.String Tools.RandomString::Generate(System.Int32)
+FNDA:1368,System.String Tools.RandomString::Generate(System.Int32)
+DA:9,1368
+DA:10,1368
+DA:11,252774
+DA:12,125019
+DA:13,125019
+DA:14,125019
+DA:15,1368
+DA:16,1368
+BRDA:11,57,1,125019
+BRDA:11,57,0,1368
+FN:4,System.Void Tools.RandomString::.cctor()
+FNDA:1,System.Void Tools.RandomString::.cctor()
+DA:5,1
+DA:6,1
+LF:10
+LH:10
+BRF:2
+BRH:2
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Tools/TimeConverter.cs
+FN:5,System.Int32 Tools.TimeConverter::DateOnlyToUnix(System.DateOnly)
+FNDA:5367,System.Int32 Tools.TimeConverter::DateOnlyToUnix(System.DateOnly)
+DA:6,5367
+DA:8,5367
+DA:9,5367
+DA:10,5367
+DA:11,5367
+DA:13,0
+DA:14,0
+DA:15,0
+DA:17,5367
+FN:18,System.DateTime Tools.TimeConverter::UnixTimeStampToDateTime(System.Int32)
+FNDA:28638,System.DateTime Tools.TimeConverter::UnixTimeStampToDateTime(System.Int32)
+DA:19,28638
+DA:20,28638
+DA:21,28638
+DA:22,28638
+DA:23,28638
+FN:24,System.DateOnly Tools.TimeConverter::UnixTimeStampToDateOnly(System.Int32)
+FNDA:28638,System.DateOnly Tools.TimeConverter::UnixTimeStampToDateOnly(System.Int32)
+DA:25,28638
+DA:26,28638
+DA:27,28638
+FN:29,System.Int32 Tools.TimeConverter::DateTimeToUnix(System.DateTime)
+FNDA:860,System.Int32 Tools.TimeConverter::DateTimeToUnix(System.DateTime)
+DA:30,860
+DA:31,860
+DA:32,860
+DA:33,860
+DA:34,860
+FN:38,System.String Tools.TimeConverter::dateOnlyToString(System.DateOnly)
+FNDA:2476,System.String Tools.TimeConverter::dateOnlyToString(System.DateOnly)
+DA:39,2476
+DA:40,2476
+DA:41,2476
+DA:42,2476
+DA:43,2476
+DA:44,2476
+DA:45,2476
+DA:46,2476
+BRDA:41,27,0,2139
+BRDA:41,27,1,337
+BRDA:43,79,0,1541
+BRDA:43,79,1,935
+LF:30
+LH:27
+BRF:4
+BRH:4
+FNF:5
+FNH:5
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Tools/ValidCurrency.cs
+FN:5,System.Boolean Tools.ValidCurrency::Check(System.String)
+FNDA:1476,System.Boolean Tools.ValidCurrency::Check(System.String)
+DA:6,1476
+DA:7,1476
+DA:8,1476
+DA:9,1476
+DA:10,1476
+DA:11,1476
+DA:12,1464
+DA:13,1464
+DA:15,12
+DA:16,1476
+BRDA:11,40,0,1464
+BRDA:11,40,1,12
+LF:10
+LH:10
+BRF:2
+BRH:2
+FNF:1
+FNH:1
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Tools/ValidEmail.cs
+FN:6,System.Boolean Tools.ValidEmail::Check(System.String)
+FNDA:8,System.Boolean Tools.ValidEmail::Check(System.String)
+DA:7,8
+DA:8,8
+DA:9,8
+DA:10,8
+DA:11,8
+DA:12,8
+LF:6
+LH:6
+BRF:0
+BRH:0
+FNF:1
+FNH:1
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/StockApp/CashTransaction.cs
+FN:6,System.Nullable`1<System.Int32> StockApp.CashTransaction::get_id()
+FNDA:255,System.Nullable`1<System.Int32> StockApp.CashTransaction::get_id()
+DA:7,255
+FN:7,System.String StockApp.CashTransaction::get_portfolioId()
+FNDA:309,System.String StockApp.CashTransaction::get_portfolioId()
+DA:8,309
+FN:8,StockApp.Money StockApp.CashTransaction::get_nativeAmount()
+FNDA:636,StockApp.Money StockApp.CashTransaction::get_nativeAmount()
+DA:9,636
+FN:9,StockApp.Money StockApp.CashTransaction::get_usdAmount()
+FNDA:178,StockApp.Money StockApp.CashTransaction::get_usdAmount()
+DA:10,178
+FN:10,System.Nullable`1<System.Int32> StockApp.CashTransaction::get_timestamp()
+FNDA:313,System.Nullable`1<System.Int32> StockApp.CashTransaction::get_timestamp()
+DA:11,313
+FN:11,System.String StockApp.CashTransaction::get_description()
+FNDA:193,System.String StockApp.CashTransaction::get_description()
+DA:12,193
+FN:69,System.Void StockApp.CashTransaction::Delete()
+FNDA:7,System.Void StockApp.CashTransaction::Delete()
+DA:70,7
+DA:71,7
+DA:72,0
+DA:73,0
+DA:76,7
+DA:77,7
+DA:78,7
+DA:79,7
+DA:80,7
+DA:81,7
+DA:82,0
+DA:83,0
+DA:85,7
+DA:86,7
+DA:87,7
+DA:89,7
+DA:90,7
+DA:91,7
+DA:92,0
+DA:93,0
+DA:94,0
+DA:95,0
+DA:97,7
+BRDA:71,23,0,0
+BRDA:71,23,1,7
+BRDA:81,99,0,0
+BRDA:81,99,1,7
+FN:13,System.Void StockApp.CashTransaction::.ctor(System.String,StockApp.Money,System.Int32,System.String)
+FNDA:43,System.Void StockApp.CashTransaction::.ctor(System.String,StockApp.Money,System.Int32,System.String)
+DA:14,43
+DA:15,43
+DA:16,43
+DA:17,43
+DA:18,43
+DA:19,43
+DA:20,43
+FN:21,System.Void StockApp.CashTransaction::.ctor()
+FNDA:72,System.Void StockApp.CashTransaction::.ctor()
+DA:22,72
+DA:23,72
+DA:24,72
+FN:26,System.Void StockApp.CashTransaction/<AddToDb>d__26::MoveNext()
+FNDA:64,System.Void StockApp.CashTransaction/<AddToDb>d__26::MoveNext()
+DA:27,64
+DA:28,64
+DA:29,4
+DA:30,4
+DA:33,60
+DA:34,2
+DA:35,2
+DA:37,58
+DA:39,58
+DA:40,58
+DA:41,58
+DA:42,58
+DA:43,58
+DA:44,58
+DA:45,58
+DA:46,58
+DA:47,58
+DA:49,58
+DA:50,58
+DA:51,58
+DA:52,0
+DA:53,0
+DA:54,0
+DA:55,0
+DA:57,58
+DA:58,58
+DA:59,58
+DA:60,58
+DA:61,58
+DA:62,0
+DA:63,0
+DA:65,58
+DA:66,58
+DA:67,58
+BRDA:28,29,0,63
+BRDA:28,42,0,62
+BRDA:28,60,0,61
+BRDA:28,29,1,3
+BRDA:28,42,1,3
+BRDA:28,60,1,3
+BRDA:28,89,0,4
+BRDA:28,89,1,60
+BRDA:33,136,0,2
+BRDA:33,136,1,58
+BRDA:61,755,0,0
+BRDA:61,755,1,58
+LF:73
+LH:59
+BRF:16
+BRH:13
+FNF:10
+FNH:10
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/StockApp/DividendPayout.cs
+FN:4,System.String StockApp.DividendPayout::get_portfolioId()
+FNDA:0,System.String StockApp.DividendPayout::get_portfolioId()
+DA:5,0
+FN:5,System.Int32 StockApp.DividendPayout::get_dividendId()
+FNDA:0,System.Int32 StockApp.DividendPayout::get_dividendId()
+DA:6,0
+FN:6,System.Decimal StockApp.DividendPayout::get_sharesAmount()
+FNDA:0,System.Decimal StockApp.DividendPayout::get_sharesAmount()
+DA:7,0
+FN:8,System.Void StockApp.DividendPayout::.ctor(System.String,System.Int32,System.Decimal)
+FNDA:0,System.Void StockApp.DividendPayout::.ctor(System.String,System.Int32,System.Decimal)
+DA:9,0
+DA:10,0
+DA:11,0
+DA:12,0
+DA:13,0
+DA:14,0
+LF:9
+LH:0
+BRF:0
+BRH:0
+FNF:4
+FNH:0
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/StockApp/Money.cs
+FN:8,System.Decimal StockApp.Money::get_amount()
+FNDA:2618055,System.Decimal StockApp.Money::get_amount()
+DA:9,2618055
+FN:9,System.String StockApp.Money::get_currency()
+FNDA:1566253,System.String StockApp.Money::get_currency()
+DA:10,1566253
+FN:12,System.Void StockApp.Money::.ctor(System.Decimal,System.String)
+FNDA:1254092,System.Void StockApp.Money::.ctor(System.Decimal,System.String)
+DA:13,1254092
+DA:14,1254092
+DA:15,1254092
+DA:16,1254092
+DA:17,1254092
+FN:18,System.Void StockApp.Money::.ctor(System.Decimal)
+FNDA:0,System.Void StockApp.Money::.ctor(System.Decimal)
+DA:19,0
+DA:20,0
+DA:21,0
+LF:10
+LH:7
+BRF:0
+BRH:0
+FNF:4
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/StockApp/Portfolio.cs
+FN:37,System.String StockApp.Portfolio::get_id()
+FNDA:3322,System.String StockApp.Portfolio::get_id()
+DA:38,3322
+FN:38,System.String StockApp.Portfolio::get_name()
+FNDA:1098,System.String StockApp.Portfolio::get_name()
+DA:39,1098
+FN:39,System.String StockApp.Portfolio::get_owner()
+FNDA:716,System.String StockApp.Portfolio::get_owner()
+DA:40,716
+FN:40,System.String StockApp.Portfolio::get_currency()
+FNDA:1012,System.String StockApp.Portfolio::get_currency()
+DA:41,1012
+FN:41,System.Nullable`1<System.Boolean> StockApp.Portfolio::get_trackBalance()
+FNDA:425,System.Nullable`1<System.Boolean> StockApp.Portfolio::get_trackBalance()
+DA:42,425
+FN:43,System.Collections.Generic.List`1<Data.DatePriceOHLC> StockApp.Portfolio::get_valueHistory()
+FNDA:680,System.Collections.Generic.List`1<Data.DatePriceOHLC> StockApp.Portfolio::get_valueHistory()
+DA:44,680
+FN:44,System.Collections.Generic.List`1<StockApp.StockTransaction> StockApp.Portfolio::get_stockTransactions()
+FNDA:2011,System.Collections.Generic.List`1<StockApp.StockTransaction> StockApp.Portfolio::get_stockTransactions()
+DA:45,2011
+FN:45,System.Collections.Generic.List`1<StockApp.CashTransaction> StockApp.Portfolio::get_cashTransactions()
+FNDA:643,System.Collections.Generic.List`1<StockApp.CashTransaction> StockApp.Portfolio::get_cashTransactions()
+DA:46,643
+FN:46,System.Collections.Generic.List`1<StockApp.StockPosition> StockApp.Portfolio::get_stockPositions()
+FNDA:1253,System.Collections.Generic.List`1<StockApp.StockPosition> StockApp.Portfolio::get_stockPositions()
+DA:47,1253
+FN:47,System.Collections.Generic.List`1<Data.Position> StockApp.Portfolio::get_positionHistories()
+FNDA:527,System.Collections.Generic.List`1<Data.Position> StockApp.Portfolio::get_positionHistories()
+DA:48,527
+FN:48,System.Collections.Generic.List`1<Data.Dividend> StockApp.Portfolio::get_dividendHistory()
+FNDA:556,System.Collections.Generic.List`1<Data.Dividend> StockApp.Portfolio::get_dividendHistory()
+DA:49,556
+FN:49,System.Collections.Generic.List`1<StockApp.DividendPayout> StockApp.Portfolio::get_dividendPayouts()
+FNDA:643,System.Collections.Generic.List`1<StockApp.DividendPayout> StockApp.Portfolio::get_dividendPayouts()
+DA:50,643
+FN:50,System.Collections.Generic.List`1<Data.CashBalance> StockApp.Portfolio::get_cashBalance()
+FNDA:1089,System.Collections.Generic.List`1<Data.CashBalance> StockApp.Portfolio::get_cashBalance()
+DA:51,1089
+FN:54,StockApp.Portfolio StockApp.Portfolio::AddToDb()
+FNDA:146,StockApp.Portfolio StockApp.Portfolio::AddToDb()
+DA:55,146
+DA:56,146
+DA:57,3
+DA:58,3
+DA:60,143
+DA:61,2
+DA:62,2
+DA:64,141
+DA:65,141
+DA:66,141
+DA:67,141
+DA:68,141
+DA:69,141
+DA:70,141
+DA:71,141
+DA:73,141
+DA:74,141
+DA:75,139
+DA:76,2
+DA:77,2
+DA:78,2
+DA:79,2
+DA:83,139
+DA:84,139
+BRDA:56,7,0,145
+BRDA:56,15,0,144
+BRDA:56,7,1,2
+BRDA:56,15,1,2
+BRDA:56,31,0,3
+BRDA:56,31,1,143
+BRDA:60,68,0,2
+BRDA:60,68,1,141
+FN:86,StockApp.User StockApp.Portfolio::GetOwner()
+FNDA:332,StockApp.User StockApp.Portfolio::GetOwner()
+DA:87,332
+DA:88,332
+DA:89,1
+DA:90,1
+DA:92,331
+DA:93,331
+DA:94,331
+DA:95,331
+DA:97,331
+DA:98,330
+DA:99,330
+DA:100,330
+DA:101,330
+DA:103,1
+DA:105,330
+BRDA:88,12,0,1
+BRDA:88,12,1,331
+BRDA:97,77,0,330
+BRDA:97,77,1,1
+FN:108,StockApp.Portfolio StockApp.Portfolio::UpdateStockTransactions()
+FNDA:118,StockApp.Portfolio StockApp.Portfolio::UpdateStockTransactions()
+DA:109,118
+DA:110,118
+DA:111,1
+DA:112,1
+DA:114,117
+DA:115,117
+DA:116,117
+DA:117,117
+DA:119,117
+DA:120,595
+DA:121,122
+DA:122,122
+DA:123,122
+DA:124,122
+DA:125,122
+DA:126,122
+DA:127,122
+DA:128,122
+DA:129,122
+DA:130,122
+DA:131,122
+DA:132,122
+DA:133,117
+DA:134,117
+BRDA:110,12,0,1
+BRDA:110,12,1,117
+BRDA:120,467,1,122
+BRDA:120,467,0,117
+FN:136,StockApp.Portfolio StockApp.Portfolio::UpdateStockPositions()
+FNDA:115,StockApp.Portfolio StockApp.Portfolio::UpdateStockPositions()
+DA:137,115
+DA:138,115
+DA:139,1
+DA:140,1
+DA:142,114
+DA:143,114
+DA:144,114
+DA:145,114
+DA:147,114
+DA:148,580
+DA:149,119
+DA:150,119
+DA:151,119
+DA:152,119
+DA:153,114
+DA:154,114
+BRDA:138,12,0,1
+BRDA:138,12,1,114
+BRDA:148,225,1,119
+BRDA:148,225,0,114
+FN:217,StockApp.Portfolio StockApp.Portfolio::ChangeName(System.String)
+FNDA:5,StockApp.Portfolio StockApp.Portfolio::ChangeName(System.String)
+DA:218,5
+DA:219,5
+DA:220,2
+DA:221,2
+DA:223,3
+DA:224,3
+DA:225,3
+DA:226,3
+DA:227,3
+DA:229,3
+DA:230,3
+DA:231,3
+DA:232,3
+DA:234,0
+DA:235,0
+DA:236,0
+DA:237,0
+DA:239,3
+BRDA:219,7,0,3
+BRDA:219,7,1,2
+BRDA:219,18,0,2
+BRDA:219,18,1,3
+FN:241,StockApp.Portfolio StockApp.Portfolio::ChangeCurrency(System.String)
+FNDA:6,StockApp.Portfolio StockApp.Portfolio::ChangeCurrency(System.String)
+DA:242,6
+DA:243,6
+DA:244,3
+DA:245,3
+DA:247,3
+DA:248,0
+DA:249,0
+DA:251,3
+DA:253,3
+DA:254,3
+DA:255,3
+DA:256,3
+DA:258,3
+DA:259,3
+DA:260,3
+DA:261,3
+DA:263,0
+DA:264,0
+DA:265,0
+DA:266,0
+DA:268,3
+BRDA:243,7,0,3
+BRDA:243,7,1,3
+BRDA:243,18,0,3
+BRDA:243,18,1,3
+BRDA:247,50,0,0
+BRDA:247,50,1,3
+FN:270,StockApp.StockTransaction StockApp.Portfolio::GetStockTransaction(System.Int32)
+FNDA:14,StockApp.StockTransaction StockApp.Portfolio::GetStockTransaction(System.Int32)
+DA:271,14
+DA:272,14
+DA:273,1
+DA:274,1
+DA:276,13
+DA:277,13
+DA:278,13
+DA:279,13
+DA:280,13
+DA:281,13
+DA:283,13
+DA:284,12
+DA:285,12
+DA:286,12
+DA:287,12
+DA:288,12
+DA:289,12
+DA:290,12
+DA:291,12
+DA:292,12
+DA:293,12
+DA:294,12
+DA:295,12
+DA:297,1
+DA:298,12
+BRDA:272,12,0,1
+BRDA:272,12,1,13
+BRDA:283,118,0,12
+BRDA:283,118,1,1
+FN:300,System.Void StockApp.Portfolio::Delete()
+FNDA:4,System.Void StockApp.Portfolio::Delete()
+DA:301,4
+DA:302,4
+DA:303,1
+DA:304,1
+DA:306,3
+DA:307,3
+DA:308,3
+DA:309,3
+DA:310,3
+DA:311,1
+DA:312,1
+DA:314,2
+DA:315,2
+DA:316,2
+DA:317,2
+DA:319,2
+DA:320,2
+DA:321,2
+DA:322,0
+DA:323,0
+DA:324,0
+DA:325,0
+DA:327,2
+BRDA:302,14,0,1
+BRDA:302,14,1,3
+BRDA:310,79,0,1
+BRDA:310,79,1,2
+FN:329,StockApp.CashTransaction StockApp.Portfolio::GetCashTransaction(System.Int32)
+FNDA:9,StockApp.CashTransaction StockApp.Portfolio::GetCashTransaction(System.Int32)
+DA:330,9
+DA:331,9
+DA:332,0
+DA:333,0
+DA:335,9
+DA:336,9
+DA:337,9
+DA:338,9
+DA:339,9
+DA:340,9
+DA:341,7
+DA:342,7
+DA:343,7
+DA:344,7
+DA:345,7
+DA:346,7
+DA:347,7
+DA:348,7
+DA:349,7
+DA:351,2
+DA:352,7
+BRDA:331,12,0,0
+BRDA:331,12,1,9
+BRDA:340,95,0,7
+BRDA:340,95,1,2
+FN:354,System.Void StockApp.Portfolio::UpdateCashTransactions()
+FNDA:0,System.Void StockApp.Portfolio::UpdateCashTransactions()
+DA:355,0
+DA:356,0
+DA:357,0
+DA:358,0
+DA:361,0
+DA:362,0
+DA:363,0
+DA:364,0
+DA:365,0
+DA:366,0
+DA:367,0
+DA:368,0
+DA:369,0
+DA:370,0
+DA:371,0
+DA:372,0
+DA:373,0
+DA:374,0
+DA:375,0
+DA:376,0
+DA:377,0
+BRDA:356,12,0,0
+BRDA:356,12,1,0
+BRDA:366,331,1,0
+BRDA:366,331,0,0
+FN:7,System.Void StockApp.Portfolio::.ctor(System.String)
+FNDA:107,System.Void StockApp.Portfolio::.ctor(System.String)
+DA:8,107
+DA:9,107
+DA:10,107
+DA:11,107
+FN:11,System.Void StockApp.Portfolio::.ctor(System.String,System.String,System.String,System.Boolean)
+FNDA:157,System.Void StockApp.Portfolio::.ctor(System.String,System.String,System.String,System.Boolean)
+DA:12,157
+DA:13,157
+DA:14,157
+DA:15,157
+DA:16,157
+DA:17,157
+DA:18,157
+FN:18,System.Void StockApp.Portfolio::.ctor(System.String,System.String,System.String,System.String,System.Boolean)
+FNDA:268,System.Void StockApp.Portfolio::.ctor(System.String,System.String,System.String,System.String,System.Boolean)
+DA:19,268
+DA:20,268
+DA:21,268
+DA:22,268
+DA:23,268
+DA:24,268
+DA:25,268
+DA:26,268
+FN:27,System.Void StockApp.Portfolio::.ctor(System.String,System.String,System.Collections.Generic.List`1<Data.DatePriceOHLC>,System.Collections.Generic.List`1<Data.Position>,System.Collections.Generic.List`1<Data.Dividend>,System.Collections.Generic.List`1<Data.CashBalance>)
+FNDA:111,System.Void StockApp.Portfolio::.ctor(System.String,System.String,System.Collections.Generic.List`1<Data.DatePriceOHLC>,System.Collections.Generic.List`1<Data.Position>,System.Collections.Generic.List`1<Data.Dividend>,System.Collections.Generic.List`1<Data.CashBalance>)
+DA:28,111
+DA:29,111
+DA:30,111
+DA:31,111
+DA:32,111
+DA:33,111
+DA:34,111
+DA:35,111
+DA:36,111
+FN:188,System.Boolean StockApp.Portfolio/<>c__DisplayClass60_0::<GetValueHistory>b__0(Data.Transaction)
+FNDA:2233,System.Boolean StockApp.Portfolio/<>c__DisplayClass60_0::<GetValueHistory>b__0(Data.Transaction)
+DA:189,2233
+BRDA:189,17,0,3
+BRDA:189,17,1,2119
+FN:189,System.Boolean StockApp.Portfolio/<>c__DisplayClass60_0::<GetValueHistory>b__1(Data.Transaction)
+FNDA:1044,System.Boolean StockApp.Portfolio/<>c__DisplayClass60_0::<GetValueHistory>b__1(Data.Transaction)
+DA:190,1044
+BRDA:190,17,0,509
+BRDA:190,17,1,424
+FN:156,System.Void StockApp.Portfolio/<GetValueHistory>d__60::MoveNext()
+FNDA:114,System.Void StockApp.Portfolio/<GetValueHistory>d__60::MoveNext()
+DA:157,114
+DA:158,114
+DA:159,1
+DA:160,1
+DA:162,113
+DA:163,1
+DA:164,1
+DA:166,112
+DA:167,1
+DA:168,1
+DA:171,111
+DA:172,111
+DA:174,111
+DA:175,111
+DA:176,111
+DA:178,565
+DA:179,116
+DA:180,116
+DA:181,116
+DA:182,116
+DA:183,116
+DA:184,116
+DA:185,116
+DA:186,116
+DA:187,116
+DA:188,111
+DA:191,111
+DA:192,110
+DA:193,110
+DA:194,110
+DA:195,111
+DA:196,111
+DA:197,76
+DA:198,76
+DA:199,76
+DA:200,111
+DA:201,111
+DA:202,111
+DA:203,111
+DA:204,111
+DA:205,111
+DA:206,111
+DA:207,111
+DA:208,111
+DA:209,111
+DA:211,0
+DA:212,0
+DA:213,0
+DA:214,111
+DA:215,111
+BRDA:158,102,0,114
+BRDA:158,102,1,0
+BRDA:158,118,0,1
+BRDA:158,118,1,113
+BRDA:162,153,0,1
+BRDA:162,153,1,112
+BRDA:166,219,0,1
+BRDA:166,219,1,111
+BRDA:178,667,1,116
+BRDA:181,547,0,116
+BRDA:181,547,1,116
+BRDA:178,667,0,111
+BRDA:191,930,0,110
+BRDA:191,930,1,111
+BRDA:196,968,0,76
+BRDA:198,985,0,76
+BRDA:198,985,1,0
+BRDA:198,1012,0,76
+BRDA:198,1012,1,0
+BRDA:196,968,1,111
+BRDA:206,1180,0,111
+BRDA:206,1180,1,0
+LF:301
+LH:261
+BRF:72
+BRH:62
+FNF:30
+FNH:29
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/StockApp/Stock.cs
+FN:9,System.String StockApp.Stock::get_ticker()
+FNDA:832,System.String StockApp.Stock::get_ticker()
+DA:10,832
+FN:10,System.String StockApp.Stock::get_exchange()
+FNDA:702,System.String StockApp.Stock::get_exchange()
+DA:11,702
+FN:4,System.Void StockApp.Stock::.ctor(System.String,System.String)
+FNDA:119,System.Void StockApp.Stock::.ctor(System.String,System.String)
+DA:5,119
+DA:6,119
+DA:7,119
+DA:8,119
+DA:9,119
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/StockApp/StockPosition.cs
+FN:11,StockApp.Portfolio StockApp.StockPosition::get_portfolio()
+FNDA:467,StockApp.Portfolio StockApp.StockPosition::get_portfolio()
+DA:12,467
+FN:12,StockApp.Stock StockApp.StockPosition::get_stock()
+FNDA:1415,StockApp.Stock StockApp.StockPosition::get_stock()
+DA:13,1415
+FN:14,System.Collections.Generic.List`1<StockApp.StockTransaction> StockApp.StockPosition::get_stockTransactions()
+FNDA:66782,System.Collections.Generic.List`1<StockApp.StockTransaction> StockApp.StockPosition::get_stockTransactions()
+DA:15,66782
+FN:101,StockApp.StockPosition StockApp.StockPosition::UpdateStockTransactions(System.DateOnly,System.DateOnly)
+FNDA:116,StockApp.StockPosition StockApp.StockPosition::UpdateStockTransactions(System.DateOnly,System.DateOnly)
+DA:102,116
+DA:103,116
+DA:104,116
+DA:105,116
+DA:106,116
+DA:107,116
+DA:108,116
+DA:109,116
+DA:110,116
+DA:111,116
+DA:114,116
+DA:116,116
+DA:118,580
+DA:119,116
+DA:120,116
+DA:122,116
+DA:124,116
+DA:125,116
+DA:126,116
+DA:127,116
+DA:128,116
+DA:129,116
+DA:130,116
+DA:131,116
+DA:132,116
+DA:134,116
+DA:135,0
+DA:136,0
+DA:137,0
+DA:138,116
+DA:139,116
+DA:141,116
+DA:142,116
+BRDA:118,724,1,116
+BRDA:134,663,0,0
+BRDA:134,663,1,116
+BRDA:134,686,0,0
+BRDA:134,686,1,116
+BRDA:118,724,0,116
+FN:6,System.Void StockApp.StockPosition::.ctor(StockApp.Portfolio,StockApp.Stock)
+FNDA:119,System.Void StockApp.StockPosition::.ctor(StockApp.Portfolio,StockApp.Stock)
+DA:7,119
+DA:8,119
+DA:9,119
+DA:10,119
+DA:11,119
+FN:45,System.Boolean StockApp.StockPosition/<>c__DisplayClass13_0::<GetValueHistory>b__0(Data.Dividend)
+FNDA:210,System.Boolean StockApp.StockPosition/<>c__DisplayClass13_0::<GetValueHistory>b__0(Data.Dividend)
+DA:46,210
+FN:17,System.Void StockApp.StockPosition/<GetValueHistory>d__13::MoveNext()
+FNDA:116,System.Void StockApp.StockPosition/<GetValueHistory>d__13::MoveNext()
+DA:18,116
+DA:19,116
+DA:20,116
+DA:21,116
+DA:23,116
+DA:24,116
+DA:26,116
+DA:27,0
+DA:28,0
+DA:32,116
+DA:33,0
+DA:34,0
+DA:35,0
+DA:37,116
+DA:38,116
+DA:39,116
+DA:40,116
+DA:42,116
+DA:43,116
+DA:44,116
+DA:45,105
+DA:47,105
+DA:48,105
+DA:49,116
+DA:50,116
+DA:53,41194
+DA:54,41078
+DA:56,41078
+DA:57,24657
+DA:59,24657
+DA:60,116
+DA:61,116
+DA:62,116
+DA:63,116
+DA:64,116
+DA:65,116
+DA:67,0
+DA:68,24657
+DA:69,41078
+DA:70,40959
+DA:71,40959
+DA:72,27715
+DA:73,27715
+DA:74,27715
+DA:75,27715
+DA:76,40959
+DA:77,41078
+DA:78,31581
+DA:79,31581
+DA:80,347
+DA:81,347
+DA:82,347
+DA:84,347
+DA:85,347
+DA:86,31581
+DA:87,41078
+DA:88,41078
+DA:89,41078
+DA:90,41078
+DA:91,41078
+DA:92,41078
+DA:93,41078
+DA:94,41078
+DA:95,41078
+DA:96,41078
+DA:98,116
+DA:99,116
+BRDA:26,175,0,0
+BRDA:26,175,1,116
+BRDA:32,274,0,0
+BRDA:32,274,1,116
+BRDA:38,379,0,116
+BRDA:38,379,1,0
+BRDA:44,652,0,105
+BRDA:44,652,1,116
+BRDA:53,1536,1,41078
+BRDA:56,771,0,24657
+BRDA:59,927,1,116
+BRDA:63,869,0,116
+BRDA:63,869,1,0
+BRDA:59,927,0,24657
+BRDA:56,771,1,41078
+BRDA:69,961,0,40959
+BRDA:71,1011,0,27715
+BRDA:71,1011,1,40959
+BRDA:69,961,1,41078
+BRDA:77,1082,0,31581
+BRDA:77,1082,1,9497
+BRDA:77,1100,0,31581
+BRDA:79,1153,0,347
+BRDA:79,1153,1,31581
+BRDA:77,1100,1,41078
+BRDA:87,1294,0,41078
+BRDA:87,1294,1,41078
+BRDA:53,1536,0,116
+LF:109
+LH:100
+BRF:34
+BRH:28
+FNF:7
+FNH:7
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/StockApp/StockTransaction.cs
+FN:6,System.Nullable`1<System.Int32> StockApp.StockTransaction::get_id()
+FNDA:593,System.Nullable`1<System.Int32> StockApp.StockTransaction::get_id()
+DA:7,593
+FN:7,System.String StockApp.StockTransaction::get_portfolioId()
+FNDA:1272,System.String StockApp.StockTransaction::get_portfolioId()
+DA:8,1272
+FN:8,System.String StockApp.StockTransaction::get_ticker()
+FNDA:1168,System.String StockApp.StockTransaction::get_ticker()
+DA:9,1168
+FN:9,System.String StockApp.StockTransaction::get_exchange()
+FNDA:1138,System.String StockApp.StockTransaction::get_exchange()
+DA:10,1138
+FN:10,System.Decimal StockApp.StockTransaction::get_amount()
+FNDA:1024,System.Decimal StockApp.StockTransaction::get_amount()
+DA:11,1024
+FN:11,System.Nullable`1<System.Decimal> StockApp.StockTransaction::get_amountAdjusted()
+FNDA:250,System.Nullable`1<System.Decimal> StockApp.StockTransaction::get_amountAdjusted()
+DA:12,250
+FN:12,System.Nullable`1<System.Decimal> StockApp.StockTransaction::get_amountOwned()
+FNDA:479,System.Nullable`1<System.Decimal> StockApp.StockTransaction::get_amountOwned()
+DA:13,479
+FN:13,System.Int32 StockApp.StockTransaction::get_timestamp()
+FNDA:26012,System.Int32 StockApp.StockTransaction::get_timestamp()
+DA:14,26012
+FN:14,StockApp.Money StockApp.StockTransaction::get_priceNative()
+FNDA:1846,StockApp.Money StockApp.StockTransaction::get_priceNative()
+DA:15,1846
+FN:15,StockApp.Money StockApp.StockTransaction::get_priceUSD()
+FNDA:451,StockApp.Money StockApp.StockTransaction::get_priceUSD()
+DA:16,451
+FN:114,System.Threading.Tasks.Task StockApp.StockTransaction::Delete()
+FNDA:14,System.Threading.Tasks.Task StockApp.StockTransaction::Delete()
+DA:115,14
+DA:116,14
+DA:117,14
+DA:118,14
+DA:119,14
+DA:120,14
+DA:121,14
+DA:122,1
+DA:123,1
+DA:126,13
+DA:127,13
+DA:128,13
+DA:130,13
+DA:131,13
+DA:132,13
+DA:133,0
+DA:134,0
+DA:135,0
+DA:136,0
+DA:138,13
+DA:139,13
+BRDA:121,58,0,1
+BRDA:121,58,1,13
+FN:17,System.Void StockApp.StockTransaction::.ctor(System.Int32,System.String,System.String,System.String,System.Decimal,System.Int32,StockApp.Money)
+FNDA:3,System.Void StockApp.StockTransaction::.ctor(System.Int32,System.String,System.String,System.String,System.Decimal,System.Int32,StockApp.Money)
+DA:18,3
+DA:19,3
+DA:20,3
+DA:21,3
+DA:22,3
+DA:23,3
+DA:24,3
+DA:25,3
+DA:26,3
+DA:27,3
+FN:28,System.Void StockApp.StockTransaction::.ctor()
+FNDA:551,System.Void StockApp.StockTransaction::.ctor()
+DA:29,551
+DA:30,551
+DA:32,551
+FN:34,System.Void StockApp.StockTransaction/<AddToDb>d__42::MoveNext()
+FNDA:134,System.Void StockApp.StockTransaction/<AddToDb>d__42::MoveNext()
+DA:35,134
+DA:36,134
+DA:37,115
+DA:38,115
+DA:39,115
+DA:41,134
+DA:42,4
+DA:43,4
+DA:47,130
+DA:48,130
+DA:49,125
+DA:50,5
+DA:51,5
+DA:52,5
+DA:54,125
+DA:55,2
+DA:56,2
+DA:59,123
+DA:60,123
+DA:61,123
+DA:62,123
+DA:63,123
+DA:64,123
+DA:65,123
+DA:66,123
+DA:68,123
+DA:69,123
+DA:70,123
+DA:71,51
+DA:72,51
+DA:73,51
+DA:74,123
+DA:75,2
+DA:76,2
+DA:79,121
+DA:81,121
+DA:82,121
+DA:83,121
+DA:84,121
+DA:85,121
+DA:86,121
+DA:87,121
+DA:88,121
+DA:89,121
+DA:90,121
+DA:91,121
+DA:92,121
+DA:94,121
+DA:95,121
+DA:96,121
+DA:97,0
+DA:98,0
+DA:99,0
+DA:100,0
+DA:102,121
+DA:103,121
+DA:104,121
+DA:105,121
+DA:106,121
+DA:107,0
+DA:108,0
+DA:110,121
+DA:111,121
+DA:112,121
+BRDA:36,80,0,115
+BRDA:36,80,1,134
+BRDA:41,128,0,133
+BRDA:41,141,0,132
+BRDA:41,154,0,131
+BRDA:41,128,1,3
+BRDA:41,141,1,3
+BRDA:41,154,1,3
+BRDA:41,180,0,4
+BRDA:41,180,1,132
+BRDA:54,415,0,2
+BRDA:54,415,1,123
+BRDA:70,670,0,51
+BRDA:70,670,1,123
+BRDA:74,732,0,2
+BRDA:74,732,1,121
+BRDA:106,1459,0,0
+BRDA:106,1459,1,121
+LF:108
+LH:98
+BRF:20
+BRH:19
+FNF:14
+FNH:14
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/StockApp/TokenSet.cs
+FN:20,System.String StockApp.TokenSet::get_refreshToken()
+FNDA:533,System.String StockApp.TokenSet::get_refreshToken()
+DA:21,533
+FN:21,System.String StockApp.TokenSet::get_accessToken()
+FNDA:1319,System.String StockApp.TokenSet::get_accessToken()
+DA:22,1319
+FN:24,StockApp.TokenSet StockApp.TokenSet::SetRefreshToken(System.String)
+FNDA:4,StockApp.TokenSet StockApp.TokenSet::SetRefreshToken(System.String)
+DA:25,4
+DA:26,4
+DA:27,1
+DA:28,1
+DA:31,3
+DA:32,3
+DA:33,3
+BRDA:26,7,0,1
+BRDA:26,7,1,3
+FN:37,StockApp.TokenSet StockApp.TokenSet::Create(System.String)
+FNDA:12,StockApp.TokenSet StockApp.TokenSet::Create(System.String)
+DA:38,12
+DA:39,12
+DA:40,1
+DA:41,1
+DA:43,11
+DA:45,11
+DA:47,10
+DA:48,10
+DA:49,10
+DA:51,10
+DA:52,10
+BRDA:39,7,0,1
+BRDA:39,7,1,11
+FN:54,StockApp.TokenSet StockApp.TokenSet::Refresh()
+FNDA:5,StockApp.TokenSet StockApp.TokenSet::Refresh()
+DA:55,5
+DA:56,5
+DA:57,1
+DA:58,1
+DA:60,4
+DA:61,2
+DA:62,2
+DA:64,2
+DA:65,2
+BRDA:56,12,0,1
+BRDA:56,12,1,4
+FN:67,StockApp.User StockApp.TokenSet::GetUser()
+FNDA:268,StockApp.User StockApp.TokenSet::GetUser()
+DA:68,268
+DA:69,268
+DA:70,3
+DA:71,3
+DA:73,265
+DA:74,265
+DA:75,265
+DA:76,265
+DA:77,265
+DA:79,265
+DA:80,254
+DA:81,254
+DA:82,254
+DA:84,11
+DA:85,254
+BRDA:69,14,0,3
+BRDA:69,14,1,265
+BRDA:79,85,0,254
+BRDA:79,85,1,11
+FN:7,System.Void StockApp.TokenSet::.ctor(System.String,System.String)
+FNDA:247,System.Void StockApp.TokenSet::.ctor(System.String,System.String)
+DA:8,247
+DA:9,247
+DA:10,247
+DA:11,247
+DA:12,247
+FN:12,System.Void StockApp.TokenSet::.ctor(System.String)
+FNDA:265,System.Void StockApp.TokenSet::.ctor(System.String)
+DA:13,265
+DA:14,265
+DA:15,265
+DA:16,265
+FN:16,System.Void StockApp.TokenSet::.ctor()
+FNDA:15,System.Void StockApp.TokenSet::.ctor()
+DA:17,15
+DA:18,15
+DA:19,15
+LF:56
+LH:56
+BRF:10
+BRH:10
+FNF:9
+FNH:9
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/StockApp/User.cs
+FN:6,System.String StockApp.User::get_id()
+FNDA:1815,System.String StockApp.User::get_id()
+DA:7,1815
+FN:7,System.String StockApp.User::get_email()
+FNDA:560,System.String StockApp.User::get_email()
+DA:8,560
+FN:8,System.String StockApp.User::get_password()
+FNDA:293,System.String StockApp.User::get_password()
+DA:9,293
+FN:25,StockApp.User StockApp.User::SignUp()
+FNDA:9,StockApp.User StockApp.User::SignUp()
+DA:26,9
+DA:27,9
+DA:28,2
+DA:29,2
+DA:31,7
+DA:32,7
+DA:33,7
+DA:34,7
+DA:36,7
+DA:37,5
+DA:38,5
+DA:39,5
+DA:40,5
+DA:41,5
+DA:42,5
+DA:43,5
+DA:44,5
+DA:46,5
+DA:47,5
+DA:48,5
+DA:49,0
+DA:50,0
+DA:51,0
+DA:52,0
+DA:54,5
+DA:56,2
+DA:57,5
+BRDA:27,7,0,8
+BRDA:27,7,1,1
+BRDA:27,23,0,2
+BRDA:27,23,1,7
+BRDA:36,88,0,5
+BRDA:36,88,1,2
+FN:59,StockApp.User StockApp.User::SignIn()
+FNDA:11,StockApp.User StockApp.User::SignIn()
+DA:60,11
+DA:61,11
+DA:62,2
+DA:63,2
+DA:65,9
+DA:66,9
+DA:67,9
+DA:68,9
+DA:69,9
+DA:70,9
+DA:73,9
+DA:74,7
+DA:75,7
+DA:76,7
+DA:78,7
+DA:79,2
+DA:80,2
+DA:82,5
+DA:83,5
+DA:85,2
+DA:86,5
+BRDA:61,7,0,10
+BRDA:61,7,1,1
+BRDA:61,25,0,2
+BRDA:61,25,1,9
+BRDA:73,118,0,7
+BRDA:78,179,0,2
+BRDA:78,179,1,5
+BRDA:73,118,1,2
+FN:88,StockApp.User StockApp.User::ChangeEmail(System.String)
+FNDA:4,StockApp.User StockApp.User::ChangeEmail(System.String)
+DA:89,4
+DA:90,4
+DA:91,1
+DA:92,1
+DA:94,3
+DA:95,3
+DA:96,3
+DA:97,3
+DA:98,3
+DA:100,3
+DA:101,3
+DA:102,2
+DA:103,2
+DA:105,1
+DA:106,1
+DA:107,1
+DA:108,1
+DA:110,2
+BRDA:90,7,0,1
+BRDA:90,7,1,3
+FN:112,StockApp.User StockApp.User::ChangePassword(System.String,System.String)
+FNDA:6,StockApp.User StockApp.User::ChangePassword(System.String,System.String)
+DA:113,6
+DA:114,6
+DA:115,2
+DA:116,2
+DA:118,4
+DA:119,4
+DA:120,4
+DA:121,4
+DA:122,4
+DA:123,4
+DA:124,4
+DA:125,2
+DA:126,2
+DA:128,2
+DA:129,2
+DA:130,2
+DA:131,2
+DA:132,2
+DA:134,2
+DA:135,2
+DA:136,2
+DA:137,2
+DA:139,0
+DA:140,0
+DA:141,0
+DA:142,0
+DA:144,2
+BRDA:114,2,0,5
+BRDA:114,2,1,1
+BRDA:114,15,0,2
+BRDA:114,15,1,4
+BRDA:124,89,0,2
+BRDA:124,89,1,2
+FN:146,System.Void StockApp.User::Delete()
+FNDA:3,System.Void StockApp.User::Delete()
+DA:147,3
+DA:148,3
+DA:149,1
+DA:150,1
+DA:152,2
+DA:153,2
+DA:154,2
+DA:155,2
+DA:157,2
+DA:158,2
+DA:159,2
+DA:160,0
+DA:161,0
+DA:162,0
+DA:163,0
+DA:165,2
+BRDA:148,12,0,1
+BRDA:148,12,1,2
+FN:167,StockApp.User StockApp.User::UpdatePortfolios()
+FNDA:89,StockApp.User StockApp.User::UpdatePortfolios()
+DA:168,89
+DA:169,89
+DA:170,1
+DA:171,1
+DA:173,88
+DA:174,88
+DA:175,88
+DA:176,88
+DA:177,88
+DA:178,88
+DA:179,0
+DA:180,0
+DA:182,88
+DA:183,730
+DA:184,233
+DA:185,233
+DA:186,233
+DA:187,233
+DA:188,233
+DA:189,233
+DA:190,233
+DA:191,233
+DA:192,233
+DA:193,233
+DA:194,88
+DA:195,88
+BRDA:169,14,0,1
+BRDA:169,14,1,88
+BRDA:178,85,0,0
+BRDA:178,85,1,88
+BRDA:183,234,1,233
+BRDA:183,234,0,88
+FN:197,StockApp.Portfolio StockApp.User::GetPortfolio(System.String)
+FNDA:40,StockApp.Portfolio StockApp.User::GetPortfolio(System.String)
+DA:198,40
+DA:199,40
+DA:200,1
+DA:201,1
+DA:203,39
+DA:204,39
+DA:205,39
+DA:206,39
+DA:207,39
+DA:208,39
+DA:210,39
+DA:211,39
+DA:212,28
+DA:213,28
+DA:214,28
+DA:215,28
+DA:216,28
+DA:217,28
+DA:218,28
+DA:219,28
+DA:220,28
+DA:222,11
+DA:224,28
+BRDA:199,9,0,1
+BRDA:199,9,1,39
+BRDA:211,100,0,28
+BRDA:211,100,1,11
+FN:262,System.Collections.Generic.List`1<Data.CashBalance> StockApp.User::InsertMissingValues(System.Collections.Generic.List`1<Data.CashBalance>)
+FNDA:150,System.Collections.Generic.List`1<Data.CashBalance> StockApp.User::InsertMissingValues(System.Collections.Generic.List`1<Data.CashBalance>)
+DA:263,150
+DA:264,150
+DA:265,788
+DA:266,244
+DA:267,244
+DA:268,244
+DA:270,244
+DA:272,244
+DA:273,244
+DA:275,7524
+DA:276,7280
+DA:277,7280
+DA:278,7280
+DA:279,7280
+DA:280,7280
+DA:281,244
+DA:283,150
+DA:284,150
+BRDA:265,133,1,244
+BRDA:275,111,1,7280
+BRDA:275,111,0,244
+BRDA:265,133,0,150
+FN:354,System.Collections.Generic.List`1<StockApp.StockTransaction> StockApp.User::GetAllStockTransactions()
+FNDA:3,System.Collections.Generic.List`1<StockApp.StockTransaction> StockApp.User::GetAllStockTransactions()
+DA:355,3
+DA:356,3
+DA:358,3
+DA:360,15
+DA:361,3
+DA:362,3
+DA:363,15
+DA:364,3
+DA:365,3
+DA:366,3
+DA:367,3
+DA:369,3
+DA:370,3
+BRDA:360,200,1,3
+BRDA:363,173,1,3
+BRDA:363,173,0,3
+BRDA:360,200,0,3
+FN:372,System.Int32 StockApp.User::PostPreference(System.String,System.String)
+FNDA:17,System.Int32 StockApp.User::PostPreference(System.String,System.String)
+DA:373,17
+DA:374,17
+DA:375,2
+DA:376,2
+DA:378,15
+DA:379,15
+DA:380,15
+DA:381,15
+DA:382,15
+DA:383,15
+DA:384,15
+DA:385,15
+DA:386,15
+DA:387,15
+DA:388,15
+DA:389,15
+DA:390,15
+DA:391,15
+DA:393,15
+DA:394,15
+DA:396,0
+DA:397,0
+DA:398,0
+DA:399,0
+DA:401,15
+BRDA:374,7,0,17
+BRDA:374,10,0,16
+BRDA:374,7,1,1
+BRDA:374,10,1,1
+BRDA:374,21,0,2
+BRDA:374,21,1,15
+FN:403,System.Collections.Generic.Dictionary`2<System.String,System.String> StockApp.User::GetPreferences()
+FNDA:8,System.Collections.Generic.Dictionary`2<System.String,System.String> StockApp.User::GetPreferences()
+DA:404,8
+DA:405,8
+DA:406,1
+DA:407,1
+DA:409,7
+DA:410,7
+DA:411,7
+DA:412,7
+DA:413,7
+DA:414,7
+DA:415,3
+DA:416,3
+DA:418,4
+DA:419,26
+DA:420,7
+DA:421,7
+DA:422,7
+DA:423,4
+DA:424,7
+BRDA:405,14,0,1
+BRDA:405,14,1,7
+BRDA:414,78,0,7
+BRDA:414,78,1,0
+BRDA:414,96,0,3
+BRDA:414,96,1,4
+BRDA:419,186,1,7
+BRDA:419,186,0,4
+FN:426,System.Void StockApp.User::DeletePreference(System.String)
+FNDA:4,System.Void StockApp.User::DeletePreference(System.String)
+DA:427,4
+DA:428,4
+DA:429,2
+DA:430,2
+DA:432,2
+DA:433,2
+DA:434,2
+DA:435,2
+DA:436,2
+DA:438,2
+DA:439,2
+DA:440,2
+DA:441,0
+DA:442,0
+DA:443,0
+DA:444,0
+DA:446,2
+BRDA:428,7,0,3
+BRDA:428,7,1,1
+BRDA:428,18,0,2
+BRDA:428,18,1,2
+FN:10,System.Void StockApp.User::.ctor(System.String,System.String)
+FNDA:833,System.Void StockApp.User::.ctor(System.String,System.String)
+DA:11,833
+DA:13,249
+DA:14,249
+DA:15,249
+DA:16,249
+DA:17,249
+FN:18,System.Void StockApp.User::.ctor(System.String)
+FNDA:584,System.Void StockApp.User::.ctor(System.String)
+DA:19,584
+DA:20,584
+DA:21,584
+DA:22,584
+FN:253,Data.CashBalance StockApp.User/<>c::<GetValueHistory>b__22_2(Data.Transaction)
+FNDA:322,Data.CashBalance StockApp.User/<>c::<GetValueHistory>b__22_2(Data.Transaction)
+DA:254,322
+DA:255,322
+DA:256,322
+DA:257,322
+FN:229,System.Boolean StockApp.User/<>c__DisplayClass22_0::<GetValueHistory>b__0(Data.Transaction)
+FNDA:768,System.Boolean StockApp.User/<>c__DisplayClass22_0::<GetValueHistory>b__0(Data.Transaction)
+DA:230,768
+FN:230,System.Boolean StockApp.User/<>c__DisplayClass22_0::<GetValueHistory>b__1(Data.Transaction)
+FNDA:524,System.Boolean StockApp.User/<>c__DisplayClass22_0::<GetValueHistory>b__1(Data.Transaction)
+DA:231,524
+FN:296,System.Void StockApp.User/<>c__DisplayClass24_0::<GetTransactions>b__0(System.Collections.Generic.Dictionary`2<System.String,System.Object>)
+FNDA:3205,System.Void StockApp.User/<>c__DisplayClass24_0::<GetTransactions>b__0(System.Collections.Generic.Dictionary`2<System.String,System.Object>)
+DA:297,3205
+FN:286,System.Void StockApp.User/<GetTransactions>d__24::MoveNext()
+FNDA:198,System.Void StockApp.User/<GetTransactions>d__24::MoveNext()
+DA:287,198
+DA:288,198
+DA:289,198
+DA:290,198
+DA:291,198
+DA:293,198
+DA:294,198
+DA:295,198
+DA:296,198
+DA:298,198
+DA:299,197
+DA:300,6603
+DA:301,3006
+DA:302,3006
+DA:303,3006
+DA:304,3006
+DA:305,3006
+DA:309,3006
+DA:312,2493
+DA:313,2493
+DA:315,513
+DA:316,513
+DA:319,3006
+DA:320,3006
+DA:321,2673
+DA:322,2673
+DA:323,2673
+DA:325,333
+DA:326,333
+DA:327,333
+DA:329,3006
+DA:332,49
+DA:333,49
+DA:335,2957
+DA:336,2957
+DA:339,3006
+DA:340,3006
+DA:341,3006
+DA:342,3006
+DA:343,3006
+DA:344,3006
+DA:345,3006
+DA:346,3006
+DA:347,3006
+DA:348,3006
+DA:349,3006
+DA:350,3006
+DA:351,197
+DA:352,197
+BRDA:300,1246,1,3006
+BRDA:309,514,1,2493
+BRDA:309,514,0,513
+BRDA:320,684,0,2673
+BRDA:320,684,1,333
+BRDA:329,814,1,49
+BRDA:329,814,0,2957
+BRDA:300,1246,0,197
+FN:226,System.Void StockApp.User/<GetValueHistory>d__22::MoveNext()
+FNDA:39,System.Void StockApp.User/<GetValueHistory>d__22::MoveNext()
+DA:227,39
+DA:228,39
+DA:229,39
+DA:232,39
+DA:233,38
+DA:234,38
+DA:235,38
+DA:236,39
+DA:237,39
+DA:238,39
+DA:239,39
+DA:240,39
+DA:243,39
+DA:244,39
+DA:245,39
+DA:246,39
+DA:247,331
+DA:248,107
+DA:249,107
+DA:250,107
+DA:251,107
+DA:252,107
+DA:253,107
+DA:259,39
+DA:260,39
+BRDA:232,298,0,38
+BRDA:232,298,1,39
+BRDA:237,336,0,39
+BRDA:239,353,0,39
+BRDA:239,353,1,0
+BRDA:239,380,0,39
+BRDA:239,380,1,0
+BRDA:237,336,1,39
+BRDA:247,761,1,107
+BRDA:247,761,0,39
+LF:344
+LH:322
+BRF:78
+BRH:74
+FNF:23
+FNH:23
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/StockApp/EndpointHandler/EndpointHandler.cs
+FN:5,System.Void StockApp.EndpointHandler.EndpointHandler::.ctor(System.String)
+FNDA:40,System.Void StockApp.EndpointHandler.EndpointHandler::.ctor(System.String)
+DA:6,40
+DA:7,40
+DA:8,40
+DA:9,40
+LF:4
+LH:4
+BRF:0
+BRH:0
+FNF:1
+FNH:1
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/StockApp/EndpointHandler/ValueHistory.cs
+FN:4,System.Void StockApp.EndpointHandler.ValueHistory::.ctor(System.String)
+FNDA:40,System.Void StockApp.EndpointHandler.ValueHistory::.ctor(System.String)
+DA:5,40
+DA:6,40
+DA:8,40
+FN:10,System.Void StockApp.EndpointHandler.ValueHistory/<Get>d__1::MoveNext()
+FNDA:40,System.Void StockApp.EndpointHandler.ValueHistory/<Get>d__1::MoveNext()
+DA:11,40
+DA:12,40
+DA:13,1
+DA:14,1
+DA:16,39
+DA:17,39
+DA:18,39
+BRDA:12,37,0,1
+BRDA:12,37,1,39
+LF:10
+LH:10
+BRF:2
+BRH:2
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Program.cs
+FN:9,System.Void BackendService.Program::Main()
+FNDA:0,System.Void BackendService.Program::Main()
+DA:10,0
+DA:11,0
+DA:12,0
+LF:3
+LH:0
+BRF:0
+BRH:0
+FNF:1
+FNH:0
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/CashBalance.cs
+FN:4,System.DateOnly Data.CashBalance::get_date()
+FNDA:8051,System.DateOnly Data.CashBalance::get_date()
+DA:5,8051
+FN:5,StockApp.Money Data.CashBalance::get_balance()
+FNDA:14843,StockApp.Money Data.CashBalance::get_balance()
+DA:6,14843
+FN:7,System.Void Data.CashBalance::.ctor(System.DateOnly,StockApp.Money)
+FNDA:7563,System.Void Data.CashBalance::.ctor(System.DateOnly,StockApp.Money)
+DA:8,7563
+DA:9,7563
+DA:10,7563
+DA:11,7563
+DA:12,7563
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/CurrencyHistory.cs
+FN:15,System.String Data.CurrencyHistory::get_currency()
+FNDA:704,System.String Data.CurrencyHistory::get_currency()
+DA:16,704
+FN:16,System.DateOnly Data.CurrencyHistory::get_startDate()
+FNDA:1822,System.DateOnly Data.CurrencyHistory::get_startDate()
+DA:17,1822
+FN:17,System.DateOnly Data.CurrencyHistory::get_endDate()
+FNDA:1228,System.DateOnly Data.CurrencyHistory::get_endDate()
+DA:18,1228
+FN:18,System.String Data.CurrencyHistory::get_interval()
+FNDA:634,System.String Data.CurrencyHistory::get_interval()
+DA:19,634
+FN:19,System.Collections.Generic.List`1<Data.DatePriceOHLC> Data.CurrencyHistory::get_history()
+FNDA:1226687,System.Collections.Generic.List`1<Data.DatePriceOHLC> Data.CurrencyHistory::get_history()
+DA:20,1226687
+FN:6,System.Void Data.CurrencyHistory::.ctor(System.String,System.DateOnly,System.DateOnly,System.String)
+FNDA:634,System.Void Data.CurrencyHistory::.ctor(System.String,System.DateOnly,System.DateOnly,System.String)
+DA:7,634
+DA:8,634
+DA:9,634
+DA:10,634
+DA:11,634
+DA:12,634
+DA:13,634
+DA:14,634
+LF:13
+LH:13
+BRF:0
+BRH:0
+FNF:6
+FNH:6
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/DatePriceOHLC.cs
+FN:16,System.DateOnly Data.DatePriceOHLC::get_date()
+FNDA:48722645,System.DateOnly Data.DatePriceOHLC::get_date()
+DA:17,48722645
+FN:17,StockApp.Money Data.DatePriceOHLC::get_openPrice()
+FNDA:769955,StockApp.Money Data.DatePriceOHLC::get_openPrice()
+DA:18,769955
+FN:18,StockApp.Money Data.DatePriceOHLC::get_highPrice()
+FNDA:687163,StockApp.Money Data.DatePriceOHLC::get_highPrice()
+DA:19,687163
+FN:19,StockApp.Money Data.DatePriceOHLC::get_lowPrice()
+FNDA:665451,StockApp.Money Data.DatePriceOHLC::get_lowPrice()
+DA:20,665451
+FN:20,StockApp.Money Data.DatePriceOHLC::get_closePrice()
+FNDA:669073,StockApp.Money Data.DatePriceOHLC::get_closePrice()
+DA:21,669073
+FN:24,System.Collections.Generic.List`1<Data.DatePriceOHLC> Data.DatePriceOHLC::AddLists(System.Collections.Generic.List`1<Data.DatePriceOHLC>,System.Collections.Generic.List`1<Data.DatePriceOHLC>)
+FNDA:223,System.Collections.Generic.List`1<Data.DatePriceOHLC> Data.DatePriceOHLC::AddLists(System.Collections.Generic.List`1<Data.DatePriceOHLC>,System.Collections.Generic.List`1<Data.DatePriceOHLC>)
+DA:25,223
+DA:26,223
+DA:27,146
+DA:28,146
+DA:30,77
+DA:31,3
+DA:32,3
+DA:35,74
+DA:36,74
+DA:38,74
+DA:40,52400
+DA:41,26126
+DA:42,26126
+DA:43,26126
+DA:44,26126
+DA:45,26126
+DA:47,4778602
+DA:48,26126
+DA:49,4778602
+DA:50,4778602
+DA:51,4778602
+DA:52,4778602
+DA:53,26126
+DA:54,4778602
+DA:55,26126
+DA:56,4778602
+DA:57,4778602
+DA:58,4778602
+DA:59,4778602
+DA:60,26126
+DA:62,26126
+DA:63,26126
+DA:66,74
+DA:67,223
+BRDA:26,12,0,146
+BRDA:26,12,1,77
+BRDA:30,36,0,3
+BRDA:30,36,1,74
+BRDA:35,76,0,74
+BRDA:35,76,1,0
+BRDA:36,148,0,74
+BRDA:36,148,1,0
+BRDA:40,843,1,26126
+BRDA:47,357,0,26126
+BRDA:47,357,1,26126
+BRDA:54,579,0,26126
+BRDA:54,579,1,26126
+BRDA:40,843,0,74
+FN:7,System.Void Data.DatePriceOHLC::.ctor(System.DateOnly,StockApp.Money,StockApp.Money,StockApp.Money,StockApp.Money)
+FNDA:373551,System.Void Data.DatePriceOHLC::.ctor(System.DateOnly,StockApp.Money,StockApp.Money,StockApp.Money,StockApp.Money)
+DA:8,373551
+DA:9,373551
+DA:10,373551
+DA:11,373551
+DA:12,373551
+DA:13,373551
+DA:14,373551
+DA:15,373551
+LF:47
+LH:47
+BRF:14
+BRH:12
+FNF:7
+FNH:7
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Dividend.cs
+FN:10,System.DateOnly Data.Dividend::get_date()
+FNDA:33544,System.DateOnly Data.Dividend::get_date()
+DA:11,33544
+FN:11,StockApp.Money Data.Dividend::get_payout()
+FNDA:2317,StockApp.Money Data.Dividend::get_payout()
+DA:12,2317
+FN:4,System.Void Data.Dividend::.ctor(System.DateOnly,StockApp.Money)
+FNDA:919,System.Void Data.Dividend::.ctor(System.DateOnly,StockApp.Money)
+DA:5,919
+DA:6,919
+DA:7,919
+DA:8,919
+DA:9,919
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Position.cs
+FN:4,System.String Data.Position::get_ticker()
+FNDA:120,System.String Data.Position::get_ticker()
+DA:5,120
+FN:5,System.String Data.Position::get_exchange()
+FNDA:120,System.String Data.Position::get_exchange()
+DA:6,120
+FN:6,System.Collections.Generic.List`1<Data.DatePriceOHLC> Data.Position::get_valueHistory()
+FNDA:372,System.Collections.Generic.List`1<Data.DatePriceOHLC> Data.Position::get_valueHistory()
+DA:7,372
+FN:7,System.Collections.Generic.List`1<Data.Dividend> Data.Position::get_dividends()
+FNDA:256,System.Collections.Generic.List`1<Data.Dividend> Data.Position::get_dividends()
+DA:8,256
+FN:9,System.Void Data.Position::.ctor(System.String,System.String,System.Collections.Generic.List`1<Data.DatePriceOHLC>,System.Collections.Generic.List`1<Data.Dividend>)
+FNDA:116,System.Void Data.Position::.ctor(System.String,System.String,System.Collections.Generic.List`1<Data.DatePriceOHLC>,System.Collections.Generic.List`1<Data.Dividend>)
+DA:10,116
+DA:11,116
+DA:12,116
+DA:13,116
+DA:14,116
+DA:15,116
+DA:16,116
+LF:11
+LH:11
+BRF:0
+BRH:0
+FNF:5
+FNH:5
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/StockHistory.cs
+FN:26,System.String Data.StockHistory::get_ticker()
+FNDA:1051,System.String Data.StockHistory::get_ticker()
+DA:27,1051
+FN:27,System.String Data.StockHistory::get_exchange()
+FNDA:1051,System.String Data.StockHistory::get_exchange()
+DA:28,1051
+FN:28,System.Nullable`1<System.DateOnly> Data.StockHistory::get_startDate()
+FNDA:430,System.Nullable`1<System.DateOnly> Data.StockHistory::get_startDate()
+DA:29,430
+FN:29,System.Nullable`1<System.DateOnly> Data.StockHistory::get_endDate()
+FNDA:430,System.Nullable`1<System.DateOnly> Data.StockHistory::get_endDate()
+DA:30,430
+FN:30,System.String Data.StockHistory::get_interval()
+FNDA:536,System.String Data.StockHistory::get_interval()
+DA:31,536
+FN:31,System.Collections.Generic.List`1<Data.DatePriceOHLC> Data.StockHistory::get_history()
+FNDA:186611,System.Collections.Generic.List`1<Data.DatePriceOHLC> Data.StockHistory::get_history()
+DA:32,186611
+FN:32,System.Collections.Generic.List`1<Data.Dividend> Data.StockHistory::get_dividends()
+FNDA:75082,System.Collections.Generic.List`1<Data.Dividend> Data.StockHistory::get_dividends()
+DA:33,75082
+FN:6,System.Void Data.StockHistory::.ctor(System.String,System.String,System.DateOnly,System.DateOnly,System.String)
+FNDA:86,System.Void Data.StockHistory::.ctor(System.String,System.String,System.DateOnly,System.DateOnly,System.String)
+DA:7,86
+DA:8,86
+DA:9,86
+DA:10,86
+DA:11,86
+DA:12,86
+DA:13,86
+DA:14,86
+DA:15,86
+DA:16,86
+FN:17,System.Void Data.StockHistory::.ctor(System.String,System.String,System.String)
+FNDA:446,System.Void Data.StockHistory::.ctor(System.String,System.String,System.String)
+DA:18,446
+DA:19,446
+DA:20,446
+DA:21,446
+DA:22,446
+DA:23,446
+DA:24,446
+DA:25,446
+LF:25
+LH:25
+BRF:0
+BRH:0
+FNF:9
+FNH:9
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/StockProfile.cs
+FN:4,System.String Data.StockProfile::get_ticker()
+FNDA:655,System.String Data.StockProfile::get_ticker()
+DA:5,655
+FN:5,System.String Data.StockProfile::get_exchange()
+FNDA:655,System.String Data.StockProfile::get_exchange()
+DA:6,655
+FN:6,System.String Data.StockProfile::get_displayName()
+FNDA:311,System.String Data.StockProfile::get_displayName()
+DA:7,311
+FN:7,System.String Data.StockProfile::get_shortName()
+FNDA:310,System.String Data.StockProfile::get_shortName()
+DA:8,310
+FN:8,System.String Data.StockProfile::get_longName()
+FNDA:310,System.String Data.StockProfile::get_longName()
+DA:9,310
+FN:9,System.String Data.StockProfile::get_industry()
+FNDA:291,System.String Data.StockProfile::get_industry()
+DA:10,291
+FN:10,System.String Data.StockProfile::get_sector()
+FNDA:291,System.String Data.StockProfile::get_sector()
+DA:11,291
+FN:11,System.String Data.StockProfile::get_website()
+FNDA:291,System.String Data.StockProfile::get_website()
+DA:12,291
+FN:12,System.String Data.StockProfile::get_country()
+FNDA:310,System.String Data.StockProfile::get_country()
+DA:13,310
+FN:13,System.String Data.StockProfile::get_address()
+FNDA:291,System.String Data.StockProfile::get_address()
+DA:14,291
+FN:14,System.String Data.StockProfile::get_city()
+FNDA:291,System.String Data.StockProfile::get_city()
+DA:15,291
+FN:15,System.String Data.StockProfile::get_state()
+FNDA:291,System.String Data.StockProfile::get_state()
+DA:16,291
+FN:16,System.String Data.StockProfile::get_zip()
+FNDA:291,System.String Data.StockProfile::get_zip()
+DA:17,291
+FN:17,System.String Data.StockProfile::get_financialCurrency()
+FNDA:291,System.String Data.StockProfile::get_financialCurrency()
+DA:18,291
+FN:18,System.Nullable`1<System.Decimal> Data.StockProfile::get_sharesOutstanding()
+FNDA:291,System.Nullable`1<System.Decimal> Data.StockProfile::get_sharesOutstanding()
+DA:19,291
+FN:19,System.Nullable`1<System.Decimal> Data.StockProfile::get_trailingAnnualDividendRate()
+FNDA:0,System.Nullable`1<System.Decimal> Data.StockProfile::get_trailingAnnualDividendRate()
+DA:20,0
+FN:20,System.Nullable`1<System.Decimal> Data.StockProfile::get_trailingAnnualDividendYield()
+FNDA:0,System.Nullable`1<System.Decimal> Data.StockProfile::get_trailingAnnualDividendYield()
+DA:21,0
+FN:23,System.Void Data.StockProfile::.ctor()
+FNDA:912,System.Void Data.StockProfile::.ctor()
+DA:24,912
+FN:24,System.Void Data.StockProfile::.ctor(System.String,System.String,System.String,System.String,System.String,System.String)
+FNDA:19,System.Void Data.StockProfile::.ctor(System.String,System.String,System.String,System.String,System.String,System.String)
+DA:25,19
+DA:26,19
+DA:27,19
+DA:28,19
+DA:29,19
+DA:30,19
+DA:31,19
+DA:32,19
+DA:33,19
+LF:27
+LH:25
+BRF:0
+BRH:0
+FNF:19
+FNH:17
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Transaction.cs
+FN:16,System.String Data.Transaction::get_type()
+FNDA:3179,System.String Data.Transaction::get_type()
+DA:17,3179
+FN:17,System.Int32 Data.Transaction::get_id()
+FNDA:3006,System.Int32 Data.Transaction::get_id()
+DA:18,3006
+FN:18,System.String Data.Transaction::get_portfolio()
+FNDA:3521,System.String Data.Transaction::get_portfolio()
+DA:19,3521
+FN:19,System.Int32 Data.Transaction::get_timestamp()
+FNDA:7571,System.Int32 Data.Transaction::get_timestamp()
+DA:20,7571
+FN:20,System.String Data.Transaction::get_description()
+FNDA:3027,System.String Data.Transaction::get_description()
+DA:21,3027
+FN:21,StockApp.Money Data.Transaction::get_value()
+FNDA:3088,StockApp.Money Data.Transaction::get_value()
+DA:22,3088
+FN:22,StockApp.Money Data.Transaction::get_balance()
+FNDA:3132,StockApp.Money Data.Transaction::get_balance()
+DA:23,3132
+FN:23,StockApp.Money Data.Transaction::get_combinedBalance()
+FNDA:3371,StockApp.Money Data.Transaction::get_combinedBalance()
+DA:24,3371
+FN:4,System.Void Data.Transaction::.ctor(System.String,System.Int32,System.String,System.Int32,System.String,StockApp.Money,StockApp.Money,StockApp.Money)
+FNDA:3006,System.Void Data.Transaction::.ctor(System.String,System.Int32,System.String,System.Int32,System.String,StockApp.Money,StockApp.Money,StockApp.Money)
+DA:5,3006
+DA:6,3006
+DA:7,3006
+DA:8,3006
+DA:9,3006
+DA:10,3006
+DA:11,3006
+DA:12,3006
+DA:13,3006
+DA:14,3006
+DA:15,3006
+LF:19
+LH:19
+BRF:0
+BRH:0
+FNF:9
+FNH:9
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/UserAssetsValueHistory.cs
+FN:4,System.Collections.Generic.List`1<Data.DatePriceOHLC> Data.UserAssetsValueHistory::get_valueHistory()
+FNDA:103,System.Collections.Generic.List`1<Data.DatePriceOHLC> Data.UserAssetsValueHistory::get_valueHistory()
+DA:5,103
+FN:5,System.Collections.Generic.List`1<Data.Dividend> Data.UserAssetsValueHistory::get_dividendHistory()
+FNDA:39,System.Collections.Generic.List`1<Data.Dividend> Data.UserAssetsValueHistory::get_dividendHistory()
+DA:6,39
+FN:6,System.Collections.Generic.List`1<StockApp.Portfolio> Data.UserAssetsValueHistory::get_portfolios()
+FNDA:195,System.Collections.Generic.List`1<StockApp.Portfolio> Data.UserAssetsValueHistory::get_portfolios()
+DA:7,195
+FN:7,System.Collections.Generic.List`1<Data.CashBalance> Data.UserAssetsValueHistory::get_cashBalanceHistory()
+FNDA:39,System.Collections.Generic.List`1<Data.CashBalance> Data.UserAssetsValueHistory::get_cashBalanceHistory()
+DA:8,39
+FN:9,System.Void Data.UserAssetsValueHistory::.ctor(System.Collections.Generic.List`1<Data.DatePriceOHLC>,System.Collections.Generic.List`1<StockApp.Portfolio>,System.Collections.Generic.List`1<Data.Dividend>,System.Collections.Generic.List`1<Data.CashBalance>)
+FNDA:39,System.Void Data.UserAssetsValueHistory::.ctor(System.Collections.Generic.List`1<Data.DatePriceOHLC>,System.Collections.Generic.List`1<StockApp.Portfolio>,System.Collections.Generic.List`1<Data.Dividend>,System.Collections.Generic.List`1<Data.CashBalance>)
+DA:10,39
+DA:11,39
+DA:12,39
+DA:13,39
+DA:14,39
+DA:15,39
+DA:16,39
+LF:11
+LH:11
+BRF:0
+BRH:0
+FNF:5
+FNH:5
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Fetcher/CurrencyFetcher.cs
+FN:49,Data.CurrencyHistory Data.Fetcher.CurrencyFetcher::InsertMissingValues(Data.CurrencyHistory)
+FNDA:594,Data.CurrencyHistory Data.Fetcher.CurrencyFetcher::InsertMissingValues(Data.CurrencyHistory)
+DA:50,594
+DA:51,594
+DA:52,0
+DA:53,0
+DA:55,594
+DA:56,0
+DA:57,0
+DA:58,0
+DA:59,0
+DA:60,0
+DA:61,0
+DA:62,0
+DA:63,0
+DA:64,0
+DA:65,0
+DA:66,448342
+DA:67,223577
+DA:68,223577
+DA:69,63596
+DA:70,63596
+DA:71,63596
+DA:72,63596
+DA:73,63596
+DA:74,63596
+DA:75,63596
+DA:76,63596
+DA:77,63596
+DA:78,63596
+DA:79,223577
+DA:80,594
+DA:81,594
+BRDA:51,17,0,0
+BRDA:51,17,1,594
+BRDA:55,56,0,0
+BRDA:55,56,1,594
+BRDA:66,373,1,223577
+BRDA:68,216,0,63596
+BRDA:68,216,1,223577
+BRDA:66,373,0,594
+FN:83,System.Void Data.Fetcher.CurrencyFetcher::SaveCurrencyHistory(Data.CurrencyHistory,System.Boolean,System.Boolean)
+FNDA:8,System.Void Data.Fetcher.CurrencyFetcher::SaveCurrencyHistory(Data.CurrencyHistory,System.Boolean,System.Boolean)
+DA:84,8
+DA:85,8
+DA:86,8
+DA:87,0
+DA:88,8
+DA:89,8
+DA:90,8
+DA:91,8
+DA:92,8
+DA:94,8
+DA:95,8
+DA:97,8
+DA:98,0
+DA:99,0
+DA:100,0
+DA:101,0
+DA:102,0
+DA:103,0
+DA:105,8
+BRDA:86,34,1,8
+BRDA:86,34,0,8
+FN:11,System.Void Data.Fetcher.CurrencyFetcher/<GetHistory>d__0::MoveNext()
+FNDA:594,System.Void Data.Fetcher.CurrencyFetcher/<GetHistory>d__0::MoveNext()
+DA:12,594
+DA:13,594
+DA:14,594
+DA:15,594
+DA:16,594
+DA:17,594
+DA:18,594
+DA:22,594
+DA:23,594
+DA:24,594
+DA:25,594
+DA:26,0
+DA:27,0
+DA:28,0
+DA:29,0
+DA:30,0
+DA:33,594
+DA:34,7
+DA:35,7
+DA:37,7
+DA:38,7
+DA:39,594
+DA:40,1
+DA:41,1
+DA:42,1
+DA:43,1
+DA:44,594
+DA:45,594
+DA:46,594
+DA:47,594
+BRDA:17,131,0,594
+BRDA:33,472,0,7
+BRDA:33,472,1,594
+BRDA:39,686,0,1
+BRDA:39,686,1,594
+BRDA:17,131,1,594
+LF:80
+LH:56
+BRF:16
+BRH:14
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Fetcher/StockFetcher.cs
+FN:104,System.Void Data.Fetcher.StockFetcher::SaveProfile(Data.StockProfile)
+FNDA:0,System.Void Data.Fetcher.StockFetcher::SaveProfile(Data.StockProfile)
+DA:105,0
+DA:106,0
+DA:107,0
+DA:108,0
+DA:109,0
+DA:110,0
+DA:111,0
+DA:112,0
+DA:113,0
+DA:114,0
+DA:115,0
+DA:116,0
+DA:117,0
+DA:118,0
+DA:119,0
+DA:120,0
+DA:121,0
+DA:122,0
+DA:123,0
+DA:124,0
+DA:125,0
+DA:126,0
+DA:127,0
+DA:129,0
+DA:130,0
+DA:131,0
+DA:132,0
+DA:133,0
+DA:134,0
+DA:135,0
+DA:139,0
+FN:141,System.String Data.Fetcher.StockFetcher::GenerateTags(Data.StockProfile)
+FNDA:1,System.String Data.Fetcher.StockFetcher::GenerateTags(Data.StockProfile)
+DA:142,1
+DA:143,1
+DA:144,1
+DA:145,1
+DA:146,1
+DA:147,1
+DA:148,1
+FN:151,System.Void Data.Fetcher.StockFetcher::SaveStockHistory(Data.StockHistory,System.Boolean,System.Boolean)
+FNDA:95,System.Void Data.Fetcher.StockFetcher::SaveStockHistory(Data.StockHistory,System.Boolean,System.Boolean)
+DA:152,95
+DA:153,95
+DA:154,95
+DA:155,94
+DA:156,1
+DA:157,1
+DA:158,1
+DA:159,1
+DA:161,1
+DA:162,1
+DA:163,1
+DA:164,1
+DA:166,1
+DA:167,1
+DA:168,1
+DA:169,0
+DA:170,0
+DA:171,0
+DA:172,0
+DA:176,1
+DA:177,1
+DA:178,1
+DA:179,1
+DA:180,1
+DA:181,1
+DA:182,1
+DA:184,1
+DA:185,1
+DA:186,1
+DA:187,0
+DA:188,0
+DA:189,0
+DA:190,0
+DA:192,1
+DA:193,1
+DA:194,1
+DA:195,1
+DA:196,1
+DA:197,1
+DA:198,1
+DA:199,1
+DA:201,1
+DA:202,1
+DA:203,1
+DA:204,0
+DA:205,0
+DA:206,0
+DA:207,0
+DA:210,1
+DA:211,95
+BRDA:154,36,1,1
+BRDA:162,86,1,1
+BRDA:162,86,0,1
+BRDA:176,337,0,1
+BRDA:176,337,1,1
+BRDA:193,540,0,1
+BRDA:154,36,0,95
+BRDA:193,540,1,95
+FN:213,System.Void Data.Fetcher.StockFetcher::SaveDividends(System.Collections.Generic.List`1<Data.Dividend>,System.String,System.String)
+FNDA:95,System.Void Data.Fetcher.StockFetcher::SaveDividends(System.Collections.Generic.List`1<Data.Dividend>,System.String,System.String)
+DA:214,95
+DA:215,95
+DA:216,94
+DA:217,1
+DA:218,1
+DA:219,1
+DA:220,1
+DA:222,1
+DA:223,1
+DA:224,1
+DA:225,1
+DA:227,1
+DA:228,1
+DA:229,1
+DA:230,0
+DA:231,0
+DA:232,0
+DA:233,0
+DA:235,95
+BRDA:215,14,1,1
+BRDA:223,59,1,1
+BRDA:223,59,0,1
+BRDA:215,14,0,95
+FN:9,System.Void Data.Fetcher.StockFetcher/<GetHistory>d__0::MoveNext()
+FNDA:302,System.Void Data.Fetcher.StockFetcher/<GetHistory>d__0::MoveNext()
+DA:10,302
+DA:11,302
+DA:12,3
+DA:13,3
+DA:15,299
+DA:16,2
+DA:17,2
+DA:19,297
+DA:20,2
+DA:21,2
+DA:23,295
+DA:24,295
+DA:25,295
+DA:26,295
+DA:27,295
+DA:29,295
+DA:30,291
+DA:34,291
+DA:35,291
+DA:36,290
+DA:37,290
+DA:38,1
+DA:39,1
+DA:40,1
+DA:41,1
+DA:42,1
+DA:43,1
+DA:44,1
+DA:46,290
+DA:47,0
+DA:48,0
+DA:49,0
+DA:50,0
+DA:51,0
+DA:52,0
+DA:53,290
+DA:54,94
+DA:55,94
+DA:56,94
+DA:57,94
+DA:58,94
+DA:59,94
+DA:60,290
+DA:61,294
+DA:62,290
+DA:63,290
+DA:64,290
+DA:65,290
+DA:66,291
+BRDA:11,112,0,301
+BRDA:11,120,0,300
+BRDA:11,128,0,299
+BRDA:11,112,1,3
+BRDA:11,120,1,3
+BRDA:11,128,1,3
+BRDA:11,144,0,3
+BRDA:11,144,1,299
+BRDA:15,179,0,2
+BRDA:15,179,1,297
+BRDA:19,230,0,2
+BRDA:19,230,1,295
+BRDA:29,353,0,291
+BRDA:46,922,0,0
+BRDA:46,922,1,290
+BRDA:53,1379,0,94
+BRDA:53,1379,1,290
+BRDA:29,353,1,294
+FN:68,System.Void Data.Fetcher.StockFetcher/<GetProfile>d__1::MoveNext()
+FNDA:248,System.Void Data.Fetcher.StockFetcher/<GetProfile>d__1::MoveNext()
+DA:69,248
+DA:70,248
+DA:71,2
+DA:72,2
+DA:75,246
+DA:77,246
+DA:78,246
+DA:79,237
+DA:80,237
+DA:82,9
+DA:83,9
+DA:85,9
+DA:86,9
+DA:87,0
+DA:88,0
+DA:89,0
+DA:91,237
+BRDA:70,32,0,247
+BRDA:70,32,1,1
+BRDA:70,48,0,2
+BRDA:70,48,1,246
+FN:93,System.Void Data.Fetcher.StockFetcher/<Search>d__2::MoveNext()
+FNDA:6,System.Void Data.Fetcher.StockFetcher/<Search>d__2::MoveNext()
+DA:94,6
+DA:95,6
+DA:96,2
+DA:97,2
+DA:99,4
+DA:100,4
+BRDA:95,21,0,5
+BRDA:95,21,1,1
+BRDA:95,44,0,2
+BRDA:95,44,1,4
+LF:179
+LH:123
+BRF:38
+BRH:37
+FNF:7
+FNH:6
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Fetcher/YahooFinanceFetcher/CurrencyFetcher.cs
+FN:11,System.Void Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher/<GetHistory>d__0::MoveNext()
+FNDA:40,System.Void Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher/<GetHistory>d__0::MoveNext()
+DA:12,40
+DA:13,40
+DA:14,40
+DA:16,40
+DA:17,40
+DA:18,40
+DA:19,1
+DA:20,1
+DA:21,1
+DA:22,1
+DA:23,40
+DA:24,40
+DA:25,40
+DA:26,40
+DA:28,40
+DA:29,40
+DA:30,1
+DA:31,1
+DA:33,39
+DA:35,39
+DA:36,1
+DA:37,1
+DA:38,524
+DA:39,261
+DA:41,261
+DA:42,261
+DA:43,261
+DA:44,0
+DA:45,0
+DA:46,0
+DA:47,0
+DA:48,0
+DA:49,0
+DA:50,0
+DA:51,0
+DA:53,261
+DA:54,261
+DA:55,261
+DA:56,261
+DA:57,261
+DA:58,261
+DA:59,261
+DA:60,261
+DA:61,261
+DA:62,0
+DA:63,0
+DA:64,0
+DA:65,0
+DA:67,261
+DA:68,1
+DA:70,38
+DA:71,38
+DA:72,17072
+DA:73,8498
+DA:75,8498
+DA:76,8498
+DA:77,8498
+DA:78,0
+DA:79,0
+DA:80,0
+DA:81,0
+DA:83,8498
+DA:84,8498
+DA:85,8498
+DA:86,8498
+DA:87,0
+DA:88,0
+DA:89,0
+DA:90,0
+DA:93,8498
+DA:94,38
+DA:96,39
+DA:97,40
+BRDA:18,104,0,1
+BRDA:18,104,1,40
+BRDA:29,538,0,1
+BRDA:29,538,1,39
+BRDA:35,592,0,1
+BRDA:38,1349,1,261
+BRDA:43,697,0,0
+BRDA:43,697,1,261
+BRDA:38,1349,0,1
+BRDA:35,592,1,38
+BRDA:72,1814,1,8498
+BRDA:77,1461,0,0
+BRDA:77,1461,1,8498
+BRDA:72,1814,0,38
+LF:73
+LH:53
+BRF:14
+BRH:12
+FNF:1
+FNH:1
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Fetcher/YahooFinanceFetcher/StockFetcher.cs
+FN:221,System.Void Data.Fetcher.YahooFinanceFetcher.StockFetcher/<GetDividends>d__3::MoveNext()
+FNDA:97,System.Void Data.Fetcher.YahooFinanceFetcher.StockFetcher/<GetDividends>d__3::MoveNext()
+DA:222,97
+DA:223,97
+DA:224,97
+DA:226,97
+DA:227,97
+DA:228,97
+DA:229,97
+DA:232,97
+DA:233,0
+DA:234,0
+DA:236,97
+DA:238,97
+DA:239,97
+DA:240,97
+DA:242,97
+DA:243,97
+DA:244,97
+DA:245,97
+DA:246,97
+DA:247,0
+DA:248,0
+DA:250,97
+DA:251,97
+DA:252,97
+DA:253,95
+DA:254,95
+DA:256,2
+DA:257,2
+DA:258,2
+DA:259,32
+DA:260,13
+DA:262,13
+DA:263,13
+DA:264,13
+DA:265,13
+DA:266,13
+DA:267,13
+DA:268,13
+DA:269,13
+DA:270,13
+DA:271,13
+DA:272,13
+DA:273,13
+DA:274,0
+DA:275,0
+DA:276,0
+DA:277,0
+DA:280,13
+DA:281,2
+DA:282,2
+DA:283,97
+BRDA:232,152,0,0
+BRDA:232,152,1,97
+BRDA:246,460,0,0
+BRDA:246,460,1,97
+BRDA:252,699,0,95
+BRDA:252,699,1,2
+BRDA:259,1051,1,13
+BRDA:265,862,0,13
+BRDA:265,881,0,13
+BRDA:265,862,1,0
+BRDA:265,881,1,0
+BRDA:265,908,0,13
+BRDA:265,908,1,13
+BRDA:259,1051,0,2
+FN:9,System.Void Data.Fetcher.YahooFinanceFetcher.StockFetcher/<GetHistory>d__0::MoveNext()
+FNDA:183,System.Void Data.Fetcher.YahooFinanceFetcher.StockFetcher/<GetHistory>d__0::MoveNext()
+DA:10,183
+DA:11,183
+DA:13,183
+DA:14,183
+DA:15,183
+DA:16,183
+DA:19,183
+DA:20,1
+DA:21,1
+DA:23,182
+DA:25,182
+DA:26,182
+DA:27,182
+DA:29,182
+DA:30,182
+DA:31,182
+DA:32,182
+DA:34,182
+DA:35,95
+DA:36,95
+DA:39,87
+DA:40,87
+DA:41,87
+DA:42,1
+DA:43,1
+DA:45,86
+DA:46,86
+DA:47,86
+DA:48,86
+DA:50,44070
+DA:51,21906
+DA:52,21906
+DA:53,21906
+DA:54,21906
+DA:55,21648
+DA:57,21648
+DA:58,21648
+DA:59,21648
+DA:60,21648
+DA:61,21648
+DA:62,21648
+DA:63,21648
+DA:64,21648
+DA:65,21648
+DA:66,21648
+DA:67,0
+DA:68,0
+DA:69,0
+DA:70,0
+DA:73,21648
+DA:74,21906
+DA:75,86
+DA:76,43554
+DA:77,21648
+DA:79,21648
+DA:80,21648
+DA:81,3
+DA:82,3
+DA:83,0
+DA:84,0
+DA:85,0
+DA:88,3
+DA:89,3
+DA:90,0
+DA:91,0
+DA:92,0
+DA:93,0
+DA:94,0
+DA:95,0
+DA:96,3
+DA:97,3
+DA:98,3
+DA:99,3
+DA:100,3
+DA:101,3
+DA:102,3
+DA:103,3
+DA:104,3
+DA:105,3
+DA:106,3
+DA:107,3
+DA:108,21648
+DA:109,0
+DA:110,0
+DA:111,0
+DA:112,0
+DA:114,21648
+DA:115,86
+DA:116,182
+BRDA:19,229,0,1
+BRDA:19,229,1,182
+BRDA:34,587,0,95
+BRDA:34,587,1,87
+BRDA:41,808,0,1
+BRDA:41,808,1,86
+BRDA:50,1296,1,21906
+BRDA:54,1026,0,21906
+BRDA:54,1045,0,21906
+BRDA:54,1026,1,0
+BRDA:54,1045,1,0
+BRDA:54,1072,0,21648
+BRDA:54,1072,1,21906
+BRDA:50,1296,0,86
+BRDA:76,2228,1,21648
+BRDA:80,1536,0,3
+BRDA:82,1565,0,0
+BRDA:82,1565,1,3
+BRDA:89,1633,0,0
+BRDA:89,1633,1,3
+BRDA:96,1881,0,3
+BRDA:96,1881,1,3
+BRDA:80,1536,1,21648
+BRDA:76,2228,0,86
+FN:118,System.Void Data.Fetcher.YahooFinanceFetcher.StockFetcher/<GetProfile>d__1::MoveNext()
+FNDA:9,System.Void Data.Fetcher.YahooFinanceFetcher.StockFetcher/<GetProfile>d__1::MoveNext()
+DA:119,9
+DA:120,9
+DA:122,4
+DA:123,4
+DA:125,4
+DA:126,4
+DA:127,4
+DA:128,4
+DA:129,0
+DA:130,0
+DA:134,4
+DA:135,4
+DA:136,4
+DA:137,4
+DA:138,4
+DA:139,0
+DA:140,0
+DA:144,4
+DA:145,4
+DA:147,4
+DA:148,4
+DA:149,4
+DA:150,4
+DA:151,4
+DA:152,0
+DA:153,4
+DA:154,4
+DA:155,4
+DA:156,4
+DA:158,0
+DA:159,0
+DA:160,0
+DA:161,0
+DA:162,0
+DA:163,0
+DA:164,0
+DA:165,0
+DA:166,0
+DA:167,0
+DA:168,0
+DA:169,0
+DA:170,0
+DA:171,0
+DA:173,0
+DA:174,0
+BRDA:128,398,1,1
+BRDA:128,398,0,4
+BRDA:128,466,1,1
+BRDA:128,466,0,4
+BRDA:128,544,1,1
+BRDA:128,544,0,4
+BRDA:128,640,0,0
+BRDA:128,640,1,4
+BRDA:137,1006,1,1
+BRDA:137,1006,0,4
+BRDA:138,1115,1,1
+BRDA:138,1115,0,4
+BRDA:138,1183,1,1
+BRDA:138,1183,0,4
+BRDA:138,1261,1,1
+BRDA:138,1261,0,4
+BRDA:138,1357,0,0
+BRDA:138,1357,1,4
+BRDA:148,1472,1,1
+BRDA:148,1472,0,4
+BRDA:148,1532,1,1
+BRDA:148,1532,0,4
+BRDA:148,1603,1,1
+BRDA:148,1603,0,4
+BRDA:148,1679,1,1
+BRDA:148,1679,0,4
+BRDA:148,1751,1,1
+BRDA:148,1751,0,4
+BRDA:148,1845,0,0
+BRDA:148,1856,1,0
+BRDA:148,1856,0,0
+BRDA:148,1927,1,0
+BRDA:148,1927,0,0
+BRDA:148,2003,1,0
+BRDA:148,2003,0,0
+BRDA:148,2075,1,0
+BRDA:148,2075,0,0
+BRDA:148,2169,0,0
+BRDA:148,2180,1,0
+BRDA:148,2180,0,0
+BRDA:148,2251,1,0
+BRDA:148,2251,0,0
+BRDA:148,2327,1,0
+BRDA:148,2327,0,0
+BRDA:148,2399,1,0
+BRDA:148,2399,0,0
+BRDA:148,2493,0,0
+BRDA:148,1845,1,0
+BRDA:148,2169,1,0
+BRDA:148,2493,1,0
+BRDA:158,2624,1,0
+BRDA:158,2624,0,0
+BRDA:158,2684,1,0
+BRDA:158,2684,0,0
+BRDA:158,2755,1,0
+BRDA:158,2755,0,0
+BRDA:158,2831,1,0
+BRDA:158,2831,0,0
+BRDA:158,2903,1,0
+BRDA:158,2903,0,0
+BRDA:158,2997,0,0
+BRDA:158,2997,1,0
+BRDA:159,3027,1,0
+BRDA:159,3027,0,0
+BRDA:159,3087,1,0
+BRDA:159,3087,0,0
+BRDA:159,3158,1,0
+BRDA:159,3158,0,0
+BRDA:159,3234,1,0
+BRDA:159,3234,0,0
+BRDA:159,3306,1,0
+BRDA:159,3306,0,0
+BRDA:159,3400,0,0
+BRDA:159,3400,1,0
+BRDA:160,3430,1,0
+BRDA:160,3430,0,0
+BRDA:160,3495,0,0
+BRDA:160,3495,1,0
+BRDA:160,3508,1,0
+BRDA:160,3508,0,0
+BRDA:160,3585,0,0
+BRDA:160,3585,1,0
+BRDA:160,3598,1,0
+BRDA:160,3598,0,0
+BRDA:160,3675,0,0
+BRDA:160,3675,1,0
+BRDA:160,3688,1,0
+BRDA:160,3688,0,0
+BRDA:160,3771,0,0
+BRDA:160,3771,1,0
+BRDA:160,3781,1,0
+BRDA:160,3781,0,0
+BRDA:160,3855,0,0
+BRDA:160,3855,1,0
+BRDA:161,3886,1,0
+BRDA:161,3886,0,0
+BRDA:161,3951,0,0
+BRDA:161,3951,1,0
+BRDA:161,3964,1,0
+BRDA:161,3964,0,0
+BRDA:161,4041,0,0
+BRDA:161,4041,1,0
+BRDA:161,4054,1,0
+BRDA:161,4054,0,0
+BRDA:161,4131,0,0
+BRDA:161,4131,1,0
+BRDA:161,4144,1,0
+BRDA:161,4144,0,0
+BRDA:161,4227,0,0
+BRDA:161,4227,1,0
+BRDA:161,4237,1,0
+BRDA:161,4237,0,0
+BRDA:161,4311,0,0
+BRDA:161,4311,1,0
+BRDA:162,4341,1,0
+BRDA:162,4341,0,0
+BRDA:162,4401,1,0
+BRDA:162,4401,0,0
+BRDA:162,4472,1,0
+BRDA:162,4472,0,0
+BRDA:162,4558,0,0
+BRDA:162,4558,1,0
+BRDA:162,4571,1,0
+BRDA:162,4571,0,0
+BRDA:162,4642,1,0
+BRDA:162,4642,0,0
+BRDA:162,4713,1,0
+BRDA:162,4713,0,0
+BRDA:162,4803,0,0
+BRDA:162,4803,1,0
+BRDA:163,4833,1,0
+BRDA:163,4833,0,0
+BRDA:163,4898,0,0
+BRDA:163,4898,1,0
+BRDA:163,4911,1,0
+BRDA:163,4911,0,0
+BRDA:163,4988,0,0
+BRDA:163,4988,1,0
+BRDA:163,5001,1,0
+BRDA:163,5001,0,0
+BRDA:163,5078,0,0
+BRDA:163,5078,1,0
+BRDA:163,5091,1,0
+BRDA:163,5091,0,0
+BRDA:163,5174,0,0
+BRDA:163,5174,1,0
+BRDA:163,5187,1,0
+BRDA:163,5187,0,0
+BRDA:163,5264,0,0
+BRDA:163,5264,1,0
+BRDA:163,5274,1,0
+BRDA:163,5274,0,0
+BRDA:163,5348,0,0
+BRDA:163,5348,1,0
+BRDA:164,5378,1,0
+BRDA:164,5378,0,0
+BRDA:164,5443,0,0
+BRDA:164,5443,1,0
+BRDA:164,5456,1,0
+BRDA:164,5456,0,0
+BRDA:164,5533,0,0
+BRDA:164,5533,1,0
+BRDA:164,5546,1,0
+BRDA:164,5546,0,0
+BRDA:164,5623,0,0
+BRDA:164,5623,1,0
+BRDA:164,5636,1,0
+BRDA:164,5636,0,0
+BRDA:164,5719,0,0
+BRDA:164,5719,1,0
+BRDA:164,5732,1,0
+BRDA:164,5732,0,0
+BRDA:164,5809,0,0
+BRDA:164,5809,1,0
+BRDA:164,5819,1,0
+BRDA:164,5819,0,0
+BRDA:164,5893,0,0
+BRDA:164,5893,1,0
+BRDA:165,5923,1,0
+BRDA:165,5923,0,0
+BRDA:165,5988,0,0
+BRDA:165,5988,1,0
+BRDA:165,6001,1,0
+BRDA:165,6001,0,0
+BRDA:165,6078,0,0
+BRDA:165,6078,1,0
+BRDA:165,6091,1,0
+BRDA:165,6091,0,0
+BRDA:165,6168,0,0
+BRDA:165,6168,1,0
+BRDA:165,6181,1,0
+BRDA:165,6181,0,0
+BRDA:165,6264,0,0
+BRDA:165,6264,1,0
+BRDA:165,6277,1,0
+BRDA:165,6277,0,0
+BRDA:165,6354,0,0
+BRDA:165,6354,1,0
+BRDA:165,6364,1,0
+BRDA:165,6364,0,0
+BRDA:165,6438,0,0
+BRDA:165,6438,1,0
+BRDA:166,6468,1,0
+BRDA:166,6468,0,0
+BRDA:166,6533,0,0
+BRDA:166,6533,1,0
+BRDA:166,6546,1,0
+BRDA:166,6546,0,0
+BRDA:166,6623,0,0
+BRDA:166,6623,1,0
+BRDA:166,6636,1,0
+BRDA:166,6636,0,0
+BRDA:166,6713,0,0
+BRDA:166,6713,1,0
+BRDA:166,6726,1,0
+BRDA:166,6726,0,0
+BRDA:166,6809,0,0
+BRDA:166,6809,1,0
+BRDA:166,6822,1,0
+BRDA:166,6822,0,0
+BRDA:166,6899,0,0
+BRDA:166,6899,1,0
+BRDA:166,6909,1,0
+BRDA:166,6909,0,0
+BRDA:166,6983,0,0
+BRDA:166,6983,1,0
+BRDA:167,7013,1,0
+BRDA:167,7013,0,0
+BRDA:167,7078,0,0
+BRDA:167,7078,1,0
+BRDA:167,7091,1,0
+BRDA:167,7091,0,0
+BRDA:167,7168,0,0
+BRDA:167,7168,1,0
+BRDA:167,7181,1,0
+BRDA:167,7181,0,0
+BRDA:167,7258,0,0
+BRDA:167,7258,1,0
+BRDA:167,7271,1,0
+BRDA:167,7271,0,0
+BRDA:167,7354,0,0
+BRDA:167,7354,1,0
+BRDA:167,7367,1,0
+BRDA:167,7367,0,0
+BRDA:167,7444,0,0
+BRDA:167,7444,1,0
+BRDA:167,7454,1,0
+BRDA:167,7454,0,0
+BRDA:167,7528,0,0
+BRDA:167,7528,1,0
+BRDA:168,7558,1,0
+BRDA:168,7558,0,0
+BRDA:168,7623,0,0
+BRDA:168,7623,1,0
+BRDA:168,7636,1,0
+BRDA:168,7636,0,0
+BRDA:168,7713,0,0
+BRDA:168,7713,1,0
+BRDA:168,7726,1,0
+BRDA:168,7726,0,0
+BRDA:168,7803,0,0
+BRDA:168,7803,1,0
+BRDA:168,7816,1,0
+BRDA:168,7816,0,0
+BRDA:168,7899,0,0
+BRDA:168,7899,1,0
+BRDA:168,7912,1,0
+BRDA:168,7912,0,0
+BRDA:168,7989,0,0
+BRDA:168,7989,1,0
+BRDA:168,7999,1,0
+BRDA:168,7999,0,0
+BRDA:168,8073,0,0
+BRDA:168,8073,1,0
+BRDA:169,8103,1,0
+BRDA:169,8103,0,0
+BRDA:169,8168,0,0
+BRDA:169,8168,1,0
+BRDA:169,8181,1,0
+BRDA:169,8181,0,0
+BRDA:169,8258,0,0
+BRDA:169,8258,1,0
+BRDA:169,8271,1,0
+BRDA:169,8271,0,0
+BRDA:169,8348,0,0
+BRDA:169,8348,1,0
+BRDA:169,8361,1,0
+BRDA:169,8361,0,0
+BRDA:169,8444,0,0
+BRDA:169,8444,1,0
+BRDA:169,8457,1,0
+BRDA:169,8457,0,0
+BRDA:169,8534,0,0
+BRDA:169,8534,1,0
+BRDA:169,8544,1,0
+BRDA:169,8544,0,0
+BRDA:169,8618,0,0
+BRDA:169,8618,1,0
+BRDA:170,8648,1,0
+BRDA:170,8648,0,0
+BRDA:170,8713,0,0
+BRDA:170,8713,1,0
+BRDA:170,8726,1,0
+BRDA:170,8726,0,0
+BRDA:170,8803,0,0
+BRDA:170,8803,1,0
+BRDA:170,8816,1,0
+BRDA:170,8816,0,0
+BRDA:170,8892,1,0
+BRDA:170,8892,0,0
+BRDA:170,8976,0,0
+BRDA:170,8976,1,0
+BRDA:170,8986,1,0
+BRDA:170,8986,0,0
+BRDA:170,9060,0,0
+BRDA:170,9060,1,0
+BRDA:171,9091,1,0
+BRDA:171,9091,0,0
+BRDA:171,9156,0,0
+BRDA:171,9156,1,0
+BRDA:171,9169,1,0
+BRDA:171,9169,0,0
+BRDA:171,9246,0,0
+BRDA:171,9246,1,0
+BRDA:171,9259,1,0
+BRDA:171,9259,0,0
+BRDA:171,9335,1,0
+BRDA:171,9335,0,0
+BRDA:171,9419,0,0
+BRDA:171,9419,1,0
+BRDA:171,9429,1,0
+BRDA:171,9429,0,0
+BRDA:171,9503,0,0
+BRDA:171,9503,1,0
+FN:176,System.Void Data.Fetcher.YahooFinanceFetcher.StockFetcher/<Search>d__2::MoveNext()
+FNDA:0,System.Void Data.Fetcher.YahooFinanceFetcher.StockFetcher/<Search>d__2::MoveNext()
+DA:177,0
+DA:178,0
+DA:179,0
+DA:180,0
+DA:181,0
+DA:183,0
+DA:185,0
+DA:187,0
+DA:188,0
+DA:189,0
+DA:190,0
+DA:191,0
+DA:192,0
+DA:193,0
+DA:194,0
+DA:196,0
+DA:197,0
+DA:198,0
+DA:199,0
+DA:200,0
+DA:201,0
+DA:202,0
+DA:204,0
+DA:206,0
+DA:207,0
+DA:208,0
+DA:209,0
+DA:210,0
+DA:211,0
+DA:212,0
+DA:213,0
+DA:215,0
+DA:216,0
+DA:217,0
+DA:218,0
+DA:219,0
+BRDA:183,348,1,0
+BRDA:183,348,0,0
+BRDA:183,408,1,0
+BRDA:183,408,0,0
+BRDA:183,479,1,0
+BRDA:183,479,0,0
+BRDA:187,3211,1,0
+BRDA:189,641,1,0
+BRDA:189,641,0,0
+BRDA:189,719,1,0
+BRDA:189,719,0,0
+BRDA:189,813,1,0
+BRDA:189,813,0,0
+BRDA:189,883,0,0
+BRDA:189,893,1,0
+BRDA:189,893,0,0
+BRDA:189,961,1,0
+BRDA:189,961,0,0
+BRDA:189,1041,1,0
+BRDA:189,1041,0,0
+BRDA:189,1119,1,0
+BRDA:189,1119,0,0
+BRDA:189,883,1,0
+BRDA:189,1223,0,0
+BRDA:192,1245,1,0
+BRDA:192,1245,0,0
+BRDA:192,1313,1,0
+BRDA:192,1313,0,0
+BRDA:192,1411,1,0
+BRDA:192,1411,0,0
+BRDA:192,1493,1,0
+BRDA:192,1493,0,0
+BRDA:192,1595,0,0
+BRDA:194,1607,1,0
+BRDA:194,1607,0,0
+BRDA:194,1667,1,0
+BRDA:194,1667,0,0
+BRDA:194,1743,1,0
+BRDA:194,1743,0,0
+BRDA:194,1825,1,0
+BRDA:194,1825,0,0
+BRDA:194,1907,1,0
+BRDA:194,1907,0,0
+BRDA:192,1595,1,0
+BRDA:210,2294,1,0
+BRDA:210,2294,0,0
+BRDA:210,2406,1,0
+BRDA:210,2406,0,0
+BRDA:210,2488,1,0
+BRDA:210,2488,0,0
+BRDA:211,2581,1,0
+BRDA:211,2581,0,0
+BRDA:211,2693,1,0
+BRDA:211,2693,0,0
+BRDA:211,2775,1,0
+BRDA:211,2775,0,0
+BRDA:212,2868,1,0
+BRDA:212,2868,0,0
+BRDA:212,2980,1,0
+BRDA:212,2980,0,0
+BRDA:212,3062,1,0
+BRDA:212,3062,0,0
+BRDA:189,1223,1,0
+BRDA:187,3211,0,0
+LF:221
+LH:139
+BRF:436
+BRH:56
+FNF:4
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Fetcher/YahooFinanceFetcher/YfTranslator.cs
+FN:74,System.String Data.Fetcher.YahooFinanceFetcher.YfTranslator::GetYfSymbol(System.String,System.String)
+FNDA:288,System.String Data.Fetcher.YahooFinanceFetcher.YfTranslator::GetYfSymbol(System.String,System.String)
+DA:75,288
+DA:77,288
+DA:79,288
+DA:80,288
+DA:82,5
+DA:83,5
+DA:84,5
+DA:85,5
+DA:88,283
+FN:3,System.Void Data.Fetcher.YahooFinanceFetcher.YfTranslator::.cctor()
+FNDA:1,System.Void Data.Fetcher.YahooFinanceFetcher.YfTranslator::.cctor()
+DA:4,1
+DA:5,1
+DA:6,1
+DA:7,1
+DA:8,1
+DA:9,1
+DA:10,1
+DA:11,1
+DA:12,1
+DA:13,1
+DA:14,1
+DA:15,1
+DA:16,1
+DA:17,1
+DA:18,1
+DA:19,1
+DA:20,1
+DA:21,1
+DA:22,1
+DA:23,1
+DA:24,1
+DA:25,1
+DA:26,1
+DA:27,1
+DA:28,1
+DA:29,1
+DA:30,1
+DA:31,1
+DA:32,1
+DA:33,1
+DA:34,1
+DA:35,1
+DA:36,1
+DA:37,1
+DA:38,1
+DA:39,1
+DA:40,1
+DA:41,1
+DA:42,1
+DA:43,1
+DA:44,1
+DA:45,1
+DA:46,1
+DA:47,1
+DA:48,1
+DA:49,1
+DA:50,1
+DA:51,1
+DA:52,1
+DA:53,1
+DA:54,1
+DA:55,1
+DA:56,1
+DA:57,1
+DA:58,1
+DA:59,1
+DA:60,1
+DA:61,1
+DA:62,1
+DA:63,1
+DA:64,1
+DA:65,1
+DA:66,1
+DA:67,1
+DA:68,1
+DA:69,1
+DA:70,1
+DA:71,1
+DA:72,1
+LF:78
+LH:78
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Fetcher/DatabaseFetcher/CurrencyFetcher.cs
+FN:11,System.Threading.Tasks.Task`1<Data.CurrencyHistory> Data.Fetcher.DatabaseFetcher.CurrencyFetcher::GetHistory(System.String,System.DateOnly,System.DateOnly)
+FNDA:594,System.Threading.Tasks.Task`1<Data.CurrencyHistory> Data.Fetcher.DatabaseFetcher.CurrencyFetcher::GetHistory(System.String,System.DateOnly,System.DateOnly)
+DA:12,594
+DA:13,594
+DA:14,594
+DA:15,594
+DA:16,594
+DA:17,594
+DA:18,594
+DA:19,594
+DA:20,594
+DA:22,594
+DA:23,594
+DA:24,0
+DA:26,322932
+DA:27,160575
+DA:29,160575
+DA:30,160575
+DA:31,160575
+DA:32,160575
+DA:33,160575
+DA:34,160575
+DA:35,160575
+DA:36,160575
+DA:37,160575
+DA:38,0
+DA:39,0
+DA:40,0
+DA:41,0
+DA:44,160575
+DA:45,594
+DA:46,594
+DA:47,594
+DA:48,594
+BRDA:23,121,0,0
+BRDA:23,121,1,594
+BRDA:26,393,1,160575
+BRDA:30,212,0,0
+BRDA:30,212,1,160575
+BRDA:30,253,0,0
+BRDA:30,253,1,160575
+BRDA:30,294,0,0
+BRDA:30,294,1,160575
+BRDA:30,335,0,0
+BRDA:30,335,1,160575
+BRDA:26,393,0,594
+LF:32
+LH:27
+BRF:12
+BRH:7
+FNF:1
+FNH:1
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Fetcher/DatabaseFetcher/StockFetcher.cs
+FN:9,System.Threading.Tasks.Task`1<Data.StockHistory> Data.Fetcher.DatabaseFetcher.StockFetcher::GetHistory(System.String,System.String,System.DateOnly,System.DateOnly,System.String,System.String)
+FNDA:356,System.Threading.Tasks.Task`1<Data.StockHistory> Data.Fetcher.DatabaseFetcher.StockFetcher::GetHistory(System.String,System.String,System.DateOnly,System.DateOnly,System.String,System.String)
+DA:10,356
+DA:11,356
+DA:12,1
+DA:13,1
+DA:15,355
+DA:16,4
+DA:17,4
+DA:19,351
+DA:20,1
+DA:21,1
+DA:23,350
+DA:24,350
+DA:26,350
+DA:27,350
+DA:28,350
+DA:29,350
+DA:30,350
+DA:31,350
+DA:32,350
+DA:33,350
+DA:34,6
+DA:35,6
+DA:38,104570
+DA:39,51769
+DA:41,51769
+DA:42,51769
+DA:43,51769
+DA:44,51769
+DA:45,51769
+DA:46,51769
+DA:47,51769
+DA:48,51769
+DA:49,51769
+DA:50,0
+DA:51,0
+DA:52,0
+DA:53,0
+DA:55,51769
+DA:56,344
+DA:57,344
+DA:58,344
+DA:59,344
+BRDA:11,13,0,1
+BRDA:11,13,1,355
+BRDA:15,33,0,354
+BRDA:15,36,0,353
+BRDA:15,40,0,352
+BRDA:15,33,1,3
+BRDA:15,36,1,3
+BRDA:15,40,1,3
+BRDA:15,54,0,4
+BRDA:15,54,1,351
+BRDA:19,87,0,1
+BRDA:19,87,1,350
+BRDA:33,319,0,6
+BRDA:33,319,1,344
+BRDA:38,628,1,51769
+BRDA:42,447,0,0
+BRDA:42,447,1,51769
+BRDA:42,488,0,0
+BRDA:42,488,1,51769
+BRDA:42,529,0,0
+BRDA:42,529,1,51769
+BRDA:42,570,0,0
+BRDA:42,570,1,51769
+BRDA:38,628,0,344
+FN:61,System.Threading.Tasks.Task`1<Data.StockProfile> Data.Fetcher.DatabaseFetcher.StockFetcher::GetProfile(System.String,System.String)
+FNDA:300,System.Threading.Tasks.Task`1<Data.StockProfile> Data.Fetcher.DatabaseFetcher.StockFetcher::GetProfile(System.String,System.String)
+DA:62,300
+DA:63,300
+DA:64,300
+DA:65,300
+DA:67,300
+DA:68,300
+DA:69,300
+DA:70,300
+DA:71,300
+DA:73,300
+DA:74,291
+DA:75,291
+DA:76,291
+DA:77,291
+DA:78,291
+DA:79,291
+DA:80,291
+DA:81,291
+DA:82,291
+DA:83,291
+DA:84,291
+DA:85,291
+DA:86,291
+DA:87,291
+DA:89,291
+DA:92,9
+DA:93,9
+DA:95,291
+BRDA:73,77,0,291
+BRDA:83,291,0,0
+BRDA:83,291,1,291
+BRDA:73,77,1,9
+FN:97,System.Threading.Tasks.Task`1<Data.StockProfile[]> Data.Fetcher.DatabaseFetcher.StockFetcher::Search(System.String)
+FNDA:8,System.Threading.Tasks.Task`1<Data.StockProfile[]> Data.Fetcher.DatabaseFetcher.StockFetcher::Search(System.String)
+DA:98,8
+DA:99,8
+DA:100,1
+DA:101,1
+DA:103,7
+DA:104,7
+DA:105,7
+DA:106,7
+DA:107,16
+DA:108,1
+DA:109,1
+DA:110,1
+DA:112,7
+DA:113,7
+DA:114,7
+DA:115,7
+DA:117,59
+DA:118,19
+DA:119,19
+DA:120,19
+DA:121,7
+DA:122,7
+BRDA:99,9,0,1
+BRDA:99,9,1,7
+BRDA:107,130,1,1
+BRDA:107,130,0,7
+BRDA:117,338,1,19
+BRDA:117,338,0,7
+FN:124,System.Threading.Tasks.Task`1<System.Collections.Generic.List`1<Data.Dividend>> Data.Fetcher.DatabaseFetcher.StockFetcher::GetDividends(System.String,System.String,System.DateOnly,System.DateOnly)
+FNDA:292,System.Threading.Tasks.Task`1<System.Collections.Generic.List`1<Data.Dividend>> Data.Fetcher.DatabaseFetcher.StockFetcher::GetDividends(System.String,System.String,System.DateOnly,System.DateOnly)
+DA:125,292
+DA:126,292
+DA:127,292
+DA:128,292
+DA:129,292
+DA:130,292
+DA:131,292
+DA:132,292
+DA:133,292
+DA:134,292
+DA:135,1994
+DA:136,559
+DA:138,559
+DA:139,559
+DA:140,559
+DA:141,559
+DA:142,559
+DA:143,559
+DA:144,0
+DA:145,0
+DA:146,0
+DA:147,0
+DA:150,559
+DA:151,292
+DA:152,292
+BRDA:135,300,1,559
+BRDA:139,242,0,0
+BRDA:139,242,1,559
+BRDA:135,300,0,292
+LF:117
+LH:109
+BRF:38
+BRH:32
+FNF:4
+FNH:4
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Database/Connection.cs
+FN:9,System.Data.SqlClient.SqlConnection Data.Database.Connection::GetSqlConnection()
+FNDA:8056,System.Data.SqlClient.SqlConnection Data.Database.Connection::GetSqlConnection()
+DA:10,8056
+DA:12,8056
+DA:13,1
+DA:14,1
+DA:15,1
+DA:16,8056
+DA:17,8056
+BRDA:12,11,0,1
+BRDA:12,11,1,8056
+FN:18,System.Data.SqlClient.SqlConnection Data.Database.Connection::Create()
+FNDA:1,System.Data.SqlClient.SqlConnection Data.Database.Connection::Create()
+DA:19,1
+DA:20,1
+DA:21,1
+DA:22,1
+DA:23,1
+DA:24,1
+DA:25,1
+FN:27,System.Data.SqlClient.SqlConnectionStringBuilder Data.Database.Connection::buildConnectionString()
+FNDA:1,System.Data.SqlClient.SqlConnectionStringBuilder Data.Database.Connection::buildConnectionString()
+DA:28,1
+DA:29,1
+DA:30,1
+DA:31,1
+DA:32,1
+DA:33,1
+DA:34,1
+DA:35,1
+LF:22
+LH:22
+BRF:2
+BRH:2
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Database/Exchange.cs
+FN:7,System.String Data.Database.Exchange::GetCurrency(System.String)
+FNDA:89,System.String Data.Database.Exchange::GetCurrency(System.String)
+DA:8,89
+DA:9,89
+DA:11,89
+DA:12,89
+DA:13,89
+DA:14,89
+DA:15,89
+DA:16,88
+DA:17,88
+DA:18,88
+DA:21,1
+DA:22,1
+DA:24,88
+BRDA:15,48,0,88
+BRDA:15,48,1,1
+LF:13
+LH:13
+BRF:2
+BRH:2
+FNF:1
+FNH:1
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Data/Database/Reader.cs
+FN:9,System.Collections.Generic.List`1<System.Collections.Generic.Dictionary`2<System.String,System.Object>> Data.Database.Reader::ReadData(System.String,System.Collections.Generic.Dictionary`2<System.String,System.Object>)
+FNDA:6175,System.Collections.Generic.List`1<System.Collections.Generic.Dictionary`2<System.String,System.Object>> Data.Database.Reader::ReadData(System.String,System.Collections.Generic.Dictionary`2<System.String,System.Object>)
+DA:10,6175
+DA:11,6175
+DA:12,0
+DA:13,0
+DA:14,0
+DA:15,6175
+DA:17,6175
+DA:18,6175
+DA:20,41295
+DA:21,11385
+DA:22,11385
+DA:23,11385
+DA:25,6175
+DA:26,6175
+DA:27,6175
+DA:28,226846
+DA:29,220671
+DA:30,220671
+DA:31,3114220
+DA:32,1336439
+DA:33,1336439
+DA:34,1336439
+DA:35,220671
+DA:36,220671
+DA:37,6175
+DA:39,6175
+DA:40,5821
+DA:42,5821
+DA:44,6175
+DA:45,6175
+DA:47,6175
+BRDA:11,20,1,0
+BRDA:11,20,0,6175
+BRDA:20,96,1,11385
+BRDA:20,96,0,6175
+BRDA:28,219,1,220671
+BRDA:31,195,1,1336439
+BRDA:31,195,0,220671
+BRDA:28,219,0,6175
+BRDA:39,246,0,5821
+BRDA:39,246,1,6175
+FN:49,System.Collections.Generic.List`1<System.Collections.Generic.Dictionary`2<System.String,System.Object>> Data.Database.Reader::ReadData(System.String)
+FNDA:0,System.Collections.Generic.List`1<System.Collections.Generic.Dictionary`2<System.String,System.Object>> Data.Database.Reader::ReadData(System.String)
+DA:50,0
+DA:51,0
+DA:52,0
+FN:54,System.Collections.Generic.Dictionary`2<System.String,System.Object> Data.Database.Reader::ReadOne(System.String,System.Collections.Generic.Dictionary`2<System.String,System.Object>)
+FNDA:4292,System.Collections.Generic.Dictionary`2<System.String,System.Object> Data.Database.Reader::ReadOne(System.String,System.Collections.Generic.Dictionary`2<System.String,System.Object>)
+DA:55,4292
+DA:56,4292
+DA:58,4292
+DA:59,4145
+DA:60,4145
+DA:63,147
+DA:64,147
+DA:66,4292
+BRDA:58,20,0,4145
+BRDA:58,20,1,147
+FN:68,System.Collections.Generic.Dictionary`2<System.String,System.Object> Data.Database.Reader::ReadOne(System.String)
+FNDA:0,System.Collections.Generic.Dictionary`2<System.String,System.Object> Data.Database.Reader::ReadOne(System.String)
+DA:69,0
+DA:70,0
+DA:71,0
+FN:74,System.String Data.Database.Reader::DictionaryToString(System.Collections.Generic.Dictionary`2<System.String,System.Object>)
+FNDA:0,System.String Data.Database.Reader::DictionaryToString(System.Collections.Generic.Dictionary`2<System.String,System.Object>)
+DA:75,0
+DA:76,0
+DA:77,0
+DA:78,0
+DA:79,0
+DA:80,0
+DA:81,0
+DA:82,0
+BRDA:77,53,1,0
+BRDA:77,53,0,0
+LF:53
+LH:36
+BRF:14
+BRH:11
+FNF:5
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Authentication/Authenticate.cs
+FN:7,System.String Authentication.Authenticate::AccessToken(System.String)
+FNDA:6,System.String Authentication.Authenticate::AccessToken(System.String)
+DA:8,6
+DA:9,6
+DA:10,6
+DA:11,6
+DA:12,6
+DA:13,6
+DA:15,6
+DA:16,5
+DA:17,5
+DA:18,5
+DA:19,5
+DA:20,2
+DA:21,2
+DA:23,3
+DA:24,2
+DA:25,2
+DA:27,1
+DA:28,1
+DA:29,1
+DA:30,1
+DA:33,0
+DA:34,0
+DA:38,1
+DA:40,1
+DA:42,6
+BRDA:15,67,0,5
+BRDA:19,130,0,2
+BRDA:19,130,1,3
+BRDA:23,158,0,2
+BRDA:23,158,1,1
+BRDA:27,186,0,1
+BRDA:27,186,1,0
+BRDA:15,67,1,1
+FN:44,Authentication.RefreshAuthenticationResponse Authentication.Authenticate::RefreshToken(System.String)
+FNDA:6,Authentication.RefreshAuthenticationResponse Authentication.Authenticate::RefreshToken(System.String)
+DA:45,6
+DA:46,6
+DA:47,6
+DA:48,6
+DA:49,6
+DA:50,6
+DA:51,6
+DA:52,6
+DA:54,6
+DA:55,6
+DA:56,5
+DA:57,5
+DA:58,5
+DA:59,5
+DA:60,5
+DA:61,2
+DA:62,2
+DA:64,3
+DA:65,2
+DA:66,2
+DA:67,2
+DA:70,1
+DA:71,1
+DA:72,1
+DA:73,1
+DA:77,1
+DA:78,1
+DA:79,1
+DA:80,1
+DA:83,0
+DA:84,0
+DA:85,0
+DA:86,0
+DA:87,0
+DA:88,0
+DA:90,6
+BRDA:55,121,0,5
+BRDA:60,193,0,2
+BRDA:60,193,1,3
+BRDA:64,221,0,2
+BRDA:64,221,1,1
+BRDA:55,121,1,1
+FN:92,System.Void Authentication.Authenticate::InvalidateFamily(System.Int32)
+FNDA:2,System.Void Authentication.Authenticate::InvalidateFamily(System.Int32)
+DA:93,2
+DA:94,2
+DA:95,2
+DA:96,2
+DA:97,2
+DA:99,2
+DA:100,2
+DA:101,2
+DA:102,0
+DA:103,0
+DA:104,0
+DA:105,0
+DA:107,2
+FN:111,System.Int32 Authentication.RefreshAuthenticationResponse::get_familyID()
+FNDA:7,System.Int32 Authentication.RefreshAuthenticationResponse::get_familyID()
+DA:112,7
+FN:112,System.String Authentication.RefreshAuthenticationResponse::get_error()
+FNDA:15,System.String Authentication.RefreshAuthenticationResponse::get_error()
+DA:113,15
+FN:114,System.Void Authentication.RefreshAuthenticationResponse::.ctor(System.Int32)
+FNDA:6,System.Void Authentication.RefreshAuthenticationResponse::.ctor(System.Int32)
+DA:115,6
+DA:116,6
+DA:117,6
+DA:118,6
+LF:80
+LH:68
+BRF:14
+BRH:13
+FNF:6
+FNH:6
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Authentication/CreateFamily.cs
+FN:7,System.Int32 Authentication.CreateFamily::Call(System.String)
+FNDA:11,System.Int32 Authentication.CreateFamily::Call(System.String)
+DA:8,11
+DA:9,11
+DA:10,11
+DA:11,11
+DA:12,11
+DA:13,11
+DA:14,11
+DA:16,11
+DA:17,11
+DA:18,10
+DA:19,10
+DA:21,1
+DA:22,1
+DA:23,1
+DA:24,1
+DA:26,10
+LF:16
+LH:16
+BRF:0
+BRH:0
+FNF:1
+FNH:1
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Authentication/Expiration.cs
+FN:6,System.Int32 Authentication.Expiration::GenerateRefresh(System.Int32)
+FNDA:248,System.Int32 Authentication.Expiration::GenerateRefresh(System.Int32)
+DA:7,248
+DA:8,248
+DA:9,248
+FN:11,System.Int32 Authentication.Expiration::GenerateAccess(System.Int32)
+FNDA:248,System.Int32 Authentication.Expiration::GenerateAccess(System.Int32)
+DA:12,248
+DA:13,248
+DA:14,248
+LF:6
+LH:6
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Authentication/Middleware.cs
+FN:4,System.Void Authentication.Middleware/<InvokeAsync>d__0::MoveNext()
+FNDA:10,System.Void Authentication.Middleware/<InvokeAsync>d__0::MoveNext()
+DA:5,10
+DA:6,10
+DA:7,2
+DA:8,2
+DA:9,2
+DA:12,8
+DA:13,4
+DA:14,4
+DA:15,4
+DA:16,3
+DA:17,3
+DA:18,3
+DA:19,1
+DA:20,1
+DA:21,1
+DA:22,1
+DA:24,2
+DA:25,1
+DA:26,1
+DA:27,1
+DA:28,1
+DA:31,1
+DA:32,1
+DA:33,1
+DA:34,1
+DA:35,1
+DA:39,1
+DA:40,1
+DA:41,1
+DA:42,1
+DA:46,4
+DA:47,4
+DA:48,3
+DA:49,3
+DA:50,3
+DA:51,1
+DA:52,1
+DA:53,1
+DA:54,1
+DA:56,2
+DA:57,1
+DA:58,1
+DA:59,1
+DA:60,1
+DA:63,1
+DA:64,1
+DA:65,1
+DA:66,1
+DA:70,1
+DA:71,1
+DA:72,1
+DA:73,1
+DA:75,10
+BRDA:6,128,0,5
+BRDA:6,128,1,9
+BRDA:6,156,0,9
+BRDA:6,189,0,1
+BRDA:6,189,1,8
+BRDA:6,156,1,1
+BRDA:6,225,0,2
+BRDA:6,225,1,8
+BRDA:12,371,0,4
+BRDA:12,371,1,4
+BRDA:12,406,0,4
+BRDA:15,462,0,3
+BRDA:18,510,0,1
+BRDA:18,510,1,2
+BRDA:24,692,0,1
+BRDA:24,692,1,1
+BRDA:15,462,1,1
+BRDA:12,406,1,4
+BRDA:47,1233,0,3
+BRDA:50,1276,0,1
+BRDA:50,1276,1,2
+BRDA:56,1453,0,1
+BRDA:56,1453,1,1
+BRDA:47,1233,1,1
+LF:53
+LH:53
+BRF:24
+BRH:24
+FNF:1
+FNH:1
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Authentication/RefreshTokens.cs
+FN:7,StockApp.TokenSet Authentication.RefreshTokens::All(System.String)
+FNDA:4,StockApp.TokenSet Authentication.RefreshTokens::All(System.String)
+DA:8,4
+DA:9,4
+DA:10,4
+DA:11,4
+DA:12,4
+DA:13,4
+DA:14,4
+DA:15,2
+DA:16,2
+DA:17,2
+DA:18,2
+DA:20,2
+DA:21,2
+BRDA:14,48,0,2
+BRDA:14,48,1,2
+LF:13
+LH:13
+BRF:2
+BRH:2
+FNF:1
+FNH:1
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/Authentication/SetupTokens.cs
+FN:5,StockApp.TokenSet Authentication.SetupTokens::Call(System.Int32)
+FNDA:14,StockApp.TokenSet Authentication.SetupTokens::Call(System.Int32)
+DA:6,14
+DA:7,14
+DA:8,14
+DA:9,14
+DA:10,14
+DA:11,14
+DA:12,14
+DA:13,14
+DA:14,14
+DA:15,14
+DA:16,14
+DA:17,14
+DA:18,14
+DA:19,14
+DA:21,14
+DA:22,14
+DA:23,13
+DA:24,1
+DA:25,1
+DA:26,1
+DA:27,1
+DA:29,13
+DA:30,13
+DA:31,13
+DA:32,13
+DA:33,13
+DA:36,0
+DA:37,0
+DA:39,13
+BRDA:30,241,0,13
+BRDA:30,241,1,0
+FN:41,System.Boolean Authentication.SetupTokens::UpdateValidToken(System.String,System.Int32)
+FNDA:13,System.Boolean Authentication.SetupTokens::UpdateValidToken(System.String,System.Int32)
+DA:42,13
+DA:43,13
+DA:44,13
+DA:45,13
+DA:46,13
+DA:47,13
+DA:49,13
+DA:50,13
+DA:51,13
+DA:53,0
+DA:54,0
+DA:55,0
+DA:56,0
+DA:58,13
+LF:43
+LH:37
+BRF:2
+BRH:1
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Application.cs
+FN:5,System.Void API.v1.Application::Setup(System.Boolean)
+FNDA:1,System.Void API.v1.Application::Setup(System.Boolean)
+DA:6,1
+DA:7,1
+DA:8,1
+DA:9,1
+DA:10,0
+DA:11,0
+DA:12,0
+DA:13,0
+DA:14,0
+DA:15,0
+DA:16,1
+DA:17,1
+DA:18,1
+DA:19,1
+DA:20,1
+DA:21,1
+DA:23,1
+DA:24,1
+DA:25,1
+DA:26,1
+DA:27,1
+DA:28,1
+DA:29,1
+DA:30,1
+DA:31,1
+DA:32,1
+DA:33,1
+DA:34,1
+DA:35,1
+DA:36,1
+DA:37,1
+DA:38,1
+DA:39,1
+DA:40,1
+DA:41,1
+DA:42,1
+DA:43,1
+DA:44,1
+DA:45,1
+DA:46,1
+DA:47,1
+DA:48,1
+DA:49,1
+DA:50,1
+DA:51,0
+DA:52,0
+DA:53,0
+DA:54,1
+BRDA:50,306,0,0
+BRDA:50,306,1,1
+LF:48
+LH:39
+BRF:2
+BRH:1
+FNF:1
+FNH:1
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/CashTransactions/DeleteCashTransactions.cs
+FN:5,System.Void API.v1.DeleteCashTransactions::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.DeleteCashTransactions::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:6,2
+DA:7,2
+DA:8,0
+DA:9,0
+DA:10,0
+DA:11,2
+DA:12,2
+FN:14,API.v1.DeleteCashTransactionsResponse API.v1.DeleteCashTransactions::Endpoint(System.String,System.Int32,System.String)
+FNDA:9,API.v1.DeleteCashTransactionsResponse API.v1.DeleteCashTransactions::Endpoint(System.String,System.Int32,System.String)
+DA:15,9
+DA:16,9
+DA:17,4
+DA:18,4
+DA:20,5
+DA:21,5
+DA:22,3
+DA:23,1
+DA:24,1
+DA:25,1
+BRDA:16,2,0,8
+BRDA:16,15,0,7
+BRDA:16,18,0,6
+BRDA:16,2,1,3
+BRDA:16,15,1,3
+BRDA:16,18,1,3
+BRDA:16,36,0,4
+BRDA:16,36,1,5
+LF:17
+LH:14
+BRF:8
+BRH:8
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/CashTransactions/DeleteCashTransactionsResponse.cs
+FN:4,System.String API.v1.DeleteCashTransactionsResponse::get_response()
+FNDA:3,System.String API.v1.DeleteCashTransactionsResponse::get_response()
+DA:5,3
+FN:6,System.Void API.v1.DeleteCashTransactionsResponse::.ctor(System.String)
+FNDA:1,System.Void API.v1.DeleteCashTransactionsResponse::.ctor(System.String)
+DA:7,1
+DA:8,1
+DA:9,1
+DA:10,1
+LF:5
+LH:5
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/CashTransactions/PostCashTransactions.cs
+FN:5,System.Void API.v1.PostCashTransactions::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.PostCashTransactions::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:6,2
+DA:7,2
+DA:8,0
+DA:9,0
+DA:10,0
+DA:11,2
+DA:12,2
+FN:14,System.Void API.v1.PostCashTransactions/<Endpoint>d__1::MoveNext()
+FNDA:50,System.Void API.v1.PostCashTransactions/<Endpoint>d__1::MoveNext()
+DA:15,50
+DA:16,50
+DA:17,6
+DA:18,6
+DA:20,44
+DA:21,44
+DA:22,44
+DA:23,1
+DA:24,1
+DA:26,43
+DA:27,43
+DA:28,42
+DA:29,42
+DA:30,42
+DA:32,0
+DA:33,42
+BRDA:16,29,0,49
+BRDA:16,52,0,48
+BRDA:16,75,0,47
+BRDA:16,88,0,46
+BRDA:16,101,0,45
+BRDA:16,29,1,5
+BRDA:16,52,1,5
+BRDA:16,75,1,5
+BRDA:16,88,1,5
+BRDA:16,101,1,5
+BRDA:16,129,0,6
+BRDA:16,129,1,44
+BRDA:22,226,0,1
+BRDA:22,226,1,43
+BRDA:28,445,0,42
+BRDA:28,445,1,0
+LF:23
+LH:19
+BRF:16
+BRH:15
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/CashTransactions/PostCashTransactionsBody.cs
+FN:7,System.String API.v1.PostCashTransactionsBody::get_portfolio()
+FNDA:228,System.String API.v1.PostCashTransactionsBody::get_portfolio()
+DA:8,228
+FN:8,System.String API.v1.PostCashTransactionsBody::get_currency()
+FNDA:192,System.String API.v1.PostCashTransactionsBody::get_currency()
+DA:9,192
+FN:9,System.Decimal API.v1.PostCashTransactionsBody::get_nativeAmount()
+FNDA:141,System.Decimal API.v1.PostCashTransactionsBody::get_nativeAmount()
+DA:10,141
+FN:10,System.Int32 API.v1.PostCashTransactionsBody::get_timestamp()
+FNDA:140,System.Int32 API.v1.PostCashTransactionsBody::get_timestamp()
+DA:11,140
+FN:11,System.String API.v1.PostCashTransactionsBody::get_description()
+FNDA:93,System.String API.v1.PostCashTransactionsBody::get_description()
+DA:12,93
+FN:12,StockApp.CashTransaction API.v1.PostCashTransactionsBody::get_cashTransaction()
+FNDA:0,StockApp.CashTransaction API.v1.PostCashTransactionsBody::get_cashTransaction()
+DA:13,0
+FN:14,System.Void API.v1.PostCashTransactionsBody::.ctor(System.String,System.String,System.Decimal,System.Int32,System.String)
+FNDA:50,System.Void API.v1.PostCashTransactionsBody::.ctor(System.String,System.String,System.Decimal,System.Int32,System.String)
+DA:15,50
+DA:16,50
+DA:17,50
+DA:18,50
+DA:19,50
+DA:20,50
+DA:21,50
+DA:22,50
+LF:14
+LH:13
+BRF:0
+BRH:0
+FNF:7
+FNH:6
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/CashTransactions/PostCashTransactionsResponse.cs
+FN:4,System.String API.v1.PostCashTransactionsResponse::get_response()
+FNDA:118,System.String API.v1.PostCashTransactionsResponse::get_response()
+DA:5,118
+FN:5,System.Int32 API.v1.PostCashTransactionsResponse::get_id()
+FNDA:111,System.Int32 API.v1.PostCashTransactionsResponse::get_id()
+DA:6,111
+FN:7,System.Void API.v1.PostCashTransactionsResponse::.ctor(System.String,System.Int32)
+FNDA:42,System.Void API.v1.PostCashTransactionsResponse::.ctor(System.String,System.Int32)
+DA:8,42
+DA:9,42
+DA:10,42
+DA:11,42
+DA:12,42
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/CashTransactions/PutCashTransactions.cs
+FN:5,System.Void API.v1.PutCashTransactions::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.PutCashTransactions::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:6,2
+DA:7,2
+DA:8,0
+DA:9,0
+DA:10,0
+DA:11,2
+DA:12,2
+FN:14,System.Void API.v1.PutCashTransactions/<Endpoint>d__1::MoveNext()
+FNDA:10,System.Void API.v1.PutCashTransactions/<Endpoint>d__1::MoveNext()
+DA:15,10
+DA:16,10
+DA:17,4
+DA:18,4
+DA:20,6
+DA:21,6
+DA:22,6
+DA:23,6
+DA:24,6
+DA:25,6
+DA:26,6
+DA:27,6
+DA:28,6
+DA:29,6
+DA:30,2
+DA:31,2
+DA:32,2
+DA:33,6
+DA:34,1
+DA:35,1
+DA:36,1
+DA:37,5
+DA:38,1
+DA:39,1
+DA:40,1
+DA:41,4
+DA:42,2
+DA:43,2
+DA:44,2
+DA:45,6
+DA:46,2
+DA:47,2
+DA:48,2
+DA:49,6
+DA:50,6
+DA:51,6
+DA:52,6
+BRDA:16,24,0,9
+BRDA:16,42,0,8
+BRDA:16,65,0,7
+BRDA:16,24,1,3
+BRDA:16,42,1,3
+BRDA:16,65,1,3
+BRDA:16,86,0,4
+BRDA:16,86,1,6
+BRDA:29,332,0,2
+BRDA:29,332,1,6
+BRDA:33,380,0,2
+BRDA:33,380,1,4
+BRDA:33,410,0,1
+BRDA:33,410,1,5
+BRDA:37,483,0,1
+BRDA:37,483,1,4
+BRDA:41,558,0,2
+BRDA:41,558,1,6
+BRDA:45,624,0,2
+BRDA:45,624,1,6
+LF:44
+LH:41
+BRF:20
+BRH:20
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/CashTransactions/PutCashTransactionsBody.cs
+FN:4,System.Int32 API.v1.PutCashTransactionsBody::get_id()
+FNDA:16,System.Int32 API.v1.PutCashTransactionsBody::get_id()
+DA:5,16
+FN:5,System.String API.v1.PutCashTransactionsBody::get_portfolio()
+FNDA:31,System.String API.v1.PutCashTransactionsBody::get_portfolio()
+DA:6,31
+FN:6,System.String API.v1.PutCashTransactionsBody::get_newNativeCurrency()
+FNDA:23,System.String API.v1.PutCashTransactionsBody::get_newNativeCurrency()
+DA:7,23
+FN:7,System.Decimal API.v1.PutCashTransactionsBody::get_newNativeAmount()
+FNDA:19,System.Decimal API.v1.PutCashTransactionsBody::get_newNativeAmount()
+DA:8,19
+FN:8,System.String API.v1.PutCashTransactionsBody::get_newDescription()
+FNDA:18,System.String API.v1.PutCashTransactionsBody::get_newDescription()
+DA:9,18
+FN:9,System.Int32 API.v1.PutCashTransactionsBody::get_newTimestamp()
+FNDA:18,System.Int32 API.v1.PutCashTransactionsBody::get_newTimestamp()
+DA:10,18
+FN:11,System.Void API.v1.PutCashTransactionsBody::.ctor(System.Int32,System.String,System.String,System.Decimal,System.String,System.Int32)
+FNDA:10,System.Void API.v1.PutCashTransactionsBody::.ctor(System.Int32,System.String,System.String,System.Decimal,System.String,System.Int32)
+DA:12,10
+DA:13,10
+DA:14,10
+DA:15,10
+DA:16,10
+DA:17,10
+DA:18,10
+DA:19,10
+DA:20,10
+LF:15
+LH:15
+BRF:0
+BRH:0
+FNF:7
+FNH:7
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/CashTransactions/PutCashTransactionsResponse.cs
+FN:4,System.String API.v1.PutCashTransactionsResponse::get_response()
+FNDA:18,System.String API.v1.PutCashTransactionsResponse::get_response()
+DA:5,18
+FN:5,System.Int32 API.v1.PutCashTransactionsResponse::get_id()
+FNDA:11,System.Int32 API.v1.PutCashTransactionsResponse::get_id()
+DA:6,11
+FN:7,System.Void API.v1.PutCashTransactionsResponse::.ctor(System.String,System.Int32)
+FNDA:6,System.Void API.v1.PutCashTransactionsResponse::.ctor(System.String,System.Int32)
+DA:8,6
+DA:9,6
+DA:10,6
+DA:11,6
+DA:12,6
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/CurrencyHistories/GetCurrencyHistories.cs
+FN:6,System.Void API.v1.GetCurrencyHistories::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.GetCurrencyHistories::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:7,2
+DA:8,2
+DA:9,0
+DA:10,0
+DA:11,0
+DA:12,2
+DA:13,2
+FN:15,System.Void API.v1.GetCurrencyHistories/<Endpoint>d__1::MoveNext()
+FNDA:0,System.Void API.v1.GetCurrencyHistories/<Endpoint>d__1::MoveNext()
+DA:16,0
+DA:17,0
+DA:18,0
+DA:19,0
+LF:11
+LH:4
+BRF:0
+BRH:0
+FNF:2
+FNH:1
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/CurrencyHistories/GetCurrencyHistoriesResponse.cs
+FN:10,System.String API.v1.GetCurrencyHistoriesResponse::get_response()
+FNDA:0,System.String API.v1.GetCurrencyHistoriesResponse::get_response()
+DA:11,0
+FN:11,Data.CurrencyHistory API.v1.GetCurrencyHistoriesResponse::get_history()
+FNDA:0,Data.CurrencyHistory API.v1.GetCurrencyHistoriesResponse::get_history()
+DA:12,0
+FN:4,System.Void API.v1.GetCurrencyHistoriesResponse::.ctor(System.String,Data.CurrencyHistory)
+FNDA:0,System.Void API.v1.GetCurrencyHistoriesResponse::.ctor(System.String,Data.CurrencyHistory)
+DA:5,0
+DA:6,0
+DA:7,0
+DA:8,0
+DA:9,0
+LF:7
+LH:0
+BRF:0
+BRH:0
+FNF:3
+FNH:0
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Portfolios/DeletePortfolios.cs
+FN:6,System.Void API.v1.DeletePortfolios::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.DeletePortfolios::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:7,2
+DA:8,2
+DA:9,0
+DA:10,0
+DA:11,0
+DA:12,2
+DA:13,2
+FN:15,API.v1.DeletePortfoliosResponse API.v1.DeletePortfolios::Endpoint(System.String,System.String)
+FNDA:4,API.v1.DeletePortfoliosResponse API.v1.DeletePortfolios::Endpoint(System.String,System.String)
+DA:16,4
+DA:17,4
+DA:18,3
+DA:19,1
+DA:20,1
+LF:12
+LH:9
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Portfolios/DeletePortfoliosResponse.cs
+FN:4,System.String API.v1.DeletePortfoliosResponse::get_response()
+FNDA:3,System.String API.v1.DeletePortfoliosResponse::get_response()
+DA:5,3
+FN:5,System.Void API.v1.DeletePortfoliosResponse::.ctor(System.String)
+FNDA:1,System.Void API.v1.DeletePortfoliosResponse::.ctor(System.String)
+DA:6,1
+DA:7,1
+DA:8,1
+DA:9,1
+LF:5
+LH:5
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Portfolios/GetPortfolios.cs
+FN:5,System.Void API.v1.GetPortfolios::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.GetPortfolios::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:6,2
+DA:7,2
+DA:8,0
+DA:9,0
+DA:10,2
+DA:11,0
+DA:12,2
+DA:13,2
+FN:15,API.v1.GetPortfoliosResponse API.v1.GetPortfolios::Endpoint(System.String,System.String)
+FNDA:4,API.v1.GetPortfoliosResponse API.v1.GetPortfolios::Endpoint(System.String,System.String)
+DA:16,4
+DA:17,4
+DA:18,4
+DA:19,1
+DA:20,1
+FN:22,API.v1.GetPortfoliosResponse API.v1.GetPortfolios::Endpoint(System.String)
+FNDA:3,API.v1.GetPortfoliosResponse API.v1.GetPortfolios::Endpoint(System.String)
+DA:23,3
+DA:24,3
+DA:25,2
+DA:26,2
+DA:27,2
+LF:18
+LH:15
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Portfolios/GetPortfoliosResponse.cs
+FN:9,System.String API.v1.GetPortfoliosResponse::get_response()
+FNDA:9,System.String API.v1.GetPortfoliosResponse::get_response()
+DA:10,9
+FN:10,System.Collections.Generic.List`1<StockApp.Portfolio> API.v1.GetPortfoliosResponse::get_portfolios()
+FNDA:51,System.Collections.Generic.List`1<StockApp.Portfolio> API.v1.GetPortfoliosResponse::get_portfolios()
+DA:11,51
+FN:3,System.Void API.v1.GetPortfoliosResponse::.ctor(System.String,System.Collections.Generic.List`1<StockApp.Portfolio>)
+FNDA:3,System.Void API.v1.GetPortfoliosResponse::.ctor(System.String,System.Collections.Generic.List`1<StockApp.Portfolio>)
+DA:4,3
+DA:5,3
+DA:6,3
+DA:7,3
+DA:8,3
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Portfolios/PostPortfolios.cs
+FN:4,System.Void API.v1.PostPortfolios::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.PostPortfolios::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:5,2
+DA:6,2
+DA:7,0
+DA:8,0
+DA:9,0
+DA:10,2
+DA:11,2
+FN:13,API.v1.PostPortfoliosResponse API.v1.PostPortfolios::Endpoint(API.v1.PostPortfoliosBody,System.String)
+FNDA:6,API.v1.PostPortfoliosResponse API.v1.PostPortfolios::Endpoint(API.v1.PostPortfoliosBody,System.String)
+DA:14,6
+DA:15,6
+DA:16,5
+DA:17,5
+DA:18,1
+DA:19,1
+DA:21,4
+DA:22,1
+DA:23,1
+DA:25,3
+DA:26,3
+DA:27,2
+DA:28,2
+DA:29,2
+DA:31,0
+DA:32,2
+BRDA:17,51,0,1
+BRDA:17,51,1,4
+BRDA:21,81,0,4
+BRDA:21,81,1,0
+BRDA:21,109,0,1
+BRDA:21,109,1,3
+BRDA:27,193,0,2
+BRDA:27,193,1,0
+LF:23
+LH:19
+BRF:8
+BRH:6
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Portfolios/PostPortfoliosBody.cs
+FN:4,API.v1.PortfolioBody API.v1.PostPortfoliosBody::get_portfolio()
+FNDA:22,API.v1.PortfolioBody API.v1.PostPortfoliosBody::get_portfolio()
+DA:5,22
+FN:6,System.Void API.v1.PostPortfoliosBody::.ctor(API.v1.PortfolioBody)
+FNDA:6,System.Void API.v1.PostPortfoliosBody::.ctor(API.v1.PortfolioBody)
+DA:7,6
+DA:8,6
+DA:9,6
+DA:10,6
+FN:21,System.String API.v1.PortfolioBody::get_name()
+FNDA:14,System.String API.v1.PortfolioBody::get_name()
+DA:22,14
+FN:22,System.String API.v1.PortfolioBody::get_currency()
+FNDA:17,System.String API.v1.PortfolioBody::get_currency()
+DA:23,17
+FN:23,System.Decimal API.v1.PortfolioBody::get_balance()
+FNDA:6,System.Decimal API.v1.PortfolioBody::get_balance()
+DA:24,6
+FN:24,System.Boolean API.v1.PortfolioBody::get_trackBalance()
+FNDA:9,System.Boolean API.v1.PortfolioBody::get_trackBalance()
+DA:25,9
+FN:14,System.Void API.v1.PortfolioBody::.ctor(System.String,System.String,System.Decimal,System.Boolean)
+FNDA:6,System.Void API.v1.PortfolioBody::.ctor(System.String,System.String,System.Decimal,System.Boolean)
+DA:15,6
+DA:16,6
+DA:17,6
+DA:18,6
+DA:19,6
+DA:20,6
+DA:21,6
+LF:16
+LH:16
+BRF:0
+BRH:0
+FNF:7
+FNH:7
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Portfolios/PostPortfoliosResponse.cs
+FN:10,System.String API.v1.PostPortfoliosResponse::get_response()
+FNDA:6,System.String API.v1.PostPortfoliosResponse::get_response()
+DA:11,6
+FN:11,System.String API.v1.PostPortfoliosResponse::get_id()
+FNDA:7,System.String API.v1.PostPortfoliosResponse::get_id()
+DA:12,7
+FN:4,System.Void API.v1.PostPortfoliosResponse::.ctor(System.String,System.String)
+FNDA:2,System.Void API.v1.PostPortfoliosResponse::.ctor(System.String,System.String)
+DA:5,2
+DA:6,2
+DA:7,2
+DA:8,2
+DA:9,2
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Portfolios/PutPortfolios.cs
+FN:7,System.Void API.v1.PutPortfolios::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.PutPortfolios::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:8,2
+DA:9,2
+DA:10,0
+DA:11,0
+DA:12,0
+DA:13,2
+DA:14,2
+FN:16,API.v1.PutPortfoliosResponse API.v1.PutPortfolios::Endpoint(System.String,API.v1.PutPortfoliosBody)
+FNDA:6,API.v1.PutPortfoliosResponse API.v1.PutPortfolios::Endpoint(System.String,API.v1.PutPortfoliosBody)
+DA:17,6
+DA:18,6
+DA:19,1
+DA:20,1
+DA:22,5
+DA:23,4
+DA:24,3
+DA:25,2
+DA:26,2
+DA:27,2
+DA:28,3
+DA:29,2
+DA:30,2
+DA:31,2
+DA:32,3
+DA:33,3
+BRDA:18,12,0,1
+BRDA:18,12,1,5
+BRDA:24,74,0,2
+BRDA:24,74,1,3
+BRDA:28,111,0,2
+BRDA:28,111,1,3
+LF:23
+LH:20
+BRF:6
+BRH:6
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Portfolios/PutPortfoliosBody.cs
+FN:10,System.String API.v1.PutPortfoliosBody::get_newCurrency()
+FNDA:11,System.String API.v1.PutPortfoliosBody::get_newCurrency()
+DA:11,11
+FN:11,System.String API.v1.PutPortfoliosBody::get_newName()
+FNDA:11,System.String API.v1.PutPortfoliosBody::get_newName()
+DA:12,11
+FN:12,System.String API.v1.PutPortfoliosBody::get_id()
+FNDA:16,System.String API.v1.PutPortfoliosBody::get_id()
+DA:13,16
+FN:4,System.Void API.v1.PutPortfoliosBody::.ctor(System.String,System.String,System.String)
+FNDA:6,System.Void API.v1.PutPortfoliosBody::.ctor(System.String,System.String,System.String)
+DA:5,6
+DA:6,6
+DA:7,6
+DA:8,6
+DA:9,6
+DA:10,6
+LF:9
+LH:9
+BRF:0
+BRH:0
+FNF:4
+FNH:4
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Portfolios/PutPortfoliosResponse.cs
+FN:6,System.Void API.v1.PutPortfoliosResponse::.ctor(System.String)
+FNDA:3,System.Void API.v1.PutPortfoliosResponse::.ctor(System.String)
+DA:7,3
+DA:8,3
+DA:9,3
+DA:10,3
+LF:4
+LH:4
+BRF:0
+BRH:0
+FNF:1
+FNH:1
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/SearchResults/GetSearchResults.cs
+FN:7,System.Void API.v1.GetSearchResults::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.GetSearchResults::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:8,2
+DA:9,2
+DA:10,0
+DA:11,0
+DA:12,2
+DA:13,2
+FN:15,API.v1.GetSearchResultsResponse API.v1.GetSearchResults::Endpoint(System.String,System.Boolean)
+FNDA:4,API.v1.GetSearchResultsResponse API.v1.GetSearchResults::Endpoint(System.String,System.Boolean)
+DA:16,4
+DA:17,4
+DA:18,1
+DA:19,1
+DA:21,3
+DA:22,1
+DA:23,1
+DA:25,2
+DA:26,2
+DA:27,2
+DA:28,2
+DA:29,2
+DA:30,2
+DA:31,2
+BRDA:17,7,0,1
+BRDA:17,7,1,3
+BRDA:21,52,0,1
+BRDA:21,52,1,2
+BRDA:26,85,0,2
+BRDA:26,85,1,2
+LF:20
+LH:18
+BRF:6
+BRH:6
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/SearchResults/GetSearchResultsResponse.cs
+FN:10,System.String API.v1.GetSearchResultsResponse::get_response()
+FNDA:6,System.String API.v1.GetSearchResultsResponse::get_response()
+DA:11,6
+FN:11,Data.StockProfile[] API.v1.GetSearchResultsResponse::get_stocks()
+FNDA:7,Data.StockProfile[] API.v1.GetSearchResultsResponse::get_stocks()
+DA:12,7
+FN:4,System.Void API.v1.GetSearchResultsResponse::.ctor(System.String)
+FNDA:2,System.Void API.v1.GetSearchResultsResponse::.ctor(System.String)
+DA:5,2
+DA:6,2
+DA:7,2
+DA:8,2
+DA:9,2
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/StockHistories/GetStockHistories.cs
+FN:6,System.Void API.v1.GetStockHistories::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.GetStockHistories::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:7,2
+DA:8,2
+DA:9,0
+DA:10,0
+DA:11,2
+DA:12,2
+FN:14,System.Void API.v1.GetStockHistories/<Endpoint>d__1::MoveNext()
+FNDA:38,System.Void API.v1.GetStockHistories/<Endpoint>d__1::MoveNext()
+DA:15,38
+DA:16,38
+DA:17,34
+DA:18,34
+LF:10
+LH:8
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/StockHistories/GetStockHistoriesResponse.cs
+FN:10,System.String API.v1.GetStockHistoriesResponse::get_response()
+FNDA:102,System.String API.v1.GetStockHistoriesResponse::get_response()
+DA:11,102
+FN:11,Data.StockHistory API.v1.GetStockHistoriesResponse::get_history()
+FNDA:998,Data.StockHistory API.v1.GetStockHistoriesResponse::get_history()
+DA:12,998
+FN:4,System.Void API.v1.GetStockHistoriesResponse::.ctor(System.String,Data.StockHistory)
+FNDA:34,System.Void API.v1.GetStockHistoriesResponse::.ctor(System.String,Data.StockHistory)
+DA:5,34
+DA:6,34
+DA:7,34
+DA:8,34
+DA:9,34
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/StockProfiles/GetStockProfiles.cs
+FN:7,System.Void API.v1.GetStockProfiles::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.GetStockProfiles::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:8,2
+DA:9,2
+DA:10,0
+DA:11,0
+DA:12,2
+DA:13,2
+FN:14,System.Void API.v1.GetStockProfiles/<Endpoint>d__1::MoveNext()
+FNDA:59,System.Void API.v1.GetStockProfiles/<Endpoint>d__1::MoveNext()
+DA:15,59
+DA:16,59
+DA:17,57
+LF:9
+LH:7
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/StockProfiles/GetStockProfilesResponse.cs
+FN:9,System.String API.v1.GetStockProfilesResponse::get_response()
+FNDA:171,System.String API.v1.GetStockProfilesResponse::get_response()
+DA:10,171
+FN:10,Data.StockProfile API.v1.GetStockProfilesResponse::get_stock()
+FNDA:285,Data.StockProfile API.v1.GetStockProfilesResponse::get_stock()
+DA:11,285
+FN:4,System.Void API.v1.GetStockProfilesResponse::.ctor(System.String,Data.StockProfile)
+FNDA:57,System.Void API.v1.GetStockProfilesResponse::.ctor(System.String,Data.StockProfile)
+DA:5,57
+DA:6,57
+DA:7,57
+DA:8,57
+DA:9,57
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/StockTransactions/DeleteStockTransactions.cs
+FN:7,System.Void API.v1.DeleteStockTransactions::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.DeleteStockTransactions::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:8,2
+DA:9,2
+DA:10,0
+DA:11,0
+DA:12,0
+DA:13,2
+DA:14,2
+FN:16,System.Void API.v1.DeleteStockTransactions/<Endpoint>d__1::MoveNext()
+FNDA:5,System.Void API.v1.DeleteStockTransactions/<Endpoint>d__1::MoveNext()
+DA:17,5
+DA:18,5
+DA:19,4
+DA:20,2
+DA:21,1
+DA:22,1
+DA:23,1
+LF:14
+LH:11
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/StockTransactions/DeleteStockTransactionsResponse.cs
+FN:6,System.Void API.v1.DeleteStockTransactionsResponse::.ctor(System.String)
+FNDA:1,System.Void API.v1.DeleteStockTransactionsResponse::.ctor(System.String)
+DA:7,1
+DA:8,1
+DA:9,1
+DA:10,1
+LF:4
+LH:4
+BRF:0
+BRH:0
+FNF:1
+FNH:1
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/StockTransactions/GetStockTransactions.cs
+FN:7,System.Void API.v1.GetStockTransactions::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.GetStockTransactions::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:8,2
+DA:9,2
+DA:10,0
+DA:11,0
+DA:12,0
+DA:13,2
+DA:14,2
+FN:16,API.v1.GetStockTransactionsResponse API.v1.GetStockTransactions::Endpoint(System.String)
+FNDA:4,API.v1.GetStockTransactionsResponse API.v1.GetStockTransactions::Endpoint(System.String)
+DA:17,4
+DA:18,4
+DA:19,3
+DA:20,3
+DA:21,3
+LF:12
+LH:9
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/StockTransactions/GetStockTransactionsResponse.cs
+FN:4,System.String API.v1.GetStockTransactionsResponse::get_response()
+FNDA:6,System.String API.v1.GetStockTransactionsResponse::get_response()
+DA:5,6
+FN:5,System.Collections.Generic.List`1<StockApp.StockTransaction> API.v1.GetStockTransactionsResponse::get_stockTransactions()
+FNDA:6,System.Collections.Generic.List`1<StockApp.StockTransaction> API.v1.GetStockTransactionsResponse::get_stockTransactions()
+DA:6,6
+FN:6,System.Void API.v1.GetStockTransactionsResponse::.ctor(System.String,System.Collections.Generic.List`1<StockApp.StockTransaction>)
+FNDA:3,System.Void API.v1.GetStockTransactionsResponse::.ctor(System.String,System.Collections.Generic.List`1<StockApp.StockTransaction>)
+DA:7,3
+DA:8,3
+DA:9,3
+DA:10,3
+DA:11,3
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/StockTransactions/PostStockTransactions.cs
+FN:5,System.Void API.v1.PostStockTransactions::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.PostStockTransactions::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:6,2
+DA:7,2
+DA:8,0
+DA:9,0
+DA:10,0
+DA:11,2
+DA:12,2
+FN:14,System.Void API.v1.PostStockTransactions/<Endpoint>d__1::MoveNext()
+FNDA:74,System.Void API.v1.PostStockTransactions/<Endpoint>d__1::MoveNext()
+DA:15,74
+DA:16,74
+DA:17,1
+DA:18,1
+DA:20,73
+DA:21,2
+DA:22,2
+DA:24,71
+DA:25,1
+DA:26,1
+DA:28,70
+DA:29,1
+DA:30,1
+DA:32,69
+DA:33,2
+DA:34,2
+DA:36,67
+DA:37,1
+DA:38,1
+DA:40,66
+DA:41,2
+DA:42,2
+DA:45,64
+DA:46,63
+DA:47,63
+DA:48,63
+DA:49,1
+DA:50,1
+DA:52,62
+DA:53,62
+DA:54,62
+DA:55,62
+DA:56,62
+DA:57,62
+DA:58,62
+DA:59,62
+DA:60,56
+DA:61,56
+BRDA:16,29,0,73
+BRDA:16,29,1,1
+BRDA:16,57,0,1
+BRDA:16,57,1,73
+BRDA:20,87,0,71
+BRDA:20,87,1,2
+BRDA:20,115,0,2
+BRDA:20,115,1,71
+BRDA:24,145,0,70
+BRDA:24,145,1,1
+BRDA:24,175,0,1
+BRDA:24,175,1,70
+BRDA:28,219,0,1
+BRDA:28,219,1,69
+BRDA:32,256,0,2
+BRDA:32,256,1,67
+BRDA:36,291,0,66
+BRDA:36,291,1,1
+BRDA:36,326,0,1
+BRDA:36,326,1,66
+BRDA:40,375,0,2
+BRDA:40,375,1,64
+BRDA:48,501,0,1
+BRDA:48,501,1,62
+LF:45
+LH:42
+BRF:24
+BRH:24
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/StockTransactions/PostStockTransactionsBody.cs
+FN:3,System.String API.v1.PostStockTransactionsBody::get_portfolioId()
+FNDA:348,System.String API.v1.PostStockTransactionsBody::get_portfolioId()
+DA:4,348
+FN:4,System.String API.v1.PostStockTransactionsBody::get_ticker()
+FNDA:282,System.String API.v1.PostStockTransactionsBody::get_ticker()
+DA:5,282
+FN:5,System.String API.v1.PostStockTransactionsBody::get_exchange()
+FNDA:279,System.String API.v1.PostStockTransactionsBody::get_exchange()
+DA:6,279
+FN:6,System.Decimal API.v1.PostStockTransactionsBody::get_amount()
+FNDA:208,System.Decimal API.v1.PostStockTransactionsBody::get_amount()
+DA:7,208
+FN:7,System.Int32 API.v1.PostStockTransactionsBody::get_timestamp()
+FNDA:207,System.Int32 API.v1.PostStockTransactionsBody::get_timestamp()
+DA:8,207
+FN:8,StockApp.Money API.v1.PostStockTransactionsBody::get_priceNative()
+FNDA:337,StockApp.Money API.v1.PostStockTransactionsBody::get_priceNative()
+DA:9,337
+FN:10,System.Void API.v1.PostStockTransactionsBody::.ctor(System.String,System.String,System.String,System.Decimal,System.Int32,StockApp.Money)
+FNDA:76,System.Void API.v1.PostStockTransactionsBody::.ctor(System.String,System.String,System.String,System.Decimal,System.Int32,StockApp.Money)
+DA:11,76
+DA:12,76
+DA:13,76
+DA:14,76
+DA:15,76
+DA:16,76
+DA:17,76
+DA:18,76
+DA:19,76
+LF:15
+LH:15
+BRF:0
+BRH:0
+FNF:7
+FNH:7
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/StockTransactions/PostStockTransactionsResponse.cs
+FN:4,System.String API.v1.PostStockTransactionsResponse::get_response()
+FNDA:110,System.String API.v1.PostStockTransactionsResponse::get_response()
+DA:5,110
+FN:5,System.Int32 API.v1.PostStockTransactionsResponse::get_id()
+FNDA:56,System.Int32 API.v1.PostStockTransactionsResponse::get_id()
+DA:6,56
+FN:6,System.Void API.v1.PostStockTransactionsResponse::.ctor(System.String,System.Int32)
+FNDA:56,System.Void API.v1.PostStockTransactionsResponse::.ctor(System.String,System.Int32)
+DA:7,56
+DA:8,56
+DA:9,56
+DA:10,56
+DA:11,56
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/StockTransactions/PutStockTransactions.cs
+FN:6,System.Void API.v1.PutStockTransactions::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.PutStockTransactions::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:7,2
+DA:8,2
+DA:9,0
+DA:10,0
+DA:11,0
+DA:12,2
+DA:13,2
+FN:15,System.Void API.v1.PutStockTransactions/<Endpoint>d__1::MoveNext()
+FNDA:14,System.Void API.v1.PutStockTransactions/<Endpoint>d__1::MoveNext()
+DA:16,14
+DA:17,14
+DA:18,2
+DA:19,2
+DA:21,12
+DA:22,12
+DA:23,11
+DA:24,1
+DA:25,1
+DA:27,10
+DA:28,10
+DA:29,10
+DA:30,10
+DA:31,10
+DA:32,10
+DA:33,10
+DA:34,10
+DA:35,10
+DA:37,10
+DA:38,6
+DA:39,6
+DA:40,6
+DA:42,10
+DA:43,3
+DA:44,3
+DA:45,3
+DA:46,7
+DA:47,2
+DA:48,2
+DA:49,2
+DA:50,5
+DA:51,1
+DA:52,1
+DA:53,1
+DA:55,10
+DA:56,5
+DA:57,5
+DA:58,5
+DA:60,10
+DA:61,10
+DA:63,10
+DA:65,10
+BRDA:17,40,0,13
+BRDA:17,40,1,1
+BRDA:17,61,0,2
+BRDA:17,61,1,12
+BRDA:23,151,0,5
+BRDA:23,151,1,6
+BRDA:23,177,0,1
+BRDA:23,177,1,10
+BRDA:37,437,0,6
+BRDA:37,437,1,10
+BRDA:42,485,0,5
+BRDA:42,485,1,5
+BRDA:42,515,0,3
+BRDA:42,515,1,7
+BRDA:46,588,0,2
+BRDA:46,588,1,5
+BRDA:50,663,0,1
+BRDA:50,663,1,10
+BRDA:55,729,0,5
+BRDA:55,729,1,10
+LF:49
+LH:46
+BRF:20
+BRH:20
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/StockTransactions/PutStockTransactionsBody.cs
+FN:13,System.Int32 API.v1.PutStockTransactionsBody::get_id()
+FNDA:39,System.Int32 API.v1.PutStockTransactionsBody::get_id()
+DA:14,39
+FN:14,System.String API.v1.PutStockTransactionsBody::get_portfolio()
+FNDA:40,System.String API.v1.PutStockTransactionsBody::get_portfolio()
+DA:15,40
+FN:15,System.Decimal API.v1.PutStockTransactionsBody::get_newAmount()
+FNDA:37,System.Decimal API.v1.PutStockTransactionsBody::get_newAmount()
+DA:16,37
+FN:16,System.Int32 API.v1.PutStockTransactionsBody::get_newTimestamp()
+FNDA:36,System.Int32 API.v1.PutStockTransactionsBody::get_newTimestamp()
+DA:17,36
+FN:17,System.Decimal API.v1.PutStockTransactionsBody::get_newPrice()
+FNDA:45,System.Decimal API.v1.PutStockTransactionsBody::get_newPrice()
+DA:18,45
+FN:18,System.String API.v1.PutStockTransactionsBody::get_newCurrency()
+FNDA:54,System.String API.v1.PutStockTransactionsBody::get_newCurrency()
+DA:19,54
+FN:4,System.Void API.v1.PutStockTransactionsBody::.ctor(System.Int32,System.String,System.Decimal,System.Int32,System.Decimal,System.String)
+FNDA:15,System.Void API.v1.PutStockTransactionsBody::.ctor(System.Int32,System.String,System.Decimal,System.Int32,System.Decimal,System.String)
+DA:5,15
+DA:6,15
+DA:7,15
+DA:8,15
+DA:9,15
+DA:10,15
+DA:11,15
+DA:12,15
+DA:13,15
+LF:15
+LH:15
+BRF:0
+BRH:0
+FNF:7
+FNH:7
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/StockTransactions/PutStockTransactionsResponse.cs
+FN:7,System.Void API.v1.PutStockTransactionsResponse::.ctor(System.String,System.Int32)
+FNDA:10,System.Void API.v1.PutStockTransactionsResponse::.ctor(System.String,System.Int32)
+DA:8,10
+DA:9,10
+DA:10,10
+DA:11,10
+DA:12,10
+LF:5
+LH:5
+BRF:0
+BRH:0
+FNF:1
+FNH:1
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Tokens/PostTokens.cs
+FN:7,System.Void API.v1.PostTokens::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.PostTokens::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:8,2
+DA:9,2
+DA:10,0
+DA:11,0
+DA:12,2
+DA:13,2
+FN:15,StockApp.TokenSet API.v1.PostTokens::Endpoint(API.v1.PostTokensBody)
+FNDA:7,StockApp.TokenSet API.v1.PostTokens::Endpoint(API.v1.PostTokensBody)
+DA:16,7
+DA:17,7
+DA:18,1
+DA:19,1
+DA:21,6
+DA:22,1
+DA:23,1
+DA:25,5
+DA:26,3
+DA:27,3
+BRDA:17,19,0,1
+BRDA:17,19,1,6
+BRDA:21,56,0,1
+BRDA:21,56,1,5
+LF:16
+LH:14
+BRF:4
+BRH:4
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Tokens/PostTokensBody.cs
+FN:10,System.String API.v1.PostTokensBody::get_email()
+FNDA:19,System.String API.v1.PostTokensBody::get_email()
+DA:11,19
+FN:11,System.String API.v1.PostTokensBody::get_password()
+FNDA:18,System.String API.v1.PostTokensBody::get_password()
+DA:12,18
+FN:4,System.Void API.v1.PostTokensBody::.ctor(System.String,System.String)
+FNDA:7,System.Void API.v1.PostTokensBody::.ctor(System.String,System.String)
+DA:5,7
+DA:6,7
+DA:7,7
+DA:8,7
+DA:9,7
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Tokens/PutTokens.cs
+FN:7,System.Void API.v1.PutTokens::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.PutTokens::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:8,2
+DA:9,2
+DA:10,0
+DA:11,0
+DA:12,0
+DA:13,2
+DA:14,2
+FN:16,API.v1.TokensResponse API.v1.PutTokens::Endpoint(System.String)
+FNDA:2,API.v1.TokensResponse API.v1.PutTokens::Endpoint(System.String)
+DA:17,2
+DA:18,2
+DA:19,1
+DA:20,1
+LF:11
+LH:8
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Tokens/TokensResponse.cs
+FN:12,System.String API.v1.TokensResponse::get_response()
+FNDA:2,System.String API.v1.TokensResponse::get_response()
+DA:13,2
+FN:13,StockApp.TokenSet API.v1.TokensResponse::get_tokenSet()
+FNDA:5,StockApp.TokenSet API.v1.TokensResponse::get_tokenSet()
+DA:14,5
+FN:6,System.Void API.v1.TokensResponse::.ctor(System.String,StockApp.TokenSet)
+FNDA:1,System.Void API.v1.TokensResponse::.ctor(System.String,StockApp.TokenSet)
+DA:7,1
+DA:8,1
+DA:9,1
+DA:10,1
+DA:11,1
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Transactions/GetTransactions.cs
+FN:7,System.Void API.v1.GetTransactions::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.GetTransactions::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:8,2
+DA:9,2
+DA:10,0
+DA:11,0
+DA:12,0
+DA:13,2
+DA:14,2
+FN:16,System.Void API.v1.GetTransactions/<Endpoint>d__1::MoveNext()
+FNDA:48,System.Void API.v1.GetTransactions/<Endpoint>d__1::MoveNext()
+DA:17,48
+DA:18,48
+DA:19,48
+DA:20,47
+LF:11
+LH:8
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Transactions/GetTransactionsResponse.cs
+FN:4,System.String API.v1.GetTransactionsResponse::get_response()
+FNDA:78,System.String API.v1.GetTransactionsResponse::get_response()
+DA:5,78
+FN:5,System.Collections.Generic.List`1<Data.Transaction> API.v1.GetTransactionsResponse::get_transactions()
+FNDA:340,System.Collections.Generic.List`1<Data.Transaction> API.v1.GetTransactionsResponse::get_transactions()
+DA:6,340
+FN:6,System.Void API.v1.GetTransactionsResponse::.ctor(System.String,System.Collections.Generic.List`1<Data.Transaction>)
+FNDA:47,System.Void API.v1.GetTransactionsResponse::.ctor(System.String,System.Collections.Generic.List`1<Data.Transaction>)
+DA:7,47
+DA:8,47
+DA:9,47
+DA:10,47
+DA:11,47
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Users/DeleteUsers.cs
+FN:5,System.Void API.v1.DeleteUsers::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.DeleteUsers::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:6,2
+DA:7,2
+DA:8,0
+DA:9,0
+DA:10,0
+DA:11,2
+DA:12,2
+FN:14,API.v1.DeleteUsersResponse API.v1.DeleteUsers::Endpoint(System.String)
+FNDA:3,API.v1.DeleteUsersResponse API.v1.DeleteUsers::Endpoint(System.String)
+DA:15,3
+DA:16,3
+DA:17,1
+DA:18,1
+DA:19,1
+LF:12
+LH:9
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Users/DeleteUsersResponse.cs
+FN:4,System.String API.v1.DeleteUsersResponse::get_response()
+FNDA:3,System.String API.v1.DeleteUsersResponse::get_response()
+DA:5,3
+FN:6,System.Void API.v1.DeleteUsersResponse::.ctor(System.String)
+FNDA:1,System.Void API.v1.DeleteUsersResponse::.ctor(System.String)
+DA:7,1
+DA:8,1
+DA:9,1
+DA:10,1
+LF:5
+LH:5
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Users/GetUsers.cs
+FN:7,System.Void API.v1.GetUsers::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.GetUsers::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:8,2
+DA:9,2
+DA:10,0
+DA:11,0
+DA:12,0
+DA:13,2
+DA:14,2
+FN:16,API.v1.GetUsersResponse API.v1.GetUsers::Endpoint(System.String)
+FNDA:2,API.v1.GetUsersResponse API.v1.GetUsers::Endpoint(System.String)
+DA:17,2
+DA:18,2
+DA:19,0
+DA:20,0
+LF:11
+LH:6
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Users/GetUsersResponse.cs
+FN:10,System.String API.v1.GetUsersResponse::get_response()
+FNDA:0,System.String API.v1.GetUsersResponse::get_response()
+DA:11,0
+FN:11,System.String API.v1.GetUsersResponse::get_uid()
+FNDA:0,System.String API.v1.GetUsersResponse::get_uid()
+DA:12,0
+FN:4,System.Void API.v1.GetUsersResponse::.ctor(System.String,System.String)
+FNDA:0,System.Void API.v1.GetUsersResponse::.ctor(System.String,System.String)
+DA:5,0
+DA:6,0
+DA:7,0
+DA:8,0
+DA:9,0
+LF:7
+LH:0
+BRF:0
+BRH:0
+FNF:3
+FNH:0
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Users/PostUsers.cs
+FN:7,System.Void API.v1.PostUsers::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.PostUsers::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:8,2
+DA:9,2
+DA:10,0
+DA:11,0
+DA:12,2
+DA:13,2
+FN:15,API.v1.PostUsersResponse API.v1.PostUsers::Endpoint(API.v1.PostUsersBody)
+FNDA:4,API.v1.PostUsersResponse API.v1.PostUsers::Endpoint(API.v1.PostUsersBody)
+DA:16,4
+DA:17,4
+DA:18,1
+DA:19,1
+DA:21,3
+DA:22,2
+DA:24,2
+BRDA:17,17,0,1
+BRDA:17,17,1,3
+LF:13
+LH:11
+BRF:2
+BRH:2
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Users/PostUsersBody.cs
+FN:10,System.String API.v1.PostUsersBody::get_email()
+FNDA:10,System.String API.v1.PostUsersBody::get_email()
+DA:11,10
+FN:11,System.String API.v1.PostUsersBody::get_password()
+FNDA:6,System.String API.v1.PostUsersBody::get_password()
+DA:12,6
+FN:4,System.Void API.v1.PostUsersBody::.ctor(System.String,System.String)
+FNDA:3,System.Void API.v1.PostUsersBody::.ctor(System.String,System.String)
+DA:5,3
+DA:6,3
+DA:7,3
+DA:8,3
+DA:9,3
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Users/PostUsersResponse.cs
+FN:10,System.String API.v1.PostUsersResponse::get_response()
+FNDA:4,System.String API.v1.PostUsersResponse::get_response()
+DA:11,4
+FN:11,System.String API.v1.PostUsersResponse::get_uid()
+FNDA:3,System.String API.v1.PostUsersResponse::get_uid()
+DA:12,3
+FN:4,System.Void API.v1.PostUsersResponse::.ctor(System.String,System.String)
+FNDA:2,System.Void API.v1.PostUsersResponse::.ctor(System.String,System.String)
+DA:5,2
+DA:6,2
+DA:7,2
+DA:8,2
+DA:9,2
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Users/Preferences/DeleteUserPreferences.cs
+FN:6,System.Void API.v1.DeleteUserPreferences::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:0,System.Void API.v1.DeleteUserPreferences::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:7,0
+DA:8,0
+DA:9,0
+DA:10,0
+DA:11,0
+DA:12,0
+DA:13,0
+FN:15,API.v1.DeleteUserPreferencesResponse API.v1.DeleteUserPreferences::Endpoint(System.String,System.String)
+FNDA:5,API.v1.DeleteUserPreferencesResponse API.v1.DeleteUserPreferences::Endpoint(System.String,System.String)
+DA:16,5
+DA:17,5
+DA:18,4
+DA:19,4
+DA:21,1
+DA:22,1
+DA:23,1
+DA:24,1
+BRDA:17,2,0,4
+BRDA:17,15,0,3
+BRDA:17,18,0,2
+BRDA:17,2,1,3
+BRDA:17,15,1,3
+BRDA:17,18,1,3
+BRDA:17,36,0,4
+BRDA:17,36,1,1
+LF:15
+LH:8
+BRF:8
+BRH:8
+FNF:2
+FNH:1
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Users/Preferences/DeleteUserPreferencesResponse.cs
+FN:4,System.String API.v1.DeleteUserPreferencesResponse::get_response()
+FNDA:3,System.String API.v1.DeleteUserPreferencesResponse::get_response()
+DA:5,3
+FN:6,System.Void API.v1.DeleteUserPreferencesResponse::.ctor(System.String)
+FNDA:1,System.Void API.v1.DeleteUserPreferencesResponse::.ctor(System.String)
+DA:7,1
+DA:8,1
+DA:9,1
+DA:10,1
+LF:5
+LH:5
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Users/Preferences/GetUserPreferences.cs
+FN:5,System.Void API.v1.GetUserPreferences::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.GetUserPreferences::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:6,2
+DA:7,2
+DA:8,0
+DA:9,0
+DA:10,0
+DA:11,2
+DA:12,2
+FN:14,API.v1.GetUserPreferencesResponse API.v1.GetUserPreferences::Endpoint(System.String)
+FNDA:7,API.v1.GetUserPreferencesResponse API.v1.GetUserPreferences::Endpoint(System.String)
+DA:15,7
+DA:16,7
+DA:17,2
+DA:18,2
+DA:20,5
+DA:21,4
+DA:22,4
+DA:23,4
+BRDA:16,2,0,6
+BRDA:16,2,1,1
+BRDA:16,20,0,2
+BRDA:16,20,1,5
+LF:15
+LH:12
+BRF:4
+BRH:4
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Users/Preferences/GetUserPreferencesResponse.cs
+FN:4,System.Collections.Generic.Dictionary`2<System.String,System.String> API.v1.GetUserPreferencesResponse::get_preferences()
+FNDA:16,System.Collections.Generic.Dictionary`2<System.String,System.String> API.v1.GetUserPreferencesResponse::get_preferences()
+DA:5,16
+FN:5,System.String API.v1.GetUserPreferencesResponse::get_response()
+FNDA:12,System.String API.v1.GetUserPreferencesResponse::get_response()
+DA:6,12
+FN:7,System.Void API.v1.GetUserPreferencesResponse::.ctor(System.String,System.Collections.Generic.Dictionary`2<System.String,System.String>)
+FNDA:4,System.Void API.v1.GetUserPreferencesResponse::.ctor(System.String,System.Collections.Generic.Dictionary`2<System.String,System.String>)
+DA:8,4
+DA:9,4
+DA:10,4
+DA:11,4
+DA:12,4
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Users/Preferences/PostUserPreferences.cs
+FN:5,System.Void API.v1.PostUserPreferences::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.PostUserPreferences::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:6,2
+DA:7,2
+DA:8,0
+DA:9,0
+DA:10,0
+DA:11,2
+DA:12,2
+FN:14,API.v1.PostUserPreferencesResponse API.v1.PostUserPreferences::Endpoint(API.v1.PostUserPreferencesBody,System.String)
+FNDA:7,API.v1.PostUserPreferencesResponse API.v1.PostUserPreferences::Endpoint(API.v1.PostUserPreferencesBody,System.String)
+DA:15,7
+DA:16,7
+DA:17,6
+DA:18,6
+DA:21,1
+DA:22,1
+DA:23,1
+DA:24,1
+BRDA:16,7,0,6
+BRDA:16,15,0,5
+BRDA:16,33,0,4
+BRDA:16,51,0,3
+BRDA:16,64,0,2
+BRDA:16,7,1,5
+BRDA:16,15,1,5
+BRDA:16,33,1,5
+BRDA:16,51,1,5
+BRDA:16,64,1,5
+BRDA:16,75,0,6
+BRDA:16,75,1,1
+LF:15
+LH:12
+BRF:12
+BRH:12
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Users/Preferences/PostUserPreferencesBody.cs
+FN:4,System.String API.v1.PostUserPreferencesBody::get_setting()
+FNDA:19,System.String API.v1.PostUserPreferencesBody::get_setting()
+DA:5,19
+FN:5,System.String API.v1.PostUserPreferencesBody::get_value()
+FNDA:19,System.String API.v1.PostUserPreferencesBody::get_value()
+DA:6,19
+FN:7,System.Void API.v1.PostUserPreferencesBody::.ctor(System.String,System.String)
+FNDA:7,System.Void API.v1.PostUserPreferencesBody::.ctor(System.String,System.String)
+DA:8,7
+DA:9,7
+DA:10,7
+DA:11,7
+DA:12,7
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Users/Preferences/PostUserPreferencesResponse.cs
+FN:6,System.String API.v1.PostUserPreferencesResponse::get_response()
+FNDA:3,System.String API.v1.PostUserPreferencesResponse::get_response()
+DA:7,3
+FN:7,System.Int32 API.v1.PostUserPreferencesResponse::get_id()
+FNDA:3,System.Int32 API.v1.PostUserPreferencesResponse::get_id()
+DA:8,3
+FN:9,System.Void API.v1.PostUserPreferencesResponse::.ctor(System.String,System.Int32)
+FNDA:1,System.Void API.v1.PostUserPreferencesResponse::.ctor(System.String,System.Int32)
+DA:10,1
+DA:11,1
+DA:12,1
+DA:13,1
+DA:14,1
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Users/PutEmailBody.cs
+FN:10,System.String API.v1.PutEmailBody::get_oldEmail()
+FNDA:8,System.String API.v1.PutEmailBody::get_oldEmail()
+DA:11,8
+FN:11,System.String API.v1.PutEmailBody::get_newEmail()
+FNDA:10,System.String API.v1.PutEmailBody::get_newEmail()
+DA:12,10
+FN:4,System.Void API.v1.PutEmailBody::.ctor(System.String,System.String)
+FNDA:4,System.Void API.v1.PutEmailBody::.ctor(System.String,System.String)
+DA:5,4
+DA:6,4
+DA:7,4
+DA:8,4
+DA:9,4
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Users/PutPasswordBody.cs
+FN:10,System.String API.v1.PutPasswordBody::get_oldPassword()
+FNDA:10,System.String API.v1.PutPasswordBody::get_oldPassword()
+DA:11,10
+FN:11,System.String API.v1.PutPasswordBody::get_newPassword()
+FNDA:9,System.String API.v1.PutPasswordBody::get_newPassword()
+DA:12,9
+FN:12,System.String API.v1.PutPasswordBody::get_email()
+FNDA:6,System.String API.v1.PutPasswordBody::get_email()
+DA:13,6
+FN:4,System.Void API.v1.PutPasswordBody::.ctor(System.String,System.String,System.String)
+FNDA:4,System.Void API.v1.PutPasswordBody::.ctor(System.String,System.String,System.String)
+DA:5,4
+DA:6,4
+DA:7,4
+DA:8,4
+DA:9,4
+DA:10,4
+LF:9
+LH:9
+BRF:0
+BRH:0
+FNF:4
+FNH:4
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Users/PutUserResponse.cs
+FN:8,System.String API.v1.PutUserResponse::get_response()
+FNDA:6,System.String API.v1.PutUserResponse::get_response()
+DA:9,6
+FN:4,System.Void API.v1.PutUserResponse::.ctor(System.String)
+FNDA:2,System.Void API.v1.PutUserResponse::.ctor(System.String)
+DA:5,2
+DA:6,2
+DA:7,2
+DA:8,2
+LF:5
+LH:5
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/Users/PutUsers.cs
+FN:6,System.Void API.v1.PutUsers::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.PutUsers::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:7,2
+DA:8,2
+DA:9,0
+DA:10,0
+DA:11,0
+DA:12,2
+DA:14,2
+DA:15,0
+DA:16,0
+DA:17,0
+DA:18,2
+DA:19,2
+FN:21,API.v1.PutUserResponse API.v1.PutUsers::EndpointPass(System.String,API.v1.PutPasswordBody)
+FNDA:4,API.v1.PutUserResponse API.v1.PutUsers::EndpointPass(System.String,API.v1.PutPasswordBody)
+DA:22,4
+DA:23,4
+DA:24,2
+DA:25,2
+DA:27,2
+DA:28,2
+DA:29,1
+DA:31,1
+BRDA:23,7,0,3
+BRDA:23,15,0,2
+BRDA:23,7,1,2
+BRDA:23,15,1,2
+BRDA:23,31,0,2
+BRDA:23,31,1,2
+FN:33,API.v1.PutUserResponse API.v1.PutUsers::EndpointEmail(System.String,API.v1.PutEmailBody)
+FNDA:4,API.v1.PutUserResponse API.v1.PutUsers::EndpointEmail(System.String,API.v1.PutEmailBody)
+DA:34,4
+DA:35,4
+DA:36,2
+DA:37,2
+DA:39,2
+DA:40,1
+DA:41,1
+DA:43,1
+DA:44,1
+DA:45,1
+DA:46,1
+BRDA:35,7,0,3
+BRDA:35,7,1,1
+BRDA:35,23,0,2
+BRDA:35,23,1,2
+BRDA:39,58,0,1
+BRDA:39,58,1,1
+LF:31
+LH:25
+BRF:12
+BRH:12
+FNF:3
+FNH:3
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/ValueHistory/GetValueHistory.cs
+FN:6,System.Void API.v1.GetValueHistory::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+FNDA:2,System.Void API.v1.GetValueHistory::Setup(Microsoft.AspNetCore.Builder.WebApplication)
+DA:7,2
+DA:8,2
+DA:9,0
+DA:10,0
+DA:11,0
+DA:12,2
+DA:13,2
+FN:15,System.Void API.v1.GetValueHistory/<EndpointAsync>d__1::MoveNext()
+FNDA:40,System.Void API.v1.GetValueHistory/<EndpointAsync>d__1::MoveNext()
+DA:16,40
+DA:17,40
+DA:18,39
+DA:19,39
+LF:11
+LH:8
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record
+SF:/mnt/c/Users/frede/Documents/bachelor_project/The-Project-Backend/BackendService/APIv1/Endpoints/ValueHistory/GetValueHistoryResponse.cs
+FN:4,Data.UserAssetsValueHistory API.v1.GetValueHistoryResponse::get_valueHistory()
+FNDA:259,Data.UserAssetsValueHistory API.v1.GetValueHistoryResponse::get_valueHistory()
+DA:5,259
+FN:6,System.Void API.v1.GetValueHistoryResponse::.ctor(Data.UserAssetsValueHistory)
+FNDA:39,System.Void API.v1.GetValueHistoryResponse::.ctor(Data.UserAssetsValueHistory)
+DA:7,39
+DA:8,39
+DA:9,39
+DA:10,39
+LF:5
+LH:5
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record

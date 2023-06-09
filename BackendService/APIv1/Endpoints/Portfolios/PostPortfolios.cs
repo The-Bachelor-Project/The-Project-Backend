@@ -24,10 +24,8 @@ public class PostPortfolios
 		}
 		StockApp.Portfolio portfolio = new StockApp.Portfolio(body.portfolio.name, user.id!, body.portfolio.currency, body.portfolio.trackBalance);
 		portfolio.AddToDb();
-		if (portfolio.id != null)
-		{
-			return new PostPortfoliosResponse("success", portfolio.id);
-		}
-		return new PostPortfoliosResponse("error", "");
+		return new PostPortfoliosResponse("success", portfolio.id!);
+
+
 	}
 }

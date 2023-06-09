@@ -10,8 +10,6 @@ public class PostCashTransactionsBody
 	public Decimal nativeAmount { get; set; }
 	public int timestamp { get; set; }
 	public String? description { get; set; }
-	public CashTransaction? cashTransaction { get; set; }
-
 	public PostCashTransactionsBody(String portfolio, String currency, Decimal nativeAmount, int timestamp, String? description)
 	{
 		this.portfolio = portfolio;

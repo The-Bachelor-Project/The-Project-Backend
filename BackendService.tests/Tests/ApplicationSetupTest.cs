@@ -36,20 +36,6 @@ public class ApplicationSetupTest
 	}
 
 	[TestMethod]
-	public void SetupEndpoint_GetUsersTest()
-	{
-		try
-		{
-			WebApplication app = WebApplication.CreateBuilder().Build();
-			API.v1.GetUsers.Setup(app);
-		}
-		catch (System.Exception e)
-		{
-			Assert.Fail("Endpoint could not setup correctly: " + e.Message);
-		}
-	}
-
-	[TestMethod]
 	public void SetupEndpoint_GetStockProfiles()
 	{
 		try
@@ -168,20 +154,6 @@ public class ApplicationSetupTest
 		{
 			WebApplication app = WebApplication.CreateBuilder().Build();
 			API.v1.PostStockTransactions.Setup(app);
-		}
-		catch (System.Exception e)
-		{
-			Assert.Fail("Endpoint could not setup correctly: " + e.Message);
-		}
-	}
-
-	[TestMethod]
-	public void SetupEndpoint_GetCurrencyHistories()
-	{
-		try
-		{
-			WebApplication app = WebApplication.CreateBuilder().Build();
-			API.v1.GetCurrencyHistories.Setup(app);
 		}
 		catch (System.Exception e)
 		{

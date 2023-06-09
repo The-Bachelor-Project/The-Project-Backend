@@ -290,7 +290,7 @@ public class UserTest
 		{
 			Assert.Fail("Exception thrown, portfolios not gotten: " + e.Message);
 		}
-		StockApp.Portfolio gottenPortfolio = user.GetPortfolio(portfolio.id!);
+		StockApp.Portfolio gottenPortfolio = user.GetPortfolios(portfolio.id!);
 		Assert.IsTrue(gottenPortfolio.id == portfolio.id, "portfolio id should be " + portfolio.id + " but was " + gottenPortfolio.id);
 		PortfolioHelper.Delete(userTestObject);
 	}
@@ -308,7 +308,7 @@ public class UserTest
 		{
 			Assert.Fail("Exception thrown, portfolios not gotten: " + e.Message);
 		}
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.GetPortfolio(null!));
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.GetPortfolios(null!));
 		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
 	}
 
@@ -317,7 +317,8 @@ public class UserTest
 	{
 		StockApp.User user = userTestObject.user!;
 		user.Delete();
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => GetUsers.Endpoint(userTestObject.accessToken!));
+		PostTokensBody postTokensBody = new PostTokensBody(userTestObject.user!.email!, userTestObject.user!.password!);
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostTokens.Endpoint(postTokensBody));
 		Assert.IsTrue(exception.StatusCode == 401, "status code should be 401 but was " + exception.StatusCode);
 	}
 
