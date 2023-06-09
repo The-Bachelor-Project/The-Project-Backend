@@ -82,7 +82,6 @@ public class CurrencyFetcher : ICurrencyFetcher
 
 	private void SaveCurrencyHistory(Data.CurrencyHistory history, bool updateStartTrackingDate, bool updateEndTrackingDate)
 	{
-		System.Console.WriteLine(history.history.Count);
 		if (history.history.Count == 0)
 			return;
 		String insertIntoCurrencyRatesQuery = "EXEC BulkJsonCurrencyRates @CurrencyRatesBulk, @Code";

@@ -25,7 +25,6 @@ public class StockPosition
 		{
 			return new Data.Position(stock.ticker, stock.exchange, valueHistory, dividendHistory);
 		}
-		System.Console.WriteLine("Stock ffd   " + stock.ticker + "    " + stockTransactions.Count);
 		if (Tools.TimeConverter.UnixTimeStampToDateOnly(stockTransactions.First().timestamp) < startDate)
 		{
 			currentlyOwned = stockTransactions.First().amountOwned!.Value;
@@ -51,7 +50,6 @@ public class StockPosition
 
 			if (transactionIndex < stockTransactions.Count)
 			{
-				// System.Console.WriteLine(currentDate);
 				while (Tools.TimeConverter.UnixTimeStampToDateOnly(stockTransactions[transactionIndex].timestamp) == currentDate)
 				{
 					currentlyOwned = stockTransactions[transactionIndex].amountOwned!.Value;
@@ -96,7 +94,6 @@ public class StockPosition
 
 	public StockPosition UpdateStockTransactions(DateOnly startDate, DateOnly endDate)
 	{
-		System.Console.WriteLine("UpdateStockTransactions: " + startDate + " " + endDate + " " + stock.ticker + " " + stock.exchange + " " + portfolio.id);
 		String query = "SELECT * FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp <= @endDate";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@portfolio", portfolio.id!);
@@ -113,7 +110,6 @@ public class StockPosition
 
 		foreach (Dictionary<String, object> row in data)
 		{
-			System.Console.WriteLine("StockTransactions: " + "    " + row["ticker"].ToString() + "   " + Tools.TimeConverter.UnixTimeStampToDateOnly(Convert.ToInt32(row["timestamp"])));
 
 			StockTransaction newStockTransaction = new StockTransaction();
 

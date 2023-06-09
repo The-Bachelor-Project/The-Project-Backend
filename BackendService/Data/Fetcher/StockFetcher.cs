@@ -76,7 +76,6 @@ public class StockFetcher : IStockFetcher
 			// Get the stock profile from the database
 			DatabaseFetcher.StockFetcher database = new DatabaseFetcher.StockFetcher();
 			Data.StockProfile profile = await database.GetProfile(ticker, exchange);
-			System.Console.WriteLine("Got stock profile from database");
 			return profile;
 		}
 		catch (StatusCodeException)
@@ -84,7 +83,6 @@ public class StockFetcher : IStockFetcher
 			// If the stock profile is not in the database, get it from the API
 			YahooFinanceFetcher.StockFetcher api = new YahooFinanceFetcher.StockFetcher();
 			Data.StockProfile profile = await api.GetProfile(ticker, exchange);
-			System.Console.WriteLine("Got stock profile from API");
 			SaveProfile(profile);
 			return profile;
 		}
@@ -131,7 +129,7 @@ public class StockFetcher : IStockFetcher
 		}
 		catch (Exception e)
 		{
-			System.Console.WriteLine(e.Message);
+			System.Console.WriteLine(e);
 			throw new StatusCodeException(500, "Could not save stock profile of stock " + profile.exchange + ":" + profile.ticker + " to database");
 		}
 
@@ -150,7 +148,6 @@ public class StockFetcher : IStockFetcher
 
 	private void SaveStockHistory(StockHistory history, bool updateStartTrackingDate, bool updateEndTrackingDate)
 	{
-		System.Console.WriteLine(history.history.Count);
 		if (history.history.Count == 0)
 			return;
 		String insertIntoStockPricesQuery = "EXEC BulkJsonStockPrices @StockPricesBulk, @Ticker, @Exchange";

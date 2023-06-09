@@ -8,7 +8,6 @@ public class StockFetcher : IStockFetcher
 {
 	public async Task<StockHistory> GetHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, string interval, string currency)
 	{
-		System.Console.WriteLine("Fetching stock history for " + ticker + " on " + exchange + " from " + startDate + " to " + endDate);
 
 		String getCurrencyQuery = "SELECT currency FROM Exchanges WHERE symbol = @symbol";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
@@ -28,7 +27,6 @@ public class StockFetcher : IStockFetcher
 
 		HttpClient client = new HttpClient();
 		String url = "https://query1.finance.yahoo.com/v7/finance/download/" + tickerExt + "?interval=1d&period1=" + startTime + "&period2=" + endTime;
-		System.Console.WriteLine(url);
 		HttpResponseMessage stockHistoryRes = await client.GetAsync(url);
 
 		if (stockHistoryRes.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -134,7 +132,6 @@ public class StockFetcher : IStockFetcher
 		HttpResponseMessage quoteRes = await client.GetAsync("https://query1.finance.yahoo.com/v6/finance/quote?symbols=" + tickerExt);
 		String quoteJson = await quoteRes.Content.ReadAsStringAsync();
 		dynamic quote = JObject.Parse(quoteJson);
-		System.Console.WriteLine(quote);
 		if (quoteSummary.StatusCode == System.Net.HttpStatusCode.NotFound)
 		{
 			throw new StatusCodeException(404, "Could not get stock profile for " + exchange + ":" + ticker + ", using quote on Yahoo Finance");
@@ -220,7 +217,6 @@ public class StockFetcher : IStockFetcher
 
 	public async Task<List<Dividend>> GetDividends(string ticker, string exchange, DateOnly startDate, DateOnly endDate)
 	{
-		System.Console.WriteLine("Getting dividends for " + ticker + " " + exchange);
 		List<Data.Dividend> dividends = new List<Data.Dividend>();
 
 		String getCurrencyQuery = "SELECT currency FROM Exchanges WHERE symbol = @symbol";
@@ -241,7 +237,6 @@ public class StockFetcher : IStockFetcher
 
 		HttpClient client = new HttpClient();
 		String url = "https://query1.finance.yahoo.com/v7/finance/download/" + tickerExt + "?interval=1d&period1=" + startTime + "&period2=" + endTime + "&events=div";
-		System.Console.WriteLine(url);
 		HttpResponseMessage dividendsResponse = client.GetAsync(url).Result;
 		if (dividendsResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
 		{

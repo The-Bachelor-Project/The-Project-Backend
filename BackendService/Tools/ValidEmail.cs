@@ -7,7 +7,6 @@ public class ValidEmail
 	{
 		String regexPattern = @"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$";
 		Regex regex = new Regex(regexPattern);
-		System.Console.WriteLine(regex.IsMatch(email));
 		return regex.IsMatch(email);
 	}
 }

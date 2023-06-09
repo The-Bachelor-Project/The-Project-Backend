@@ -48,8 +48,6 @@ public class Authenticate
 		parameters.Add("@RefreshToken", refreshToken);
 		parameters.Add("@UnixNow", Tools.TimeConverter.DateTimeToUnix(DateTime.Now));
 		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(checkIfValidQuery, parameters);
-		System.Console.WriteLine("RefreshToken: " + refreshToken);
-		System.Console.WriteLine("UnixNow: " + Tools.TimeConverter.DateTimeToUnix(DateTime.Now));
 		try
 		{
 			if (data != null)

@@ -147,7 +147,6 @@ public class Portfolio
 		foreach (Dictionary<String, object> row in data)
 		{
 			stockPositions.Add(new StockPosition(this, new Stock(row["ticker"].ToString()!, row["exchange"].ToString()!)));
-			System.Console.WriteLine(stockPositions.Last().stock.ticker + " " + stockPositions.Last().stock.exchange);
 		}
 		return this;
 	}
@@ -260,7 +259,6 @@ public class Portfolio
 		{
 			throw new StatusCodeException(400, "Missing required fields");
 		}
-		System.Console.WriteLine("ID: " + transactionID);
 		String query = "SELECT * FROM StockTransactions WHERE id = @id AND portfolio = @portfolio";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@id", transactionID);

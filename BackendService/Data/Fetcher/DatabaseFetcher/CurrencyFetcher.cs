@@ -10,7 +10,6 @@ public class CurrencyFetcher : ICurrencyFetcher
 
 	public Task<Data.CurrencyHistory> GetHistory(string currency, DateOnly startDate, DateOnly endDate)
 	{
-		System.Console.WriteLine(currency);
 		String getCurrencyHistoryQuery = "SELECT * FROM GetCurrencyRates(@currency, @interval, @start_date, @end_date)";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@currency", currency);

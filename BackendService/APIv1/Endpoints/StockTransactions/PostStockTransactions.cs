@@ -43,7 +43,6 @@ public class PostStockTransactions
 		}
 
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
-		System.Console.WriteLine("User: " + user.id);
 		StockApp.User owner = new StockApp.Portfolio(body.portfolioId).GetOwner();
 		if (user.id != owner.id)
 		{

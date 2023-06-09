@@ -13,7 +13,6 @@ public class PostPortfolios
 	public static PostPortfoliosResponse Endpoint(PostPortfoliosBody body, String accessToken)
 	{
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
-		System.Console.WriteLine("User: " + user.id);
 		if (body.portfolio.name is null)
 		{
 			throw new StatusCodeException(400, "Missing name of portfolio");

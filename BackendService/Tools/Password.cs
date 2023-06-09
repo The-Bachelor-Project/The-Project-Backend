@@ -22,7 +22,6 @@ public class Password
 			builder.Append(bytes[i].ToString("x2"));
 		}
 		//Return the hexadecimal string.
-		System.Console.WriteLine(builder.ToString() + " is the hash");
 		return builder.ToString();
 	}
 }

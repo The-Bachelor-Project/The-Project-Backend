@@ -12,7 +12,6 @@ public class SetupTokens
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		SqlCommand command = new SqlCommand(createTokenRecord, connection);
 		command.Parameters.AddWithValue("@refresh_token", refreshToken);
-		System.Console.WriteLine(refreshExpirationUnix);
 		command.Parameters.AddWithValue("@refresh_expiration", refreshExpirationUnix);
 		command.Parameters.AddWithValue("@access_token", accessToken);
 		command.Parameters.AddWithValue("@access_expiration", accessExpirationUnix);

@@ -62,7 +62,6 @@ public class User
 		{
 			throw new StatusCodeException(400, "Fields are missing");
 		}
-		System.Console.WriteLine("SignIn with email: " + email);
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "SELECT * FROM Accounts WHERE email = @email";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
@@ -251,7 +250,6 @@ public class User
 			dataPortfolio.name = portfolio.name;
 			dataPortfolio.currency = portfolio.currency;
 			dataPortfolio.owner = portfolio.owner;
-			System.Console.WriteLine("id: " + dataPortfolio.id + " name: " + dataPortfolio.name + " currency: " + dataPortfolio.currency);
 			dataPortfolios.Add(dataPortfolio);
 			valueHistory = Data.DatePriceOHLC.AddLists(valueHistory, dataPortfolio.valueHistory!);
 			dividendHistory.AddRange(dataPortfolio.dividendHistory!);

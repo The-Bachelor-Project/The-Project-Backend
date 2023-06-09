@@ -20,7 +20,6 @@ public class StockFetcher : IStockFetcher
 		{
 			throw new StatusCodeException(400, "Invalid currency");
 		}
-		System.Console.WriteLine("Getting stock history from database for " + ticker + " " + exchange + " " + startDate + " " + endDate + " " + interval);
 		StockHistory result = new StockHistory(ticker, exchange, "daily");
 
 		String getStockHistoryQuery = "SELECT * FROM GetStockPrices(@ticker, @exchange, 'daily', @start_date, @end_date)";
@@ -123,7 +122,6 @@ public class StockFetcher : IStockFetcher
 
 	public Task<List<Dividend>> GetDividends(string ticker, string exchange, DateOnly startDate, DateOnly endDate)
 	{
-		System.Console.WriteLine("Getting dividends from database for " + ticker + " " + exchange + " " + startDate + " " + endDate);
 		List<Dividend> dividends = new List<Dividend>();
 		String getDividendsQuery = "SELECT * FROM StockDividends WHERE ticker = @ticker AND exchange = @exchange AND date >= @start_date AND date <= @end_date";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
