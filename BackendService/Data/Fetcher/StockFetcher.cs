@@ -96,7 +96,6 @@ public class StockFetcher : IStockFetcher
 		{
 			throw new StatusCodeException(400, "Required fields are missing");
 		}
-		//await new YahooFinanceFetcher.StockFetcher().Search(query); //TODO in the future check if search has already been performed recently
 		return await new DatabaseFetcher.StockFetcher().Search(query);
 	}
 
@@ -141,7 +140,6 @@ public class StockFetcher : IStockFetcher
 
 	public String GenerateTags(Data.StockProfile stockProfile)
 	{
-		//TODO: Make variants for NOVO-B, NOVO B, AT&T, ATT, AT T, so fourth
 		String tags = "";
 		tags += stockProfile.exchange + " " + stockProfile.ticker + ",";
 		tags += stockProfile.ticker + " " + stockProfile.exchange + ",";

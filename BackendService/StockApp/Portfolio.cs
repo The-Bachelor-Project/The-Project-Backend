@@ -199,9 +199,19 @@ public class Portfolio
 		}
 		User user = GetOwner();
 		cashBalance = user.InsertMissingValues(cashBalance);
-
-		System.Console.WriteLine("RETURNED: " + dividendHistory.Count);
-		return new Portfolio("[NAME]"/* TODO Get name */, currency, valueHistory, positionHistories, dividendHistory, cashBalance);
+		String getPortfolioNameQuery = "SELECT name FROM Portfolios WHERE uid = @uid";
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@uid", id);
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(getPortfolioNameQuery, parameters);
+		if (data != null)
+		{
+			name = data["name"].ToString()!;
+		}
+		else
+		{
+			name = "";
+		}
+		return new Portfolio(name, currency, valueHistory, positionHistories, dividendHistory, cashBalance);
 	}
 
 	public Portfolio ChangeName(string newName)

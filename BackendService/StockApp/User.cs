@@ -74,7 +74,6 @@ public class User
 		{
 			String dbPassword = data["password"].ToString()!;
 			String userID = data["user_id"].ToString()!;
-			//TODO Check password
 
 			if (dbPassword != Tools.Password.Hash(password!))
 			{

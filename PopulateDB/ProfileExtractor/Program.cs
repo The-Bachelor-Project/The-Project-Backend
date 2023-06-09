@@ -448,7 +448,6 @@ class Program
 	}
 	public static String GenerateTags(Dictionary<string, dynamic> stockProfile)
 	{
-		//TODO: Make variants for NOVO-B, NOVO B, AT&T, ATT, AT T, so fourth
 		String tags = "";
 		tags += stockProfile["exchange"] + " " + stockProfile["ticker"] + ",";
 		tags += stockProfile["ticker"] + " " + stockProfile["exchange"] + ",";
