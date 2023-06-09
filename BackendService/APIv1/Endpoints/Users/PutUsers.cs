@@ -20,7 +20,7 @@ public class PutUsers
 
 	public static PutUserResponse EndpointPass(string accessToken, PutPasswordBody body)
 	{
-		if (body.oldPassword is null || body.newPassword is null || body.email is null)
+		if (body.oldPassword is null || body.newPassword is null)
 		{
 			throw new StatusCodeException(400, "Missing required fields");
 		}
@@ -32,7 +32,7 @@ public class PutUsers
 
 	public static PutUserResponse EndpointEmail(String accessToken, PutEmailBody body)
 	{
-		if (body.oldEmail is null || body.newEmail is null)
+		if (body.newEmail is null)
 		{
 			throw new StatusCodeException(400, "Missing required fields");
 		}

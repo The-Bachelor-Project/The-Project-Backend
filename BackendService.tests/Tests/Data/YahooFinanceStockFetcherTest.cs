@@ -77,7 +77,7 @@ public class YahooFinanceStockFetcherTest
 	public async Task YahooFinanceStockFetcherTest_GetDividends_InvalidTickerTest()
 	{
 		StatusCodeException exception = await Assert.ThrowsExceptionAsync<StatusCodeException>(async () => await stockFetcher.GetDividends("invalid", "NASDAQ", DateOnly.Parse("2021-01-01"), DateOnly.Parse("2022-01-01")));
-		Assert.IsTrue(exception.StatusCode == 400, "Status code should be 404 but was " + exception.StatusCode);
+		Assert.IsTrue(exception.StatusCode == 404, "Status code should be 404 but was " + exception.StatusCode);
 	}
 
 	[TestMethod]

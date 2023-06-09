@@ -47,7 +47,6 @@ public class Portfolio
 	public List<StockPosition> stockPositions { get; set; } = new List<StockPosition>();
 	public List<Data.Position>? positionHistories { get; set; }
 	public List<Data.Dividend>? dividendHistory { get; set; }
-	public List<DividendPayout> dividendPayouts { get; set; } = new List<DividendPayout>();
 	public List<Data.CashBalance> cashBalance { get; set; } = new List<Data.CashBalance>();
 
 

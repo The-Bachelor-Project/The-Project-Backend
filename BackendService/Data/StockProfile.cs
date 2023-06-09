@@ -19,7 +19,6 @@ public class StockProfile
 	public Decimal? sharesOutstanding { get; set; }
 	public Decimal? trailingAnnualDividendRate { get; set; }
 	public Decimal? trailingAnnualDividendYield { get; set; }
-	int trackingDate;
 
 	public StockProfile() { }
 	public StockProfile(string? ticker, string? exchange, string? name, string? shortName, string? longName, string? country)

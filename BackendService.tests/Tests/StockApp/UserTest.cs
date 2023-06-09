@@ -319,7 +319,7 @@ public class UserTest
 		user.Delete();
 		PostTokensBody postTokensBody = new PostTokensBody(userTestObject.user!.email!, userTestObject.user!.password!);
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PostTokens.Endpoint(postTokensBody));
-		Assert.IsTrue(exception.StatusCode == 401, "status code should be 401 but was " + exception.StatusCode);
+		Assert.IsTrue(exception.StatusCode == 404, "status code should be 404 but was " + exception.StatusCode);
 	}
 
 	[TestMethod]

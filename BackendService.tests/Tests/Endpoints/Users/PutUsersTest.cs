@@ -21,7 +21,7 @@ public class PutUsersTest
 	public void PutUsersTest_SuccessfulEmailChange()
 	{
 		String newEmail = Tools.RandomString.Generate(20) + "@test.com";
-		PutEmailBody body = new PutEmailBody(userTestObject.user!.email!, newEmail);
+		PutEmailBody body = new PutEmailBody(newEmail);
 		PutUserResponse response = PutUsers.EndpointEmail(userTestObject.accessToken!, body);
 		Assert.IsTrue(response.response == "success", "response should be success but was \"" + response.response + "\"");
 		userTestObject.user!.email = newEmail;
@@ -37,7 +37,7 @@ public class PutUsersTest
 	[TestMethod]
 	public void PutUsersTest_InvalidEmail()
 	{
-		PutEmailBody body = new PutEmailBody(userTestObject.user!.email!, Tools.RandomString.Generate(20));
+		PutEmailBody body = new PutEmailBody(Tools.RandomString.Generate(20));
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PutUsers.EndpointEmail(userTestObject.accessToken!, body));
 		Assert.IsTrue(exception.StatusCode == 400, "StatusCode should be 400 but was " + exception.StatusCode);
 	}
@@ -46,7 +46,7 @@ public class PutUsersTest
 	public void PutUsersTest_SuccessfulPasswordChange()
 	{
 		String newPassword = Tools.RandomString.Generate(20);
-		PutPasswordBody body = new PutPasswordBody(userTestObject.user!.password!, newPassword, userTestObject.user!.email!);
+		PutPasswordBody body = new PutPasswordBody(userTestObject.user!.password!, newPassword);
 		PutUserResponse response = PutUsers.EndpointPass(userTestObject.accessToken!, body);
 		Assert.IsTrue(response.response == "success", "response should be success but was \"" + response.response + "\"");
 		userTestObject.user!.password = newPassword;
@@ -61,23 +61,15 @@ public class PutUsersTest
 	[TestMethod]
 	public void PutUsersTest_WrongOldPassword()
 	{
-		PutPasswordBody body = new PutPasswordBody(Tools.RandomString.Generate(20), Tools.RandomString.Generate(20), userTestObject.user!.email!);
+		PutPasswordBody body = new PutPasswordBody(Tools.RandomString.Generate(20), Tools.RandomString.Generate(20));
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PutUsers.EndpointPass(userTestObject.accessToken!, body));
 		Assert.IsTrue(exception.StatusCode == 401, "StatusCode should be 401 but was " + exception.StatusCode);
 	}
 
 	[TestMethod]
-	public void PutUsersTest_OldEmailNullTest()
-	{
-		PutEmailBody body = new PutEmailBody(null!, Tools.RandomString.Generate(20));
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PutUsers.EndpointEmail(userTestObject.accessToken!, body));
-		Assert.IsTrue(exception.StatusCode == 400, "StatusCode should be 400 but was " + exception.StatusCode);
-	}
-
-	[TestMethod]
 	public void PutUsersTest_NewEmailNullTest()
 	{
-		PutEmailBody body = new PutEmailBody(userTestObject.user!.email!, null!);
+		PutEmailBody body = new PutEmailBody(null!);
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PutUsers.EndpointEmail(userTestObject.accessToken!, body));
 		Assert.IsTrue(exception.StatusCode == 400, "StatusCode should be 400 but was " + exception.StatusCode);
 	}
@@ -85,7 +77,7 @@ public class PutUsersTest
 	[TestMethod]
 	public void PutUsersTest_NewPasswordNullTest()
 	{
-		PutPasswordBody body = new PutPasswordBody(userTestObject.user!.password!, null!, userTestObject.user!.email!);
+		PutPasswordBody body = new PutPasswordBody(userTestObject.user!.password!, null!);
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PutUsers.EndpointPass(userTestObject.accessToken!, body));
 		Assert.IsTrue(exception.StatusCode == 400, "StatusCode should be 400 but was " + exception.StatusCode);
 	}
@@ -93,7 +85,7 @@ public class PutUsersTest
 	[TestMethod]
 	public void PutUsersTest_OldPasswordNullTest()
 	{
-		PutPasswordBody body = new PutPasswordBody(null!, Tools.RandomString.Generate(20), userTestObject.user!.email!);
+		PutPasswordBody body = new PutPasswordBody(null!, Tools.RandomString.Generate(20));
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PutUsers.EndpointPass(userTestObject.accessToken!, body));
 		Assert.IsTrue(exception.StatusCode == 400, "StatusCode should be 400 but was " + exception.StatusCode);
 	}
