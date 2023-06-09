@@ -155,7 +155,7 @@ public class Portfolio
 
 	public async Task<Portfolio> GetValueHistory(string currency, DateOnly startDate, DateOnly endDate)
 	{
-		if (id == null || currency == null || startDate == null || endDate == null)
+		if (id == null || currency == null)
 		{
 			throw new StatusCodeException(400, "Missing required fields");
 		}
@@ -199,19 +199,7 @@ public class Portfolio
 		}
 		User user = GetOwner();
 		cashBalance = user.InsertMissingValues(cashBalance);
-		String getPortfolioNameQuery = "SELECT name FROM Portfolios WHERE uid = @uid";
-		Dictionary<String, object> parameters = new Dictionary<string, object>();
-		parameters.Add("@uid", id);
-		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(getPortfolioNameQuery, parameters);
-		if (data != null)
-		{
-			name = data["name"].ToString()!;
-		}
-		else
-		{
-			name = "";
-		}
-		return new Portfolio(name, currency, valueHistory, positionHistories, dividendHistory, cashBalance);
+		return new Portfolio(name!, currency, valueHistory, positionHistories, dividendHistory, cashBalance);
 	}
 
 	public Portfolio ChangeName(string newName)

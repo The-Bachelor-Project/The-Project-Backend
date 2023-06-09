@@ -247,6 +247,11 @@ public class User
 		foreach (Portfolio portfolio in portfolios)
 		{
 			Portfolio dataPortfolio = await portfolio.GetValueHistory(currency, startDate, endDate);
+			dataPortfolio.id = portfolio.id;
+			dataPortfolio.name = portfolio.name;
+			dataPortfolio.currency = portfolio.currency;
+			dataPortfolio.owner = portfolio.owner;
+			System.Console.WriteLine("id: " + dataPortfolio.id + " name: " + dataPortfolio.name + " currency: " + dataPortfolio.currency);
 			dataPortfolios.Add(dataPortfolio);
 			valueHistory = Data.DatePriceOHLC.AddLists(valueHistory, dataPortfolio.valueHistory!);
 			dividendHistory.AddRange(dataPortfolio.dividendHistory!);

@@ -21,14 +21,15 @@ public class StockPosition
 		List<Data.Dividend> dividendHistory = new List<Data.Dividend>();
 
 		decimal currentlyOwned = 0;
+		if (stockTransactions.Count == 0)
+		{
+			return new Data.Position(stock.ticker, stock.exchange, valueHistory, dividendHistory);
+		}
 		System.Console.WriteLine("Stock ffd   " + stock.ticker + "    " + stockTransactions.Count);
-
-
 		if (Tools.TimeConverter.UnixTimeStampToDateOnly(stockTransactions.First().timestamp) < startDate)
 		{
 			currentlyOwned = stockTransactions.First().amountOwned!.Value;
 		}
-
 		DateOnly currentDate = Tools.TimeConverter.UnixTimeStampToDateOnly(stockTransactions.First().timestamp);
 		currentDate = currentDate < startDate ? currentDate : startDate;
 		Data.StockHistory stockHistory = await new Data.Fetcher.StockFetcher().GetHistory(stock.ticker, stock.exchange, currentDate, endDate, "daily", currency);
