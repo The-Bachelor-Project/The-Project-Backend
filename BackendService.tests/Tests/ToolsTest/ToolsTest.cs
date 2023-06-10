@@ -16,7 +16,7 @@ public class ToolsTest
 	public void ToolsTest_PasswordHashTest()
 	{
 		String password = Tools.RandomString.Generate(20);
-		String passwordHash = Tools.Password.Hash(password);
+		String passwordHash = Tools.Password.Hash(password, "SALT");
 		Assert.IsTrue(passwordHash.Length == 64, "passwordHash should have length 64 but has length " + passwordHash.Length);
 		Assert.IsTrue(password != passwordHash, "password should not be the same as hashed password");
 	}
