@@ -45,7 +45,7 @@ public class User
 			SqlCommand command = new SqlCommand(signUpQuery, connection);
 			command.Parameters.AddWithValue("@user_id", uid);
 			command.Parameters.AddWithValue("@email", email);
-			command.Parameters.AddWithValue("@password", Tools.Password.Hash(password!));
+			command.Parameters.AddWithValue("@password", Tools.Password.Hash(password!, uid));
 			try
 			{
 				command.ExecuteNonQuery();
@@ -82,7 +82,7 @@ public class User
 			String dbPassword = data["password"].ToString()!;
 			String userID = data["user_id"].ToString()!;
 
-			if (dbPassword != Tools.Password.Hash(password!))
+			if (dbPassword != Tools.Password.Hash(password!, userID))
 			{
 				throw new StatusCodeException(401, "The password is incorrect");
 			}
@@ -134,7 +134,7 @@ public class User
 			throw new StatusCodeException(400, "Fields are missing");
 		}
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
-		oldPassword = Tools.Password.Hash(oldPassword);
+		oldPassword = Tools.Password.Hash(oldPassword, id!);
 		String getOldPasswordQuery = "SELECT password FROM Accounts WHERE password = @password";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@password", oldPassword);
@@ -147,7 +147,7 @@ public class User
 		SqlCommand command = new SqlCommand(updatePasswordQuery, connection);
 		command.Parameters.AddWithValue("@user_id", id);
 		command.Parameters.AddWithValue("@old_password", oldPassword);
-		command.Parameters.AddWithValue("@new_password", Tools.Password.Hash(newPassword));
+		command.Parameters.AddWithValue("@new_password", Tools.Password.Hash(newPassword, id!));
 		try
 		{
 			command.ExecuteNonQuery();
