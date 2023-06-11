@@ -35,7 +35,7 @@ public class TimeConverter
 
 
 
-	public static String dateOnlyToString(DateOnly dateOnly)
+	public static String DateOnlyToString(DateOnly dateOnly)
 	{
 		String res = dateOnly.Year.ToString();
 		res += dateOnly.Month >= 10 ? "-" : "-0";

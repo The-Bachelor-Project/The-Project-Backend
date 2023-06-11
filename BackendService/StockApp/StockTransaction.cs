@@ -72,6 +72,24 @@ public class StockTransaction
 			await new Data.Fetcher.StockFetcher().GetHistory(ticker!, exchange!, startTrackingDate, endTrackingDate, "daily", "USD");
 		}
 
+		String getSplits = "SELECT * FROM StockSplits WHERE ticker = @ticker AND exchange = @exchange AND date >= @date";
+		parameters = new Dictionary<string, object>();
+		parameters.Add("@ticker", ticker);
+		parameters.Add("@exchange", exchange);
+		parameters.Add("@date", Tools.TimeConverter.DateOnlyToString(Tools.TimeConverter.UnixTimeStampToDateOnly(timestamp)));
+		List<Dictionary<String, object>> splits = Data.Database.Reader.ReadData(getSplits, parameters);
+		Decimal amountAdjustedRatio = 1;
+		System.Console.WriteLine(Tools.TimeConverter.DateOnlyToString(Tools.TimeConverter.UnixTimeStampToDateOnly(timestamp)));
+		int ratioOut = 1;
+		int ratioIn = 1;
+		foreach (Dictionary<String, object> split in splits)
+		{
+			ratioOut *= (int)split["ratio_out"];
+			ratioIn *= (int)split["ratio_in"];
+		}
+		amountAdjustedRatio = (Decimal)ratioOut / (Decimal)ratioIn;
+
+
 		String getAmountOwned = "SELECT TOP 1 amount_owned FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp <= @timestamp ORDER BY timestamp DESC, id DESC";
 		parameters = new Dictionary<string, object>();
 		parameters.Add("@portfolio", portfolioId);
@@ -81,7 +99,6 @@ public class StockTransaction
 		data = Data.Database.Reader.ReadOne(getAmountOwned, parameters);
 
 		amountOwned = 0;
-		amountAdjusted = amount!;
 		if (data != null)
 		{
 			amountOwned = (Decimal)data["amount_owned"];
@@ -90,26 +107,11 @@ public class StockTransaction
 		{
 			throw new StatusCodeException(400, "Not enough owned stocks");
 		}
-
-
-		if (amount < 0)
-		{
-			String getFutureLowestOwned = "SELECT TOP 1 amount_owned FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND (timestamp > @timestamp) AND amount_owned < @amount_adjusted";
-			Dictionary<String, object> p = new Dictionary<string, object>();
-			p.Add("@portfolio", portfolioId);
-			p.Add("@ticker", ticker);
-			p.Add("@exchange", exchange);
-			p.Add("@timestamp", timestamp);
-			p.Add("@amount_adjusted", amountAdjusted!);
-			Dictionary<String, object>? d = Data.Database.Reader.ReadOne(getFutureLowestOwned, p);
-
-			if (d != null)
-			{
-				throw new StatusCodeException(400, "Not enough owned stocks later in time");
-			}
-		}
+		amountAdjusted = amount * amountAdjustedRatio;
+		amountOwned = amountOwned + amountAdjusted;
 
 		priceUSD = await Tools.PriceConverter.ConvertMoney(priceNative, timestamp, "USD", false);
+
 
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String insertStockTransaction = "INSERT INTO StockTransactions(portfolio, ticker, exchange, amount, amount_adjusted, amount_owned, timestamp, amount_currency, currency, amount_usd) VALUES (@portfolio, @ticker, @exchange, @amount, @amount_adjusted, @amount_owned, @timestamp, @amount_currency, @currency, @amount_usd)";
@@ -119,7 +121,7 @@ public class StockTransaction
 		command.Parameters.AddWithValue("@exchange", exchange);
 		command.Parameters.AddWithValue("@amount", amount);
 		command.Parameters.AddWithValue("@amount_adjusted", amountAdjusted);
-		command.Parameters.AddWithValue("@amount_owned", amountOwned + amountAdjusted);
+		command.Parameters.AddWithValue("@amount_owned", amountOwned);
 		command.Parameters.AddWithValue("@timestamp", timestamp);
 		command.Parameters.AddWithValue("@amount_currency", priceNative!.amount);
 		command.Parameters.AddWithValue("@currency", priceNative.currency);

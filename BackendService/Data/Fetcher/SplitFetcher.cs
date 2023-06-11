@@ -10,7 +10,6 @@ public class SplitFetcher
 		HttpClient client = new HttpClient();
 		String url = "https://query1.finance.yahoo.com/v7/finance/download/" + tickerExt + "?period1=" + startTime + "&period2=" + endTime + "&interval=1d&events=split";
 		HttpResponseMessage stockSplitsHis = await client.GetAsync(url);
-		System.Console.WriteLine("HERE");
 		if (stockSplitsHis.StatusCode == System.Net.HttpStatusCode.NotFound)
 		{
 			return new Dictionary<DateOnly, Dictionary<int, int>>();
@@ -19,12 +18,10 @@ public class SplitFetcher
 		String stockSplitsHisCsv = await stockSplitsHis.Content.ReadAsStringAsync();
 		String[] dataLines = stockSplitsHisCsv.Replace("\r", "").Split("\n");
 		Dictionary<DateOnly, Dictionary<int, int>> result = new Dictionary<DateOnly, Dictionary<int, int>>();
-		System.Console.WriteLine("AND HERE");
 		if (dataLines.Count() == 1)
 		{
 			return result;
 		}
-		System.Console.WriteLine("MOREOVER");
 		for (int i = 1; i < dataLines.Length; i++)
 		{
 			try
@@ -36,7 +33,6 @@ public class SplitFetcher
 				result.Add(date, new Dictionary<int, int>(){
 					{ratioOut, ratioIn}
 				});
-				System.Console.WriteLine("ratioOut: " + ratioOut + " ratioIn: " + ratioIn);
 			}
 			catch (Exception e)
 			{

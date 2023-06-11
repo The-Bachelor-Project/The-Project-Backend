@@ -198,7 +198,7 @@ public class StockFetcher : IStockFetcher
 			command = new SqlCommand(updateStartTrackingDateQuery, connection);
 			command.Parameters.AddWithValue("@ticker", history.ticker);
 			command.Parameters.AddWithValue("@exchange", history.exchange);
-			command.Parameters.AddWithValue("@start_tracking_date", Tools.TimeConverter.dateOnlyToString(history.history.First().date));
+			command.Parameters.AddWithValue("@start_tracking_date", Tools.TimeConverter.DateOnlyToString(history.history.First().date));
 			try
 			{
 				command.ExecuteNonQuery();
@@ -215,7 +215,7 @@ public class StockFetcher : IStockFetcher
 			command = new SqlCommand(updateEndTrackingDateQuery, connection);
 			command.Parameters.AddWithValue("@ticker", history.ticker);
 			command.Parameters.AddWithValue("@exchange", history.exchange);
-			command.Parameters.AddWithValue("@end_tracking_date", Tools.TimeConverter.dateOnlyToString(history.history.Last().date));
+			command.Parameters.AddWithValue("@end_tracking_date", Tools.TimeConverter.DateOnlyToString(history.history.Last().date));
 			try
 			{
 				command.ExecuteNonQuery();
@@ -264,7 +264,7 @@ public class StockFetcher : IStockFetcher
 				SqlCommand command = new SqlCommand(insertSplitRatioQuery, connection);
 				command.Parameters.AddWithValue("@ticker", ticker);
 				command.Parameters.AddWithValue("@exchange", exchange);
-				command.Parameters.AddWithValue("@date", Tools.TimeConverter.dateOnlyToString(splitRatio.Key));
+				command.Parameters.AddWithValue("@date", Tools.TimeConverter.DateOnlyToString(splitRatio.Key));
 				command.Parameters.AddWithValue("@ratio_out", ratio.Key);
 				command.Parameters.AddWithValue("@ratio_in", ratio.Value);
 				try

@@ -13,8 +13,8 @@ public class CurrencyFetcher : ICurrencyFetcher
 		String getCurrencyHistoryQuery = "SELECT * FROM GetCurrencyRates(@currency, @interval, @start_date, @end_date)";
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@currency", currency);
-		parameters.Add("@start_date", Tools.TimeConverter.dateOnlyToString(startDate));
-		parameters.Add("@end_date", Tools.TimeConverter.dateOnlyToString(endDate));
+		parameters.Add("@start_date", Tools.TimeConverter.DateOnlyToString(startDate));
+		parameters.Add("@end_date", Tools.TimeConverter.DateOnlyToString(endDate));
 		parameters.Add("@interval", "daily");
 		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(getCurrencyHistoryQuery, parameters);
 

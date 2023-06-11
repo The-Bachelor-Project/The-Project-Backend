@@ -26,8 +26,8 @@ public class StockFetcher : IStockFetcher
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@ticker", ticker);
 		parameters.Add("@exchange", exchange);
-		parameters.Add("@start_date", Tools.TimeConverter.dateOnlyToString(startDate));
-		parameters.Add("@end_date", Tools.TimeConverter.dateOnlyToString(endDate));
+		parameters.Add("@start_date", Tools.TimeConverter.DateOnlyToString(startDate));
+		parameters.Add("@end_date", Tools.TimeConverter.DateOnlyToString(endDate));
 		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(getStockHistoryQuery, parameters);
 		if (data.Count == 0)
 		{
@@ -127,8 +127,8 @@ public class StockFetcher : IStockFetcher
 		Dictionary<String, object> parameters = new Dictionary<string, object>();
 		parameters.Add("@ticker", ticker);
 		parameters.Add("@exchange", exchange);
-		parameters.Add("@start_date", Tools.TimeConverter.dateOnlyToString(startDate));
-		parameters.Add("@end_date", Tools.TimeConverter.dateOnlyToString(endDate));
+		parameters.Add("@start_date", Tools.TimeConverter.DateOnlyToString(startDate));
+		parameters.Add("@end_date", Tools.TimeConverter.DateOnlyToString(endDate));
 		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(getDividendsQuery, parameters);
 		foreach (Dictionary<String, object> row in data)
 		{

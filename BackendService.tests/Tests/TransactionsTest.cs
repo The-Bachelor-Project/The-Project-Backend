@@ -391,8 +391,8 @@ public class TransactionsTest
 		{
 			if (data["start_tracking_date"] != DBNull.Value && data["end_tracking_date"] != DBNull.Value)
 			{
-				startTrackingDate = Tools.TimeConverter.dateOnlyToString(DateOnly.FromDateTime((DateTime)data["start_tracking_date"]));
-				endTrackingDate = Tools.TimeConverter.dateOnlyToString(DateOnly.FromDateTime((DateTime)data["end_tracking_date"]));
+				startTrackingDate = Tools.TimeConverter.DateOnlyToString(DateOnly.FromDateTime((DateTime)data["start_tracking_date"]));
+				endTrackingDate = Tools.TimeConverter.DateOnlyToString(DateOnly.FromDateTime((DateTime)data["end_tracking_date"]));
 			}
 		}
 		String resetStockQuery = "EXEC ResetIt @ID, @Exchange, @IsStock";
