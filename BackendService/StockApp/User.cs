@@ -118,10 +118,10 @@ public class User
 			System.Console.WriteLine(e);
 			throw new StatusCodeException(409, "Could not update user email");
 		}
-		String changePasswordQuery = "UPDATE Accounts SET password = @password WHERE id = @id";
+		String changePasswordQuery = "UPDATE Accounts SET password = @password WHERE user_id = @id";
 		command = new SqlCommand(changePasswordQuery, connection);
 		command.Parameters.AddWithValue("@password", Tools.Password.Hash(password, id!));
-		command.Parameters.AddWithValue("@id", id!);
+		command.Parameters.AddWithValue("@user_id", id!);
 		try
 		{
 			command.ExecuteNonQuery();
