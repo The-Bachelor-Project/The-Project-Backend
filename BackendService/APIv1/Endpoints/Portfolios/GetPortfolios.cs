@@ -1,12 +1,17 @@
 namespace API.v1;
+using Microsoft.AspNetCore.Mvc;
 
 public class GetPortfolios
 {
-	public static void Setup(WebApplication app)
+	public static void Setup(WebApplication app, [FromQuery] String? id = null)
 	{
 		app.MapGet("/v1/portfolios", (HttpContext context) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
+			if (id is not null)
+			{
+				return Results.Ok(Endpoint(id, accessToken!));
+			}
 			return Results.Ok(Endpoint(accessToken!));
 		});
 	}
