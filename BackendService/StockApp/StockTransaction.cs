@@ -79,7 +79,6 @@ public class StockTransaction
 		parameters.Add("@date", Tools.TimeConverter.DateOnlyToString(Tools.TimeConverter.UnixTimeStampToDateOnly(timestamp)));
 		List<Dictionary<String, object>> splits = Data.Database.Reader.ReadData(getSplits, parameters);
 		Decimal amountAdjustedRatio = 1;
-		System.Console.WriteLine(Tools.TimeConverter.DateOnlyToString(Tools.TimeConverter.UnixTimeStampToDateOnly(timestamp)));
 		int ratioOut = 1;
 		int ratioIn = 1;
 		foreach (Dictionary<String, object> split in splits)

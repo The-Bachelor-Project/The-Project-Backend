@@ -21,7 +21,7 @@ public class PutUsersTest
 	public void PutUsersTest_SuccessfulEmailChange()
 	{
 		String newEmail = Tools.RandomString.Generate(20) + "@test.com";
-		PutEmailBody body = new PutEmailBody(newEmail);
+		PutEmailBody body = new PutEmailBody(newEmail, "password");
 		PutUserResponse response = PutUsers.EndpointEmail(userTestObject.accessToken!, body);
 		Assert.IsTrue(response.response == "success", "response should be success but was \"" + response.response + "\"");
 		userTestObject.user!.email = newEmail;
@@ -37,7 +37,7 @@ public class PutUsersTest
 	[TestMethod]
 	public void PutUsersTest_InvalidEmail()
 	{
-		PutEmailBody body = new PutEmailBody(Tools.RandomString.Generate(20));
+		PutEmailBody body = new PutEmailBody(Tools.RandomString.Generate(20), "password");
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PutUsers.EndpointEmail(userTestObject.accessToken!, body));
 		Assert.IsTrue(exception.StatusCode == 400, "StatusCode should be 400 but was " + exception.StatusCode);
 	}
@@ -69,7 +69,7 @@ public class PutUsersTest
 	[TestMethod]
 	public void PutUsersTest_NewEmailNullTest()
 	{
-		PutEmailBody body = new PutEmailBody(null!);
+		PutEmailBody body = new PutEmailBody(null!, "password");
 		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => PutUsers.EndpointEmail(userTestObject.accessToken!, body));
 		Assert.IsTrue(exception.StatusCode == 400, "StatusCode should be 400 but was " + exception.StatusCode);
 	}

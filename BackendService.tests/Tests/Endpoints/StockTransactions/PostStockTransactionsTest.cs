@@ -68,7 +68,7 @@ public class PostStockTransactionsTest
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.id != 0, "Response id should not be 0");
 		StockApp.StockTransaction gottenStockTransaction = StockTransactionHelper.Get(stockTransaction1ID);
-		Assert.IsTrue(gottenStockTransaction.amountOwned == 10, "Amount owned for first transaction should be 10 but was " + gottenStockTransaction.amountOwned);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 40, "Amount owned for first transaction should be 40 do to splits but was " + gottenStockTransaction.amountOwned);
 
 		StockApp.StockTransaction stockTransaction2 = new StockApp.StockTransaction();
 		stockTransaction2.portfolioId = portfolio.id;
@@ -90,9 +90,9 @@ public class PostStockTransactionsTest
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.id != 0, "Response id should not be 0");
 		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction2ID);
-		Assert.IsTrue(gottenStockTransaction.amountOwned == 30, "Amount owned for the first transaction should be 30 but was " + gottenStockTransaction.amountOwned);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 120, "Amount owned for the first transaction should be 120 due to splits but was " + gottenStockTransaction.amountOwned);
 		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction1ID);
-		Assert.IsTrue(gottenStockTransaction.amountOwned == 10, "Amount owned for the second transaction should be 10 but was " + gottenStockTransaction.amountOwned);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 40, "Amount owned for the second transaction should be 40 due to splits but was " + gottenStockTransaction.amountOwned);
 
 
 		StockApp.StockTransaction stockTransaction3 = new StockApp.StockTransaction();
@@ -115,11 +115,11 @@ public class PostStockTransactionsTest
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.id != 0, "Response id should not be 0");
 		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction3ID);
-		Assert.IsTrue(gottenStockTransaction.amountOwned == 60, "Amount owned for the third transaction should be 60 but was " + gottenStockTransaction.amountOwned);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 150, "Amount owned for the third transaction should be 150 due to splits but was " + gottenStockTransaction.amountOwned);
 		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction2ID);
-		Assert.IsTrue(gottenStockTransaction.amountOwned == 30, "Amount owned for the second transaction should be 30 but was " + gottenStockTransaction.amountOwned);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 120, "Amount owned for the second transaction should be 120 due to splits but was " + gottenStockTransaction.amountOwned);
 		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction1ID);
-		Assert.IsTrue(gottenStockTransaction.amountOwned == 10, "Amount owned for the first transaction should be 10 but was " + gottenStockTransaction.amountOwned);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 40, "Amount owned for the first transaction should be 40 due to splits but was " + gottenStockTransaction.amountOwned);
 	}
 
 	[TestMethod]
@@ -167,9 +167,9 @@ public class PostStockTransactionsTest
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.id != 0, "Response id should not be 0");
 		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction2ID);
-		Assert.IsTrue(gottenStockTransaction.amountOwned == 20, "Amount owned for the first transaction should be 20 but was " + gottenStockTransaction.amountOwned);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 80, "Amount owned for the first transaction should be 80 but was " + gottenStockTransaction.amountOwned);
 		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction1ID);
-		Assert.IsTrue(gottenStockTransaction.amountOwned == 30, "Amount owned for the second transaction should be 30 but was " + gottenStockTransaction.amountOwned);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 90, "Amount owned for the second transaction should be 90 but was " + gottenStockTransaction.amountOwned);
 
 
 		StockApp.StockTransaction stockTransaction3 = new StockApp.StockTransaction();
@@ -192,11 +192,11 @@ public class PostStockTransactionsTest
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.id != 0, "Response id should not be 0");
 		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction3ID);
-		Assert.IsTrue(gottenStockTransaction.amountOwned == 30, "Amount owned for the third transaction should be 30 but was " + gottenStockTransaction.amountOwned);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 120, "Amount owned for the third transaction should be 120 but was " + gottenStockTransaction.amountOwned);
 		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction2ID);
-		Assert.IsTrue(gottenStockTransaction.amountOwned == 50, "Amount owned for the second transaction should be 50 but was " + gottenStockTransaction.amountOwned);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 200, "Amount owned for the second transaction should be 200 but was " + gottenStockTransaction.amountOwned);
 		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction1ID);
-		Assert.IsTrue(gottenStockTransaction.amountOwned == 60, "Amount owned for the first transaction should be 60 but was " + gottenStockTransaction.amountOwned);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 210, "Amount owned for the first transaction should be 210 but was " + gottenStockTransaction.amountOwned);
 	}
 
 	[TestMethod]
@@ -222,7 +222,7 @@ public class PostStockTransactionsTest
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.id != 0, "Response id should not be 0");
 		StockApp.StockTransaction gottenStockTransaction = StockTransactionHelper.Get(stockTransaction1ID);
-		Assert.IsTrue(gottenStockTransaction.amountOwned == 10, "Amount owned for first transaction should be 10 but was " + gottenStockTransaction.amountOwned);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 40, "Amount owned for first transaction should be 40 but was " + gottenStockTransaction.amountOwned);
 
 		StockApp.StockTransaction stockTransaction2 = new StockApp.StockTransaction();
 		stockTransaction2.portfolioId = portfolio.id;
@@ -244,9 +244,9 @@ public class PostStockTransactionsTest
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.id != 0, "Response id should not be 0");
 		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction2ID);
-		Assert.IsTrue(gottenStockTransaction.amountOwned == 20, "Amount owned for the first transaction should be 20 but was " + gottenStockTransaction.amountOwned);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 80, "Amount owned for the first transaction should be 80 but was " + gottenStockTransaction.amountOwned);
 		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction1ID);
-		Assert.IsTrue(gottenStockTransaction.amountOwned == 30, "Amount owned for the second transaction should be 30 but was " + gottenStockTransaction.amountOwned);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 120, "Amount owned for the second transaction should be 120 but was " + gottenStockTransaction.amountOwned);
 
 
 		StockApp.StockTransaction stockTransaction3 = new StockApp.StockTransaction();
@@ -269,11 +269,11 @@ public class PostStockTransactionsTest
 		Assert.IsTrue(response.response == "success", "Response should be success but was " + response.response);
 		Assert.IsTrue(response.id != 0, "Response id should not be 0");
 		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction3ID);
-		Assert.IsTrue(gottenStockTransaction.amountOwned == 60, "Amount owned for the third transaction should be 60 but was " + gottenStockTransaction.amountOwned);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 150, "Amount owned for the third transaction should be 150 but was " + gottenStockTransaction.amountOwned);
 		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction2ID);
-		Assert.IsTrue(gottenStockTransaction.amountOwned == 20, "Amount owned for the second transaction should be 20 but was " + gottenStockTransaction.amountOwned);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 80, "Amount owned for the second transaction should be 80 but was " + gottenStockTransaction.amountOwned);
 		gottenStockTransaction = StockTransactionHelper.Get(stockTransaction1ID);
-		Assert.IsTrue(gottenStockTransaction.amountOwned == 30, "Amount owned for the first transaction should be 30 but was " + gottenStockTransaction.amountOwned);
+		Assert.IsTrue(gottenStockTransaction.amountOwned == 120, "Amount owned for the first transaction should be 120 but was " + gottenStockTransaction.amountOwned);
 	}
 
 	[TestMethod]

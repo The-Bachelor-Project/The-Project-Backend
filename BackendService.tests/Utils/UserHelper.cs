@@ -13,7 +13,7 @@ public class UserHelper
 		SqlCommand command = new SqlCommand(insertAccountQuery, connection);
 		command.Parameters.AddWithValue("@user_id", uid);
 		command.Parameters.AddWithValue("@email", email);
-		command.Parameters.AddWithValue("@password", Tools.Password.Hash(password, "SALT"));
+		command.Parameters.AddWithValue("@password", Tools.Password.Hash(password, uid));
 		try
 		{
 			command.ExecuteNonQuery();
