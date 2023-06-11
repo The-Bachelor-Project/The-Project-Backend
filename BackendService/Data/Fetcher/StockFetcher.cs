@@ -259,6 +259,17 @@ public class StockFetcher : IStockFetcher
 		{
 			foreach (KeyValuePair<int, int> ratio in splitRatio.Value)
 			{
+				String checkSplitExists = "SELECT COUNT(*) FROM StockSplits WHERE ticker = @ticker AND exchange = @exchange AND date = @date AND ratio_in = @ratio_in AND ratio_out = @ratio_out";
+				Dictionary<string, object> parameters = new Dictionary<string, object>();
+				parameters.Add("@ticker", ticker);
+				parameters.Add("@exchange", exchange);
+				parameters.Add("@date", Tools.TimeConverter.DateOnlyToString(splitRatio.Key));
+				parameters.Add("@ratio_in", ratio.Key);
+				parameters.Add("@ratio_out", ratio.Value);
+				Dictionary<string, object>? result = Data.Database.Reader.ReadOne(checkSplitExists, parameters);
+				if (result != null && result.Count > 0)
+					continue;
+
 				String insertSplitRatioQuery = "INSERT INTO StockSplits (ticker, exchange, date, ratio_in, ratio_out) VALUES (@ticker, @exchange, @date, @ratio_in, @ratio_out)";
 				SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 				SqlCommand command = new SqlCommand(insertSplitRatioQuery, connection);

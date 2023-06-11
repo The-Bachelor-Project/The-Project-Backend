@@ -102,12 +102,12 @@ public class StockTransaction
 		{
 			amountOwned = (Decimal)data["amount_owned"];
 		}
+		amountAdjusted = amount * amountAdjustedRatio;
+		amountOwned = amountOwned + amountAdjusted;
 		if ((amountOwned + amountAdjusted) < 0)
 		{
 			throw new StatusCodeException(400, "Not enough owned stocks");
 		}
-		amountAdjusted = amount * amountAdjustedRatio;
-		amountOwned = amountOwned + amountAdjusted;
 
 		priceUSD = await Tools.PriceConverter.ConvertMoney(priceNative, timestamp, "USD", false);
 

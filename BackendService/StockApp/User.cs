@@ -131,6 +131,7 @@ public class User
 			System.Console.WriteLine(e);
 			throw new StatusCodeException(500, "Failed to change email");
 		}
+		password = Tools.Password.Hash(password, id!);
 		return this;
 	}
 
@@ -367,7 +368,6 @@ public class User
 			int id = Convert.ToInt32(row["id"]);
 			String description;
 			Money amount;
-
 			switch (type)
 			{
 				case "DividendPayout":

@@ -599,7 +599,7 @@ public class PostStockTransactionsTest
 
 		stockTransactionData = new StockApp.StockTransaction();
 		stockTransactionData.portfolioId = portfolio.id;
-		stockTransactionData.amount = -3;
+		stockTransactionData.amount = -5;
 		stockTransactionData.exchange = "NASDAQ";
 		stockTransactionData.ticker = "AAPL";
 		stockTransactionData.timestamp = Tools.TimeConverter.DateTimeToUnix(DateTime.Now);
