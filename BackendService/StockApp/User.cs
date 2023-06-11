@@ -121,7 +121,7 @@ public class User
 		String changePasswordQuery = "UPDATE Accounts SET password = @password WHERE user_id = @id";
 		command = new SqlCommand(changePasswordQuery, connection);
 		command.Parameters.AddWithValue("@password", Tools.Password.Hash(password, id!));
-		command.Parameters.AddWithValue("@user_id", id!);
+		command.Parameters.AddWithValue("@id", id!);
 		try
 		{
 			command.ExecuteNonQuery();
