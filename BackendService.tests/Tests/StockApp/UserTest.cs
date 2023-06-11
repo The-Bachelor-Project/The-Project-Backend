@@ -141,7 +141,7 @@ public class UserTest
 		String newEmail = Tools.RandomString.Generate(200) + "@test.com";
 		try
 		{
-			user.ChangeEmail(newEmail);
+			user.ChangeEmail(newEmail, "HEL");
 			UserExistsInDatabaseCheck(newEmail);
 			user.email = newEmail;
 		}
@@ -165,7 +165,7 @@ public class UserTest
 		{
 			Assert.Fail("Exception thrown, user not added to database: " + e.Message);
 		}
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.ChangeEmail(otherEmail));
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.ChangeEmail(otherEmail, "HEL"));
 		Assert.IsTrue(exception.StatusCode == 409, "status code should be 409 but was " + exception.StatusCode);
 		UserHelper.Delete(new UserTestObject(otherUser, "", "", -2));
 	}
@@ -174,7 +174,7 @@ public class UserTest
 	public void UserTest_ChangeEmail_NewEmailNullTest()
 	{
 		StockApp.User user = userTestObject.user!;
-		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.ChangeEmail(null!));
+		StatusCodeException exception = Assert.ThrowsException<StatusCodeException>(() => user.ChangeEmail(null!, "HEL"));
 		Assert.IsTrue(exception.StatusCode == 400, "status code should be 400 but was " + exception.StatusCode);
 	}
 

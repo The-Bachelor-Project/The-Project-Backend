@@ -42,21 +42,7 @@ public class PutUsers
 			throw new StatusCodeException(400, "Invalid email");
 		}
 		User user = new TokenSet(accessToken).GetUser();
-		user.ChangeEmail(body.newEmail);
-		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
-		String changePasswordQuery = "UPDATE Accounts SET password = @password WHERE id = @id";
-		SqlCommand command = new SqlCommand(changePasswordQuery, connection);
-		command.Parameters.AddWithValue("@password", Tools.Password.Hash(body.password, user.id!));
-		command.Parameters.AddWithValue("@id", user.id!);
-		try
-		{
-			command.ExecuteNonQuery();
-		}
-		catch (Exception e)
-		{
-			System.Console.WriteLine(e);
-			throw new StatusCodeException(500, "Failed to change email");
-		}
+		user.ChangeEmail(body.newEmail, body.password);
 		return new PutUserResponse("success");
 	}
 }
