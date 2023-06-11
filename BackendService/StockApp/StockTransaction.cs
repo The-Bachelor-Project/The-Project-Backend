@@ -60,18 +60,25 @@ public class StockTransaction
 			throw new StatusCodeException(400, "Invalid currency " + priceNative!.currency);
 		}
 
-		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
-
-
-
+		String getStartTracking = "SELECT start_tracking_date FROM Stocks WHERE ticker = @ticker AND exchange = @exchange";
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@ticker", ticker);
+		parameters.Add("@exchange", exchange);
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(getStartTracking, parameters);
+		if (data == null || data["start_tracking_date"] == System.DBNull.Value || Tools.TimeConverter.DateTimeToUnix((DateTime)data["start_tracking_date"]) > timestamp)
+		{
+			DateOnly startTrackingDate = Tools.TimeConverter.UnixTimeStampToDateOnly(timestamp);
+			DateOnly endTrackingDate = DateOnly.FromDateTime(DateTime.Now);
+			await new Data.Fetcher.StockFetcher().GetHistory(ticker!, exchange!, startTrackingDate, endTrackingDate, "daily", "USD");
+		}
 
 		String getAmountOwned = "SELECT TOP 1 amount_owned FROM StockTransactions WHERE portfolio = @portfolio AND ticker = @ticker AND exchange = @exchange AND timestamp <= @timestamp ORDER BY timestamp DESC, id DESC";
-		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters = new Dictionary<string, object>();
 		parameters.Add("@portfolio", portfolioId);
 		parameters.Add("@ticker", ticker);
 		parameters.Add("@exchange", exchange);
 		parameters.Add("@timestamp", timestamp);
-		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(getAmountOwned, parameters);
+		data = Data.Database.Reader.ReadOne(getAmountOwned, parameters);
 
 		amountOwned = 0;
 		amountAdjusted = amount!;
@@ -104,6 +111,7 @@ public class StockTransaction
 
 		priceUSD = await Tools.PriceConverter.ConvertMoney(priceNative, timestamp, "USD", false);
 
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String insertStockTransaction = "INSERT INTO StockTransactions(portfolio, ticker, exchange, amount, amount_adjusted, amount_owned, timestamp, amount_currency, currency, amount_usd) VALUES (@portfolio, @ticker, @exchange, @amount, @amount_adjusted, @amount_owned, @timestamp, @amount_currency, @currency, @amount_usd)";
 		SqlCommand command = new SqlCommand(insertStockTransaction, connection);
 		command.Parameters.AddWithValue("@portfolio", portfolioId);

@@ -49,23 +49,29 @@ public class StockFetcher : IStockFetcher
 			{
 				StockHistory fromYahoo = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, startDate.AddDays(-7), endDate, interval, currency);
 				fromYahoo.dividends = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetDividends(ticker, exchange, startDate.AddDays(-7), endDate);
+				Dictionary<DateOnly, Dictionary<int, int>> splitRatios = await new Data.Fetcher.YahooFinanceFetcher.SplitFetcher().GetSplits(ticker, exchange, startDate.AddDays(-7), endDate);
 				SaveStockHistory(fromYahoo, true, true);
 				SaveDividends(fromYahoo.dividends, ticker, exchange);
+				SaveSplits(splitRatios, ticker, exchange);
 				return fromYahoo;
 			}
 			if (startDate < startTrackingDate)
 			{
 				StockHistory fromYahooBefore = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, startDate.AddDays(-7), startTrackingDate.AddDays(-1), interval, currency);
 				fromYahooBefore.dividends = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetDividends(ticker, exchange, startDate.AddDays(-7), startTrackingDate.AddDays(-1));
+				Dictionary<DateOnly, Dictionary<int, int>> splitRatios = await new Data.Fetcher.YahooFinanceFetcher.SplitFetcher().GetSplits(ticker, exchange, startDate.AddDays(-7), startTrackingDate.AddDays(-1));
 				SaveStockHistory(fromYahooBefore, true, false);
 				SaveDividends(fromYahooBefore.dividends, ticker, exchange);
+				SaveSplits(splitRatios, ticker, exchange);
 			}
 			if (endDate > endTrackingDate)
 			{
 				StockHistory fromYahooAfter = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetHistory(ticker, exchange, endTrackingDate.AddDays(1), endDate, interval, currency);
 				fromYahooAfter.dividends = await new Data.Fetcher.YahooFinanceFetcher.StockFetcher().GetDividends(ticker, exchange, endTrackingDate.AddDays(1), endDate);
+				Dictionary<DateOnly, Dictionary<int, int>> splitRatios = await new Data.Fetcher.YahooFinanceFetcher.SplitFetcher().GetSplits(ticker, exchange, endTrackingDate.AddDays(1), endDate);
 				SaveStockHistory(fromYahooAfter, false, true);
 				SaveDividends(fromYahooAfter.dividends, ticker, exchange);
+				SaveSplits(splitRatios, ticker, exchange);
 			}
 		}
 		StockHistory stockHistoryReturn = await new Data.Fetcher.DatabaseFetcher.StockFetcher().GetHistory(ticker, exchange, startDate, endDate, interval, currency);
@@ -244,6 +250,47 @@ public class StockFetcher : IStockFetcher
 		{
 			System.Console.WriteLine(e.Message);
 			throw new StatusCodeException(500, "Could not save dividends of " + exchange + ":" + ticker + " to database");
+		}
+	}
+
+	private void SaveSplits(Dictionary<DateOnly, Dictionary<int, int>> splitRatios, string ticker, string exchange)
+	{
+		foreach (KeyValuePair<DateOnly, Dictionary<int, int>> splitRatio in splitRatios)
+		{
+			foreach (KeyValuePair<int, int> ratio in splitRatio.Value)
+			{
+				String insertSplitRatioQuery = "INSERT INTO StockSplits (ticker, exchange, date, ratio_in, ratio_out) VALUES (@ticker, @exchange, @date, @ratio_in, @ratio_out)";
+				SqlConnection connection = Data.Database.Connection.GetSqlConnection();
+				SqlCommand command = new SqlCommand(insertSplitRatioQuery, connection);
+				command.Parameters.AddWithValue("@ticker", ticker);
+				command.Parameters.AddWithValue("@exchange", exchange);
+				command.Parameters.AddWithValue("@date", Tools.TimeConverter.dateOnlyToString(splitRatio.Key));
+				command.Parameters.AddWithValue("@ratio_out", ratio.Key);
+				command.Parameters.AddWithValue("@ratio_in", ratio.Value);
+				try
+				{
+					command.ExecuteNonQuery();
+				}
+				catch (SqlException e)
+				{
+					if (e.Number == 2627 || e.Number == 2601) // Primary key violations, meaning it exists
+					{
+						System.Console.WriteLine(e);
+						continue;
+					}
+					else
+					{
+						System.Console.WriteLine(e);
+						throw new StatusCodeException(500, "Error while saving split ratios");
+					}
+
+				}
+				catch (Exception e)
+				{
+					System.Console.WriteLine(e);
+					throw new StatusCodeException(500, "Error while saving split ratios");
+				}
+			}
 		}
 	}
 }

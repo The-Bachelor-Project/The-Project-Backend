@@ -134,6 +134,7 @@ public class Portfolio
 			stockTransactions.Last().amountOwned = Convert.ToDecimal(row["amount_owned"]);
 			stockTransactions.Last().timestamp = Convert.ToInt32(row["timestamp"]);
 			stockTransactions.Last().priceNative = new Money(Convert.ToDecimal(row["amount_currency"]), row["currency"].ToString()!);
+			stockTransactions.Last().priceUSD = new Money(Convert.ToDecimal(row["amount_usd"]), "USD");
 		}
 		return this;
 	}
