@@ -82,7 +82,6 @@ public class StockPosition
 				{
 					dividend = stockHistory.dividends[dividendIndex];
 					dividendIndex++;
-
 					dividendHistory.Add(new Data.Dividend(currentDate, new StockApp.Money(dividend.payout.amount * currentlyOwned, currency)));
 				}
 			}

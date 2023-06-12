@@ -104,10 +104,11 @@ public class User
 			throw new StatusCodeException(400, "Fields are missing");
 		}
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
-		String query = "UPDATE Accounts SET email = @new_email WHERE user_id = @user_id";
+		String query = "UPDATE Accounts SET email = @new_email, password = @password WHERE user_id = @user_id";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@user_id", id);
 		command.Parameters.AddWithValue("@new_email", newEmail);
+		command.Parameters.AddWithValue("@password", Tools.Password.Hash(password, id!));
 		try
 		{
 			command.ExecuteNonQuery();
@@ -117,19 +118,6 @@ public class User
 		{
 			System.Console.WriteLine(e);
 			throw new StatusCodeException(409, "Could not update user email");
-		}
-		String changePasswordQuery = "UPDATE Accounts SET password = @password WHERE user_id = @id";
-		command = new SqlCommand(changePasswordQuery, connection);
-		command.Parameters.AddWithValue("@password", Tools.Password.Hash(password, id!));
-		command.Parameters.AddWithValue("@id", id!);
-		try
-		{
-			command.ExecuteNonQuery();
-		}
-		catch (Exception e)
-		{
-			System.Console.WriteLine(e);
-			throw new StatusCodeException(500, "Failed to change email");
 		}
 		password = Tools.Password.Hash(password, id!);
 		return this;
@@ -287,7 +275,6 @@ public class User
 		{
 			newTransactions = allTransactions.GetRange(firstIndex < 0 ? 0 : firstIndex, ((lastIndex - firstIndex + 1) < 0 ? 0 : (lastIndex - firstIndex + 1)));
 		}
-
 
 		List<Data.DatePriceOHLC> valueHistory = new List<Data.DatePriceOHLC>();
 		List<Portfolio> dataPortfolios = new List<Portfolio>();
