@@ -116,13 +116,13 @@ public class User
 		{
 			command.ExecuteNonQuery();
 			this.email = email;
+			this.password = password;
 		}
 		catch (Exception e)
 		{
 			System.Console.WriteLine(e);
 			throw new StatusCodeException(409, "Could not update user email");
 		}
-		password = Tools.Password.Hash(password, id!);
 		return this;
 	}
 

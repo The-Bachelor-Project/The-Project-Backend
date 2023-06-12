@@ -428,7 +428,7 @@ public class TransactionsTest
 		Assert.IsTrue(postStockTransactionsResponse.response == "success", "Response should be success but was " + postStockTransactionsResponse.response);
 		GetTransactionsResponse transactions = await GetTransactions.Endpoint(userTestObject.accessToken!, "USD");
 		Assert.IsTrue(transactions.response == "success", "Response should be success but was " + transactions.response);
-		Assert.IsTrue(transactions.transactions.Count == 11, "Transactions should be 11 but was " + transactions.transactions.Count);
+		Assert.IsTrue(transactions.transactions.Count == 11, "Transactions should be 11 because of dividends but was " + transactions.transactions.Count);
 		GetValueHistoryResponse valueHistory = await GetValueHistory.EndpointAsync(startTrackingDate, endTrackingDate, "EUR", userTestObject.accessToken!);
 		Assert.IsTrue(valueHistory.valueHistory.valueHistory[0].highPrice.currency == "EUR", "Currency should be EUR but was " + valueHistory.valueHistory.valueHistory[0].highPrice.currency);
 		transactions = await GetTransactions.Endpoint(userTestObject.accessToken!, "USD");

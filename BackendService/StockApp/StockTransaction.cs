@@ -104,7 +104,8 @@ public class StockTransaction
 		}
 		amountAdjusted = amount * amountAdjustedRatio;
 		amountOwned = amountOwned + amountAdjusted;
-		if ((amountOwned + amountAdjusted) < 0)
+
+		if (amountOwned < 0)
 		{
 			throw new StatusCodeException(400, "Not enough owned stocks");
 		}

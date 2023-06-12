@@ -25,13 +25,10 @@ public class PutUsersTest
 		PutUserResponse response = PutUsers.EndpointEmail(userTestObject.accessToken!, body);
 		Assert.IsTrue(response.response == "success", "response should be success but was \"" + response.response + "\"");
 		userTestObject.user!.email = newEmail;
-		PostTokensBody signInBody = new PostTokensBody(userTestObject.user!.email!, userTestObject.user!.password!);
+		PostTokensBody signInBody = new PostTokensBody(userTestObject.user!.email!, "password");
 		StockApp.TokenSet signInResponse = PostTokens.Endpoint(signInBody);
 		Assert.IsTrue(signInResponse.accessToken != "", "accessToken should not be empty");
 		Assert.IsTrue(signInResponse.refreshToken != "", "refreshToken should not be empty");
-		userTestObject.accessToken = signInResponse.accessToken;
-		userTestObject.refreshToken = signInResponse.refreshToken;
-
 	}
 
 	[TestMethod]
@@ -54,8 +51,6 @@ public class PutUsersTest
 		StockApp.TokenSet signInResponse = PostTokens.Endpoint(signInBody);
 		Assert.IsTrue(signInResponse.accessToken != "", "accessToken should not be empty");
 		Assert.IsTrue(signInResponse.refreshToken != "", "refreshToken should not be empty");
-		userTestObject.accessToken = signInResponse.accessToken;
-		userTestObject.refreshToken = signInResponse.refreshToken;
 	}
 
 	[TestMethod]
