@@ -99,16 +99,19 @@ public class User
 	/// <returns>The <see cref="User"/> object with the updated email address.</returns>
 	public User ChangeEmail(String newEmail, String password)
 	{
+		System.Console.WriteLine("ChangeEmail 1: " + password);
 		if (newEmail == null)
 		{
 			throw new StatusCodeException(400, "Fields are missing");
 		}
+		String passwordHash = Tools.Password.Hash(password, id!);
+		System.Console.WriteLine("ChangeEmail 2: " + passwordHash);
 		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		String query = "UPDATE Accounts SET email = @new_email, password = @password WHERE user_id = @user_id";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@user_id", id);
 		command.Parameters.AddWithValue("@new_email", newEmail);
-		command.Parameters.AddWithValue("@password", Tools.Password.Hash(password, id!));
+		command.Parameters.AddWithValue("@password", passwordHash);
 		try
 		{
 			command.ExecuteNonQuery();
