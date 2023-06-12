@@ -46,7 +46,7 @@ public class StockPosition
 		Data.Dividend? dividend = null;
 		if (stockHistory.dividends.Count != 0)
 		{
-			dividendIndex = stockHistory.dividends.FindIndex(divi => divi.date >= currentDate);
+			dividendIndex = stockHistory.dividends.FindIndex(divi => divi.date >= startDate);
 			dividend = stockHistory.dividends[dividendIndex];
 		}
 		int transactionIndex = 0;
