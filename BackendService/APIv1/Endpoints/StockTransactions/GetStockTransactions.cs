@@ -9,19 +9,14 @@ public class GetStockTransactions
 		app.MapGet("/v1/stock-transactions", (HttpContext context) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
-			if (accessToken is null)
-			{
-				context.Response.StatusCode = 401;
-				return Results.Ok(new GetPortfoliosResponse("error", new List<StockApp.Portfolio> { }));
-			}
-			return Results.Ok(Endpoint(accessToken));
+			return Results.Ok(Endpoint(accessToken!));
 		});
 	}
 
-	public static GetStockTransactionsResponse Endpoint(string accessToken)
+	public static GetStockTransactionsResponse Endpoint(String accessToken)
 	{
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
-		List<Data.StockTransaction> stockTransactions = user.GetAllStockTransactions();
+		List<StockApp.StockTransaction> stockTransactions = user.GetAllStockTransactions();
 		return new GetStockTransactionsResponse("success", stockTransactions);
 	}
 }

@@ -10,8 +10,8 @@ public class CurrencyFetcher : ICurrencyFetcher
 
 	public async Task<Data.CurrencyHistory> GetHistory(string currency, DateOnly startDate, DateOnly endDate)
 	{
-		int startTime = Tools.TimeConverter.dateOnlyToUnix(startDate);
-		int endTime = Tools.TimeConverter.dateOnlyToUnix(endDate);
+		int startTime = Tools.TimeConverter.DateOnlyToUnix(startDate);
+		int endTime = Tools.TimeConverter.DateOnlyToUnix(endDate);
 
 		HttpClient client = new HttpClient();
 		Boolean isGBX = false;
@@ -26,7 +26,10 @@ public class CurrencyFetcher : ICurrencyFetcher
 		String stockHistoryCsv = await stockHistoryRes.Content.ReadAsStringAsync();
 
 		String[] dataLines = stockHistoryCsv.Replace("\r", "").Split("\n");
-
+		if (dataLines.Count() == 1)
+		{
+			return new Data.CurrencyHistory(currency, startDate, endDate, "daily");
+		}
 		Data.CurrencyHistory? result = null;
 
 		if (isGBX)
@@ -34,24 +37,32 @@ public class CurrencyFetcher : ICurrencyFetcher
 			result = new Data.CurrencyHistory("GBX", startDate, endDate, "daily");
 			for (int i = 1; i < dataLines.Length; i++)
 			{
-				String[] data = dataLines[i].Split(",");
-				if (data[1] == "null")
+				try
 				{
-					Data.DatePriceOHLC temp = new Data.DatePriceOHLC(DateOnly.Parse(data[0]), result.history.Last().openPrice, result.history.Last().highPrice, result.history.Last().lowPrice, result.history.Last().closePrice);
-					temp.openPrice.amount /= 100;
-					temp.highPrice.amount /= 100;
-					temp.lowPrice.amount /= 100;
-					temp.closePrice.amount /= 100;
-					result.history.Add(temp);
+					String[] data = dataLines[i].Split(",");
+					if (data[1] == "null")
+					{
+						Data.DatePriceOHLC temp = new Data.DatePriceOHLC(DateOnly.Parse(data[0]), result.history.Last().openPrice, result.history.Last().highPrice, result.history.Last().lowPrice, result.history.Last().closePrice);
+						temp.openPrice.amount /= 100;
+						temp.highPrice.amount /= 100;
+						temp.lowPrice.amount /= 100;
+						temp.closePrice.amount /= 100;
+						result.history.Add(temp);
+					}
+					else
+					{
+						Data.DatePriceOHLC temp = new Data.DatePriceOHLC(DateOnly.Parse(data[0]), new StockApp.Money(Decimal.Parse(data[1]), StockApp.Money.DEFAULT_CURRENCY), new StockApp.Money(Decimal.Parse(data[2]), StockApp.Money.DEFAULT_CURRENCY), new StockApp.Money(Decimal.Parse(data[3]), StockApp.Money.DEFAULT_CURRENCY), new StockApp.Money(Decimal.Parse(data[4]), StockApp.Money.DEFAULT_CURRENCY));
+						temp.openPrice.amount /= 100;
+						temp.highPrice.amount /= 100;
+						temp.lowPrice.amount /= 100;
+						temp.closePrice.amount /= 100;
+						result.history.Add(temp);
+					}
 				}
-				else
+				catch (Exception e)
 				{
-					Data.DatePriceOHLC temp = new Data.DatePriceOHLC(DateOnly.Parse(data[0]), new Data.Money(Decimal.Parse(data[1]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[2]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[3]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[4]), Data.Money.DEFAULT_CURRENCY));
-					temp.openPrice.amount /= 100;
-					temp.highPrice.amount /= 100;
-					temp.lowPrice.amount /= 100;
-					temp.closePrice.amount /= 100;
-					result.history.Add(temp);
+					System.Console.WriteLine(e);
+					continue;
 				}
 			}
 		}
@@ -60,16 +71,25 @@ public class CurrencyFetcher : ICurrencyFetcher
 			result = new Data.CurrencyHistory(currency, startDate, endDate, "daily");
 			for (int i = 1; i < dataLines.Length; i++)
 			{
-				String[] data = dataLines[i].Split(",");
-				if (data[1] == "null")
+				try
 				{
-					Data.DatePriceOHLC temp = new Data.DatePriceOHLC(DateOnly.Parse(data[0]), result.history.Last().openPrice, result.history.Last().highPrice, result.history.Last().lowPrice, result.history.Last().closePrice);
-					result.history.Add(temp);
+					String[] data = dataLines[i].Split(",");
+					if (data[1] == "null")
+					{
+						Data.DatePriceOHLC temp = new Data.DatePriceOHLC(DateOnly.Parse(data[0]), result.history.Last().openPrice, result.history.Last().highPrice, result.history.Last().lowPrice, result.history.Last().closePrice);
+						result.history.Add(temp);
+					}
+					else
+					{
+						result.history.Add(new Data.DatePriceOHLC(DateOnly.Parse(data[0]), new StockApp.Money(Decimal.Parse(data[1]), StockApp.Money.DEFAULT_CURRENCY), new StockApp.Money(Decimal.Parse(data[2]), StockApp.Money.DEFAULT_CURRENCY), new StockApp.Money(Decimal.Parse(data[3]), StockApp.Money.DEFAULT_CURRENCY), new StockApp.Money(Decimal.Parse(data[4]), StockApp.Money.DEFAULT_CURRENCY)));
+					}
 				}
-				else
+				catch (Exception e)
 				{
-					result.history.Add(new Data.DatePriceOHLC(DateOnly.Parse(data[0]), new Data.Money(Decimal.Parse(data[1]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[2]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[3]), Data.Money.DEFAULT_CURRENCY), new Data.Money(Decimal.Parse(data[4]), Data.Money.DEFAULT_CURRENCY)));
+					System.Console.WriteLine(e);
+					continue;
 				}
+
 			}
 		}
 

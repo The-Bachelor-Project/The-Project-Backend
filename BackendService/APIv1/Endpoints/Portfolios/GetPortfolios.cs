@@ -1,28 +1,25 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace API.v1;
+using Microsoft.AspNetCore.Mvc;
 
 public class GetPortfolios
 {
-	public static void Setup(WebApplication app)
+	public static void Setup(WebApplication app, [FromQuery] String? id = null)
 	{
 		app.MapGet("/v1/portfolios", (HttpContext context) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
-			if (accessToken is null)
+			if (id is not null)
 			{
-				context.Response.StatusCode = 401;
-				return Results.Ok(new GetPortfoliosResponse("error", new List<StockApp.Portfolio> { }));
+				return Results.Ok(Endpoint(id, accessToken!));
 			}
-
-			return Results.Ok(Endpoint(accessToken));
+			return Results.Ok(Endpoint(accessToken!));
 		});
 	}
 
 	public static GetPortfoliosResponse Endpoint(string id, string accessToken)
 	{
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
-		StockApp.Portfolio portfolio = user.GetPortfolio(id);
+		StockApp.Portfolio portfolio = user.GetPortfolios(id);
 		return new GetPortfoliosResponse("success", new List<StockApp.Portfolio> { portfolio });
 	}
 

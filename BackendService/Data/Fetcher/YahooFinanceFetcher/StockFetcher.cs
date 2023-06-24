@@ -6,64 +6,74 @@ namespace Data.Fetcher.YahooFinanceFetcher;
 
 public class StockFetcher : IStockFetcher
 {
-	public async Task<StockHistory> GetHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, string interval)
+	public async Task<StockHistory> GetHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, string interval, string currency)
 	{
-		System.Console.WriteLine("Fetching stock history for " + ticker + " on " + exchange + " from " + startDate + " to " + endDate);
 
-		SqlConnection connection = new Database.Connection().Create();
 		String getCurrencyQuery = "SELECT currency FROM Exchanges WHERE symbol = @symbol";
-		SqlCommand command = new SqlCommand(getCurrencyQuery, connection);
-		command.Parameters.AddWithValue("@symbol", exchange);
-		using (SqlDataReader reader = command.ExecuteReader())
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@symbol", exchange);
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(getCurrencyQuery, parameters);
+
+
+		if (data == null)
 		{
-			if (!reader.Read())
+			throw new StatusCodeException(400, "Exchange not found");
+		}
+		currency = data["currency"].ToString()!;
+
+		int startTime = Tools.TimeConverter.DateOnlyToUnix(startDate);
+		int endTime = Tools.TimeConverter.DateOnlyToUnix(endDate);
+		String tickerExt = YfTranslator.GetYfSymbol(ticker, exchange);
+
+		HttpClient client = new HttpClient();
+		String url = "https://query1.finance.yahoo.com/v7/finance/download/" + tickerExt + "?interval=1d&period1=" + startTime + "&period2=" + endTime;
+		HttpResponseMessage stockHistoryRes = await client.GetAsync(url);
+
+		if (stockHistoryRes.StatusCode == System.Net.HttpStatusCode.NotFound)
+		{
+			return new StockHistory(ticker, exchange, "daily");
+		}
+
+		String stockHistoryCsv = await stockHistoryRes.Content.ReadAsStringAsync();
+		String[] dataLines = stockHistoryCsv.Replace("\r", "").Split("\n");
+		if (dataLines.Count() == 1)
+		{
+			return new StockHistory(ticker, exchange, "daily");
+		}
+		String currencySymbol = Data.Database.Exchange.GetCurrency(exchange);
+		StockHistory result = new StockHistory(ticker, exchange, startDate, endDate, "daily");
+		List<string> dataList = dataLines.ToList();
+		dataList.RemoveAt(0);
+
+		foreach (string row in dataList)
+		{
+			String[] dataSplit = row.Split(",");
+			DateOnly date = DateOnly.Parse(dataSplit[0]);
+			if (date >= startDate && date <= endDate && dataSplit[1] != "null")
 			{
-				reader.Close();
-				throw new Exception("Exchange not found");
-			}
-
-			String currency = reader["currency"].ToString()!;
-			reader.Close();
-
-			int startTime = Tools.TimeConverter.dateOnlyToUnix(startDate);
-			int endTime = Tools.TimeConverter.dateOnlyToUnix(endDate);
-			String tickerExt = YfTranslator.GetYfSymbol(ticker, exchange);
-
-			HttpClient client = new HttpClient();
-			String url = "https://query1.finance.yahoo.com/v7/finance/download/" + tickerExt + "?interval=1d&period1=" + startTime + "&period2=" + endTime;
-			System.Console.WriteLine(url);
-			HttpResponseMessage stockHistoryRes = await client.GetAsync(url);
-
-			if (stockHistoryRes.StatusCode == System.Net.HttpStatusCode.NotFound)
-			{
-				return new StockHistory(ticker, exchange, "daily");
-			}
-			String stockHistoryCsv = await stockHistoryRes.Content.ReadAsStringAsync();
-			String[] dataLines = stockHistoryCsv.Replace("\r", "").Split("\n");
-			String currencySymbol = Data.Database.Exchange.GetCurrency(exchange);
-
-			StockHistory result = new StockHistory(ticker, exchange, startDate, endDate, "daily");
-			List<string> dataList = dataLines.ToList();
-			dataList.RemoveAt(0);
-
-			foreach (string data in dataList)
-			{
-				String[] dataSplit = data.Split(",");
-				DateOnly date = DateOnly.Parse(dataSplit[0]);
-				if (date >= startDate && date <= endDate && dataSplit[1] != "null")
+				try
 				{
 					Data.DatePriceOHLC dataPoint = new Data.DatePriceOHLC(
-						DateOnly.Parse(dataSplit[0]),
-						new Data.Money(Decimal.Parse(dataSplit[1]), currency),
-						new Data.Money(Decimal.Parse(dataSplit[2]), currency),
-						new Data.Money(Decimal.Parse(dataSplit[3]), currency),
-						new Data.Money(Decimal.Parse(dataSplit[4]), currency)
+					DateOnly.Parse(dataSplit[0]),
+					new StockApp.Money(Decimal.Parse(dataSplit[1]), currency),
+					new StockApp.Money(Decimal.Parse(dataSplit[2]), currency),
+					new StockApp.Money(Decimal.Parse(dataSplit[3]), currency),
+					new StockApp.Money(Decimal.Parse(dataSplit[4]), currency)
 					);
 					result.history.Add(dataPoint);
 				}
+				catch (Exception e)
+				{
+					System.Console.WriteLine(e);
+					continue;
+				}
+
 			}
-			await new Tools.PriceHistoryConverter().ConvertStockPrice(result.history, "USD");
-			foreach (Data.DatePriceOHLC datePrice in result.history)
+		}
+		await new Tools.PriceConverter().ConvertStockPrice(result.history, "USD", false);
+		foreach (Data.DatePriceOHLC datePrice in result.history)
+		{
+			try
 			{
 				if (datePrice.highPrice.currency != "USD")
 				{
@@ -94,11 +104,14 @@ public class StockFetcher : IStockFetcher
 					datePrice.openPrice.currency = "USD";
 				}
 			}
-			return result;
+			catch (Exception e)
+			{
+				System.Console.WriteLine(e);
+				continue;
+			}
 		}
+		return result;
 	}
-
-
 
 	public async Task<Data.StockProfile> GetProfile(string ticker, string exchange)
 	{
@@ -110,27 +123,35 @@ public class StockFetcher : IStockFetcher
 		HttpResponseMessage quoteSummaryRes = await client.GetAsync("https://query1.finance.yahoo.com/v11/finance/quoteSummary/" + tickerExt + "?modules=assetProfile");
 		String quoteSummaryJson = await quoteSummaryRes.Content.ReadAsStringAsync();
 		dynamic quoteSummary = JObject.Parse(quoteSummaryJson);
+		if (quoteSummary.StatusCode == System.Net.HttpStatusCode.NotFound)
+		{
+			throw new StatusCodeException(404, "Could not get stock profile for " + exchange + ":" + ticker + ", using quoteSummary on Yahoo Finance");
+		}
 
 
 		HttpResponseMessage quoteRes = await client.GetAsync("https://query1.finance.yahoo.com/v6/finance/quote?symbols=" + tickerExt);
 		String quoteJson = await quoteRes.Content.ReadAsStringAsync();
 		dynamic quote = JObject.Parse(quoteJson);
+		if (quoteSummary.StatusCode == System.Net.HttpStatusCode.NotFound)
+		{
+			throw new StatusCodeException(404, "Could not get stock profile for " + exchange + ":" + ticker + ", using quote on Yahoo Finance");
+		}
+
 
 		result.ticker = ticker;
 		result.exchange = exchange;
 		try
 		{
 			result.displayName = quote.quoteResponse.result[0].displayName ??
-								  quote.quoteResponse.result[0].shortName ??
-								  quote.quoteResponse.result[0].longName ??
-								  throw new Exception("Stock does not have a name");
+			quote.quoteResponse.result[0].shortName ??
+			quote.quoteResponse.result[0].longName ??
+			throw new StatusCodeException(500, "Stock does not have a name");
 		}
 		catch (System.Exception e)
 		{
 			System.Console.WriteLine(e);
+			throw new StatusCodeException(500, "Stock " + exchange + ":" + ticker + " could not be gotten from Yahoo Finance. Please check if ticker and exchange are correct.");
 		}
-
-
 		result.shortName = quote.quoteResponse.result[0].shortName ?? "";
 		result.longName = quote.quoteResponse.result[0].longName ?? "";
 		result.sharesOutstanding = quote?.quoteResponse?.result?[0]?.sharesOutstanding ?? 0;
@@ -174,12 +195,13 @@ public class StockFetcher : IStockFetcher
 					}
 					catch (Exception e)
 					{
-						//TODO maybe do something about this, i dunno
+						System.Console.WriteLine(e);
+						continue;
 					}
 				}
 				else
 				{
-					SqlConnection connection = new Data.Database.Connection().Create();
+					SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 					String sqlQuery = "INSERT INTO MissingExchanges (exchange, disp, stock) VALUES (@exchange, @disp, @stock)";
 					SqlCommand command = new SqlCommand(sqlQuery, connection);
 					command.Parameters.AddWithValue("@exchange", "" + res.exch);
@@ -193,57 +215,65 @@ public class StockFetcher : IStockFetcher
 		return resultStocks;
 	}
 
-	internal async Task<List<Dividend>> GetDividends(string ticker, string exchange, DateOnly startDate, DateOnly endDate)
+	public async Task<List<Dividend>> GetDividends(string ticker, string exchange, DateOnly startDate, DateOnly endDate)
 	{
-		System.Console.WriteLine("Getting dividends for " + ticker + " " + exchange);
 		List<Data.Dividend> dividends = new List<Data.Dividend>();
 
-		SqlConnection connection = new Data.Database.Connection().Create();
 		String getCurrencyQuery = "SELECT currency FROM Exchanges WHERE symbol = @symbol";
-		SqlCommand command = new SqlCommand(getCurrencyQuery, connection);
-		command.Parameters.AddWithValue("@symbol", exchange);
-		using (SqlDataReader reader = command.ExecuteReader())
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@symbol", exchange);
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(getCurrencyQuery, parameters);
+
+
+		if (data == null)
 		{
-			if (!reader.Read())
-			{
-				reader.Close();
-				throw new Exception("Exchange not found");
-			}
-			String currency = reader["currency"].ToString()!;
-			reader.Close();
+			throw new StatusCodeException(404, "Exchange of " + exchange + ":" + ticker + " was not found");
+		}
+		String currency = data["currency"].ToString()!;
 
-			int startTime = Tools.TimeConverter.dateOnlyToUnix(startDate);
-			int endTime = Tools.TimeConverter.dateOnlyToUnix(endDate);
-			String tickerExt = YfTranslator.GetYfSymbol(ticker, exchange);
+		int startTime = Tools.TimeConverter.DateOnlyToUnix(startDate);
+		int endTime = Tools.TimeConverter.DateOnlyToUnix(endDate);
+		String tickerExt = YfTranslator.GetYfSymbol(ticker, exchange);
 
-			HttpClient client = new HttpClient();
-			String url = "https://query1.finance.yahoo.com/v7/finance/download/" + tickerExt + "?interval=1d&period1=" + startTime + "&period2=" + endTime + "&events=div";
-			System.Console.WriteLine(url);
-			HttpResponseMessage dividendsResponse = client.GetAsync(url).Result;
-			if (dividendsResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+		HttpClient client = new HttpClient();
+		String url = "https://query1.finance.yahoo.com/v7/finance/download/" + tickerExt + "?interval=1d&period1=" + startTime + "&period2=" + endTime + "&events=div";
+		HttpResponseMessage dividendsResponse = client.GetAsync(url).Result;
+		if (dividendsResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+		{
+			throw new StatusCodeException(404, "The stock " + exchange + ":" + ticker + " was not found on Yahoo Finance");
+		}
+		String stockDividendCSV = await dividendsResponse.Content.ReadAsStringAsync();
+		String[] stockDividendLines = stockDividendCSV.Split("\n");
+		if (stockDividendLines.Length == 1)
+		{
+			return dividends;
+		}
+		String currencySymbol = Data.Database.Exchange.GetCurrency(exchange);
+		List<String> dataList = stockDividendLines.ToList();
+		dataList.RemoveAt(0);
+		foreach (String dataP in dataList)
+		{
+			try
 			{
-				throw new Exception("Stock not found");
-			}
-			String stockDividendCSV = await dividendsResponse.Content.ReadAsStringAsync();
-			String[] stockDividendLines = stockDividendCSV.Split("\n");
-			String currencySymbol = Data.Database.Exchange.GetCurrency(exchange);
-			List<String> dataList = stockDividendLines.ToList();
-			dataList.RemoveAt(0);
-			foreach (String data in dataList)
-			{
-				String[] dataSplit = data.Split(",");
+				String[] dataSplit = dataP.Split(",");
 				DateOnly date = DateOnly.Parse(dataSplit[0]);
 				if (date >= startDate && date <= endDate && dataSplit[1] != "null")
 				{
 					Data.Dividend dataPoint = new Data.Dividend(
 						DateOnly.Parse(dataSplit[0]),
-						new Data.Money(Decimal.Parse(dataSplit[1]), currency)
+						new StockApp.Money(Decimal.Parse(dataSplit[1]), currency)
 					);
 					dividends.Add(dataPoint);
 				}
 			}
-			await new Tools.PriceHistoryConverter().ConvertStockDividends(dividends, "USD");
+			catch (Exception e)
+			{
+				System.Console.WriteLine(e);
+				continue;
+			}
+
 		}
+		await new Tools.PriceConverter().ConvertStockDividends(dividends, "USD", false);
 		return dividends;
 	}
 }

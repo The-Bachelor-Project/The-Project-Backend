@@ -7,79 +7,105 @@ namespace Data.Fetcher;
 public class CurrencyFetcher : ICurrencyFetcher
 {
 
-
+	/// <summary>
+	/// Retrieves the historical data for a specific currency within a date range.
+	/// </summary>
+	/// <param name="currency">The currency code.</param>
+	/// <param name="startDate">The start date of the historical data.</param>
+	/// <param name="endDate">The end date of the historical data.</param>
+	/// <returns>The historical data for the specified currency.</returns>
 	public async Task<Data.CurrencyHistory> GetHistory(string currency, DateOnly startDate, DateOnly endDate)
 	{
-		SqlConnection connection = (new Database.Connection()).Create();
 		String getTrackingDateQuery = "SELECT start_tracking_date, end_tracking_date FROM Currencies WHERE code = @currency";
-		SqlCommand command = new SqlCommand(getTrackingDateQuery, connection);
-		command.Parameters.AddWithValue("@currency", currency);
-		using (SqlDataReader reader = command.ExecuteReader())
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@currency", currency);
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(getTrackingDateQuery, parameters);
+		if (data != null)
 		{
-			if (reader.Read())
+			DateOnly startTrackingDate;
+			DateOnly endTrackingDate;
+			try
 			{
-				DateOnly startTrackingDate;
-				DateOnly endTrackingDate;
-				try
-				{
-					startTrackingDate = DateOnly.FromDateTime((DateTime)reader["start_tracking_date"]);
-					endTrackingDate = DateOnly.FromDateTime((DateTime)reader["end_tracking_date"]);
-					reader.Close();
-				}
-				catch (Exception)
-				{
-					reader.Close();
-					Data.CurrencyHistory fromYahoo = await (new Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher()).GetHistory(currency, startDate.AddDays(-7), endDate);
-					SaveCurrencyHistory(fromYahoo, true, true);
-
-					return fromYahoo;
-
-				}
-
-				if (startDate < startTrackingDate)
-				{
-					Data.CurrencyHistory fromYahooBefore = await (new Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher()).GetHistory(currency, startDate.AddDays(-7), startTrackingDate.AddDays(-1));
-
-					SaveCurrencyHistory(fromYahooBefore, true, false);
-				}
-				if (endDate > endTrackingDate)
-				{
-					Data.CurrencyHistory fromYahooAfter = await (new Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher()).GetHistory(currency, endTrackingDate.AddDays(1), endDate);
-					SaveCurrencyHistory(fromYahooAfter, false, true);
-				}
+				startTrackingDate = DateOnly.FromDateTime((DateTime)data["start_tracking_date"]);
+				endTrackingDate = DateOnly.FromDateTime((DateTime)data["end_tracking_date"]);
 			}
-			reader.Close();
-			return await (new Data.Fetcher.DatabaseFetcher.CurrencyFetcher()).GetHistory(currency, startDate, endDate);
+			catch (Exception)
+			{
+				Data.CurrencyHistory fromYahoo = await (new Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher()).GetHistory(currency, startDate.AddDays(-7), endDate);
+				SaveCurrencyHistory(fromYahoo, true, true);
+				return InsertMissingValues(fromYahoo);
+			}
+
+			if (startDate < startTrackingDate)
+			{
+				Data.CurrencyHistory fromYahooBefore = await (new Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher()).GetHistory(currency, startDate.AddDays(-7), startTrackingDate.AddDays(-1));
+
+				SaveCurrencyHistory(fromYahooBefore, true, false);
+			}
+			if (endDate > endTrackingDate)
+			{
+				Data.CurrencyHistory fromYahooAfter = await (new Data.Fetcher.YahooFinanceFetcher.CurrencyFetcher()).GetHistory(currency, endTrackingDate.AddDays(1), endDate);
+				SaveCurrencyHistory(fromYahooAfter, false, true);
+			}
 		}
+		CurrencyHistory currencyHistory = await new Data.Fetcher.DatabaseFetcher.CurrencyFetcher().GetHistory(currency, startDate, endDate);
+		return InsertMissingValues(currencyHistory);
+	}
+
+	private CurrencyHistory InsertMissingValues(CurrencyHistory currencyHistory)
+	{
+		if (currencyHistory.history.Count == 0)
+		{
+			return currencyHistory;
+		}
+		if (currencyHistory.history.First().date != currencyHistory.startDate)
+		{
+			DatePriceOHLC newPrice = new DatePriceOHLC(
+				currencyHistory.startDate,
+				currencyHistory.history.First().openPrice,
+				currencyHistory.history.First().highPrice,
+				currencyHistory.history.First().lowPrice,
+				currencyHistory.history.First().closePrice
+			);
+			currencyHistory.history.Insert(0, newPrice);
+		}
+		for (int i = 0; i < currencyHistory.history.Count - 1; i++)
+		{
+			if (currencyHistory.history[i].date.AddDays(1) != currencyHistory.history[i + 1].date)
+			{
+				DatePriceOHLC newPrice = new DatePriceOHLC(
+					currencyHistory.history[i].date.AddDays(1),
+					currencyHistory.history[i].openPrice,
+					currencyHistory.history[i].highPrice,
+					currencyHistory.history[i].lowPrice,
+					currencyHistory.history[i].closePrice
+				);
+				currencyHistory.history.Insert(i + 1, newPrice);
+			}
+		}
+		return currencyHistory;
 	}
 
 	private void SaveCurrencyHistory(Data.CurrencyHistory history, bool updateStartTrackingDate, bool updateEndTrackingDate)
 	{
-		System.Console.WriteLine(history.history.Count);
 		if (history.history.Count == 0)
 			return;
 		String insertIntoCurrencyRatesQuery = "EXEC BulkJsonCurrencyRates @CurrencyRatesBulk, @Code";
-		SqlConnection connection = new Data.Database.Connection().Create();
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		SqlCommand command = new SqlCommand(insertIntoCurrencyRatesQuery, connection);
 		command.Parameters.AddWithValue("@CurrencyRatesBulk", JsonConvert.SerializeObject(history.history));
 		command.Parameters.AddWithValue("@Code", history.currency);
-		command.ExecuteNonQuery();
+		try
+		{
+			command.ExecuteNonQuery();
 
-		if (updateStartTrackingDate)
-		{
-			String updateStartTrackingDateQuery = "UPDATE Currencies SET start_tracking_date = @start_tracking_date WHERE code = @code";
-			command = new SqlCommand(updateStartTrackingDateQuery, connection);
-			command.Parameters.AddWithValue("@code", history.currency);
-			command.Parameters.AddWithValue("@start_tracking_date", Tools.TimeConverter.dateOnlyToString(history.history.First().date));
-			command.ExecuteNonQuery();
 		}
-		if (updateEndTrackingDate)
+		catch (Exception e)
 		{
-			String updateEndTrackingDateQuery = "UPDATE Currencies SET end_tracking_date = @end_tracking_date WHERE code = @code";
-			command = new SqlCommand(updateEndTrackingDateQuery, connection);
-			command.Parameters.AddWithValue("@code", history.currency);
-			command.Parameters.AddWithValue("@end_tracking_date", Tools.TimeConverter.dateOnlyToString(history.history.Last().date));
-			command.ExecuteNonQuery();
+			System.Console.WriteLine("Start tracking date: " + history.history.First().date);
+			System.Console.WriteLine("End tracking date: " + history.history.Last().date);
+			System.Console.WriteLine(e);
+			throw new StatusCodeException(500, "There was a problem when adding currency rates to the database");
 		}
 	}
 }

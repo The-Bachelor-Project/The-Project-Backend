@@ -1,0 +1,160 @@
+{
+	"quote": {
+		"result": [
+			{
+				"language": "en-US",
+				"region": "US",
+				"quoteType": "EQUITY",
+				"typeDisp": "Equity",
+				"quoteSourceName": "Delayed Quote",
+				"triggerable": false,
+				"customPriceAlertConfidence": "LOW",
+				"currency": "EUR",
+				"exchange": "VIE",
+				"shortName": "BAIC MOTOR CORP LTD-H",
+				"longName": "BAIC Motor Corporation Limited",
+				"messageBoardId": "finmb_217267370",
+				"exchangeTimezoneName": "Europe/Amsterdam",
+				"exchangeTimezoneShortName": "CEST",
+				"gmtOffSetMilliseconds": 7200000,
+				"market": "at_market",
+				"esgPopulated": false,
+				"regularMarketChangePercent": 2.2727318,
+				"regularMarketPrice": 0.27,
+				"marketState": "PREPRE",
+				"firstTradeDateMilliseconds": 1536908100000,
+				"priceHint": 4,
+				"epsTrailingTwelveMonths": 0.07,
+				"sharesOutstanding": 2520689920,
+				"bookValue": 6.982,
+				"fiftyDayAverage": 0.25722,
+				"fiftyDayAverageChange": 0.012780011,
+				"fiftyDayAverageChangePercent": 0.049685135,
+				"twoHundredDayAverage": 0.2572025,
+				"twoHundredDayAverageChange": 0.012797505,
+				"twoHundredDayAverageChangePercent": 0.04975653,
+				"marketCap": 2168505088,
+				"priceToBook": 0.03867087,
+				"sourceInterval": 15,
+				"exchangeDataDelayedBy": 15,
+				"tradeable": false,
+				"cryptoTradeable": false,
+				"regularMarketChange": 0.006000012,
+				"regularMarketTime": 1683819126,
+				"regularMarketDayHigh": 0.27,
+				"regularMarketDayRange": "0.2695 - 0.27",
+				"regularMarketDayLow": 0.2695,
+				"regularMarketVolume": 0,
+				"regularMarketPreviousClose": 0.264,
+				"bid": 0.266,
+				"ask": 0.274,
+				"fullExchangeName": "Vienna",
+				"financialCurrency": "CNY",
+				"regularMarketOpen": 0.2695,
+				"averageDailyVolume3Month": 0,
+				"averageDailyVolume10Day": 0,
+				"fiftyTwoWeekLowChange": 0.046500012,
+				"fiftyTwoWeekLowChangePercent": 0.20805375,
+				"fiftyTwoWeekRange": "0.2235 - 0.3265",
+				"fiftyTwoWeekHighChange": -0.056499988,
+				"fiftyTwoWeekHighChangePercent": -0.17304744,
+				"fiftyTwoWeekLow": 0.2235,
+				"fiftyTwoWeekHigh": 0.3265,
+				"dividendDate": 20217600,
+				"trailingAnnualDividendRate": 0.0,
+				"trailingPE": 3.857143,
+				"trailingAnnualDividendYield": 0.0,
+				"symbol": "2B5.VI"
+			}
+		],
+		"error": null
+	},
+	"summary": {
+		"result": [
+			{
+				"assetProfile": {
+					"address1": "No. 99 Shuanghe Street",
+					"address2": "Shunyi District",
+					"city": "Beijing",
+					"zip": "101300",
+					"country": "China",
+					"phone": "86 10 5663 5500",
+					"website": "https://www.baicmotor.com",
+					"industry": "Auto Manufacturers",
+					"industryDisp": "Auto Manufacturers",
+					"sector": "Consumer Cyclical",
+					"longBusinessSummary": "BAIC Motor Corporation Limited, together with its subsidiaries, researches,  develops, manufactures, sells, and after-sale services passenger vehicles in the People's Republic of China. The company provides luxury passenger cars, luxury commercial vehicles, middle-end and high-end passenger cars, and self-owned passenger cars. It also provides engines, powertrain, power batteries, other parts, and components. In addition, the company produces core parts and components of passenger vehicles, as well as engages in car financing and investment management businesses. The company sells its products under the Beijing Brand, Beijing Benz, Beijing Hyundai, and Fujian Benz names. BAIC Motor Corporation Limited was founded in 1958 and is headquartered in Beijing, the People's Republic of China.",
+					"fullTimeEmployees": 19491,
+					"companyOfficers": [
+						{
+							"maxAge": 1,
+							"name": "Mr. Wenbing  Huang",
+							"age": 49,
+							"title": "CEO, Pres & Exec. Director",
+							"yearBorn": 1973,
+							"fiscalYear": 2022,
+							"totalPay": {
+								"raw": 271498,
+								"fmt": "271.5k",
+								"longFmt": "271,498"
+							},
+							"exercisedValue": {
+								"raw": 0,
+								"fmt": null,
+								"longFmt": "0"
+							},
+							"unexercisedValue": {
+								"raw": 0,
+								"fmt": null,
+								"longFmt": "0"
+							}
+						},
+						{
+							"maxAge": 1,
+							"name": "Mr. Yanjun  Zhang",
+							"age": 50,
+							"title": "Employee Representative Supervisor and Deputy Head of the Legal & Compliance Department",
+							"yearBorn": 1972,
+							"exercisedValue": {
+								"raw": 0,
+								"fmt": null,
+								"longFmt": "0"
+							},
+							"unexercisedValue": {
+								"raw": 0,
+								"fmt": null,
+								"longFmt": "0"
+							}
+						},
+						{
+							"maxAge": 1,
+							"name": "Mr. Jianhui  Wang",
+							"age": 45,
+							"title": "Company Sec., Sec. to the Board and Deputy Director of the Investment & Planning Center",
+							"yearBorn": 1977,
+							"exercisedValue": {
+								"raw": 0,
+								"fmt": null,
+								"longFmt": "0"
+							},
+							"unexercisedValue": {
+								"raw": 0,
+								"fmt": null,
+								"longFmt": "0"
+							}
+						}
+					],
+					"auditRisk": 3,
+					"boardRisk": 4,
+					"compensationRisk": 4,
+					"shareHolderRightsRisk": 10,
+					"overallRisk": 6,
+					"governanceEpochDate": 1682899200,
+					"compensationAsOfEpochDate": 1672444800,
+					"maxAge": 86400
+				}
+			}
+		],
+		"error": null
+	}
+}

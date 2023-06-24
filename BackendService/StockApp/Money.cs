@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace StockApp;
 
 public class Money
@@ -7,13 +9,10 @@ public class Money
 	public decimal amount { get; set; }
 	public string currency { get; set; }
 
+	[JsonConstructor]
 	public Money(decimal amount, string currency)
 	{
 		this.amount = amount;
 		this.currency = currency;
-	}
-
-	public Money(decimal amount) : this(amount, DEFAULT_CURRENCY)
-	{
 	}
 }

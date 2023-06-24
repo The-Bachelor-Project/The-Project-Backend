@@ -2,23 +2,24 @@ using System.Data.SqlClient;
 
 namespace Data.Database;
 
-class Exchange
+public class Exchange
 {
 	public static String GetCurrency(String exchange)
 	{
 		String getCurrencyQuery = "SELECT currency FROM Exchanges WHERE symbol = @symbol";
-		SqlConnection connection = new Data.Database.Connection().Create();
-		SqlCommand command = new SqlCommand(getCurrencyQuery, connection);
-		command.Parameters.AddWithValue("@symbol", exchange);
-		using (SqlDataReader reader = command.ExecuteReader())
+
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@symbol", exchange);
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(getCurrencyQuery, parameters);
+		String currency = "";
+		if (data != null)
 		{
-			String currency = "";
-			if (reader.Read())
-			{
-				currency = reader["currency"].ToString()!;
-			}
-			reader.Close();
+			currency = data["currency"].ToString()!;
 			return currency;
+		}
+		else
+		{
+			throw new StatusCodeException(404, "Currency of exchange " + exchange + " not found");
 		}
 	}
 }

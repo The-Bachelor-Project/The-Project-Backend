@@ -1,4 +1,8 @@
 {
 	"editor.formatOnSave": true,
-	"editor.defaultFormatter": "ms-dotnettools.csharp"
+	"editor.defaultFormatter": "ms-dotnettools.csharp",
+	"cSpell.words": [
+		"disp",
+		"OHLC"
+	]
 }

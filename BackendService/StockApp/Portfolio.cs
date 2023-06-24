@@ -9,140 +9,399 @@ public class Portfolio
 	{
 		this.id = id;
 	}
-	public Portfolio(string name, string owner, string currency, decimal balance, bool trackBalance)
+	public Portfolio(string name, string owner, string currency)
 	{
 		this.name = name;
 		this.owner = owner;
 		this.currency = currency;
-		this.balance = balance;
-		this.trackBalance = trackBalance;
 	}
-	public Portfolio(string id, string name, string owner, string currency, decimal balance, bool trackBalance)
+	public Portfolio(string id, string name, string owner, string currency)
 	{
 		this.id = id;
 		this.name = name;
 		this.owner = owner;
 		this.currency = currency;
-		this.balance = balance;
-		this.trackBalance = trackBalance;
+	}
+
+	public Portfolio(String name, String currency, List<Data.DatePriceOHLC> valueHistory, List<Data.Position> positions, List<Data.Dividend> dividendHistory, List<Data.CashBalance> cashBalance)
+	{
+		this.name = name;
+		this.currency = currency;
+		this.valueHistory = valueHistory;
+		this.positionHistories = positions;
+		this.dividendHistory = dividendHistory;
+		this.cashBalance = cashBalance;
 	}
 
 	public String? id { get; set; }
 	public String? name { get; set; }
 	public String? owner { get; set; }
 	public String? currency { get; set; }
-	public Decimal? balance { get; set; }
-	public Boolean? trackBalance { get; set; }
-
+	public List<Data.DatePriceOHLC>? valueHistory { get; set; }
 	public List<StockTransaction> stockTransactions { get; set; } = new List<StockTransaction>();
+	public List<CashTransaction> cashTransactions { get; set; } = new List<CashTransaction>();
 	public List<StockPosition> stockPositions { get; set; } = new List<StockPosition>();
+	public List<Data.Position>? positionHistories { get; set; }
+	public List<Data.Dividend>? dividendHistory { get; set; }
+	public List<Data.CashBalance> cashBalance { get; set; } = new List<Data.CashBalance>();
 
-
-
+	/// Adds the portfolio to the database.
+	/// </summary>
+	/// <returns>The added portfolio.</returns>
 	public Portfolio AddToDb()
 	{
-		SqlConnection connection = new Data.Database.Connection().Create();
+		if (name == null || owner == null || currency == null)
+		{
+			throw new StatusCodeException(400, "Missing required fields");
+		}
+		if (!(Tools.ValidCurrency.Check(currency!)))
+		{
+			throw new StatusCodeException(400, "Currency " + currency + " is not supported");
+		}
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
 		id = Tools.RandomString.Generate(32);
-		String query = "INSERT INTO Portfolios (uid, name, owner, currency, balance) VALUES (@uid, @name, @owner, @currency, @balance)";
+		String query = "INSERT INTO Portfolios (uid, name, owner, currency) VALUES (@uid, @name, @owner, @currency)";
 		SqlCommand command = new SqlCommand(query, connection);
 		command.Parameters.AddWithValue("@uid", id);
 		command.Parameters.AddWithValue("@name", name);
 		command.Parameters.AddWithValue("@owner", owner);
 		command.Parameters.AddWithValue("@currency", currency);
-		command.Parameters.AddWithValue("@balance", balance);
-		command.ExecuteNonQuery();
+		try
+		{
+			command.ExecuteNonQuery();
+		}
+		catch (System.Exception e)
+		{
+			System.Console.WriteLine(e);
+			throw new StatusCodeException(500, "Failed to create portfolio");
+		}
+
 
 		return this;
 	}
 
+	/// <summary>
+	/// Retrieves the owner of the portfolio.
+	/// </summary>
+	/// <returns>The user who owns the portfolio.</returns>
 	public User GetOwner()
 	{
-		SqlConnection connection = new Data.Database.Connection().Create();
-		String query = "SELECT owner FROM Portfolios WHERE uid = @uid";
-		SqlCommand command = new SqlCommand(query, connection);
-		command.Parameters.AddWithValue("@uid", id);
-		using (SqlDataReader reader = command.ExecuteReader())
+		if (id == null)
 		{
-			if (reader.Read())
-			{
-				String userId = reader["owner"].ToString()!;
-				User user = new User(userId);
-				reader.Close();
-				return user;
-			}
-			reader.Close();
-			throw new Exception();
+			throw new StatusCodeException(400, "Missing required fields");
 		}
+		String query = "SELECT owner FROM Portfolios WHERE uid = @uid";
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@uid", id);
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(query, parameters);
+
+		if (data != null)
+		{
+			String userId = data["owner"].ToString()!;
+			User user = new User(userId);
+			return user;
+		}
+		throw new StatusCodeException(404, "No portfolio with uid " + id + " was found");
 
 	}
 
 
+	/// <summary>
+	/// Updates the stock transactions of the portfolio.
+	/// </summary>
+	/// <returns>The updated portfolio with the updated stock transactions.</returns>
 	public Portfolio UpdateStockTransactions()
 	{
-		SqlConnection connection = new Data.Database.Connection().Create();
-		String query = "SELECT * FROM StockTransactions WHERE portfolio = @portfolio";
-		SqlCommand command = new SqlCommand(query, connection);
-		command.Parameters.AddWithValue("@portfolio", id);
-		using (SqlDataReader reader = command.ExecuteReader())
+		if (id == null)
 		{
-			stockTransactions = new List<StockTransaction>();
-			while (reader.Read())
-			{
-				stockTransactions.Add(new StockTransaction());
-				stockTransactions.Last().id = reader["id"].ToString();
-				stockTransactions.Last().portfolioId = id;
-				stockTransactions.Last().ticker = reader["ticker"].ToString();
-				stockTransactions.Last().exchange = reader["exchange"].ToString();
-				stockTransactions.Last().amount = Convert.ToDecimal(reader["amount"]);
-				stockTransactions.Last().amountAdjusted = Convert.ToDecimal(reader["amount_adjusted"]);
-				stockTransactions.Last().amountOwned = Convert.ToDecimal(reader["amount_owned"]);
-				stockTransactions.Last().timestamp = Convert.ToInt32(reader["timestamp"]);
-				stockTransactions.Last().price = new Money(Convert.ToDecimal(reader["price_amount"]), reader["price_currency"].ToString()!);
-			}
-			reader.Close();
-			return this;
+			throw new StatusCodeException(400, "Missing required fields");
 		}
+		String query = "SELECT * FROM StockTransactions WHERE portfolio = @portfolio";
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@portfolio", id);
+		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(query, parameters);
+
+		stockTransactions = new List<StockTransaction>();
+		foreach (Dictionary<String, object> row in data)
+		{
+			stockTransactions.Add(new StockTransaction());
+			stockTransactions.Last().id = int.Parse(row["id"].ToString()!);
+			stockTransactions.Last().portfolioId = id;
+			stockTransactions.Last().ticker = row["ticker"].ToString();
+			stockTransactions.Last().exchange = row["exchange"].ToString();
+			stockTransactions.Last().amount = Convert.ToDecimal(row["amount"]);
+			stockTransactions.Last().amountAdjusted = Convert.ToDecimal(row["amount_adjusted"]);
+			stockTransactions.Last().amountOwned = Convert.ToDecimal(row["amount_owned"]);
+			stockTransactions.Last().timestamp = Convert.ToInt32(row["timestamp"]);
+			stockTransactions.Last().priceNative = new Money(Convert.ToDecimal(row["amount_currency"]), row["currency"].ToString()!);
+			stockTransactions.Last().priceUSD = new Money(Convert.ToDecimal(row["amount_usd"]), "USD");
+		}
+		return this;
 	}
 
+	/// <summary>
+	/// Updates the stock positions of the portfolio based on the stock transactions on the portfolio.
+	/// </summary>
+	/// <returns>The updated portfolio with the updated stock positions.</returns>
 	public Portfolio UpdateStockPositions()
 	{
-		SqlConnection connection = new Data.Database.Connection().Create();
-		String query = "SELECT DISTINCT ticker, exchange FROM StockTransactions WHERE portfolio = @portfolio";
-		SqlCommand command = new SqlCommand(query, connection);
-		command.Parameters.AddWithValue("@portfolio", id);
-		using (SqlDataReader reader = command.ExecuteReader())
+		if (id == null)
 		{
-			stockPositions = new List<StockPosition>();
-			while (reader.Read())
-			{
-				stockPositions.Add(new StockPosition(this, new Stock(reader["ticker"].ToString()!, reader["exchange"].ToString()!)));
-				System.Console.WriteLine(stockPositions.Last().stock.ticker + " " + stockPositions.Last().stock.exchange);
-			}
-			reader.Close();
-			return this;
+			throw new StatusCodeException(400, "Missing required fields");
 		}
+		String query = "SELECT DISTINCT ticker, exchange FROM StockTransactions WHERE portfolio = @portfolio";
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@portfolio", id);
+		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(query, parameters);
+
+		stockPositions = new List<StockPosition>();
+		foreach (Dictionary<String, object> row in data)
+		{
+			stockPositions.Add(new StockPosition(this, new Stock(row["ticker"].ToString()!, row["exchange"].ToString()!)));
+		}
+		return this;
 	}
 
-	public async Task<Data.Portfolio> GetValueHistory(string currency, DateOnly startData, DateOnly endDate)
+	/// <summary>
+	/// Retrieves the value history for a portfolio with the specified currency, for a given date range.
+	/// </summary>
+	/// <param name="currency">The currency in which to retrieve the value history.</param>
+	/// <param name="startDate">The start date of the value history.</param>
+	/// <param name="endDate">The end date of the value history.</param>
+	/// <returns>The portfolio with the value, dividend, position and cash balance histories.</returns>
+	public async Task<Portfolio> GetValueHistory(string currency, DateOnly startDate, DateOnly endDate)
 	{
+		if (id == null || currency == null)
+		{
+			throw new StatusCodeException(400, "Missing required fields");
+		}
+		if (!(Tools.ValidCurrency.Check(currency)))
+		{
+			throw new StatusCodeException(400, "Currency" + currency + " is not supported");
+		}
+		if (startDate > endDate)
+		{
+			throw new StatusCodeException(400, "Start date must be before end date");
+		}
+
 		UpdateStockPositions();
 		UpdateStockTransactions();
 
-		List<Data.DatePriceOHLC> valueHistory = new List<Data.DatePriceOHLC>();
-		List<Data.Position> dataPositions = new List<Data.Position>();
-		List<Data.Dividend> dividendHistory = new List<Data.Dividend>();
+		valueHistory = new List<Data.DatePriceOHLC>();
+		positionHistories = new List<Data.Position>();
+		dividendHistory = new List<Data.Dividend>();
 
 		foreach (StockPosition position in stockPositions)
 		{
-			Data.Position dataPosition = await position.GetValueHistory(currency, startData, endDate);
+			Data.Position dataPosition = await position.GetValueHistory(currency, startDate, endDate);
 			if (dataPosition.valueHistory.Count > 0)
 			{
-				dataPositions.Add(dataPosition);
+				positionHistories.Add(dataPosition);
 				valueHistory = Data.DatePriceOHLC.AddLists(valueHistory, dataPosition.valueHistory);
 				dividendHistory.AddRange(dataPosition.dividends);
 			}
 		}
-		System.Console.WriteLine("RETURNED: " + dividendHistory.Count);
-		return new Data.Portfolio("[NAME]"/* TODO Get name */, currency, valueHistory, dataPositions, dividendHistory);
+		List<Data.Transaction> allTransactions = await GetOwner().GetTransactions(currency);
+		int firstIndex = allTransactions.FindLastIndex(x => x.timestamp <= Tools.TimeConverter.DateOnlyToUnix(startDate) && x.portfolio == id);
+		int lastIndex = allTransactions.FindIndex(x => x.timestamp <= Tools.TimeConverter.DateOnlyToUnix(endDate) && x.portfolio == id);
+		if (firstIndex == -1)
+		{
+			firstIndex = 0;
+		}
+		List<Data.Transaction> newTransactions = new List<Data.Transaction>();
+		if (lastIndex != -1)
+		{
+			newTransactions = allTransactions.GetRange(firstIndex < 0 ? 0 : firstIndex, ((lastIndex - firstIndex + 1) < 0 ? 0 : (lastIndex - firstIndex + 1)));
+		}
+		User user = GetOwner();
+		cashBalance = user.InsertMissingValues(cashBalance);
+		return new Portfolio(name!, currency, valueHistory, positionHistories, dividendHistory, cashBalance);
+	}
+
+	/// <summary>
+	/// Changes the name of the portfolio.
+	/// </summary>
+	/// <param name="newName">The new name to set for the portfolio.</param>
+	/// <returns>The updated portfolio with the new name.</returns>
+	public Portfolio ChangeName(string newName)
+	{
+		if (id == null || newName == null)
+		{
+			throw new StatusCodeException(400, "Missing required fields");
+		}
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
+		String query = "UPDATE Portfolios SET name = @name WHERE uid = @uid";
+		SqlCommand command = new SqlCommand(query, connection);
+		command.Parameters.AddWithValue("@name", newName);
+		command.Parameters.AddWithValue("@uid", id);
+		try
+		{
+			command.ExecuteNonQuery();
+			this.name = newName;
+			return this;
+		}
+		catch (Exception e)
+		{
+			System.Console.WriteLine(e);
+			throw new StatusCodeException(409, "Could not change name of portfolio with id " + id);
+		}
+	}
+
+	/// <summary>
+	/// Changes the currency of the portfolio.
+	/// </summary>
+	/// <param name="newCurrency">The new currency to set for the portfolio.</param>
+	/// <returns>The updated portfolio with the new currency.</returns>
+	public Portfolio ChangeCurrency(String newCurrency)
+	{
+		if (id == null || newCurrency == null)
+		{
+			throw new StatusCodeException(400, "Missing required fields");
+		}
+		if (!(Tools.ValidCurrency.Check(newCurrency)))
+		{
+			throw new StatusCodeException(400, "Currency" + currency + " is not supported");
+		}
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
+
+		String updateCurrency = "UPDATE Portfolios SET currency = @currency WHERE uid = @uid";
+		SqlCommand command = new SqlCommand(updateCurrency, connection);
+		command.Parameters.AddWithValue("@currency", newCurrency);
+		command.Parameters.AddWithValue("@uid", id);
+		try
+		{
+			command.ExecuteNonQuery();
+			this.currency = newCurrency;
+			return this;
+		}
+		catch (Exception e)
+		{
+			System.Console.WriteLine(e);
+			throw new StatusCodeException(409, "Could not change currency of portfolio with id " + id);
+		}
+	}
+
+	/// <summary>
+	/// Retrieves the stock transaction with the specified transaction ID from the portfolio.
+	/// </summary>
+	/// <param name="transactionID">The ID of the stock transaction to retrieve.</param>
+	/// <returns>The stock transaction with the specified ID.</returns>
+	public StockTransaction GetStockTransaction(int transactionID)
+	{
+		if (id == null)
+		{
+			throw new StatusCodeException(400, "Missing required fields");
+		}
+		String query = "SELECT * FROM StockTransactions WHERE id = @id AND portfolio = @portfolio";
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@id", transactionID);
+		parameters.Add("@portfolio", id!);
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(query, parameters);
+
+		if (data != null)
+		{
+			StockTransaction stockTransaction = new StockTransaction();
+			stockTransaction.id = int.Parse(data["id"].ToString()!);
+			stockTransaction.portfolioId = data["portfolio"].ToString();
+			stockTransaction.ticker = data["ticker"].ToString();
+			stockTransaction.exchange = data["exchange"].ToString();
+			stockTransaction.amount = Convert.ToDecimal(data["amount"]);
+			stockTransaction.amountAdjusted = Convert.ToDecimal(data["amount_adjusted"]);
+			stockTransaction.amountOwned = Convert.ToDecimal(data["amount_owned"]);
+			stockTransaction.timestamp = Convert.ToInt32(data["timestamp"]);
+			stockTransaction.priceNative = new Money(Convert.ToDecimal(data["amount_currency"]), data["currency"].ToString()!);
+			return stockTransaction;
+		}
+		throw new StatusCodeException(404, "Could not find stock transaction with id " + transactionID);
+	}
+
+	/// <summary>
+	/// Deletes the portfolio from the database.
+	/// </summary>
+	public void Delete()
+	{
+		if (id == null)
+		{
+			throw new StatusCodeException(400, "Missing required fields");
+		}
+		String queryCheck = "SELECT * FROM Portfolios WHERE uid = @uid";
+		Dictionary<String, object> parametersCheck = new Dictionary<string, object>();
+		parametersCheck.Add("@uid", id!);
+		Dictionary<String, object>? dataCheck = Data.Database.Reader.ReadOne(queryCheck, parametersCheck);
+		if (dataCheck == null)
+		{
+			throw new StatusCodeException(404, "Could not find portfolio with id " + id);
+		}
+		SqlConnection connection = Data.Database.Connection.GetSqlConnection();
+		String query = "DELETE FROM Portfolios WHERE uid = @uid";
+		SqlCommand command = new SqlCommand(query, connection);
+		command.Parameters.AddWithValue("@uid", id);
+		try
+		{
+			command.ExecuteNonQuery();
+		}
+		catch (Exception e)
+		{
+			System.Console.WriteLine(e);
+			throw new StatusCodeException(409, "Could not delete portfolio with id " + id);
+		}
+	}
+
+	/// <summary>
+	/// Retrieves the cash transaction with the specified ID from the portfolio.
+	/// </summary>
+	/// <param name="cashTransactionID">The ID of the cash transaction to retrieve.</param>
+	/// <returns>The cash transaction with the specified ID.</returns>
+	public CashTransaction GetCashTransaction(int cashTransactionID)
+	{
+		if (id == null)
+		{
+			throw new StatusCodeException(400, "Missing required fields");
+		}
+		String query = "SELECT * FROM CashTransactions WHERE id = @id AND portfolio = @portfolio";
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@id", cashTransactionID);
+		parameters.Add("@portfolio", id!);
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(query, parameters);
+		if (data != null)
+		{
+			CashTransaction cashTransaction = new CashTransaction();
+			cashTransaction.id = int.Parse(data["id"].ToString()!);
+			cashTransaction.portfolioId = data["portfolio"].ToString();
+			cashTransaction.timestamp = Convert.ToInt32(data["timestamp"]);
+			cashTransaction.nativeAmount = new Money(Convert.ToDecimal(data["amount_currency"]), data["currency"].ToString()!);
+			cashTransaction.usdAmount = new Money(Convert.ToDecimal(data["amount_usd"]), "USD");
+			cashTransaction.description = data["description"].ToString();
+			return cashTransaction;
+		}
+		throw new StatusCodeException(404, "Could not find cash transaction with id " + cashTransactionID);
+	}
+
+	/// <summary>
+	/// Updates the list of cash transactions for the portfolio.
+	/// </summary>
+	public void UpdateCashTransactions()
+	{
+		if (id == null)
+		{
+			throw new StatusCodeException(400, "Missing required fields");
+		}
+
+		String query = "SELECT * FROM CashTransactions WHERE portfolio = @portfolio";
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@portfolio", id!);
+		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(query, parameters);
+		cashTransactions = new List<CashTransaction>();
+		foreach (Dictionary<String, object> row in data)
+		{
+			CashTransaction cashTransaction = new CashTransaction();
+			cashTransaction.id = int.Parse(row["id"].ToString()!);
+			cashTransaction.portfolioId = row["portfolio"].ToString();
+			cashTransaction.timestamp = Convert.ToInt32(row["timestamp"]);
+			cashTransaction.nativeAmount = new Money(Convert.ToDecimal(row["amount_currency"]), row["currency"].ToString()!);
+			cashTransaction.usdAmount = new Money(Convert.ToDecimal(row["amount_usd"]), "USD");
+			cashTransaction.description = row["description"].ToString();
+			cashTransactions.Add(cashTransaction);
+		}
 	}
 }

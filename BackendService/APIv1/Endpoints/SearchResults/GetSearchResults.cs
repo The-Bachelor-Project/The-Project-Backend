@@ -14,6 +14,14 @@ public class GetSearchResults
 
 	public static GetSearchResultsResponse Endpoint(string query, bool stocks)
 	{
+		if (query == null)
+		{
+			throw new StatusCodeException(400, "Required fields are missing");
+		}
+		if (query.Replace(" ", "").Length == 0)
+		{
+			throw new StatusCodeException(400, "Query cannot be empty");
+		}
 		GetSearchResultsResponse results = new GetSearchResultsResponse("success");
 		if (stocks)
 		{
@@ -23,14 +31,4 @@ public class GetSearchResults
 	}
 
 }
-public class GetSearchResultsResponse
-{
-	public GetSearchResultsResponse(string response)
-	{
-		this.response = response;
-		this.stocks = new Data.StockProfile[] { };
-	}
 
-	public String response { get; set; }
-	public Data.StockProfile[] stocks { get; set; }
-}

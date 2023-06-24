@@ -6,36 +6,55 @@ namespace Data.Fetcher.DatabaseFetcher;
 
 public class StockFetcher : IStockFetcher
 {
-	public Task<StockHistory> GetHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, string interval)
+	public Task<StockHistory> GetHistory(string ticker, string exchange, DateOnly startDate, DateOnly endDate, string interval, string currency)
 	{
-		System.Console.WriteLine("Getting stock history from database for " + ticker + " " + exchange + " " + startDate + " " + endDate + " " + interval);
+		if (startDate > endDate)
+		{
+			throw new StatusCodeException(400, "Start date must be before end date");
+		}
+		if (ticker == null || exchange == null || interval == null || currency == null)
+		{
+			throw new StatusCodeException(400, "Required fields missing");
+		}
+		if (!(Tools.ValidCurrency.Check(currency)))
+		{
+			throw new StatusCodeException(400, "Invalid currency");
+		}
 		StockHistory result = new StockHistory(ticker, exchange, "daily");
 
-		SqlConnection connection = new Data.Database.Connection().Create();
 		String getStockHistoryQuery = "SELECT * FROM GetStockPrices(@ticker, @exchange, 'daily', @start_date, @end_date)";
-		SqlCommand command = new SqlCommand(getStockHistoryQuery, connection);
-		command.Parameters.AddWithValue("@ticker", ticker);
-		command.Parameters.AddWithValue("@exchange", exchange);
-		command.Parameters.AddWithValue("@start_date", Tools.TimeConverter.dateOnlyToString(startDate));
-		command.Parameters.AddWithValue("@end_date", Tools.TimeConverter.dateOnlyToString(endDate));
-		using (SqlDataReader reader = command.ExecuteReader())
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@ticker", ticker);
+		parameters.Add("@exchange", exchange);
+		parameters.Add("@start_date", Tools.TimeConverter.DateOnlyToString(startDate));
+		parameters.Add("@end_date", Tools.TimeConverter.DateOnlyToString(endDate));
+		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(getStockHistoryQuery, parameters);
+		if (data.Count == 0)
 		{
-			while (reader.Read())
+			throw new StatusCodeException(404, "No stock history data found for " + exchange + ":" + ticker + " from database. Please check if exchange and ticker are correct.");
+		}
+
+		foreach (Dictionary<String, object> row in data)
+		{
+			try
 			{
 				result.history.Add(new Data.DatePriceOHLC(
-					DateOnly.FromDateTime((DateTime)reader["end_date"]),
-					new Money(Decimal.Parse("" + reader["open_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
-					new Money(Decimal.Parse("" + reader["high_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
-					new Money(Decimal.Parse("" + reader["low_price"].ToString()), Data.Money.DEFAULT_CURRENCY),
-					new Money(Decimal.Parse("" + reader["close_price"].ToString()), Data.Money.DEFAULT_CURRENCY)
+					DateOnly.FromDateTime((DateTime)row["end_date"]),
+					new StockApp.Money(Decimal.Parse("" + row["open_price"].ToString()), StockApp.Money.DEFAULT_CURRENCY),
+					new StockApp.Money(Decimal.Parse("" + row["high_price"].ToString()), StockApp.Money.DEFAULT_CURRENCY),
+					new StockApp.Money(Decimal.Parse("" + row["low_price"].ToString()), StockApp.Money.DEFAULT_CURRENCY),
+					new StockApp.Money(Decimal.Parse("" + row["close_price"].ToString()), StockApp.Money.DEFAULT_CURRENCY)
 				));
 			}
-			result.startDate = result.history.First().date;
-			result.endDate = result.history.Last().date;
-			reader.Close();
-
-			return Task.FromResult(result);
+			catch (System.Exception e)
+			{
+				System.Console.WriteLine(e);
+				continue;
+			}
 		}
+		result.startDate = result.history.First().date;
+		result.endDate = result.history.Last().date;
+		return Task.FromResult(result);
 	}
 
 	public Task<Data.StockProfile> GetProfile(string ticker, string exchange)
@@ -44,44 +63,42 @@ public class StockFetcher : IStockFetcher
 		profile.ticker = ticker;
 		profile.exchange = exchange;
 
-
-		SqlConnection connection = (new Data.Database.Connection()).Create();
 		String query = "SELECT * FROM Stocks WHERE ticker = @ticker AND exchange = @exchange";
-		SqlCommand command = new SqlCommand(query, connection);
-		command.Parameters.AddWithValue("@ticker", ticker);
-		command.Parameters.AddWithValue("@exchange", exchange);
-		using (SqlDataReader reader = command.ExecuteReader())
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@ticker", ticker);
+		parameters.Add("@exchange", exchange);
+		Dictionary<String, object>? data = Data.Database.Reader.ReadOne(query, parameters);
+
+		if (data != null)
 		{
-			if (reader.Read())
-			{
-				profile.displayName = reader["company_name"].ToString();
-				profile.shortName = reader["short_name"].ToString();
-				profile.longName = reader["long_name"].ToString();
-				profile.address = reader["address"].ToString();
-				profile.city = reader["city"].ToString();
-				profile.state = reader["state"].ToString();
-				profile.zip = reader["zip"].ToString();
-				profile.financialCurrency = reader["financial_currency"].ToString();
-				profile.sharesOutstanding = (Decimal.TryParse(reader["shares_outstanding"].ToString(), out decimal number) ? number : 0);
-				profile.industry = reader["industry"].ToString();
-				profile.sector = reader["sector"].ToString();
-				profile.website = reader["website"].ToString();
-				profile.country = reader["country"].ToString();
-			}
-			else
-			{
-				reader.Close();
-				throw new CouldNotGetStockException();
-			}
-			reader.Close();
+			profile.displayName = data["company_name"].ToString();
+			profile.shortName = data["short_name"].ToString();
+			profile.longName = data["long_name"].ToString();
+			profile.address = data["address"].ToString();
+			profile.city = data["city"].ToString();
+			profile.state = data["state"].ToString();
+			profile.zip = data["zip"].ToString();
+			profile.financialCurrency = data["financial_currency"].ToString();
+			profile.sharesOutstanding = (Decimal.TryParse(data["shares_outstanding"].ToString(), out decimal number) ? number : 0);
+			profile.industry = data["industry"].ToString();
+			profile.sector = data["sector"].ToString();
+			profile.website = data["website"].ToString();
+			profile.country = data["country"].ToString();
+
 			return Task.FromResult(profile);
 		}
-
-
+		else
+		{
+			throw new StatusCodeException(0);
+		}
 	}
 
 	public Task<Data.StockProfile[]> Search(string query)
 	{
+		if (query == null)
+		{
+			throw new StatusCodeException(400, "Required fields missing");
+		}
 		Data.StockProfile[] results = new Data.StockProfile[] { };
 		Regex regex = new Regex("[A-Za-z0-9]*[A-Za-z0-9]", RegexOptions.IgnoreCase);
 		MatchCollection matchedAuthors = regex.Matches(query);
@@ -91,43 +108,44 @@ public class StockFetcher : IStockFetcher
 			termTrimmed += " " + matchedAuthors[i].Value.ToLower();
 		}
 
-		SqlConnection connection = new Data.Database.Connection().Create();
 		String sqlQuery = "SELECT TOP 100 * FROM Stocks WHERE tags LIKE @tags";
-		SqlCommand command = new SqlCommand(sqlQuery, connection);
-		command.Parameters.AddWithValue("@tags", "%" + query + "%");
-		using (SqlDataReader reader = command.ExecuteReader())
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@tags", "%" + query + "%");
+		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(sqlQuery, parameters);
+
+		foreach (Dictionary<String, object> row in data)
 		{
-			while (reader.Read())
-			{
-				results = results.Append(new Data.StockProfile((String)reader["ticker"], (String)reader["exchange"], (String)reader["company_name"], (String)reader["country"])).ToArray();
-			}
-			reader.Close();
-			return Task.FromResult(results);
+			results = results.Append(new Data.StockProfile((String)row["ticker"], (String)row["exchange"], (String)row["company_name"], (String)row["short_name"], (String)row["long_name"], (String)row["country"])).ToArray();
 		}
+		return Task.FromResult(results);
 	}
 
 	public Task<List<Dividend>> GetDividends(string ticker, string exchange, DateOnly startDate, DateOnly endDate)
 	{
-		System.Console.WriteLine("Getting dividends from database for " + ticker + " " + exchange + " " + startDate + " " + endDate);
 		List<Dividend> dividends = new List<Dividend>();
-		SqlConnection connection = new Data.Database.Connection().Create();
 		String getDividendsQuery = "SELECT * FROM StockDividends WHERE ticker = @ticker AND exchange = @exchange AND date >= @start_date AND date <= @end_date";
-		SqlCommand command = new SqlCommand(getDividendsQuery, connection);
-		command.Parameters.AddWithValue("@ticker", ticker);
-		command.Parameters.AddWithValue("@exchange", exchange);
-		command.Parameters.AddWithValue("@start_date", Tools.TimeConverter.dateOnlyToString(startDate));
-		command.Parameters.AddWithValue("@end_date", Tools.TimeConverter.dateOnlyToString(endDate));
-		using (SqlDataReader reader = command.ExecuteReader())
+		Dictionary<String, object> parameters = new Dictionary<string, object>();
+		parameters.Add("@ticker", ticker);
+		parameters.Add("@exchange", exchange);
+		parameters.Add("@start_date", Tools.TimeConverter.DateOnlyToString(startDate));
+		parameters.Add("@end_date", Tools.TimeConverter.DateOnlyToString(endDate));
+		List<Dictionary<String, object>> data = Data.Database.Reader.ReadData(getDividendsQuery, parameters);
+		foreach (Dictionary<String, object> row in data)
 		{
-			while (reader.Read())
+			try
 			{
-				dividends.Add(new Data.Dividend(
-					DateOnly.FromDateTime((DateTime)reader["date"]),
-					new Money(Decimal.Parse("" + reader["payout"].ToString()), Data.Money.DEFAULT_CURRENCY)
+				dividends.Add(new Dividend(
+					DateOnly.FromDateTime((DateTime)row["date"]),
+					new StockApp.Money(Decimal.Parse("" + row["payout"].ToString()), StockApp.Money.DEFAULT_CURRENCY)
 				));
 			}
-			reader.Close();
-			return Task.FromResult(dividends);
+			catch (System.Exception e)
+			{
+				System.Console.WriteLine(e);
+				continue;
+			}
+
 		}
+		return Task.FromResult(dividends);
 	}
 }

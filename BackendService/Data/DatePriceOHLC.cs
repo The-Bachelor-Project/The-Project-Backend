@@ -21,6 +21,12 @@ public class DatePriceOHLC
 	public Money closePrice { get; set; }
 
 
+	/// <summary>
+	/// Adds two lists of <see cref="DatePriceOHLC"/> objects together, merging the data for matching dates.
+	/// </summary>
+	/// <param name="list1">The first list of DatePriceOHLC objects.</param>
+	/// <param name="list2">The second list of DatePriceOHLC objects.</param>
+	/// <returns>A new list containing merged data from both input lists.</returns>
 	public static List<DatePriceOHLC> AddLists(List<DatePriceOHLC> list1, List<DatePriceOHLC> list2)
 	{
 		if (list1.Count == 0)

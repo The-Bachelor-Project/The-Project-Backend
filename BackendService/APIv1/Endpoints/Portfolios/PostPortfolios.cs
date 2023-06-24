@@ -6,25 +6,25 @@ public class PostPortfolios
 		app.MapPost("/v1/portfolios", (HttpContext context, PostPortfoliosBody body) =>
 		{
 			String? accessToken = context.Items["AccessToken"] as String;
-			if (accessToken is null)
-			{
-				context.Response.StatusCode = 401;
-				return Results.Ok(new GetPortfoliosResponse("error", new List<StockApp.Portfolio> { }));
-			}
-			return Results.Ok(Endpoint(body, accessToken));
+			return Results.Ok(Endpoint(body, accessToken!));
 		});
 	}
 
 	public static PostPortfoliosResponse Endpoint(PostPortfoliosBody body, String accessToken)
 	{
 		StockApp.User user = new StockApp.TokenSet(accessToken).GetUser();
-		System.Console.WriteLine("User: " + user.id);
-		StockApp.Portfolio portfolio = new StockApp.Portfolio(body.portfolio.name, user.id!, body.portfolio.currency, body.portfolio.balance, body.portfolio.trackBalance);
-		portfolio.AddToDb();
-		if (portfolio.id != null)
+		if (body.portfolio.name is null)
 		{
-			return new PostPortfoliosResponse("success", portfolio.id);
+			throw new StatusCodeException(400, "Missing name of portfolio");
 		}
-		return new PostPortfoliosResponse("error", "");
+		if (body.portfolio.currency is null || body.portfolio.currency == "")
+		{
+			throw new StatusCodeException(400, "Missing currency of portfolio");
+		}
+		StockApp.Portfolio portfolio = new StockApp.Portfolio(body.portfolio.name, user.id!, body.portfolio.currency);
+		portfolio.AddToDb();
+		return new PostPortfoliosResponse("success", portfolio.id!);
+
+
 	}
 }
